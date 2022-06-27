@@ -78,7 +78,7 @@ main {
     display: inline;
 }
 
-#statistics_page, #yellow_page, #green_page, #blue_page, #pink_page {
+#statistics_page, #yellow_page, #green_page, #blue_page, #pink_page, #prestige_page, #crystal_page, #crystal_page2, #settings_page  {
     display: none;
 }
 
