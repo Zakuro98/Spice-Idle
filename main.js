@@ -615,6 +615,8 @@ function delete_save() {
     }
 }
 
+goto_tab(0)
+
 //load the game
 function load(savegame) {
     if (savegame === null) return
