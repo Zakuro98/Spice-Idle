@@ -1,0 +1,614 @@
+.root {
+    --rainbow_spice: #ff0000;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #221625;
+    font-family: "Fira Code";
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0em;
+    padding: 0em;
+}
+
+main {
+    margin: 32px;
+}
+
+.menu, .submenu {
+    display: flex;
+    margin: 0em;
+}
+
+#spices_tabs {
+    display: none;
+}
+
+.tab {
+    background: black;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    font-family: "Fira Code";
+    font-size: 2em;
+    border: none;
+    flex: 1;
+}
+
+.subtab {
+    background: #151116;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    font-family: "Fira Code";
+    font-size: 1.5em;
+    border: none;
+    flex: 1;
+}
+
+.locked {
+    color: #666666;
+    font-weight: normal;
+}
+
+.unlocked {
+    color: #aaaaaa;
+    font-weight: normal;
+}
+
+.unlocked:hover {
+    color: white;
+    font-weight: normal;
+}
+
+.selected {
+    color: white;
+    font-weight: bold;
+}
+
+#color_shift {
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+}
+
+#color_shift_button, #crystal_buy_i {
+    display: inline;
+}
+
+#statistics_page, #yellow_page, #green_page, #blue_page, #pink_page {
+    display: none;
+}
+
+.spice_num {
+    font-size: 4em;
+    font-weight: 700;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: -0.15em;
+}
+
+.spice_text {
+    font-size: 2em;
+    font-weight: 700;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.spice_up {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0.5em;
+    margin-bottom: 2em;
+}
+
+.spice_gen_page {
+    display: flex;
+}
+
+.spice_gen_panel {
+    padding-right: 6em;
+}
+
+.spice_gen {
+    margin-top: 1.5em;
+}
+
+.spice_gen_s {
+    margin-top: 5em;
+}
+
+.spice_gen_name {
+    font-size: 1.25em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0.4em;
+}
+
+.spice_gen_info {
+    font-size: 1em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0.6em;
+    margin-left: 2em;
+}
+
+.spice_gen_boost {
+    font-size: 1em;
+    font-weight: 700;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0.8em;
+    margin-left: 2em;
+}
+
+#color_shift_unlock {
+    margin-left: 0em;
+    margin-top: 0.35em;
+    margin-bottom: 0.3em;
+}
+
+.spice_buttons {
+    margin-left: 2em;
+}
+
+.spice_buy {
+    padding: 0.2em 0.4em;
+    background-color: #311936;
+    font-family: "Fira Code";
+    font-size: 1em;
+    font-weight: 400;
+    color: white;
+    border: 1px solid white;
+    margin-bottom: 0.3em;
+    margin-right: 0.3em;
+}
+
+.spice_buy:hover {
+    background-color: #421d49;
+}
+
+.spice_buy:active {
+    background-color: #571c66;
+}
+
+.max_all {
+    font-size: 1.25em;
+}
+
+.a_disabled {
+    font-size: 1.25em;
+    color: #ff2714;
+}
+
+.a_enabled {
+    font-size: 1.25em;
+    color: #25dd8a;
+}
+
+#boost_auto, #infusion_auto, #prestige_auto_toggle {
+    font-size: 1em;
+}
+
+.red_spice{
+    color: #ff2714;
+}
+
+.yellow_spice {
+    color: #ffd107;
+}
+
+.green_spice {
+    color: #25dd8a;
+}
+
+.blue_spice {
+    color: #0072ff;
+}
+
+.pink_spice {
+    color: #ff3dd8;
+}
+
+.crystal_spice {
+    color: white;
+    text-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
+}
+
+.red_cost {
+    color: #ff2714;
+    font-weight: 700;
+}
+
+.yellow_cost {
+    color: #ffd107;
+    font-weight: 700;
+}
+
+.green_cost {
+    color: #25dd8a;
+    font-weight: 700;
+}
+
+.blue_cost {
+    color: #0072ff;
+    font-weight: 700;
+}
+
+.pink_cost {
+    color: #ff3dd8;
+    font-weight: 700;
+}
+
+.rainbow_cost {
+    color: var(--rainbow_spice);
+    text-shadow: 0 0 0.2em var(--rainbow_spice);
+    font-weight: 700;
+}
+
+.crystal_cost {
+    color: white;
+    text-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
+    font-weight: 700;
+}
+
+.empty_cost {
+    color: #9b9b9b;
+    font-weight: 700;
+}
+
+.prestige_header {
+    display: flex;
+}
+
+.rainbow_spice_panel {
+    flex-grow: 1;
+}
+
+.prestige_panel {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.prestige_text {
+    font-size: 1.25em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    text-align: right;
+}
+
+#prestige_req {
+    color: grey;
+}
+
+.prestige_button {
+    padding: 0.4em 0.6em;
+    font-family: "Fira Code";
+    font-size: 2em;
+    font-weight: 400;
+    margin-left: 0.4em;
+    flex-grow: 0;
+}
+
+#prestige_upgrade_block {
+    display: flex;
+    flex-wrap: wrap;
+    width: 64.8em;
+    height: 27em;
+    margin-left: calc(50% - 32.4em);
+    margin-top: 5em;
+    margin-bottom: 18.5em;
+}
+
+#crystal_upgrade_block {
+    display: flex;
+    flex-wrap: wrap;
+    width: 64.8em;
+    height: 27em;
+    margin-left: calc(50% - 32.4em);
+    margin-top: 5em;
+    margin-bottom: 18.5em;
+}
+
+.prestige_upgrade {
+    padding: 0.5em 0.5em;
+    font-family: "Fira Code";
+    font-size: 0.9em;
+    font-weight: 400;
+    margin: 0.5em;
+    width: 17em;
+    height: 9em;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.rainbow_spice {
+    color: var(--rainbow_spice);
+    text-shadow: 0 0 0.2em var(--rainbow_spice);
+}
+
+.p_locked {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+}
+
+.p_unlocked {
+    background-color: black;
+    color: var(--rainbow_spice);
+    text-shadow: 0 0 0.2em var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice);
+    box-shadow: 0 0 0.3em var(--rainbow_spice), 0 0 0.3em var(--rainbow_spice) inset;
+}
+
+.p_unlocked:hover {
+    background-color: black;
+    color: white;
+    text-shadow: 0 0 0.2em var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice);
+    box-shadow: 0 0 0.3em var(--rainbow_spice), 0 0 1em var(--rainbow_spice) inset;
+}
+
+.p_unlocked:active {
+    background-color: var(--rainbow_spice);
+    color: black;
+    text-shadow: none;
+    border: 1px solid var(--rainbow_spice);
+    box-shadow: 0 0 0.4em var(--rainbow_spice);
+}
+
+.p_unlocked2 {
+    background-color: black;
+    color: var(--rainbow_spice);
+    text-shadow: 0 0 0.5em var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice);
+    box-shadow: 0 0 0.5em var(--rainbow_spice), 0 0 0.5em var(--rainbow_spice) inset;
+}
+
+.p_unlocked2:hover {
+    background-color: black;
+    color: white;
+    text-shadow: 0 0 0.5em var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice);
+    box-shadow: 0 0 0.5em var(--rainbow_spice), 0 0 3em var(--rainbow_spice) inset;
+}
+
+.p_unlocked2:active {
+    background-color: var(--rainbow_spice);
+    color: black;
+    text-shadow: none;
+    border: 1px solid var(--rainbow_spice);
+    box-shadow: 0 0 0.5em var(--rainbow_spice);
+}
+
+.p_bought {
+    background-color: var(--rainbow_spice);
+    color: black;
+    text-shadow: none;
+    border: 1px solid var(--rainbow_spice);
+    box-shadow: 0 0 0.5em var(--rainbow_spice);
+}
+
+.c_unlocked {
+    background-color: black;
+    color: #ff2ad4;
+    text-shadow: 0em 0em 0.2em #ff2ad4, 0em 0em 0.5em #ff2ad4;
+    border: 1px solid #ff2ad4;
+    box-shadow: 0em 0em 0.5em #ff2ad4, 0em 0em 3em #ff2ad4 inset;
+}
+
+.c_unlocked:hover {
+    background-color: black;
+    color: white;
+    text-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
+    border: 1px solid white;
+    box-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4, 0em 0em 1.2em white inset, 0em 0em 3em #ff2ad4 inset;
+}
+
+.c_unlocked:active {
+    background-color: white;
+    color: black;
+    text-shadow: none;
+    border: 1px solid white;
+    box-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
+}
+
+.c_bought {
+    background-color: white;
+    color: black;
+    text-shadow: none;
+    border: 1px solid white;
+    box-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
+}
+
+.p_special {
+    margin-left: 27.5em;
+    margin-top: 2.5em;
+}
+
+.crystal_header {
+    display: flex;
+}
+
+.crystal_panel {
+    flex-grow: 1;
+}
+
+#rainbow_spice_num2, #rainbow_spice_text2 {
+    text-align: right;
+}
+
+#crystal_buy_i, #crystal_max_i {
+    display: inline;
+}
+
+#crystal_gen_i {
+    margin-top: 0em;
+    margin-bottom: 3.5em;
+}
+
+#prestige_auto_buttons {
+    display: flex;
+    justify-content: right;
+    margin-top: -0.5em;
+}
+
+#prestige_auto_mode {
+    margin-right: 0em;
+}
+
+#prestige_boosts, #prestige_spice {
+    display: flex;
+    justify-content: right;
+    margin-top: 0.25em;
+}
+
+.p_auto_text {
+    font-size: 1em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0.075em;
+    margin-bottom: 0em;
+    margin-right: 0.5em;
+    text-align: right;
+    display: inline;
+}
+
+.input {
+    background-color: #311936;
+    width: 8em;
+    color: white;
+    padding: 0.2em 0.25em;
+    font-family: "Fira Code";
+    font-size: 0.8em;
+    font-weight: normal;
+    border: 1px solid white;
+    display: inline;
+}
+
+.statistics_text {
+    font-size: 1.333em;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+}
+
+.settings_block {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#save_block {
+    margin-top: 5em;
+    margin-bottom: 3em;
+}
+
+#wipe_block {
+    margin-top: 3em;
+}
+
+.settings_button {
+    padding: 0.2em 0.2em;
+    width: 16em;
+    height: 4em;
+    background-color: #311936;
+    font-family: "Fira Code";
+    font-size: 1.25em;
+    font-weight: 400;
+    color: white;
+    border: 1px solid white;
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+}
+
+.settings_button:hover {
+    background-color: #421d49;
+}
+
+.settings_button:active {
+    background-color: #571c66;
+}
+
+.s_big {
+    font-size: 2em;
+    padding: 0.125em 0.125em;
+    width: 10em;
+    height: 2.5em;
+    margin-left: 0.15625em;
+    margin-right: 0.15625em;
+}
+
+#wipe_save {
+    color: #ff2714;
+}
+
+.hotkeys_list {
+    font-size: 1em;
+    color: white;
+    margin-top: 3em;
+    margin-bottom: 0em;
+    text-align: center;
+}
+
+.info {
+    color: white;
+    font-size: 1.25em;
+    margin-top: 6em;
+    margin-bottom: 0.5em;
+}
+
+.link {
+    color: #ff3dd8;
+    cursor: pointer;
+    margin-right: 0.5em;
+}
+
+.link:hover {
+    color: #fd74e2;
+}
+
+.title {
+    font-family: "Fira Code";
+    font-size: 2.857em;
+    font-weight: bold;
+    color: #ff3dd8;
+    margin-top: 0.4em;
+    margin-bottom: 0.8em;
+}
+
+.change_head {
+    font-family: "Fira Code";
+    color: white;
+    font-size: 1em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.change_minor {
+    font-family: "Fira Code";
+    color: #aaaaaa;
+    font-size: 1em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.change_major {
+    font-family: "Fira Code";
+    color: #ff3dd8;
+    font-size: 1.4em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
