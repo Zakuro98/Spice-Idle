@@ -543,20 +543,19 @@ function format_inf(num, not) {
     }
 
     let output = ""
-    if (num.cmp(1.7976931348622053 * 10 ** 308) === -1) {
-        let output = num.toNumber().toString()
-        if (num >= 1000) {
+    if (num.cmp(10 ** 21) === -1) {
+        let temp_num = num.toNumber()
+        output = Math.floor(temp_num).toString()
+        if (temp_num >= 1000) {
             let digits = output.length
-            if (num < 10 ** 21) {
-                for (let i = digits - 3; i > 0; i -= 3) {
-                    output = output.substr(0, i) + "," + output.substr(i)
-                }
+            for (let i = digits - 3; i > 0; i -= 3) {
+                output = output.substr(0, i) + "," + output.substr(i)
             }
         }
     } else {
         let exponent = Math.floor(num.exponent)
         let mantissa = num.mantissa
-        output = mantissa.toFixed(16) + "e+" + format_num(exponent)
+        output = mantissa.toFixed(16) + "e+" + format_num(new Decimal(exponent))
     }
     if (num.cmp(cutoff) === 1 || num.cmp(cutoff) === 0) {
         switch (not) {
