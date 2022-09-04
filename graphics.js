@@ -154,7 +154,7 @@ function spice_update() {
                 } else {
                     info_str +=
                         " (" +
-                        format_num(game.red_spice_bought[gen.id], 0) +
+                        format_small(game.red_spice_bought[gen.id]) +
                         " bought),<br>producing "
                 }
                 info_str += format_infdec(
@@ -256,7 +256,7 @@ function spice_update() {
                 } else {
                     info_str +=
                         " (" +
-                        format_num(game.yellow_spice_bought[gen.id], 0) +
+                        format_small(game.yellow_spice_bought[gen.id]) +
                         " bought),<br>producing "
                 }
                 info_str += format_infdec(
@@ -375,7 +375,7 @@ function spice_update() {
                 } else {
                     info_str +=
                         " (" +
-                        format_num(game.green_spice_bought[gen.id], 0) +
+                        format_small(game.green_spice_bought[gen.id]) +
                         " bought),<br>producing "
                 }
                 info_str += format_infdec(
@@ -490,7 +490,7 @@ function spice_update() {
                 } else {
                     info_str +=
                         " (" +
-                        format_num(game.blue_spice_bought[gen.id], 0) +
+                        format_small(game.blue_spice_bought[gen.id]) +
                         " bought),<br>producing "
                 }
                 info_str += format_infdec(
@@ -605,7 +605,7 @@ function spice_update() {
                 } else {
                     info_str +=
                         " (" +
-                        format_num(game.pink_spice_bought[gen.id], 0) +
+                        format_small(game.pink_spice_bought[gen.id]) +
                         " bought),<br>producing "
                 }
                 info_str += format_infdec(
@@ -646,7 +646,7 @@ function spice_update() {
                             " " +
                             gen.plural +
                             " (" +
-                            format_num(game.pink_spice_bought[gen.id]) +
+                            format_small(game.pink_spice_bought[gen.id]) +
                             " bought) <span class='bold'>" +
                             format_infdec(
                                 game.total_pink_spice_boost[gen.id],
@@ -734,7 +734,7 @@ function spice_update() {
 
         let s_str =
             "You have " +
-            format_num(game.red_strengthener, game.notation) +
+            format_small(game.red_strengthener) +
             " red spice strengtheners,<br>boosting all red spice generators " +
             format_infdec(
                 Decimal.pow(
@@ -747,7 +747,7 @@ function spice_update() {
         if (game.prestige_bought[18] >= 1)
             s_str =
                 "You have " +
-                format_num(game.red_strengthener, 0) +
+                format_small(game.red_strengthener) +
                 " red spice strengtheners,<br>boosting all red spice generators " +
                 format_infdec(
                     Decimal.pow(6, game.red_strengthener),
@@ -786,7 +786,7 @@ function spice_update() {
         let s_str = ""
         s_str =
             "You have " +
-            format_num(game.yellow_strengthener, 0) +
+            format_small(game.yellow_strengthener) +
             " yellow spice strengtheners,<br>boosting all red & yellow spice generators " +
             format_infdec(
                 new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
@@ -798,7 +798,7 @@ function spice_update() {
         if (game.prestige_bought[18] >= 1)
             s_str =
                 "You have " +
-                format_num(game.yellow_strengthener, 0) +
+                format_small(game.yellow_strengthener) +
                 " yellow spice strengtheners,<br>boosting all red & yellow spice generators " +
                 format_infdec(
                     new Decimal(6).pow(game.yellow_strengthener),
@@ -835,7 +835,7 @@ function spice_update() {
         let s_str = ""
         s_str =
             "You have " +
-            format_num(game.green_strengthener, 0) +
+            format_small(game.green_strengthener) +
             " green spice strengtheners,<br>boosting all red, yellow & green spice generators " +
             format_infdec(
                 new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
@@ -847,7 +847,7 @@ function spice_update() {
         if (game.prestige_bought[18] >= 1)
             s_str =
                 "You have " +
-                format_num(game.green_strengthener, 0) +
+                format_small(game.green_strengthener) +
                 " green spice strengtheners,<br>boosting all red, yellow & green spice generators " +
                 format_infdec(
                     new Decimal(6).pow(game.green_strengthener),
@@ -884,7 +884,7 @@ function spice_update() {
         let s_str = ""
         s_str =
             "You have " +
-            format_num(game.blue_strengthener, 0) +
+            format_small(game.blue_strengthener) +
             " blue spice strengtheners,<br>boosting all red, yellow, green & blue spice generators " +
             format_infdec(
                 new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
@@ -896,7 +896,7 @@ function spice_update() {
         if (game.prestige_bought[18] >= 1)
             s_str =
                 "You have " +
-                format_num(game.blue_strengthener, 0) +
+                format_small(game.blue_strengthener) +
                 " blue spice strengtheners,<br>boosting all red, yellow, green & blue spice generators " +
                 format_infdec(
                     new Decimal(6).pow(game.blue_strengthener),
@@ -932,7 +932,7 @@ function spice_update() {
 
         document.getElementById("pink_info_s").innerHTML =
             "You have " +
-            format_num(game.pink_strengthener, 0) +
+            format_small(game.pink_strengthener) +
             " pink spice strengtheners,<br>boosting ALL spice generators " +
             format_infdec(
                 new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
@@ -944,7 +944,7 @@ function spice_update() {
         if (game.prestige_bought[18] >= 1)
             document.getElementById("pink_info_s").innerHTML =
                 "You have " +
-                format_num(game.pink_strengthener, 0) +
+                format_small(game.pink_strengthener) +
                 " pink spice strengtheners,<br>boosting ALL spice generators " +
                 format_infdec(
                     new Decimal(6).pow(game.pink_strengthener),
@@ -975,7 +975,7 @@ function spice_update() {
                 "Color Shift"
             document.getElementById("color_shift_info").innerHTML =
                 "You have " +
-                format_num(game.color_boosts, 0) +
+                format_small(game.color_boosts) +
                 " color shifts,<br>boosting ALL spice generators " +
                 format_infdec(
                     new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
@@ -987,7 +987,7 @@ function spice_update() {
             if (game.prestige_bought[18] >= 1)
                 document.getElementById("color_shift_info").innerHTML =
                     "You have " +
-                    format_num(game.color_boosts, 0) +
+                    format_small(game.color_boosts) +
                     " color shifts,<br>boosting ALL spice generators " +
                     format_infdec(
                         new Decimal(6).pow(game.color_boosts),
@@ -1001,7 +1001,7 @@ function spice_update() {
                 "Color Boost"
             document.getElementById("color_shift_info").innerHTML =
                 "You have " +
-                format_num(game.color_boosts, 0) +
+                format_small(game.color_boosts) +
                 " color boosts,<br>boosting ALL spice generators " +
                 format_infdec(
                     new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
@@ -1013,7 +1013,7 @@ function spice_update() {
             if (game.prestige_bought[18] >= 1)
                 document.getElementById("color_shift_info").innerHTML =
                     "You have " +
-                    format_num(game.color_boosts, 0) +
+                    format_small(game.color_boosts) +
                     " color boosts,<br>boosting ALL spice generators " +
                     format_infdec(
                         new Decimal(6).pow(game.color_boosts * 2 - 4),
@@ -1035,102 +1035,102 @@ function spice_update() {
         switch (game.color_boosts) {
             case 0:
                 document.getElementById("color_shift_req").innerHTML =
-                    "Requires " + format_num(50, 0) + " red spice galaxies"
+                    "Requires " + format_small(50) + " red spice galaxies"
                 break
             case 1:
                 document.getElementById("color_shift_req").innerHTML =
-                    "Requires " + format_num(50, 0) + " yellow spice galaxies"
+                    "Requires " + format_small(50) + " yellow spice galaxies"
                 break
             case 2:
                 document.getElementById("color_shift_req").innerHTML =
-                    "Requires " + format_num(50, 0) + " green spice galaxies"
+                    "Requires " + format_small(50) + " green spice galaxies"
                 break
             case 3:
                 document.getElementById("color_shift_req").innerHTML =
-                    "Requires " + format_num(50, 0) + " blue spice galaxies"
+                    "Requires " + format_small(50) + " blue spice galaxies"
                 break
             default:
                 if (game.prestige_bought[24] === 0) {
                     if (game.color_boosts <= 8)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 25 - 50, 0) +
+                            format_small(game.color_boosts * 25 - 50) +
                             " pink spice galaxies"
                     else if (game.color_boosts <= 29)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 50 - 250, 0) +
+                            format_small(game.color_boosts * 50 - 250) +
                             " pink spice galaxies"
                     else if (game.color_boosts <= 133)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 75 - 975, 0) +
+                            format_small(game.color_boosts * 75 - 975) +
                             " pink spice galaxies"
                     else if (game.color_boosts <= 223)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 100 - 4300, 0) +
+                            format_small(game.color_boosts * 100 - 4300) +
                             " pink spice galaxies"
                     else if (game.color_boosts <= 523)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 150 - 15450, 0) +
+                            format_small(game.color_boosts * 150 - 15450) +
                             " pink spice galaxies"
                     else if (game.color_boosts <= 1201)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 200 - 41600, 0) +
+                            format_small(game.color_boosts * 200 - 41600) +
                             " pink spice galaxies"
                     else if (game.color_boosts <= 4104)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 300 - 161700, 0) +
+                            format_small(game.color_boosts * 300 - 161700) +
                             " pink spice galaxies"
                     else
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 500 - 982500, 0) +
+                            format_small(game.color_boosts * 500 - 982500) +
                             " pink spice galaxies"
                 } else {
                     if (game.color_boosts <= 8)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 25 - 50, 0) +
+                            format_small(game.color_boosts * 25 - 50) +
                             " bought pink spice galaxies"
                     else if (game.color_boosts <= 29)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 50 - 250, 0) +
+                            format_small(game.color_boosts * 50 - 250) +
                             " bought pink spice galaxies"
                     else if (game.color_boosts <= 133)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 75 - 975, 0) +
+                            format_small(game.color_boosts * 75 - 975) +
                             " bought pink spice galaxies"
                     else if (game.color_boosts <= 223)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 100 - 4300, 0) +
+                            format_small(game.color_boosts * 100 - 4300) +
                             " bought pink spice galaxies"
                     else if (game.color_boosts <= 523)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 150 - 15450, 0) +
+                            format_small(game.color_boosts * 150 - 15450) +
                             " bought pink spice galaxies"
                     else if (game.color_boosts <= 1201)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 200 - 41600, 0) +
+                            format_small(game.color_boosts * 200 - 41600) +
                             " bought pink spice galaxies"
                     else if (game.color_boosts <= 4104)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 300 - 161700, 0) +
+                            format_small(game.color_boosts * 300 - 161700) +
                             " bought pink spice galaxies"
                     else
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
-                            format_num(game.color_boosts * 500 - 982500, 0) +
+                            format_small(game.color_boosts * 500 - 982500) +
                             " bought pink spice galaxies"
                 }
                 break
@@ -1265,7 +1265,7 @@ function prestige_update() {
                 " μg rainbow spice"
         document.getElementById("prestige_req").style.color = "white"
         document.getElementById("prestige_req").innerHTML =
-            format_num(game.color_boosts, 0) + " color boosts done"
+            format_small(game.color_boosts) + " color boosts done"
     } else {
         document.getElementById("prestige_button").className =
             "prestige_button p_locked"
@@ -1336,9 +1336,15 @@ function prestige_update() {
                 if (game.prestige_bought[u.id] < u.max)
                     u.desc =
                         "Increase boost from strengtheners/shifts<br>(" +
-                        format_dec(2 + 0.2 * game.prestige_bought[u.id], 0) +
+                        format_dec(
+                            2 + 0.2 * game.prestige_bought[u.id],
+                            game.notation
+                        ) +
                         "x -> " +
-                        format_dec(2.2 + 0.2 * game.prestige_bought[u.id], 0) +
+                        format_dec(
+                            2.2 + 0.2 * game.prestige_bought[u.id],
+                            game.notation
+                        ) +
                         "x)"
                 else
                     u.desc =
@@ -1369,14 +1375,15 @@ function prestige_update() {
                 if (game.prestige_bought[u.id] < u.max) {
                     if (game.prestige_bought[u.id] === 0)
                         u.desc =
-                            "You start with " + format_num(1) + " color shift"
+                            "You start with " + format_small(1) + " color shift"
                     else
                         u.desc =
                             "You start with " +
-                            format_num(game.prestige_bought[u.id] + 1) +
+                            format_small(game.prestige_bought[u.id] + 1) +
                             " color shifts"
                 } else
-                    u.desc = "You start with " + format_num(4) + " color shifts"
+                    u.desc =
+                        "You start with " + format_small(4) + " color shifts"
                 break
             case 5:
                 if (game.prestige_bought[u.id] < u.max)
@@ -1406,39 +1413,39 @@ function prestige_update() {
                     case 0:
                         u.desc =
                             "Reduce the strengthener price scaling<br>(" +
-                            format_num(10, 0) +
+                            format_small(10) +
                             "x -> " +
-                            format_num(8, 0) +
+                            format_small(8) +
                             "x)"
                         break
                     case 1:
                         u.desc =
                             "Reduce the strengthener price scaling<br>(" +
-                            format_num(8, 0) +
+                            format_small(8) +
                             "x -> " +
-                            format_num(6, 0) +
+                            format_small(6) +
                             "x)"
                         break
                     case 2:
                         u.desc =
                             "Reduce the strengthener price scaling<br>(" +
-                            format_num(6, 0) +
+                            format_small(6) +
                             "x -> " +
-                            format_num(4, 0) +
+                            format_small(4) +
                             "x)"
                         break
                     case 3:
                         u.desc =
                             "Reduce the strengthener price scaling<br>(" +
-                            format_num(4, 0) +
+                            format_small(4) +
                             "x -> " +
-                            format_num(3, 0) +
+                            format_small(3) +
                             "x)"
                         break
                     case 4:
                         u.desc =
                             "Reduce the strengthener price scaling<br>(" +
-                            format_num(3, 0) +
+                            format_small(3) +
                             "x)"
                         break
                 }
@@ -1474,12 +1481,12 @@ function prestige_update() {
                 if (game.prestige_bought[u.id] < u.max)
                     u.desc =
                         "You get " +
-                        format_num(12 + 12 * game.prestige_bought[u.id], 0) +
+                        format_small(12 + 12 * game.prestige_bought[u.id]) +
                         " free crystal infusions"
                 else
                     u.desc =
                         "You get " +
-                        format_num(144, 0) +
+                        format_small(144) +
                         " free crystal infusions"
                 break
             case 21:
@@ -1624,7 +1631,7 @@ function crystal_update() {
                 } else {
                     info_str +=
                         " (" +
-                        format_num(game.crystal_spice_bought[gen.id]) +
+                        format_small(game.crystal_spice_bought[gen.id]) +
                         " bought),<br>producing "
                 }
                 if (gen.id === 0) {
@@ -1742,7 +1749,7 @@ function crystal_update() {
 
         let s_str =
             "You have " +
-            format_num(game.crystal_strengthener, 0) +
+            format_small(game.crystal_strengthener) +
             " crystallized spice strengtheners,<br>boosting all crystallized spice generators " +
             format_infdec(
                 Decimal.pow(4, game.crystal_strengthener),
@@ -1765,11 +1772,9 @@ function crystal_update() {
     }
 
     let s_str =
-        "You have " +
-        format_num(game.crystal_infusion, 0) +
-        " crystal infusions"
+        "You have " + format_small(game.crystal_infusion) + " crystal infusions"
     if (game.prestige_bought[20] >= 1)
-        s_str += " (+" + format_num(game.prestige_bought[20] * 12, 0) + " free)"
+        s_str += " (+" + format_small(game.prestige_bought[20] * 12) + " free)"
     s_str +=
         ",<br>boosting all normal spice generators " +
         format_infdec(
@@ -1870,22 +1875,22 @@ function stats_update() {
     if (game.color_boosts >= 4)
         stats_str +=
             "<br>You have done " +
-            format_num(game.color_boosts, 0) +
+            format_small(game.color_boosts) +
             " color boosts."
     else if (game.color_boosts >= 1)
         stats_str +=
             "<br>You have done " +
-            format_num(game.color_boosts, 0) +
+            format_small(game.color_boosts) +
             " color shifts."
 
     if (game.prestige >= 1) {
         if (game.prestige === 1)
             stats_str +=
-                "<br><br><br>You have Prestiged " + format_num(1) + " time."
+                "<br><br><br>You have Prestiged " + format_small(1) + " time."
         else
             stats_str +=
                 "<br><br><br>You have Prestiged " +
-                format_num(game.prestige) +
+                format_small(game.prestige) +
                 " times."
 
         stats_str +=
