@@ -519,6 +519,83 @@ function format_num(num, not) {
 
         if (output === "") output = "0"
     }
+    if ((not === 12 || not === 13) && num < 10 ** 36 && num > cutoff) {
+        const single_array_cond = [
+            "",
+            "M",
+            "B",
+            "T",
+            "Qa",
+            "Qn",
+            "Se",
+            "Sp",
+            "Oc",
+            "No",
+        ]
+        const one_array_cond = [
+            "",
+            "U",
+            "D",
+            "T",
+            "Qa",
+            "Qn",
+            "Se",
+            "Sp",
+            "O",
+            "N",
+        ]
+        const ten_array_cond = [
+            "",
+            "Dc",
+            "Vg",
+            "Tg",
+            "Qg",
+            "Qi",
+            "Sx",
+            "Sg",
+            "Og",
+            "Ng",
+            "Ce",
+        ]
+
+        let order2 = Math.floor(Math.log10(num) / 3) - 1
+        let one_str2 = ""
+        let ten_str2 = ""
+        if (order2 < 10) {
+            one_str2 = single_array_cond[order2]
+        } else {
+            one_str2 = one_array_cond[order2 % 10]
+            ten_str2 = ten_array_cond[Math.floor(order2 / 10)]
+        }
+
+        let lead2 = num / 10 ** (3 * order2 + 3)
+        let lead_str2 = ""
+        if (lead2 < 10) {
+            lead_str2 = lead2.toFixed(3)
+        } else if (lead2 < 100) {
+            lead_str2 = lead2.toFixed(2)
+        } else {
+            lead_str2 = lead2.toFixed(1)
+        }
+
+        output = lead_str2 + " " + one_str2 + ten_str2
+    } else if (num >= cutoff) {
+        if (not === 12) {
+            let exponent = Math.floor(Math.log10(num))
+            let mantissa = num / 10 ** exponent
+            output = mantissa.toFixed(3) + "e" + exponent
+        } else if (not === 13) {
+            let exponent2 = Math.floor(Math.log10(num) / 3) * 3
+            let mantissa2 = num / 10 ** exponent2
+            if (mantissa2 < 10) {
+                output = mantissa2.toFixed(3) + "e" + exponent2
+            } else if (mantissa2 < 100) {
+                output = mantissa2.toFixed(2) + "e" + exponent2
+            } else {
+                output = mantissa2.toFixed(1) + "e" + exponent2
+            }
+        }
+    }
     if (num >= 1.7976931348622053 * 10 ** 308 && not !== 9) {
         output = "∞"
     }
@@ -1321,6 +1398,100 @@ function format_inf(num, not) {
         }
 
         if (output === "") output = "0"
+    }
+    if (
+        (not === 12 || not === 13) &&
+        num.cmp(10 ** 36) === -1 &&
+        num.cmp(cutoff) >= 0
+    ) {
+        const single_array_cond = [
+            "",
+            "M",
+            "B",
+            "T",
+            "Qa",
+            "Qn",
+            "Se",
+            "Sp",
+            "Oc",
+            "No",
+        ]
+        const one_array_cond = [
+            "",
+            "U",
+            "D",
+            "T",
+            "Qa",
+            "Qn",
+            "Se",
+            "Sp",
+            "O",
+            "N",
+        ]
+        const ten_array_cond = [
+            "",
+            "Dc",
+            "Vg",
+            "Tg",
+            "Qg",
+            "Qi",
+            "Sx",
+            "Sg",
+            "Og",
+            "Ng",
+        ]
+        const hundred_array_cond = [
+            "",
+            "Ce",
+            "Du",
+            "Tc",
+            "Qd",
+            "Qe",
+            "Sc",
+            "St",
+            "Oe",
+            "Ne",
+        ]
+
+        let order2 = Math.floor(num.exponent / 3) - 1
+        let one_str2 = ""
+        let ten_str2 = ""
+        let hundred_str2 = ""
+        if (order2 < 10) {
+            one_str2 = single_array_cond[order2]
+        } else {
+            one_str2 = one_array_cond[order2 % 10]
+            ten_str2 = ten_array_cond[Math.floor(order2 / 10) % 10]
+            hundred_str2 = hundred_array_cond[Math.floor(order2 / 100) % 10]
+        }
+
+        let lead2 = num.div(new Decimal(10).pow(3 * order2 + 3)).toNumber()
+        let lead_str2 = ""
+        if (lead2 < 10) {
+            lead_str2 = lead2.toFixed(3)
+        } else if (lead2 < 100) {
+            lead_str2 = lead2.toFixed(2)
+        } else {
+            lead_str2 = lead2.toFixed(1)
+        }
+
+        output = lead_str2 + " " + one_str2 + ten_str2 + hundred_str2
+    } else if (num.cmp(cutoff) >= 0) {
+        if (not === 12) {
+            let exponent = Math.floor(num.exponent)
+            let mantissa = num.mantissa
+            output = mantissa.toFixed(3) + "e" + format_num(exponent)
+        } else if (not === 13) {
+            let exponent2 = Math.floor(num.exponent / 3) * 3
+            let mantissa2 = num.div(new Decimal(10).pow(exponent2)).toNumber()
+            if (mantissa2 < 10) {
+                output = mantissa2.toFixed(3) + "e" + format_num(exponent2)
+            } else if (mantissa2 < 100) {
+                output = mantissa2.toFixed(2) + "e" + format_num(exponent2)
+            } else {
+                output = mantissa2.toFixed(1) + "e" + format_num(exponent2)
+            }
+        }
     }
     if (negative) {
         output = "-" + output
