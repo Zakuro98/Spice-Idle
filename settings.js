@@ -301,7 +301,7 @@ function notation(not) {
     if (not === undefined) {
         game.notation++
         if (game.notation === 8) game.notation++
-        if (game.notation > 11) game.notation = 2
+        if (game.notation > 13) game.notation = 2
     } else {
         game.notation = not
     }
@@ -339,6 +339,14 @@ function notation(not) {
             break
         case 11:
             document.getElementById("notation").innerHTML = "Notation<br>BASE64"
+            break
+        case 12:
+            document.getElementById("notation").innerHTML =
+                "Notation<br>MIXED SCIENTIFIC"
+            break
+        case 13:
+            document.getElementById("notation").innerHTML =
+                "Notation<br>MIXED ENGINEERING"
             break
     }
 }
