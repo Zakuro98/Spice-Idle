@@ -264,6 +264,16 @@ let game = {
     autopr_goal: [10, new Decimal(1)],
 }
 
+function format_small(num) {
+    if (game.notation === 10) {
+        return format_num(num, 10)
+    } else if (game.notation === 11) {
+        return format_num(num, 11)
+    } else {
+        return format_num(num, 0)
+    }
+}
+
 //initialize map
 const spice_map = new Map()
 const prestige_map = new Map()
