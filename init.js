@@ -1,6 +1,6 @@
 //initializing game variables
 let game = {
-    version: "1.0.0",
+    version: "1.1.0",
 
     tickspeed: 100,
 
@@ -48,7 +48,7 @@ let game = {
     red_strengthener: 0,
     red_strengthener_price: new Decimal(1000000),
 
-    yellow_spice: new Decimal(10),
+    yellow_spice: new Decimal(5),
     yellow_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -58,11 +58,11 @@ let game = {
         new Decimal(0),
     ],
     yellow_spice_price: [
-        new Decimal(10),
-        new Decimal(600),
-        new Decimal(250000),
-        new Decimal(7 * 10 ** 9),
-        new Decimal(2 * 10 ** 15),
+        new Decimal(5),
+        new Decimal(300),
+        new Decimal(100000),
+        new Decimal(3.5 * 10 ** 9),
+        new Decimal(1.5 * 10 ** 15),
         new Decimal(6 * 10 ** 22),
     ],
     yellow_spice_bought: [0, 0, 0, 0, 0, 0],
@@ -84,9 +84,9 @@ let game = {
     ],
 
     yellow_strengthener: 0,
-    yellow_strengthener_price: new Decimal(2 * 10 ** 7),
+    yellow_strengthener_price: new Decimal(6000000),
 
-    green_spice: new Decimal(20),
+    green_spice: new Decimal(5),
     green_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -96,11 +96,11 @@ let game = {
         new Decimal(0),
     ],
     green_spice_price: [
-        new Decimal(20),
-        new Decimal(2500),
-        new Decimal(2000000),
-        new Decimal(1 * 10 ** 11),
-        new Decimal(6 * 10 ** 16),
+        new Decimal(5),
+        new Decimal(600),
+        new Decimal(500000),
+        new Decimal(3 * 10 ** 10),
+        new Decimal(3.5 * 10 ** 16),
         new Decimal(3.5 * 10 ** 24),
     ],
     green_spice_bought: [0, 0, 0, 0, 0, 0],
@@ -122,9 +122,9 @@ let game = {
     ],
 
     green_strengthener: 0,
-    green_strengthener_price: new Decimal(4 * 10 ** 8),
+    green_strengthener_price: new Decimal(3.5 * 10 ** 7),
 
-    blue_spice: new Decimal(40),
+    blue_spice: new Decimal(5),
     blue_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -134,11 +134,11 @@ let game = {
         new Decimal(0),
     ],
     blue_spice_price: [
-        new Decimal(40),
-        new Decimal(10000),
-        new Decimal(1.5 * 10 ** 7),
-        new Decimal(2 * 10 ** 12),
-        new Decimal(2 * 10 ** 18),
+        new Decimal(5),
+        new Decimal(1000),
+        new Decimal(2000000),
+        new Decimal(2.5 * 10 ** 11),
+        new Decimal(8.5 * 10 ** 17),
         new Decimal(2.5 * 10 ** 26),
     ],
     blue_spice_bought: [0, 0, 0, 0, 0, 0],
@@ -160,9 +160,9 @@ let game = {
     ],
 
     blue_strengthener: 0,
-    blue_strengthener_price: new Decimal(8 * 10 ** 9),
+    blue_strengthener_price: new Decimal(2 * 10 ** 8),
 
-    pink_spice: new Decimal(80),
+    pink_spice: new Decimal(5),
     pink_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -172,11 +172,11 @@ let game = {
         new Decimal(0),
     ],
     pink_spice_price: [
-        new Decimal(80),
-        new Decimal(40000),
-        new Decimal(1 * 10 ** 8),
-        new Decimal(3 * 10 ** 13),
-        new Decimal(6.5 * 10 ** 19),
+        new Decimal(5),
+        new Decimal(2500),
+        new Decimal(4000000),
+        new Decimal(2 * 10 ** 12),
+        new Decimal(2 * 10 ** 19),
         new Decimal(1.5 * 10 ** 28),
     ],
     pink_spice_bought: [0, 0, 0, 0, 0, 0],
@@ -198,14 +198,14 @@ let game = {
     ],
 
     pink_strengthener: 0,
-    pink_strengthener_price: new Decimal(1.6 * 10 ** 11),
+    pink_strengthener_price: new Decimal(1.5 * 10 ** 9),
 
     total_spice: new Decimal(5),
     total_time_played: 0,
 
     color_boosts: 0,
     tab: 0,
-    subtab: [0, 0, 0],
+    subtab: [0, 0, 0, 0],
     autosp_toggle: new Array(5).fill(false),
     autocb_toggle: false,
 
@@ -261,7 +261,31 @@ let game = {
 
     autopr_toggle: false,
     autopr_mode: 0,
-    autopr_goal: [10, new Decimal(1)],
+    autopr_goal: [10, new Decimal(1), 30],
+    autopr_delta: [5, new Decimal(10)],
+    autopr_goal2: [0, new Decimal(1)],
+
+    ascend: 0,
+    ansuz: 0,
+    rune: new Array(3).fill(0),
+    rune_power: new Array(3).fill(0),
+    total_rune_power: 0,
+    rune_boost: [new Decimal(1), new Decimal(1), new Decimal(1)],
+    distribute_unlocked: false,
+
+    ascend_confirm: true,
+
+    ascend_bought: new Array(13).fill(false),
+    autoup_toggle: false,
+    autocr_toggle: false,
+
+    autoas_toggle: false,
+    autoas_goal: 1,
+
+    ascend_amount_history: new Array(10).fill(-1),
+    ascend_time_history: new Array(10).fill(-1),
+
+    ascend_time_played: 0,
 }
 
 function format_small(num) {
@@ -277,6 +301,9 @@ function format_small(num) {
 //initialize map
 const spice_map = new Map()
 const prestige_map = new Map()
+const ascension_map = new Map()
+const ascension_map2 = new Map()
+const ascension_map3 = new Map()
 
 //spice generator class
 class spice_gen {
@@ -399,32 +426,32 @@ new spice_gen("red", 3, new Decimal(4.5 * 10 ** 8), "agency", "agencies")
 new spice_gen("red", 4, new Decimal(6 * 10 ** 13), "planet", "planets")
 new spice_gen("red", 5, new Decimal(9 * 10 ** 20), "galaxy", "galaxies")
 //yellow
-new spice_gen("yellow", 0, new Decimal(10), "harvester", "harvesters")
-new spice_gen("yellow", 1, new Decimal(600), "machine", "machines")
-new spice_gen("yellow", 2, new Decimal(250000), "factory", "factories")
-new spice_gen("yellow", 3, new Decimal(7 * 10 ** 9), "agency", "agencies")
-new spice_gen("yellow", 4, new Decimal(2 * 10 ** 15), "planet", "planets")
+new spice_gen("yellow", 0, new Decimal(5), "harvester", "harvesters")
+new spice_gen("yellow", 1, new Decimal(300), "machine", "machines")
+new spice_gen("yellow", 2, new Decimal(100000), "factory", "factories")
+new spice_gen("yellow", 3, new Decimal(3.5 * 10 ** 9), "agency", "agencies")
+new spice_gen("yellow", 4, new Decimal(1.5 * 10 ** 15), "planet", "planets")
 new spice_gen("yellow", 5, new Decimal(6 * 10 ** 22), "galaxy", "galaxies")
 //green
-new spice_gen("green", 0, new Decimal(20), "harvester", "harvesters")
-new spice_gen("green", 1, new Decimal(2500), "machine", "machines")
-new spice_gen("green", 2, new Decimal(2000000), "factory", "factories")
-new spice_gen("green", 3, new Decimal(1 * 10 ** 11), "agency", "agencies")
-new spice_gen("green", 4, new Decimal(6 * 10 ** 16), "planet", "planets")
+new spice_gen("green", 0, new Decimal(5), "harvester", "harvesters")
+new spice_gen("green", 1, new Decimal(600), "machine", "machines")
+new spice_gen("green", 2, new Decimal(500000), "factory", "factories")
+new spice_gen("green", 3, new Decimal(3 * 10 ** 10), "agency", "agencies")
+new spice_gen("green", 4, new Decimal(3.5 * 10 ** 16), "planet", "planets")
 new spice_gen("green", 5, new Decimal(3.5 * 10 ** 24), "galaxy", "galaxies")
 //blue
-new spice_gen("blue", 0, new Decimal(40), "harvester", "harvesters")
-new spice_gen("blue", 1, new Decimal(10000), "machine", "machines")
-new spice_gen("blue", 2, new Decimal(1.5 * 10 ** 7), "factory", "factories")
-new spice_gen("blue", 3, new Decimal(2 * 10 ** 12), "agency", "agencies")
-new spice_gen("blue", 4, new Decimal(2 * 10 ** 18), "planet", "planets")
+new spice_gen("blue", 0, new Decimal(5), "harvester", "harvesters")
+new spice_gen("blue", 1, new Decimal(1000), "machine", "machines")
+new spice_gen("blue", 2, new Decimal(2000000), "factory", "factories")
+new spice_gen("blue", 3, new Decimal(2.5 * 10 ** 11), "agency", "agencies")
+new spice_gen("blue", 4, new Decimal(8.5 * 10 ** 17), "planet", "planets")
 new spice_gen("blue", 5, new Decimal(2.5 * 10 ** 26), "galaxy", "galaxies")
 //pink
-new spice_gen("pink", 0, new Decimal(80), "harvester", "harvesters")
-new spice_gen("pink", 1, new Decimal(40000), "machine", "machines")
-new spice_gen("pink", 2, new Decimal(1 * 10 ** 8), "factory", "factories")
-new spice_gen("pink", 3, new Decimal(3 * 10 ** 13), "agency", "agencies")
-new spice_gen("pink", 4, new Decimal(6.5 * 10 ** 19), "planet", "planets")
+new spice_gen("pink", 0, new Decimal(5), "harvester", "harvesters")
+new spice_gen("pink", 1, new Decimal(2500), "machine", "machines")
+new spice_gen("pink", 2, new Decimal(8000000), "factory", "factories")
+new spice_gen("pink", 3, new Decimal(2 * 10 ** 12), "agency", "agencies")
+new spice_gen("pink", 4, new Decimal(2 * 10 ** 19), "planet", "planets")
 new spice_gen("pink", 5, new Decimal(1.5 * 10 ** 28), "galaxy", "galaxies")
 //crystal
 new spice_gen("crystal", 0, Decimal.pow(2, 56), "furnace", "furnaces")
@@ -449,7 +476,7 @@ class prestige_upgrade {
     price
     max
 
-    //generator constructor
+    //upgrade constructor
     constructor(desc, price, max) {
         this.desc = desc
         this.id = prestige_upgrade.upgrades.length
@@ -466,7 +493,7 @@ class prestige_upgrade {
             buy_prestige_upgrade(this.id)
         })
 
-        //attaching generator to spice page
+        //attaching upgrade to prestige upgrades page
         prestige_map.set(this, button)
         if (this.id <= 12)
             document
@@ -498,7 +525,7 @@ new prestige_upgrade("Boost from buying 10 is squared", new Decimal(4), 4)
 new prestige_upgrade("You start with 1 color shift", new Decimal(8), 4)
 //[5]
 new prestige_upgrade(
-    "Strengtheners also boost the next color<br>(1.00x -> 1.20x)",
+    "Strengtheners boost the next color more<br>(1.05x -> 1.20x)",
     new Decimal(16),
     5
 )
@@ -580,7 +607,7 @@ new prestige_upgrade(
 )
 //[20]
 new prestige_upgrade(
-    "You get 4 free crystal infusions",
+    "You get 12 free crystal infusions",
     new Decimal(2).pow(214),
     12
 )
@@ -609,5 +636,190 @@ new prestige_upgrade(
     1
 )
 //[25]
-new prestige_upgrade("Coming soon...", new Decimal(2).pow(1024), 1)
+new prestige_upgrade("Unlocks Ascension", new Decimal(2).pow(1024), 1)
 //done initializing prestige upgrades
+
+//setting up lines between ascension upgrades
+function get_offset(element) {
+    let rect = element.getBoundingClientRect()
+    return {
+        left: rect.left + window.pageXOffset,
+        top: rect.top + window.pageYOffset,
+        width: rect.width || element.offsetWidth,
+        height: rect.height || element.offsetHeight,
+    }
+}
+
+//ascension upgrade class
+class ascension_upgrade {
+    static upgrades = []
+
+    desc
+    price
+    req
+    req2
+    x
+    y
+
+    //upgrade constructor
+    constructor(desc, price, req, req2, x, y) {
+        this.desc = desc
+        this.id = ascension_upgrade.upgrades.length
+        this.price = price
+        this.req = req
+        this.req2 = req2
+
+        ascension_upgrade.upgrades.push(this)
+
+        //ascension upgrade button
+        let button = document.createElement("BUTTON")
+        button.innerHTML = this.desc + '<br><span class="bold">---</span>'
+        button.className = "ascension_upgrade a_locked"
+        button.style.left = "calc(50% - 8.5em + " + x + ")"
+        button.style.top = "calc(15em + " + y + ")"
+        button.addEventListener("click", () => {
+            buy_ascension_upgrade(this.id)
+        })
+
+        //attaching upgrade to ascension upgrades page
+        ascension_map.set(this, button)
+        document.getElementById("ascension_upgrade_screen").appendChild(button)
+
+        //lines behind ascension upgrades
+        if (req !== undefined) {
+            let line = document.createElement("DIV")
+            line.className = "ascension_line"
+
+            ascension_map2.set(this, line)
+            document.getElementById("ascension_upgrade_lines").appendChild(line)
+        }
+
+        if (req2 !== undefined) {
+            let line = document.createElement("DIV")
+            line.className = "ascension_line"
+
+            ascension_map3.set(this, line)
+            document.getElementById("ascension_upgrade_lines").appendChild(line)
+        }
+    }
+}
+
+//initializing ascension upgrades
+//[0]
+new ascension_upgrade(
+    "The boost from red spice amount is 50% stronger",
+    1,
+    undefined,
+    undefined,
+    "0em",
+    "0em"
+)
+//[1]
+new ascension_upgrade(
+    "The boost from Times Prestiged stat is stronger",
+    3,
+    0,
+    undefined,
+    "0em",
+    "12em"
+)
+//[2]
+new ascension_upgrade(
+    "Increase boost from strengtheners/boosts<br>(2.00x -> 4.00x)",
+    6,
+    1,
+    undefined,
+    "0em",
+    "24em"
+)
+//[3]
+new ascension_upgrade(
+    "Quality of life Prestige upgrades are not reset by Ascension",
+    10,
+    2,
+    undefined,
+    "0em",
+    "36em"
+)
+//[4]
+new ascension_upgrade(
+    "Crystallized spice generator multipliers are stronger",
+    24,
+    3,
+    undefined,
+    "10em",
+    "48em"
+)
+//[5]
+new ascension_upgrade(
+    "You get twice as many free crystal infusions",
+    100,
+    4,
+    undefined,
+    "10em",
+    "60em"
+)
+//[6]
+new ascension_upgrade(
+    "Crystal infusions boost crystallized spice production 1.12x",
+    300,
+    5,
+    undefined,
+    "10em",
+    "72em"
+)
+//[7]
+new ascension_upgrade(
+    "Crystal infusions are 10% stronger",
+    800,
+    6,
+    undefined,
+    "20em",
+    "84em"
+)
+//[8]
+new ascension_upgrade(
+    "Unlocks automation for Prestige upgrades",
+    15,
+    3,
+    undefined,
+    "-10em",
+    "48em"
+)
+//[9]
+new ascension_upgrade(
+    "Unlocks more options for Prestige automation",
+    30,
+    8,
+    undefined,
+    "-10em",
+    "60em"
+)
+//[10]
+new ascension_upgrade(
+    "Unlocks automation for crystallized spice",
+    60,
+    9,
+    undefined,
+    "-10em",
+    "72em"
+)
+//[11]
+new ascension_upgrade(
+    "Strengtheners are 2x stronger",
+    500,
+    10,
+    undefined,
+    "-20em",
+    "84em"
+)
+//[12]
+new ascension_upgrade(
+    "Unlocks automation for Ascension",
+    100,
+    6,
+    10,
+    "0em",
+    "84em"
+)
+//done initializing ascension upgrades
