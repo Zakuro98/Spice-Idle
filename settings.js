@@ -10,33 +10,53 @@ function goto_tab(id) {
             document.getElementById("crystal_page").style.display = "none"
             document.getElementById("crystal_page2").style.display = "none"
             document.getElementById("prestige_tabs").style.display = "none"
+            document.getElementById("ascension_page").style.display = "none"
+            document.getElementById("ascension_page2").style.display = "none"
+            document.getElementById("ascension_tabs").style.display = "none"
             document.getElementById("statistics_page").style.display = "none"
             document.getElementById("prestige_statistics_page").style.display =
+                "none"
+            document.getElementById("ascension_statistics_page").style.display =
                 "none"
             document.getElementById("statistics_tabs").style.display = "none"
             document.getElementById("settings_page").style.display = "none"
 
             document.getElementById("spices").className = "tab selected"
-            if (game.color_boosts >= 10 || game.prestige >= 1)
+            if (
+                game.color_boosts >= 10 ||
+                game.prestige >= 1 ||
+                game.ascend >= 1
+            )
                 document.getElementById("prestige").className = "tab unlocked"
             else document.getElementById("prestige").className = "tab locked"
+            if (game.prestige_bought[25])
+                document.getElementById("ascension").className = "tab unlocked"
+            else document.getElementById("ascension").className = "tab locked"
             document.getElementById("statistics").className = "tab unlocked"
             document.getElementById("settings").className = "tab unlocked"
             break
         case 1:
-            if (game.color_boosts >= 10 || game.prestige >= 1) {
+            if (
+                game.color_boosts >= 10 ||
+                game.prestige >= 1 ||
+                game.ascend >= 1
+            ) {
                 game.tab = id
 
-                document.getElementById("prestige_page").style.display = "none"
-                document.getElementById("crystal_page").style.display = "none"
-                document.getElementById("crystal_page2").style.display = "none"
                 goto_subtab(game.subtab[1])
                 document.getElementById("spices_page").style.display = "none"
                 document.getElementById("spices_tabs").style.display = "none"
+                document.getElementById("ascension_page").style.display = "none"
+                document.getElementById("ascension_page2").style.display =
+                    "none"
+                document.getElementById("ascension_tabs").style.display = "none"
                 document.getElementById("statistics_page").style.display =
                     "none"
                 document.getElementById(
                     "prestige_statistics_page"
+                ).style.display = "none"
+                document.getElementById(
+                    "ascension_statistics_page"
                 ).style.display = "none"
                 document.getElementById("statistics_tabs").style.display =
                     "none"
@@ -44,6 +64,51 @@ function goto_tab(id) {
 
                 document.getElementById("prestige").className = "tab selected"
                 document.getElementById("spices").className = "tab unlocked"
+                if (game.prestige_bought[25])
+                    document.getElementById("ascension").className =
+                        "tab unlocked"
+                else
+                    document.getElementById("ascension").className =
+                        "tab locked"
+                document.getElementById("statistics").className = "tab unlocked"
+                document.getElementById("settings").className = "tab unlocked"
+            }
+            break
+        case 2:
+            if (game.prestige_bought[25]) {
+                game.tab = id
+
+                goto_subtab(game.subtab[3])
+                document.getElementById("ascension_tabs").style.display = "flex"
+                document.getElementById("spices_page").style.display = "none"
+                document.getElementById("spices_tabs").style.display = "none"
+                document.getElementById("prestige_page").style.display = "none"
+                document.getElementById("crystal_page").style.display = "none"
+                document.getElementById("crystal_page2").style.display = "none"
+                document.getElementById("prestige_tabs").style.display = "none"
+                document.getElementById("statistics_page").style.display =
+                    "none"
+                document.getElementById(
+                    "prestige_statistics_page"
+                ).style.display = "none"
+                document.getElementById(
+                    "ascension_statistics_page"
+                ).style.display = "none"
+                document.getElementById("statistics_tabs").style.display =
+                    "none"
+                document.getElementById("settings_page").style.display = "none"
+
+                document.getElementById("ascension").className = "tab selected"
+                document.getElementById("spices").className = "tab unlocked"
+                if (
+                    game.color_boosts >= 10 ||
+                    game.prestige >= 1 ||
+                    game.ascend >= 1
+                )
+                    document.getElementById("prestige").className =
+                        "tab unlocked"
+                else
+                    document.getElementById("prestige").className = "tab locked"
                 document.getElementById("statistics").className = "tab unlocked"
                 document.getElementById("settings").className = "tab unlocked"
             }
@@ -58,13 +123,23 @@ function goto_tab(id) {
             document.getElementById("crystal_page").style.display = "none"
             document.getElementById("crystal_page2").style.display = "none"
             document.getElementById("prestige_tabs").style.display = "none"
+            document.getElementById("ascension_page").style.display = "none"
+            document.getElementById("ascension_page2").style.display = "none"
+            document.getElementById("ascension_tabs").style.display = "none"
             document.getElementById("settings_page").style.display = "none"
 
             document.getElementById("statistics").className = "tab selected"
             document.getElementById("spices").className = "tab unlocked"
-            if (game.color_boosts >= 10 || game.prestige >= 1)
+            if (
+                game.color_boosts >= 10 ||
+                game.prestige >= 1 ||
+                game.ascend >= 1
+            )
                 document.getElementById("prestige").className = "tab unlocked"
             else document.getElementById("prestige").className = "tab locked"
+            if (game.prestige_bought[25])
+                document.getElementById("ascension").className = "tab unlocked"
+            else document.getElementById("ascension").className = "tab locked"
             document.getElementById("settings").className = "tab unlocked"
             break
         case 6:
@@ -77,16 +152,28 @@ function goto_tab(id) {
             document.getElementById("crystal_page").style.display = "none"
             document.getElementById("crystal_page2").style.display = "none"
             document.getElementById("prestige_tabs").style.display = "none"
+            document.getElementById("ascension_page").style.display = "none"
+            document.getElementById("ascension_page2").style.display = "none"
+            document.getElementById("ascension_tabs").style.display = "none"
             document.getElementById("statistics_page").style.display = "none"
             document.getElementById("prestige_statistics_page").style.display =
+                "none"
+            document.getElementById("ascension_statistics_page").style.display =
                 "none"
             document.getElementById("statistics_tabs").style.display = "none"
 
             document.getElementById("settings").className = "tab selected"
             document.getElementById("spices").className = "tab unlocked"
-            if (game.color_boosts >= 10 || game.prestige >= 1)
+            if (
+                game.color_boosts >= 10 ||
+                game.prestige >= 1 ||
+                game.ascend >= 1
+            )
                 document.getElementById("prestige").className = "tab unlocked"
             else document.getElementById("prestige").className = "tab locked"
+            if (game.prestige_bought[25])
+                document.getElementById("ascension").className = "tab unlocked"
+            else document.getElementById("ascension").className = "tab locked"
             document.getElementById("statistics").className = "tab unlocked"
             break
     }
@@ -265,11 +352,37 @@ function goto_subtab(id) {
                     "subtab unlocked"
                 break
         }
+    } else if (game.tab === 2) {
+        game.subtab[3] = id
+
+        document.getElementById("ascension_page").style.display = "none"
+        document.getElementById("ascension_page2").style.display = "none"
+
+        switch (id) {
+            case 0:
+                document.getElementById("ascension_page").style.display =
+                    "block"
+
+                document.getElementById("runes").className = "subtab selected"
+                document.getElementById("ascension_upgrades").className =
+                    "subtab unlocked"
+                break
+            case 1:
+                document.getElementById("ascension_page2").style.display =
+                    "block"
+
+                document.getElementById("ascension_upgrades").className =
+                    "subtab selected"
+                document.getElementById("runes").className = "subtab unlocked"
+                break
+        }
     } else if (game.tab === 5) {
         game.subtab[2] = id
 
         document.getElementById("statistics_page").style.display = "none"
         document.getElementById("prestige_statistics_page").style.display =
+            "none"
+        document.getElementById("ascension_statistics_page").style.display =
             "none"
 
         switch (id) {
@@ -281,6 +394,12 @@ function goto_subtab(id) {
                     "subtab selected"
                 document.getElementById("past_prestiges").className =
                     "subtab unlocked"
+                if (game.ascend >= 1)
+                    document.getElementById("past_ascensions").className =
+                        "subtab unlocked"
+                else
+                    document.getElementById("past_ascensions").className =
+                        "subtab locked"
                 break
             case 1:
                 document.getElementById(
@@ -291,6 +410,26 @@ function goto_subtab(id) {
                     "subtab selected"
                 document.getElementById("statistics_subtab").className =
                     "subtab unlocked"
+                if (game.ascend >= 1)
+                    document.getElementById("past_ascensions").className =
+                        "subtab unlocked"
+                else
+                    document.getElementById("past_ascensions").className =
+                        "subtab locked"
+                break
+            case 2:
+                if (game.ascend >= 1) {
+                    document.getElementById(
+                        "ascension_statistics_page"
+                    ).style.display = "block"
+
+                    document.getElementById("past_ascensions").className =
+                        "subtab selected"
+                    document.getElementById("statistics_subtab").className =
+                        "subtab unlocked"
+                    document.getElementById("past_prestiges").className =
+                        "subtab unlocked"
+                }
                 break
         }
     }
@@ -372,5 +511,22 @@ function condensed() {
         game.condensed = true
         document.getElementById("condensed").innerHTML =
             "Condensed Generators<br>ENABLED"
+    }
+}
+//toggle various confirmations
+function confirmations(type, ignore) {
+    switch (type) {
+        case "ascend":
+            if (game.ascend_confirm) {
+                game.ascend_confirm = false
+                document.getElementById("ascend_confirm").innerHTML =
+                    "Ascension Confirmations<br>DISABLED"
+            } else {
+                game.ascend_confirm = true
+                if (game.autoas_toggle && !ignore) auto_toggle("ascend")
+                document.getElementById("ascend_confirm").innerHTML =
+                    "Ascension Confirmations<br>ENABLED"
+            }
+            break
     }
 }
