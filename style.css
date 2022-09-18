@@ -1,5 +1,10 @@
 .root {
     --rainbow_spice: #ff0000;
+    --ascension: #00d9ff;
+    --ascension2: #80ecff;
+    --ascension3: #05282e;
+    --ascension4: #0a505c;
+    --ascension5: #087d91;
 }
 
 html {
@@ -74,11 +79,16 @@ main {
     margin-bottom: 1.5em;
 }
 
-#color_shift_button, #crystal_buy_i {
+#color_shift_button {
+    display: inline;
+    margin-left: 2em;
+}
+
+#crystal_buy_i {
     display: inline;
 }
 
-#statistics_page, #yellow_page, #green_page, #blue_page, #pink_page, #prestige_page, #crystal_page, #crystal_page2, #settings_page  {
+#statistics_page, #yellow_page, #green_page, #blue_page, #pink_page, #prestige_page, #crystal_page, #crystal_page2, #ascension_page, #ascension_page2, #settings_page {
     display: none;
 }
 
@@ -158,6 +168,13 @@ main {
     margin-left: 2em;
 }
 
+.center_button {
+    display: flex;
+    justify-content: center;
+    margin-top: 5em;
+    margin-bottom: 0.5em;
+}
+
 .spice_buy {
     padding: 0.2em 0.4em;
     background-color: #311936;
@@ -178,6 +195,43 @@ main {
     background-color: #571c66;
 }
 
+.noshift {
+    color: #9b9b9b;
+}
+
+.noshift:hover {
+    background-color: #311936;
+}
+
+.noshift:active {
+    background-color: #311936;
+}
+
+.shift1 {
+    color: #ffd107;
+    text-shadow: 0 0 0.2em #ffd107;
+}
+
+.shift2 {
+    color: #25dd8a;
+    text-shadow: 0 0 0.2em #25dd8a;
+}
+
+.shift3 {
+    color: #0072ff;
+    text-shadow: 0 0 0.2em #0072ff;
+}
+
+.shift4 {
+    color: #ff3dd8;
+    text-shadow: 0 0 0.2em #ff3dd8;
+}
+
+.boost {
+    color: var(--rainbow_spice);
+    text-shadow: 0 0 0.2em var(--rainbow_spice);
+}
+
 .max_all {
     font-size: 1.25em;
 }
@@ -194,6 +248,11 @@ main {
 
 #boost_auto, #infusion_auto, #prestige_auto_toggle {
     font-size: 1em;
+}
+
+#ascend_auto_toggle {
+    font-size: 1em;
+    margin-right: 0em;
 }
 
 .red_spice{
@@ -306,7 +365,6 @@ main {
     width: 64.8em;
     height: 27em;
     margin-left: calc(50% - 32.4em);
-    margin-top: 5em;
     margin-bottom: 18.5em;
 }
 
@@ -316,7 +374,6 @@ main {
     width: 64.8em;
     height: 27em;
     margin-left: calc(50% - 32.4em);
-    margin-top: 5em;
     margin-bottom: 18.5em;
 }
 
@@ -459,7 +516,7 @@ main {
     margin-bottom: 3.5em;
 }
 
-#prestige_auto_buttons {
+#prestige_auto_buttons, #ascend_auto_buttons {
     display: flex;
     justify-content: right;
     margin-top: -0.5em;
@@ -469,10 +526,14 @@ main {
     margin-right: 0em;
 }
 
-#prestige_boosts, #prestige_spice {
+#prestige_boosts, #prestige_spice, #prestige_time, #prestige_boosts_delta, #prestige_spice_delta, #ascend_runes {
     display: flex;
     justify-content: right;
     margin-top: 0.25em;
+}
+
+#upgrade_auto_toggle, #upgrade_auto_toggle2 {
+    margin-right: 0em;
 }
 
 .p_auto_text {
@@ -498,6 +559,195 @@ main {
     display: inline;
 }
 
+.ascension_header {
+    display: flex;
+}
+
+.ansuz_panel {
+    flex-grow: 1;
+}
+
+.ansuz_num {
+    font-size: 4em;
+    font-weight: 700;
+    color: white;
+    margin-top: -0.15em;
+    margin-bottom: 0em;
+}
+
+.ansuz_text {
+    font-size: 2em;
+    font-weight: 700;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.ascension_panel {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.ascend_text {
+    font-size: 1.25em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    text-align: right;
+}
+
+#ascend_req {
+    color: grey;
+}
+
+.ascend_button {
+    padding: 0.4em 0.6em;
+    font-family: "Fira Code";
+    font-size: 2em;
+    font-weight: 400;
+    margin-left: 0.4em;
+    flex-grow: 0;
+}
+
+.a_locked {
+    background-color: black;
+    color: var(--ascension);
+    border: 1px solid var(--ascension);
+}
+
+.a_unlocked {
+    background-color: var(--ascension3);
+    color: var(--ascension2);
+    text-shadow: 0 0 0.2em var(--ascension);
+    border: 1px solid var(--ascension2);
+    box-shadow: 0 0 0.3em var(--ascension), 0 0 1em var(--ascension) inset;
+}
+
+.a_unlocked:hover {
+    background-color: var(--ascension4);
+    color: white;
+    text-shadow: 0 0 0.1em white, 0 0 0.2em var(--ascension);
+    border: 1px solid var(--ascension2);
+    box-shadow: 0 0 0.3em var(--ascension), 0 0 1em var(--ascension) inset;
+}
+
+.a_unlocked:active {
+    background-color: var(--ascension);
+    color: black;
+    text-shadow: none;
+    border: 1px solid var(--ascension);
+    box-shadow: 0 0 0.4em var(--ascension);
+}
+
+.a_unlocked2 {
+    background-color: var(--ascension3);
+    color: var(--ascension2);
+    text-shadow: 0 0 0.2em var(--ascension);
+    border: 1px solid var(--ascension2);
+    box-shadow: 0 0 0.6em var(--ascension), 0 0 2em var(--ascension) inset;
+}
+
+.a_unlocked2:hover {
+    background-color: var(--ascension4);
+    color: white;
+    text-shadow: 0 0 0.1em white, 0 0 0.2em var(--ascension);
+    border: 1px solid var(--ascension2);
+    box-shadow: 0 0 0.6em var(--ascension), 0 0 2em var(--ascension) inset;
+}
+
+.a_unlocked2:active {
+    background-color: var(--ascension);
+    color: black;
+    text-shadow: none;
+    border: 1px solid var(--ascension);
+    box-shadow: 0 0 0.8em var(--ascension);
+}
+
+.a_bought {
+    background-color: var(--ascension);
+    color: black;
+    text-shadow: none;
+    border: 1px solid var(--ascension);
+    box-shadow: 0 0 0.8em var(--ascension);
+}
+
+.runes {
+    color: var(--ascension2);
+    text-shadow: 0 0 0.2em var(--ascension);
+}
+
+.rune_panel {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.rune_header {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.rune_text {
+    color: white;
+    font-size: 1.25em;
+    margin-top: 0.1em;
+    margin-bottom: 0.6em;
+    margin-left: 1.5em;
+}
+
+.rune_menu {
+    display: flex;
+    flex-direction: row;
+    margin-left: 2em;
+}
+
+.rune_control {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5em;
+    margin-bottom: 0em;
+}
+
+#distribute_buttons {
+    margin-top: 0.5em;
+    margin-bottom: 3em;
+}
+
+.rune_button {
+    font-size: 1.25em;
+    font-family: "Fira Code";
+    margin-right: 0.5em;
+}
+
+#ascension_upgrade_screen {
+    height: 76em;
+}
+
+.ascension_upgrade {
+    padding: 0.5em 0.5em;
+    font-family: "Fira Code";
+    font-size: 0.9em;
+    font-weight: 400;
+    width: 17em;
+    height: 9em;
+    position: absolute;
+    left: calc(50% - 8.5em);
+    top: 0em;
+}
+
+.ascension_line {
+    padding: 0em;
+    margin: 0em;
+    background-color: var(--ascension5);
+    line-height: 1px;
+    position: absolute;
+    height: 2em;
+}
+
 .statistics_text {
     font-size: 1.333em;
     font-weight: 400;
@@ -509,6 +759,10 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+#settings_block2 {
+    margin-top: 0.6em;
 }
 
 #save_block {
