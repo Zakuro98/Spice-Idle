@@ -1,6 +1,6 @@
 //updating whether tabs are available
 function tabs_update() {
-    if (game.color_boosts >= 10 || game.prestige >= 1) {
+    if (game.color_boosts >= 10 || game.prestige >= 1 || game.ascend >= 1) {
         if (game.tab === 1)
             document.getElementById("prestige").className = "tab selected"
         else document.getElementById("prestige").className = "tab unlocked"
@@ -8,6 +8,16 @@ function tabs_update() {
     } else {
         document.getElementById("prestige").className = "tab locked"
         document.getElementById("prestige").innerHTML = "LOCKED"
+    }
+
+    if (game.prestige_bought[25]) {
+        if (game.tab === 2)
+            document.getElementById("ascension").className = "tab selected"
+        else document.getElementById("ascension").className = "tab unlocked"
+        document.getElementById("ascension").innerHTML = "ASCENSION"
+    } else {
+        document.getElementById("ascension").className = "tab locked"
+        document.getElementById("ascension").innerHTML = "LOCKED"
     }
 }
 
@@ -22,18 +32,36 @@ function spice_update() {
             game.notation
         ) +
         " g red spice/sec"
-    if (game.prestige_bought[11] >= 1)
-        document.getElementById("red_spice_up").innerHTML =
-            "+" +
-            format_infdec(
-                game.red_spice_gen[0]
-                    .floor()
-                    .mul(game.total_red_spice_boost[0]),
-                game.notation
-            ) +
-            " g red spice/sec<br>Your red spice is boosting yellow, green, blue, & pink spice production " +
-            format_infdec(game.red_spice.pow(0.005).add(1), game.notation) +
-            "x"
+    if (game.prestige_bought[11] >= 1) {
+        if (game.ascend_bought[0]) {
+            document.getElementById("red_spice_up").innerHTML =
+                "+" +
+                format_infdec(
+                    game.red_spice_gen[0]
+                        .floor()
+                        .mul(game.total_red_spice_boost[0]),
+                    game.notation
+                ) +
+                " g red spice/sec<br>Your red spice is boosting yellow, green, blue, & pink spice production " +
+                format_infdec(
+                    game.red_spice.pow(0.0075).add(1),
+                    game.notation
+                ) +
+                "x"
+        } else {
+            document.getElementById("red_spice_up").innerHTML =
+                "+" +
+                format_infdec(
+                    game.red_spice_gen[0]
+                        .floor()
+                        .mul(game.total_red_spice_boost[0]),
+                    game.notation
+                ) +
+                " g red spice/sec<br>Your red spice is boosting yellow, green, blue, & pink spice production " +
+                format_infdec(game.red_spice.pow(0.005).add(1), game.notation) +
+                "x"
+        }
+    }
 
     document.getElementById("yellow_spice_num").innerHTML =
         format_infdec(game.yellow_spice, game.notation) + " g"
@@ -738,8 +766,10 @@ function spice_update() {
             " red spice strengtheners,<br>boosting all red spice generators " +
             format_infdec(
                 Decimal.pow(
-                    2 + 0.2 * game.prestige_bought[2],
-                    game.red_strengthener
+                    2 +
+                        0.2 * game.prestige_bought[2] +
+                        2 * game.ascend_bought[2],
+                    game.red_strengthener * (1 + game.ascend_bought[11])
                 ),
                 game.notation
             ) +
@@ -750,11 +780,14 @@ function spice_update() {
                 format_small(game.red_strengthener) +
                 " red spice strengtheners,<br>boosting all red spice generators " +
                 format_infdec(
-                    Decimal.pow(6, game.red_strengthener),
+                    Decimal.pow(
+                        6 + 2 * game.ascend_bought[2],
+                        game.red_strengthener * (1 + game.ascend_bought[11])
+                    ),
                     game.notation
                 ) +
                 "x"
-        if (game.prestige_bought[5] >= 1)
+        if (game.prestige_bought[5] >= 1 && game.color_boosts >= 1)
             s_str +=
                 ",<br>boosting all yellow spice generators " +
                 format_infdec(
@@ -762,6 +795,14 @@ function spice_update() {
                         1 + 0.2 * game.prestige_bought[5],
                         game.red_strengthener
                     ),
+                    game.notation
+                ) +
+                "x"
+        else if (game.color_boosts >= 1)
+            s_str +=
+                ",<br>boosting all yellow spice generators " +
+                format_infdec(
+                    Decimal.pow(1.05, game.red_strengthener),
                     game.notation
                 ) +
                 "x"
@@ -789,9 +830,11 @@ function spice_update() {
             format_small(game.yellow_strengthener) +
             " yellow spice strengtheners,<br>boosting all red & yellow spice generators " +
             format_infdec(
-                new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
-                    game.yellow_strengthener
-                ),
+                new Decimal(
+                    2 +
+                        0.2 * game.prestige_bought[2] +
+                        2 * game.ascend_bought[2]
+                ).pow(game.yellow_strengthener * (1 + game.ascend_bought[11])),
                 game.notation
             ) +
             "x"
@@ -801,7 +844,9 @@ function spice_update() {
                 format_small(game.yellow_strengthener) +
                 " yellow spice strengtheners,<br>boosting all red & yellow spice generators " +
                 format_infdec(
-                    new Decimal(6).pow(game.yellow_strengthener),
+                    new Decimal(6 + 2 * game.ascend_bought[2]).pow(
+                        game.yellow_strengthener * (1 + game.ascend_bought[11])
+                    ),
                     game.notation
                 ) +
                 "x"
@@ -812,6 +857,14 @@ function spice_update() {
                     new Decimal(1 + 0.2 * game.prestige_bought[5]).pow(
                         game.yellow_strengthener
                     ),
+                    game.notation
+                ) +
+                "x"
+        else if (game.color_boosts >= 2)
+            s_str +=
+                ",<br>boosting all green spice generators " +
+                format_infdec(
+                    new Decimal(1.05).pow(game.yellow_strengthener),
                     game.notation
                 ) +
                 "x"
@@ -838,9 +891,11 @@ function spice_update() {
             format_small(game.green_strengthener) +
             " green spice strengtheners,<br>boosting all red, yellow & green spice generators " +
             format_infdec(
-                new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
-                    game.green_strengthener
-                ),
+                new Decimal(
+                    2 +
+                        0.2 * game.prestige_bought[2] +
+                        2 * game.ascend_bought[2]
+                ).pow(game.green_strengthener * (1 + game.ascend_bought[11])),
                 game.notation
             ) +
             "x"
@@ -850,7 +905,9 @@ function spice_update() {
                 format_small(game.green_strengthener) +
                 " green spice strengtheners,<br>boosting all red, yellow & green spice generators " +
                 format_infdec(
-                    new Decimal(6).pow(game.green_strengthener),
+                    new Decimal(6 + 2 * game.ascend_bought[2]).pow(
+                        game.green_strengthener * (1 + game.ascend_bought[11])
+                    ),
                     game.notation
                 ) +
                 "x"
@@ -861,6 +918,14 @@ function spice_update() {
                     new Decimal(1 + 0.2 * game.prestige_bought[5]).pow(
                         game.green_strengthener
                     ),
+                    game.notation
+                ) +
+                "x"
+        else if (game.color_boosts >= 3)
+            s_str +=
+                ",<br>boosting all blue spice generators " +
+                format_infdec(
+                    new Decimal(1.05).pow(game.green_strengthener),
                     game.notation
                 ) +
                 "x"
@@ -887,9 +952,11 @@ function spice_update() {
             format_small(game.blue_strengthener) +
             " blue spice strengtheners,<br>boosting all red, yellow, green & blue spice generators " +
             format_infdec(
-                new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
-                    game.blue_strengthener
-                ),
+                new Decimal(
+                    2 +
+                        0.2 * game.prestige_bought[2] +
+                        2 * game.ascend_bought[2]
+                ).pow(game.blue_strengthener * (1 + game.ascend_bought[11])),
                 game.notation
             ) +
             "x"
@@ -899,7 +966,9 @@ function spice_update() {
                 format_small(game.blue_strengthener) +
                 " blue spice strengtheners,<br>boosting all red, yellow, green & blue spice generators " +
                 format_infdec(
-                    new Decimal(6).pow(game.blue_strengthener),
+                    new Decimal(6 + 2 * game.ascend_bought[2]).pow(
+                        game.blue_strengthener * (1 + game.ascend_bought[11])
+                    ),
                     game.notation
                 ) +
                 "x"
@@ -910,6 +979,14 @@ function spice_update() {
                     new Decimal(1 + 0.2 * game.prestige_bought[5]).pow(
                         game.blue_strengthener
                     ),
+                    game.notation
+                ) +
+                "x"
+        else if (game.color_boosts >= 4)
+            s_str +=
+                ",<br>boosting all pink spice generators " +
+                format_infdec(
+                    new Decimal(1.05).pow(game.blue_strengthener),
                     game.notation
                 ) +
                 "x"
@@ -935,9 +1012,11 @@ function spice_update() {
             format_small(game.pink_strengthener) +
             " pink spice strengtheners,<br>boosting ALL spice generators " +
             format_infdec(
-                new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
-                    game.pink_strengthener
-                ),
+                new Decimal(
+                    2 +
+                        0.2 * game.prestige_bought[2] +
+                        2 * game.ascend_bought[2]
+                ).pow(game.pink_strengthener * (1 + game.ascend_bought[11])),
                 game.notation
             ) +
             "x"
@@ -947,7 +1026,9 @@ function spice_update() {
                 format_small(game.pink_strengthener) +
                 " pink spice strengtheners,<br>boosting ALL spice generators " +
                 format_infdec(
-                    new Decimal(6).pow(game.pink_strengthener),
+                    new Decimal(6 + 2 * game.ascend_bought[2]).pow(
+                        game.pink_strengthener * (1 + game.ascend_bought[11])
+                    ),
                     game.notation
                 ) +
                 "x"
@@ -967,7 +1048,8 @@ function spice_update() {
     if (
         game.red_spice_gen[5].cmp(10) >= 0 ||
         game.color_boosts >= 1 ||
-        game.prestige >= 1
+        game.prestige >= 1 ||
+        game.ascend >= 1
     ) {
         document.getElementById("color_shift").style.display = "block"
         if (game.color_boosts < 4) {
@@ -978,9 +1060,11 @@ function spice_update() {
                 format_small(game.color_boosts) +
                 " color shifts,<br>boosting ALL spice generators " +
                 format_infdec(
-                    new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
-                        game.color_boosts
-                    ),
+                    new Decimal(
+                        2 +
+                            0.2 * game.prestige_bought[2] +
+                            2 * game.ascend_bought[2]
+                    ).pow(game.color_boosts),
                     game.notation
                 ) +
                 "x"
@@ -990,7 +1074,9 @@ function spice_update() {
                     format_small(game.color_boosts) +
                     " color shifts,<br>boosting ALL spice generators " +
                     format_infdec(
-                        new Decimal(6).pow(game.color_boosts),
+                        new Decimal(6 + 2 * game.ascend_bought[2]).pow(
+                            game.color_boosts
+                        ),
                         game.notation
                     ) +
                     "x"
@@ -1004,9 +1090,11 @@ function spice_update() {
                 format_small(game.color_boosts) +
                 " color boosts,<br>boosting ALL spice generators " +
                 format_infdec(
-                    new Decimal(2 + 0.2 * game.prestige_bought[2]).pow(
-                        game.color_boosts * 2 - 4
-                    ),
+                    new Decimal(
+                        2 +
+                            0.2 * game.prestige_bought[2] +
+                            2 * game.ascend_bought[2]
+                    ).pow(game.color_boosts * 2 - 4),
                     game.notation
                 ) +
                 "x"
@@ -1016,7 +1104,9 @@ function spice_update() {
                     format_small(game.color_boosts) +
                     " color boosts,<br>boosting ALL spice generators " +
                     format_infdec(
-                        new Decimal(6).pow(game.color_boosts * 2 - 4),
+                        new Decimal(6 + 2 * game.ascend_bought[2]).pow(
+                            game.color_boosts * 2 - 4
+                        ),
                         game.notation
                     ) +
                     "x"
@@ -1026,7 +1116,8 @@ function spice_update() {
         if (
             game.color_boosts >= 6 &&
             game.color_boosts < 10 &&
-            game.prestige === 0
+            game.prestige === 0 &&
+            game.ascend === 0
         )
             document.getElementById("color_shift_unlock").style.display =
                 "block"
@@ -1139,6 +1230,83 @@ function spice_update() {
         document.getElementById("color_shift").style.display = "none"
     }
 
+    let can_boost = false
+    switch (game.color_boosts) {
+        case 0:
+            if (game.red_spice_gen[5].cmp(50) >= 0) can_boost = true
+            break
+        case 1:
+            if (game.yellow_spice_gen[5].cmp(50) >= 0) can_boost = true
+            break
+        case 2:
+            if (game.green_spice_gen[5].cmp(50) >= 0) can_boost = true
+            break
+        case 3:
+            if (game.blue_spice_gen[5].cmp(50) >= 0) can_boost = true
+            break
+        default:
+            if (game.color_boosts <= 8) {
+                if (game.pink_spice_bought[5] >= game.color_boosts * 25 - 50)
+                    can_boost = true
+            } else if (game.color_boosts <= 29) {
+                if (game.pink_spice_bought[5] >= game.color_boosts * 50 - 250)
+                    can_boost = true
+            } else if (game.color_boosts <= 133) {
+                if (game.pink_spice_bought[5] >= game.color_boosts * 75 - 975)
+                    can_boost = true
+            } else if (game.color_boosts <= 223) {
+                if (game.pink_spice_bought[5] >= game.color_boosts * 100 - 4300)
+                    can_boost = true
+            } else if (game.color_boosts <= 523) {
+                if (
+                    game.pink_spice_bought[5] >=
+                    game.color_boosts * 150 - 15450
+                )
+                    can_boost = true
+            } else if (game.color_boosts <= 1201) {
+                if (
+                    game.pink_spice_bought[5] >=
+                    game.color_boosts * 200 - 41600
+                )
+                    can_boost = true
+            } else if (game.color_boosts <= 4104) {
+                if (
+                    game.pink_spice_bought[5] >=
+                    game.color_boosts * 300 - 161700
+                )
+                    can_boost = true
+            } else {
+                if (
+                    game.pink_spice_bought[5] >=
+                    game.color_boosts * 500 - 982500
+                )
+                    can_boost = true
+            }
+            break
+    }
+
+    if (can_boost) {
+        if (game.color_boosts >= 4) {
+            document.getElementById("color_shift_button").className =
+                "spice_buy boost"
+        } else if (game.color_boosts === 3) {
+            document.getElementById("color_shift_button").className =
+                "spice_buy shift4"
+        } else if (game.color_boosts === 2) {
+            document.getElementById("color_shift_button").className =
+                "spice_buy shift3"
+        } else if (game.color_boosts === 1) {
+            document.getElementById("color_shift_button").className =
+                "spice_buy shift2"
+        } else if (game.color_boosts === 0) {
+            document.getElementById("color_shift_button").className =
+                "spice_buy shift1"
+        }
+    } else {
+        document.getElementById("color_shift_button").className =
+            "spice_buy noshift"
+    }
+
     if (game.color_boosts >= 1 && game.tab === 0) {
         document.getElementById("spices_tabs").style.display = "flex"
         document.getElementById("red_max_all").style.display = "block"
@@ -1198,7 +1366,7 @@ function spice_update() {
         document.getElementById("red_max_all").style.display = "none"
     }
 
-    if (game.prestige >= 1) {
+    if (game.prestige >= 1 || game.ascend >= 1) {
         document.getElementById("red_max_all").style.display = "inline"
         document.getElementById("yellow_max_all").style.display = "inline"
         document.getElementById("green_max_all").style.display = "inline"
@@ -1287,12 +1455,48 @@ function prestige_update() {
         if (game.autopr_mode === 0) {
             document.getElementById("prestige_boosts").style.display = "flex"
             document.getElementById("prestige_spice").style.display = "none"
-        } else {
+            document.getElementById("prestige_time").style.display = "none"
+            if (game.ascend_bought[9]) {
+                document.getElementById("prestige_boosts_delta").style.display =
+                    "flex"
+            } else {
+                document.getElementById("prestige_boosts_delta").style.display =
+                    "none"
+            }
+            document.getElementById("prestige_spice_delta").style.display =
+                "none"
+        } else if (game.autopr_mode === 1) {
             document.getElementById("prestige_boosts").style.display = "none"
             document.getElementById("prestige_spice").style.display = "flex"
+            document.getElementById("prestige_time").style.display = "none"
+            document.getElementById("prestige_boosts_delta").style.display =
+                "none"
+            if (game.ascend_bought[9]) {
+                document.getElementById("prestige_spice_delta").style.display =
+                    "flex"
+            } else {
+                document.getElementById("prestige_spice_delta").style.display =
+                    "none"
+            }
+        } else if (game.autopr_mode === 2) {
+            document.getElementById("prestige_boosts").style.display = "none"
+            document.getElementById("prestige_spice").style.display = "none"
+            document.getElementById("prestige_time").style.display = "flex"
+            document.getElementById("prestige_boosts_delta").style.display =
+                "none"
+            document.getElementById("prestige_spice_delta").style.display =
+                "none"
         }
     } else {
         document.getElementById("prestige_auto_block").style.display = "none"
+    }
+
+    if (game.ascend_bought[8]) {
+        document.getElementById("upgrade_auto_toggle").style.display = "block"
+        document.getElementById("upgrade_auto_toggle2").style.display = "block"
+    } else {
+        document.getElementById("upgrade_auto_toggle").style.display = "none"
+        document.getElementById("upgrade_auto_toggle2").style.display = "none"
     }
 
     for (const u of prestige_upgrade.upgrades) {
@@ -1319,13 +1523,27 @@ function prestige_update() {
                 break
             case 1:
                 if (game.prestige >= 1)
-                    u.desc =
-                        "Times Prestiged stat boosts all spice production<br>(Currently: " +
-                        format_num(
-                            2.5 * game.prestige * (game.prestige + 1),
-                            game.notation
-                        ) +
-                        "x)"
+                    if (game.ascend_bought[1]) {
+                        u.desc =
+                            "Times Prestiged stat boosts all spice production<br>(Currently: " +
+                            format_infdec(
+                                Decimal.pow(
+                                    10 ** 25,
+                                    game.prestige **
+                                        (0.5 + 40 / (game.prestige + 80))
+                                ),
+                                game.notation
+                            ) +
+                            "x)"
+                    } else {
+                        u.desc =
+                            "Times Prestiged stat boosts all spice production<br>(Currently: " +
+                            format_num(
+                                2.5 * game.prestige * (game.prestige + 1),
+                                game.notation
+                            ) +
+                            "x)"
+                    }
                 else
                     u.desc =
                         "Times Prestiged stat boosts all spice production<br>(Currently: " +
@@ -1349,7 +1567,7 @@ function prestige_update() {
                 else
                     u.desc =
                         "Increase boost from strengtheners/shifts<br>(" +
-                        format_dec(5, 0) +
+                        format_dec(5, game.notation) +
                         "x)"
                 break
             case 3:
@@ -1386,16 +1604,23 @@ function prestige_update() {
                         "You start with " + format_small(4) + " color shifts"
                 break
             case 5:
-                if (game.prestige_bought[u.id] < u.max)
+                if (game.prestige_bought[u.id] === 0)
                     u.desc =
-                        "Strengtheners also boost the next color<br>(" +
+                        "Strengtheners boost the next color more<br>(" +
+                        format_dec(1.05, 0) +
+                        "x -> " +
+                        format_dec(1.2, 0) +
+                        "x)"
+                else if (game.prestige_bought[u.id] < u.max)
+                    u.desc =
+                        "Strengtheners boost the next color more<br>(" +
                         format_dec(1 + 0.2 * game.prestige_bought[u.id], 0) +
                         "x -> " +
                         format_dec(1.2 + 0.2 * game.prestige_bought[u.id], 0) +
                         "x)"
                 else
                     u.desc =
-                        "Strengtheners also boost the next color<br>(" +
+                        "Strengtheners boost the next color more<br>(" +
                         format_dec(2, 0) +
                         "x)"
                 break
@@ -1464,15 +1689,15 @@ function prestige_update() {
                     case 0:
                         u.desc =
                             "Increase boost from strengtheners/boosts<br>(" +
-                            format_dec(5, 0) +
+                            format_dec(5, game.notation) +
                             "x -> " +
-                            format_dec(6, 0) +
+                            format_dec(6, game.notation) +
                             "x)"
                         break
                     case 1:
                         u.desc =
                             "Increase boost from strengtheners/boosts<br>(" +
-                            format_dec(6, 0) +
+                            format_dec(6, game.notation) +
                             "x)"
                         break
                 }
@@ -1481,12 +1706,15 @@ function prestige_update() {
                 if (game.prestige_bought[u.id] < u.max)
                     u.desc =
                         "You get " +
-                        format_small(12 + 12 * game.prestige_bought[u.id]) +
+                        format_small(
+                            (12 + 12 * game.prestige_bought[u.id]) *
+                                (1 + game.ascend_bought[5])
+                        ) +
                         " free crystal infusions"
                 else
                     u.desc =
                         "You get " +
-                        format_small(144) +
+                        format_small(144 * (1 + game.ascend_bought[5])) +
                         " free crystal infusions"
                 break
             case 21:
@@ -1510,9 +1738,6 @@ function prestige_update() {
             format_infdec(u.price, game.notation) +
             " μg rainbow spice</span>"
         if (u.id === 25) {
-            button.innerHTML = u.desc
-            button.className = "prestige_upgrade p_locked p_special"
-            /*
             if (game.prestige_bought[u.id] >= u.max) {
                 button.className = "prestige_upgrade c_bought p_special"
             } else {
@@ -1522,7 +1747,6 @@ function prestige_update() {
                     button.className = "prestige_upgrade p_locked p_special"
                 }
             }
-            */
         } else if (u.id === 12) {
             if (game.prestige_bought[u.id] >= u.max) {
                 button.className = "prestige_upgrade p_bought p_special"
@@ -1774,24 +1998,53 @@ function crystal_update() {
     let s_str =
         "You have " + format_small(game.crystal_infusion) + " crystal infusions"
     if (game.prestige_bought[20] >= 1)
-        s_str += " (+" + format_small(game.prestige_bought[20] * 12) + " free)"
-    s_str +=
-        ",<br>boosting all normal spice generators " +
-        format_infdec(
-            Decimal.pow(
-                5,
-                (game.crystal_infusion + game.prestige_bought[20] * 12) * 16
-            ),
-            2
-        ) +
-        "x"
+        s_str +=
+            " (+" +
+            format_small(
+                game.prestige_bought[20] * 12 * (1 + game.ascend_bought[5])
+            ) +
+            " free)"
+    if (game.ascend_bought[7]) {
+        s_str +=
+            ",<br>boosting all normal spice generators " +
+            format_infdec(
+                Decimal.pow(
+                    5,
+                    (game.crystal_infusion +
+                        game.prestige_bought[20] *
+                            12 *
+                            (1 + game.ascend_bought[5])) *
+                        17.6
+                ),
+                2
+            ) +
+            "x"
+    } else {
+        s_str +=
+            ",<br>boosting all normal spice generators " +
+            format_infdec(
+                Decimal.pow(
+                    5,
+                    (game.crystal_infusion +
+                        game.prestige_bought[20] *
+                            12 *
+                            (1 + game.ascend_bought[5])) *
+                        16
+                ),
+                2
+            ) +
+            "x"
+    }
     if (game.prestige_bought[19] >= 1)
         s_str +=
             ",<br>boosting all crystallized spice generators " +
             format_infdec(
                 Decimal.pow(
-                    1.08,
-                    game.crystal_infusion + game.prestige_bought[20] * 12
+                    1.08 + 0.04 * game.ascend_bought[6],
+                    game.crystal_infusion +
+                        game.prestige_bought[20] *
+                            12 *
+                            (1 + game.ascend_bought[5])
                 ),
                 game.notation
             ) +
@@ -1808,7 +2061,7 @@ function crystal_update() {
         document.getElementById("crystal_cost_i").className = "empty_cost"
     }
 
-    if (game.crystal_spice_bought[5] >= 5) {
+    if (game.crystal_spice_bought[5] >= 5 || game.ascend >= 1) {
         document.getElementById("crystal_max_all").style.display = "inline"
     } else {
         document.getElementById("crystal_max_all").style.display = "none"
@@ -1817,6 +2070,287 @@ function crystal_update() {
     if (game.prestige_bought[13] >= 1)
         document.getElementById("infusion_auto").style.display = "inline"
     else document.getElementById("infusion_auto").style.display = "none"
+
+    if (game.ascend_bought[10])
+        document.getElementById("crystal_auto").style.display = "inline"
+    else document.getElementById("crystal_auto").style.display = "none"
+}
+
+//graphics updates for ascension page
+function ascension_update() {
+    if (game.rainbow_spice.cmp(Decimal.pow(2, 1024)) >= 0) {
+        document.getElementById("ascend_button").className =
+            "ascend_button a_unlocked"
+        document.getElementById("ascend_up").style.display = "block"
+        let amount = Math.floor(
+            (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8
+        )
+        document.getElementById("ascend_up").innerHTML =
+            "+" + format_num(Math.floor(amount), game.notation) + " ᚫ"
+        document.getElementById("ascend_req").style.color = "white"
+        document.getElementById("ascend_req").innerHTML =
+            format_infdec(
+                Decimal.pow(2, 1024).pow((amount + 1) ** 0.125),
+                game.notation
+            ) + " μg rainbow spice required"
+    } else {
+        document.getElementById("ascend_button").className =
+            "ascend_button a_locked"
+        document.getElementById("ascend_up").style.display = "none"
+        document.getElementById("ascend_req").style.color = "grey"
+        document.getElementById("ascend_req").innerHTML =
+            format_infdec(Decimal.pow(2, 1024), game.notation) +
+            " μg rainbow spice required"
+    }
+
+    document.getElementById("ansuz_num").innerHTML =
+        format_num(game.ansuz, game.notation) + " ᚫ"
+    document.getElementById("jera_text").innerHTML =
+        "You have " +
+        format_num(game.rune[0], game.notation) +
+        " ᛡ, producing " +
+        format_num(game.rune[0], game.notation) +
+        " ᛡ power/sec<br>You have " +
+        format_num(Math.floor(game.rune_power[0]), game.notation) +
+        " ᛡ power, boosting red spice production " +
+        format_infdec(game.rune_boost[0], game.notation) +
+        "x"
+    document.getElementById("raido_text").innerHTML =
+        "You have " +
+        format_num(game.rune[1], game.notation) +
+        " ᚱ, producing " +
+        format_num(game.rune[1], game.notation) +
+        " ᚱ power/sec<br>You have " +
+        format_num(Math.floor(game.rune_power[1]), game.notation) +
+        " ᚱ power, boosting yellow, green, & blue spice production " +
+        format_infdec(game.rune_boost[1], game.notation) +
+        "x"
+    document.getElementById("othala_text").innerHTML =
+        "You have " +
+        format_num(game.rune[2], game.notation) +
+        " ᛟ, producing " +
+        format_num(game.rune[2], game.notation) +
+        " ᛟ power/sec<br>You have " +
+        format_num(Math.floor(game.rune_power[2]), game.notation) +
+        " ᛟ power, boosting pink spice production " +
+        format_infdec(game.rune_boost[2], game.notation) +
+        "x"
+
+    if (game.distribute_unlocked) {
+        document.getElementById("distribute_buttons").style.display = "flex"
+    } else {
+        document.getElementById("distribute_buttons").style.display = "none"
+    }
+
+    document.getElementById("ansuz_num2").innerHTML =
+        format_num(game.ansuz, game.notation) + " ᚫ"
+
+    if (game.ascend >= 1) {
+        document.getElementById("past_ascensions").innerHTML = "PAST ASCENSIONS"
+        if (game.subtab[2] === 2)
+            document.getElementById("past_ascensions").className =
+                "subtab selected"
+        else
+            document.getElementById("past_ascensions").className =
+                "subtab unlocked"
+    } else {
+        document.getElementById("past_ascensions").innerHTML = "LOCKED"
+        document.getElementById("past_ascensions").className = "subtab locked"
+    }
+
+    for (const u of ascension_upgrade.upgrades) {
+        switch (u.id) {
+            case 0:
+                u.desc =
+                    "The boost from red spice amount is " +
+                    format_small(50) +
+                    "% stronger"
+                break
+            case 2:
+                if (game.prestige_bought[18] >= 1)
+                    u.desc =
+                        "Increase boost from strengtheners/boosts<br>(" +
+                        format_dec(6, game.notation) +
+                        "x -> " +
+                        format_dec(8, game.notation) +
+                        "x)"
+                else
+                    u.desc =
+                        "Increase boost from strengtheners/boosts<br>(" +
+                        format_dec(
+                            2 + 0.2 * game.prestige_bought[2],
+                            game.notation
+                        ) +
+                        "x -> " +
+                        format_dec(
+                            4 + 0.2 * game.prestige_bought[2],
+                            game.notation
+                        ) +
+                        "x)"
+                break
+            case 6:
+                u.desc =
+                    "Crystal infusions boost crystallized spice production " +
+                    format_dec(1.12) +
+                    "x"
+                break
+            case 7:
+                u.desc =
+                    "Crystal infusions are " + format_small(10) + "% stronger"
+                break
+            case 11:
+                u.desc = "Strengtheners are " + format_small(2) + "x stronger"
+                break
+        }
+
+        let button = ascension_map.get(u)
+        button.innerHTML =
+            u.desc +
+            '<br><span class="bold">-' +
+            format_num(u.price, game.notation) +
+            " ᚫ</span>"
+
+        let visible = true
+
+        if (u.id > 2) {
+            if (u.req !== undefined) {
+                let step = ascension_upgrade.upgrades[u.req]
+                if (step.req !== undefined) {
+                    if (
+                        !game.ascend_bought[
+                            ascension_upgrade.upgrades[step.req].id
+                        ]
+                    ) {
+                        visible = false
+                    }
+                }
+                if (step.req2 !== undefined) {
+                    if (
+                        !game.ascend_bought[
+                            ascension_upgrade.upgrades[step.req2].id
+                        ]
+                    ) {
+                        visible = false
+                    }
+                }
+            }
+            if (u.req2 !== undefined) {
+                let step = ascension_upgrade.upgrades[u.req2]
+                if (step.req !== undefined) {
+                    if (
+                        !game.ascend_bought[
+                            ascension_upgrade.upgrades[step.req].id
+                        ]
+                    ) {
+                        visible = false
+                    }
+                }
+                if (step.req2 !== undefined) {
+                    if (
+                        !game.ascend_bought[
+                            ascension_upgrade.upgrades[step.req2].id
+                        ]
+                    ) {
+                        visible = false
+                    }
+                }
+            }
+        } else {
+            visible = true
+        }
+
+        if (game.ascend_bought[u.id]) {
+            button.className = "ascension_upgrade a_bought"
+            button.style.display = "block"
+        } else {
+            let condition1 = false
+            let condition2 = false
+            if (u.req !== undefined) {
+                if (game.ascend_bought[u.req]) condition1 = true
+                else condition1 = false
+            } else {
+                condition1 = true
+            }
+            if (u.req2 !== undefined) {
+                if (game.ascend_bought[u.req2]) condition2 = true
+                else condition2 = false
+            } else {
+                condition2 = true
+            }
+
+            if (game.ansuz >= u.price && condition1 && condition2) {
+                button.className = "ascension_upgrade a_unlocked2"
+            } else {
+                button.className = "ascension_upgrade a_locked"
+            }
+
+            if (visible) {
+                button.style.display = "block"
+            } else {
+                button.style.display = "none"
+            }
+        }
+
+        if (u.req !== undefined) {
+            let line = ascension_map2.get(u)
+            let button2 = ascension_map.get(ascension_upgrade.upgrades[u.req])
+
+            let off1 = get_offset(button)
+            let off2 = get_offset(button2)
+            let x1 = off1.left + off1.width / 2
+            let y1 = off1.top + off1.height / 2
+            let x2 = off2.left + off2.width / 2
+            let y2 = off2.top + off2.height / 2
+            let length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+            let cx = (x1 + x2) / 2 - length / 2
+            let cy = (y1 + y2) / 2
+            var angle = Math.atan2(y1 - y2, x1 - x2) * (180 / Math.PI)
+
+            line.style.left = cx + "px"
+            line.style.top = "calc(" + cy + "px - 0.5em)"
+            line.style.width = length + "px"
+            line.style.transform = "rotate(" + angle + "deg)"
+
+            if (visible) {
+                line.style.display = "block"
+            } else {
+                line.style.display = "none"
+            }
+        }
+
+        if (u.req2 !== undefined) {
+            let line = ascension_map3.get(u)
+            let button2 = ascension_map.get(ascension_upgrade.upgrades[u.req2])
+
+            let off1 = get_offset(button)
+            let off2 = get_offset(button2)
+            let x1 = off1.left + off1.width / 2
+            let y1 = off1.top + off1.height / 2
+            let x2 = off2.left + off2.width / 2
+            let y2 = off2.top + off2.height / 2
+            let length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+            let cx = (x1 + x2) / 2 - length / 2
+            let cy = (y1 + y2) / 2
+            var angle = Math.atan2(y1 - y2, x1 - x2) * (180 / Math.PI)
+
+            line.style.left = cx + "px"
+            line.style.top = "calc(" + cy + "px - 0.5em)"
+            line.style.width = length + "px"
+            line.style.transform = "rotate(" + angle + "deg)"
+
+            if (visible) {
+                line.style.display = "block"
+            } else {
+                line.style.display = "none"
+            }
+        }
+    }
+
+    if (game.ascend_bought[12]) {
+        document.getElementById("ascend_auto_block").style.display = "block"
+    } else {
+        document.getElementById("ascend_auto_block").style.display = "none"
+    }
 }
 
 //graphics updates for statistics page
@@ -1883,7 +2417,7 @@ function stats_update() {
             format_small(game.color_boosts) +
             " color shifts."
 
-    if (game.prestige >= 1) {
+    if (game.prestige >= 1 || game.ascend >= 1) {
         if (game.prestige === 1)
             stats_str +=
                 "<br><br><br>You have Prestiged " + format_small(1) + " time."
@@ -1910,6 +2444,30 @@ function stats_update() {
             " in this Prestige."
     }
 
+    if (game.ascend >= 1) {
+        if (game.ascend === 1)
+            stats_str +=
+                "<br><br><br>You have Ascended " + format_small(1) + " time."
+        else
+            stats_str +=
+                "<br><br><br>You have Ascended " +
+                format_small(game.ascend) +
+                " times."
+
+        stats_str +=
+            "<br>You have " + format_num(game.ansuz, game.notation) + " ᚫ."
+
+        stats_str +=
+            "<br>You have produced a total of " +
+            format_num(Math.floor(game.total_rune_power), game.notation) +
+            " rune power."
+
+        stats_str +=
+            "<br>You have spent " +
+            format_time_long(game.ascend_time_played, game.notation) +
+            " in this Ascension."
+    }
+
     stats_str +=
         "<br><br><br>You have played for a total of " +
         format_time_long(game.total_time_played, game.notation) +
@@ -1917,11 +2475,11 @@ function stats_update() {
 
     document.getElementById("statistics_text").innerHTML = stats_str
 
-    if (game.prestige >= 1)
+    if (game.prestige >= 1 || game.ascend >= 1)
         document.getElementById("statistics_tabs").style.display = "flex"
     else document.getElementById("statistics_tabs").style.display = "none"
 
-    stats_str = "Last 10 prestiges:"
+    stats_str = "Last 10 Prestiges:"
     let entries = 0
     let average = new Decimal(0)
 
@@ -1998,4 +2556,70 @@ function stats_update() {
     }
 
     document.getElementById("prestige_statistics_text").innerHTML = stats_str
+
+    stats_str = "Last 10 Ascensions:"
+    entries = 0
+    average = 0
+
+    for (let i = 0; i < 10; i++) {
+        if (game.ascend_time_history[i] === -1) {
+            stats_str += "<br>#" + (i + 1) + " (no data)"
+        } else {
+            entries++
+            average +=
+                game.ascend_amount_history[i] / game.ascend_time_history[i]
+            if (
+                (game.ascend_amount_history[i] * 60) /
+                    game.ascend_time_history[i] >=
+                1
+            )
+                stats_str +=
+                    "<br>#" +
+                    (i + 1) +
+                    " took " +
+                    format_time(game.ascend_time_history[i]) +
+                    " and gave " +
+                    format_num(game.ascend_amount_history[i], game.notation) +
+                    " ᚫ. +" +
+                    format_dec(
+                        (game.ascend_amount_history[i] * 60) /
+                            game.ascend_time_history[i],
+                        game.notation
+                    ) +
+                    " ᚫ/min"
+            else
+                stats_str +=
+                    "<br>#" +
+                    (i + 1) +
+                    " took " +
+                    format_time(game.ascend_time_history[i]) +
+                    " and gave " +
+                    format_num(game.ascend_amount_history[i], game.notation) +
+                    " ᚫ. +" +
+                    format_dec(
+                        (game.ascend_amount_history[i] * 3600) /
+                            game.ascend_time_history[i],
+                        game.notation
+                    ) +
+                    " ᚫ/hour"
+        }
+    }
+
+    if (entries > 0) {
+        average /= entries
+        if (average * 60 >= 1)
+            stats_str +=
+                "<br><br>Average Ansuz rune gain: +" +
+                format_dec(average * 60, game.notation) +
+                " ᚫ/min"
+        else
+            stats_str +=
+                "<br><br>Average Ansuz rune gain: +" +
+                format_dec(average * 3600, game.notation) +
+                " ᚫ/hour"
+    } else {
+        stats_str += "<br><br>Average Ansuz rune gain: undefined"
+    }
+
+    document.getElementById("ascension_statistics_text").innerHTML = stats_str
 }
