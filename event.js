@@ -1511,27 +1511,38 @@ function distribute_runes() {
 
 //recall runes
 function recall_runes(mode) {
-    let recall_ready = false
-    if (game.ascend_confirm) {
-        if (
-            confirm(
-                "Are you sure you want to recall all converted runes? This will reset your rune power!"
+    if (mode === 1) {
+        let recall_ready = false
+        if (game.ascend_confirm) {
+            if (
+                confirm(
+                    "Are you sure you want to recall all converted runes? This will reset your rune power!"
+                )
             )
-        )
+                recall_ready = true
+        } else {
             recall_ready = true
-    } else {
-        recall_ready = true
-    }
+        }
+        
 
-    if (recall_ready) {
-        if (mode === 1) {
+        if (recall_ready) {
             for (let i = 0; i < 3; i++) {
                 game.ansuz += game.rune[i]
                 game.rune[i] = 0
                 game.rune_power[i] = 0
                 game.rune_boost[i] = new Decimal(1)
             }
-        } else if (mode === 2) {
+        }
+    } else if (mode === 2) {
+        let recall_ready = false
+        if (
+            confirm(
+                "Are you sure you want to recall all spent runes? You will Ascend!"
+            )
+        )
+            recall_ready = true
+
+        if (recall_ready) {
             for (const u of ascension_upgrade.upgrades) {
                 if (game.ascend_bought[u.id]) {
                     game.ascend_bought[u.id] = false
@@ -1544,7 +1555,17 @@ function recall_runes(mode) {
             }
 
             ascend(true)
-        } else if (mode === 3) {
+        }
+    } else if (mode === 3) {
+        let recall_ready = false
+        if (
+            confirm(
+                "Are you sure you want to recall runes from ALL sources? You will Ascend!"
+            )
+        )
+            recall_ready = true
+
+        if (recall_ready) {
             for (let i = 0; i < 3; i++) {
                 game.ansuz += game.rune[i]
                 game.rune[i] = 0
