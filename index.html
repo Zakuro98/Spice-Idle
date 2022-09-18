@@ -17,7 +17,7 @@
             <button id="prestige" class="tab locked" onclick="goto_tab(1)">
                 LOCKED
             </button>
-            <button id="ascension" class="tab locked">
+            <button id="ascension" class="tab locked" onclick="goto_tab(2)">
                 LOCKED
             </button>
             <button id="collapse" class="tab locked">
@@ -64,12 +64,24 @@
             </button>
         </div>
 
+        <div id="ascension_tabs" class="submenu">
+            <button id="runes" class="subtab selected" onclick="goto_subtab(0)">
+                RUNES
+            </button>
+            <button id="ascension_upgrades" class="subtab unlocked" onclick="goto_subtab(1)">
+                ASCENSION UPGRADES
+            </button>
+        </div>
+
         <div id="statistics_tabs" class="submenu">
             <button id="statistics_subtab" class="subtab selected" onclick="goto_subtab(0)">
                 STATISTICS
             </button>
             <button id="past_prestiges" class="subtab unlocked" onclick="goto_subtab(1)">
                 PAST PRESTIGES
+            </button>
+            <button id="past_ascensions" class="subtab locked" onclick="goto_subtab(2)">
+                LOCKED
             </button>
         </div>
 
@@ -86,7 +98,7 @@
                     <p id="color_shift_req" class="spice_gen_boost">
                         Requires 50 red spice galaxies
                     </p>
-                    <button id="color_shift_button" class="spice_buy" onclick="color_boost()">
+                    <button id="color_shift_button" class="spice_buy noshift" onclick="color_boost()">
                         Reset for a new spice color
                     </button>
                     <button id="boost_auto" class="spice_buy a_disabled" onclick="auto_toggle('boost')">
@@ -338,14 +350,37 @@
                         </p>
                         <input class="input" id="p_boosts_input" type="number" value="10" min="10">
                     </div>
+                    <div id="prestige_boosts_delta">
+                        <p class="p_auto_text">
+                            Auto-Prestige Delta (Color Boosts):
+                        </p>
+                        <input class="input" id="p_boosts_input2" type="number" value="5" min="0">
+                    </div>
                     <div id="prestige_spice">
                         <p class="p_auto_text">
                             Auto-Prestige Goal (Rainbow Spice):
                         </p>
                         <input class="input" id="p_spice_input" type="number" step="0.01" value="1" min="1">
                     </div>
+                    <div id="prestige_spice_delta">
+                        <p class="p_auto_text">
+                            Auto-Prestige Delta (Rainbow Spice):
+                        </p>
+                        <input class="input" id="p_spice_input2" type="number" step="0.01" value="10" min="1">
+                    </div>
+                    <div id="prestige_time">
+                        <p class="p_auto_text">
+                            Auto-Prestige Goal (Seconds):
+                        </p>
+                        <input class="input" id="p_time_input" type="number" step="0.01" value="30" min="0.01">
+                    </div>
                 </div>
 
+                <div class="center_button">
+                    <button id="upgrade_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('prestige_upgrade')">
+                        Auto: OFF
+                    </button>
+                </div>
                 <div id="prestige_upgrade_block"></div>
             </div>
 
@@ -393,6 +428,9 @@
                 <button id="crystal_max_all" class="spice_buy max_all" onclick="max_all('crystal')">
                     Max All
                 </button>
+                <button id="crystal_auto" class="spice_buy a_disabled" onclick="auto_toggle('crystal')">
+                    Auto: OFF
+                </button>
 
                 <div class="spice_gen_page">
                     <div id="crystal_panel_left" class="spice_gen_panel"></div>
@@ -425,7 +463,141 @@
                     </p>
                 </div>
 
+                <div class="center_button">
+                    <button id="upgrade_auto_toggle2" class="spice_buy a_disabled" onclick="auto_toggle('prestige_upgrade')">
+                        Auto: OFF
+                    </button>
+                </div>
                 <div id="crystal_upgrade_block"></div>
+            </div>
+
+            <div id="ascension_page">
+                <div class="ascension_header">
+                    <div class="ansuz_panel">
+                        <p class="ansuz_text runes">
+                            Ansuz Runes
+                        </p>
+                        <p id="ansuz_num" class="ansuz_num runes">
+                            0 ᚫ
+                        </p>
+                    </div>
+                    <div class="ascension_panel">
+                        <div class="ascension_info">
+                            <p id="ascend_req" class="ascend_text">
+                                1.798e308 μg rainbow spice required
+                            </p>
+                            <p id="ascend_up" class="ascend_text runes">
+                                +1 ᚫ
+                            </p>
+                        </div>
+                        <button id="ascend_button" class="ascend_button a_locked" onclick="ascend()">
+                            ASCEND!
+                        </button>
+                    </div>
+                </div>
+
+                <div id="ascend_auto_block">
+                    <div id="ascend_auto_buttons">
+                        <button id="ascend_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('ascend')">
+                            Auto: OFF
+                        </button>
+                    </div>
+                    <div id="ascend_runes">
+                        <p class="p_auto_text">
+                            Auto-Ascend Goal (Runes):
+                        </p>
+                        <input class="input" id="a_runes_input" type="number" value="1" min="1">
+                    </div>
+                </div>
+
+                <div class="rune_control">
+                    <button class="rune_button a_unlocked" onclick="recall_runes(1)">
+                        Recall Converted Runes
+                    </button>
+                    <button class="rune_button a_unlocked" onclick="recall_runes(3)">
+                        Recall ALL Runes
+                    </button>
+                </div>
+                <div id="distribute_buttons" class="rune_control2">
+                    <button class="rune_button a_unlocked" onclick="distribute_runes()">
+                        Distribute ALL Runes
+                    </button>
+                </div>
+
+                <div class="rune_panel">
+                    <p class="rune_header runes">
+                        Jera Runes
+                    </p>
+                    <p id="jera_text" class="rune_text">
+                        You have 0 ᛡ, producing 0 ᛡ power/sec
+                        <br>You have 0 ᛡ power, boosting red spice production 1.00x
+                    </p>
+                    <div class="rune_menu">
+                        <button class="rune_button a_unlocked" onclick="convert_rune(0,false)">
+                            Convert 1 ᚫ
+                        </button>
+                        <button class="rune_button a_unlocked" onclick="convert_rune(0,true)">
+                            Convert ALL ᚫ
+                        </button>
+                    </div>
+                </div>
+                <div class="rune_panel">
+                    <p class="rune_header runes">
+                        Raido Runes
+                    </p>
+                    <p id="raido_text" class="rune_text">
+                        You have 0 ᚱ, producing 0 ᚱ power/sec
+                        <br>You have 0 ᚱ power, boosting yellow, green, & blue spice production 1.00x
+                    </p>
+                    <div class="rune_menu">
+                        <button class="rune_button a_unlocked" onclick="convert_rune(1,false)">
+                            Convert 1 ᚫ
+                        </button>
+                        <button class="rune_button a_unlocked" onclick="convert_rune(1,true)">
+                            Convert ALL ᚫ
+                        </button>
+                    </div>
+                </div>
+                <div class="rune_panel">
+                    <p class="rune_header runes">
+                        Othala Runes
+                    </p>
+                    <p id="othala_text" class="rune_text">
+                        You have 0 ᛟ, producing 0 ᛟ power/sec
+                        <br>You have 0 ᛟ power, boosting pink spice production 1.00x
+                    </p>
+                    <div class="rune_menu">
+                        <button class="rune_button a_unlocked" onclick="convert_rune(2,false)">
+                            Convert 1 ᚫ
+                        </button>
+                        <button class="rune_button a_unlocked" onclick="convert_rune(2,true)">
+                            Convert ALL ᚫ
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ascension_page2">
+                <div class="ansuz_panel">
+                    <p class="ansuz_text runes">
+                        Ansuz Runes
+                    </p>
+                    <p id="ansuz_num2" class="ansuz_num runes">
+                        0 ᚫ
+                    </p>
+                </div>
+
+                <div class="rune_control">
+                    <button class="rune_button a_unlocked" onclick="recall_runes(2)">
+                        Recall Spent Runes
+                    </button>
+                    <button class="rune_button a_unlocked" onclick="recall_runes(3)">
+                        Recall ALL Runes
+                    </button>
+                </div>
+
+                <div id="ascension_upgrade_lines"></div>
+                <div id="ascension_upgrade_screen"></div>
             </div>
 
             <div id="statistics_page">
@@ -439,7 +611,7 @@
 
             <div id="prestige_statistics_page">
                 <p id="prestige_statistics_text" class="statistics_text">
-                    Last 10 prestiges:
+                    Last 10 Prestiges:
                     <br>#1 (no data)
                     <br>#2 (no data)
                     <br>#3 (no data)
@@ -452,6 +624,24 @@
                     <br>#10 (no data)
                     <br><br>
                     Average rainbow spice gain: undefined
+                </p>
+            </div>
+
+            <div id="ascension_statistics_page">
+                <p id="ascension_statistics_text" class="statistics_text">
+                    Last 10 Ascensions:
+                    <br>#1 (no data)
+                    <br>#2 (no data)
+                    <br>#3 (no data)
+                    <br>#4 (no data)
+                    <br>#5 (no data)
+                    <br>#6 (no data)
+                    <br>#7 (no data)
+                    <br>#8 (no data)
+                    <br>#9 (no data)
+                    <br>#10 (no data)
+                    <br><br>
+                    Average Ansuz rune gain: undefined
                 </p>
             </div>
 
@@ -482,6 +672,12 @@
                         <br>DISABLED
                     </button>
                 </div>
+                <div id="settings_block2" class="settings_block">
+                    <button id="ascend_confirm" class="settings_button" onclick="confirmations('ascend')">
+                        Ascension Confirmations
+                        <br>ENABLED
+                    </button>
+                </div>
 
                 <div id="wipe_block" class="settings_block">
                     <button id="wipe_save" class="settings_button s_big" onclick="delete_save()">
@@ -498,11 +694,12 @@
                     <br>B: Color shift/boost
                     <br>P: Prestige
                     <br>I: Buy crystal infusion
+                    <br>A: Ascend
                 </p>
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.0.1<br>Made by Zakuro
+                Spice Idle v1.1.0<br>Made by Zakuro
             </p>
             <a href="changelog.html" target="_blank" class="info link">Changelog</a>
             <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
