@@ -1110,7 +1110,7 @@ function max_all(color) {
 }
 
 //toggle automation for spice
-function auto_toggle(color) {
+function auto_toggle(color, unless) {
     switch (color) {
         case "red":
             if (game.autosp_toggle[0]) {
@@ -1223,14 +1223,77 @@ function auto_toggle(color) {
                 game.autopr_mode = 1
                 document.getElementById("prestige_auto_mode").innerHTML =
                     "Mode: SPICE"
-                document.getElementById("prestige_auto_mode").className =
-                    "spice_buy"
-            } else {
+            } else if (game.autopr_mode === 1) {
+                if (game.ascend_bought[9]) {
+                    game.autopr_mode = 2
+                    document.getElementById("prestige_auto_mode").innerHTML =
+                        "Mode: TIME"
+                } else {
+                    game.autopr_mode = 0
+                    document.getElementById("prestige_auto_mode").innerHTML =
+                        "Mode: BOOSTS"
+                }
+            } else if (game.autopr_mode === 2) {
                 game.autopr_mode = 0
                 document.getElementById("prestige_auto_mode").innerHTML =
                     "Mode: BOOSTS"
-                document.getElementById("prestige_auto_mode").className =
-                    "spice_buy"
+            }
+            break
+        case "prestige_upgrade":
+            if (game.autoup_toggle) {
+                game.autoup_toggle = false
+                document.getElementById("upgrade_auto_toggle").innerHTML =
+                    "Auto: OFF"
+                document.getElementById("upgrade_auto_toggle2").innerHTML =
+                    "Auto: OFF"
+                document.getElementById("upgrade_auto_toggle").className =
+                    "spice_buy a_disabled"
+                document.getElementById("upgrade_auto_toggle2").className =
+                    "spice_buy a_disabled"
+            } else {
+                game.autoup_toggle = true
+                document.getElementById("upgrade_auto_toggle").innerHTML =
+                    "Auto: ON"
+                document.getElementById("upgrade_auto_toggle2").innerHTML =
+                    "Auto: ON"
+                document.getElementById("upgrade_auto_toggle").className =
+                    "spice_buy a_enabled"
+                document.getElementById("upgrade_auto_toggle2").className =
+                    "spice_buy a_enabled"
+            }
+            break
+        case "crystal":
+            if (game.autocr_toggle) {
+                game.autocr_toggle = false
+                document.getElementById("crystal_auto").innerHTML = "Auto: OFF"
+                document.getElementById("crystal_auto").className =
+                    "spice_buy a_disabled"
+            } else {
+                game.autocr_toggle = true
+                document.getElementById("crystal_auto").innerHTML = "Auto: ON"
+                document.getElementById("crystal_auto").className =
+                    "spice_buy a_enabled"
+            }
+            break
+        case "ascend":
+            if (game.autoas_toggle) {
+                game.autoas_toggle = false
+                document.getElementById("ascend_auto_toggle").innerHTML =
+                    "Auto: OFF"
+                document.getElementById("ascend_auto_toggle").className =
+                    "spice_buy a_disabled"
+            } else {
+                if (!game.ascend_confirm || unless) {
+                    game.autoas_toggle = true
+                    document.getElementById("ascend_auto_toggle").innerHTML =
+                        "Auto: ON"
+                    document.getElementById("ascend_auto_toggle").className =
+                        "spice_buy a_enabled"
+                } else {
+                    alert(
+                        "Ascension confirmations must be off to turn on Ascension automation!"
+                    )
+                }
             }
             break
     }
@@ -1418,5 +1481,98 @@ function max_infusion() {
             )
             game.crystal_infusion += n
         }
+    }
+}
+
+//convert runes
+function convert_rune(id, max) {
+    if (game.ansuz >= 1) {
+        if (max) {
+            game.rune[id] += game.ansuz
+            game.ansuz = 0
+        } else {
+            game.rune[id]++
+            game.ansuz--
+        }
+    }
+}
+
+//distribute runes
+function distribute_runes() {
+    if (game.ansuz >= 3) {
+        let amount = Math.floor(game.ansuz / 3)
+
+        game.ansuz -= amount * 3
+        for (let i = 0; i < 3; i++) {
+            game.rune[i] += amount
+        }
+    }
+}
+
+//recall runes
+function recall_runes(mode) {
+    let recall_ready = false
+    if (game.ascend_confirm) {
+        if (
+            confirm(
+                "Are you sure you want to recall all converted runes? This will reset your rune power!"
+            )
+        )
+            recall_ready = true
+    } else {
+        recall_ready = true
+    }
+
+    if (recall_ready) {
+        if (mode === 1) {
+            for (let i = 0; i < 3; i++) {
+                game.ansuz += game.rune[i]
+                game.rune[i] = 0
+                game.rune_power[i] = 0
+                game.rune_boost[i] = new Decimal(1)
+            }
+        } else if (mode === 2) {
+            for (const u of ascension_upgrade.upgrades) {
+                if (game.ascend_bought[u.id]) {
+                    game.ascend_bought[u.id] = false
+                    game.ansuz += u.price
+                }
+            }
+
+            if (game.autopr_mode === 2) {
+                auto_toggle("prestige_mode")
+            }
+
+            ascend(true)
+        } else if (mode === 3) {
+            for (let i = 0; i < 3; i++) {
+                game.ansuz += game.rune[i]
+                game.rune[i] = 0
+            }
+
+            for (const u of ascension_upgrade.upgrades) {
+                if (game.ascend_bought[u.id]) {
+                    game.ascend_bought[u.id] = false
+                    game.ansuz += u.price
+                }
+            }
+
+            if (game.autopr_mode === 2) {
+                auto_toggle("prestige_mode")
+            }
+
+            ascend(true)
+        }
+    }
+}
+
+//buying ascension upgrades
+function buy_ascension_upgrade(id) {
+    if (
+        game.ansuz >= ascension_upgrade.upgrades[id].price &&
+        !game.ascend_bought[id]
+    ) {
+        game.ansuz -= ascension_upgrade.upgrades[id].price
+        game.ascend_bought[id] = true
     }
 }
