@@ -603,21 +603,16 @@ function tick() {
         game.total_rune_power += game.rune[i] / game.tickspeed
     }
 
-    game.rune_boost[0] = Decimal.pow(
-        125,
-        Math.floor(game.rune_power[0]) **
-            (0.8 + 200 / (Math.floor(game.rune_power[0]) + 1000))
-    )
-    game.rune_boost[1] = Decimal.pow(
-        25,
-        Math.floor(game.rune_power[1]) **
-            (0.8 + 200 / (Math.floor(game.rune_power[1]) + 1000))
-    )
-    game.rune_boost[2] = Decimal.pow(
-        5,
-        Math.floor(game.rune_power[2]) **
-            (0.8 + 200 / (Math.floor(game.rune_power[2]) + 1000))
-    )
+    for (let i = 0; i < 3; i++) {
+        let base = 2 ** (2 - 0.5 * i)
+        let exponent = Math.floor(game.rune_power[i])
+        if (game.rune_power[i] >= 1024) {
+            exponent =
+                128 * (Math.floor(game.rune_power[i]) + 3072) ** 0.5 - 7168
+        }
+
+        game.rune_boost[i] = Decimal.pow(base, exponent)
+    }
 
     if (game.ansuz >= 6) game.distribute_unlocked = true
 
