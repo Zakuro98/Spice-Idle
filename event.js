@@ -1589,9 +1589,28 @@ function recall_runes(mode) {
 
 //buying ascension upgrades
 function buy_ascension_upgrade(id) {
+    let condition1 = false
+    let condition2 = false
+    if (ascension_upgrade.upgrades[id].req !== undefined) {
+        if (game.ascend_bought[ascension_upgrade.upgrades[id].req])
+            condition1 = true
+        else condition1 = false
+    } else {
+        condition1 = true
+    }
+    if (ascension_upgrade.upgrades[id].req2 !== undefined) {
+        if (game.ascend_bought[ascension_upgrade.upgrades[id].req2])
+            condition2 = true
+        else condition2 = false
+    } else {
+        condition2 = true
+    }
+
     if (
         game.ansuz >= ascension_upgrade.upgrades[id].price &&
-        !game.ascend_bought[id]
+        !game.ascend_bought[id] &&
+        condition1 &&
+        condition2
     ) {
         game.ansuz -= ascension_upgrade.upgrades[id].price
         game.ascend_bought[id] = true
