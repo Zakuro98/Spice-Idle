@@ -778,7 +778,7 @@ document.body.addEventListener("keydown", function (event) {
 
 //saving the game
 function save() {
-    game.version = "1.1.0"
+    game.version = "1.1.2"
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
         game.prestige_price[u.id] = u.price
@@ -901,7 +901,7 @@ function load(savegame) {
         .split(".")
         .map(val => parseInt(val))
 
-    if (major === 0) {
+    if (major <= 0) {
         let old_subtab = game.subtab
         game.subtab = new Array(4).fill(0)
         for (let i = 0; i < 3; i++) {
@@ -930,6 +930,27 @@ function load(savegame) {
         game.ascend_time_history = new Array(10).fill(-1)
         game.ascend_time_played = game.total_time_played
     }
+    if (game.version === "1.1.0") {
+        if (game.rune[0] + game.rune[1] + game.rune[2] >= 10 ** 7) {
+            ascend(true)
+            game.ascend = 1
+            game.ansuz = 1
+            game.rune = new Array(3).fill(0)
+            game.rune_power = new Array(3).fill(0)
+            game.total_rune_power = 0
+            game.rune_boost = [new Decimal(1), new Decimal(1), new Decimal(1)]
+            game.distribute_unlocked = false
+            game.ascend_bought = new Array(13).fill(false)
+            game.autoup_toggle = false
+            game.autocr_toggle = false
+            game.autoas_toggle = false
+            game.ascend_amount_history = new Array(10).fill(-1)
+            game.ascend_time_history = new Array(10).fill(-1)
+            game.ascend_time_played = 0
+        }
+    }
+
+    game.version = "1.1.2"
 
     game.red_spice = new Decimal(game.red_spice)
     game.red_strengthener_price = new Decimal(game.red_strengthener_price)
