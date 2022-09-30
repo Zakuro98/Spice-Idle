@@ -46,10 +46,16 @@ function color_boost(override) {
                     game.color_boosts * 300 - 161700
                 )
                     can_boost = true
-            } else {
+            } else if (game.color_boosts <= 7500) {
                 if (
                     game.pink_spice_bought[5] >=
                     game.color_boosts * 500 - 982500
+                )
+                    can_boost = true
+            } else {
+                if (
+                    game.pink_spice_bought[5] >=
+                    game.color_boosts * 2500 - 15982500
                 )
                     can_boost = true
             }
@@ -275,10 +281,15 @@ function color_boost(override) {
                     game.color_boosts =
                         Math.floor((game.pink_spice_bought[5] + 161700) / 300) +
                         1
-                } else {
+                } else if (game.pink_spice_bought[5] <= 2767500) {
                     game.color_boosts =
                         Math.floor((game.pink_spice_bought[5] + 982500) / 500) +
                         1
+                } else {
+                    game.color_boosts =
+                        Math.floor(
+                            (game.pink_spice_bought[5] + 15982500) / 2500
+                        ) + 1
                 }
             } else {
                 game.color_boosts++
