@@ -1177,10 +1177,15 @@ function spice_update() {
                             "Requires " +
                             format_small(game.color_boosts * 300 - 161700) +
                             " pink spice galaxies"
-                    else
+                    else if (game.color_boosts <= 7500)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
                             format_small(game.color_boosts * 500 - 982500) +
+                            " pink spice galaxies"
+                    else
+                        document.getElementById("color_shift_req").innerHTML =
+                            "Requires " +
+                            format_small(game.color_boosts * 2500 - 15982500) +
                             " pink spice galaxies"
                 } else {
                     if (game.color_boosts <= 8)
@@ -1218,10 +1223,15 @@ function spice_update() {
                             "Requires " +
                             format_small(game.color_boosts * 300 - 161700) +
                             " bought pink spice galaxies"
-                    else
+                    else if (game.color_boosts <= 7500)
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
                             format_small(game.color_boosts * 500 - 982500) +
+                            " bought pink spice galaxies"
+                    else
+                        document.getElementById("color_shift_req").innerHTML =
+                            "Requires " +
+                            format_small(game.color_boosts * 2500 - 15982500) +
                             " bought pink spice galaxies"
                 }
                 break
@@ -1275,10 +1285,16 @@ function spice_update() {
                     game.color_boosts * 300 - 161700
                 )
                     can_boost = true
-            } else {
+            } else if (game.color_boosts <= 7500) {
                 if (
                     game.pink_spice_bought[5] >=
                     game.color_boosts * 500 - 982500
+                )
+                    can_boost = true
+            } else {
+                if (
+                    game.pink_spice_bought[5] >=
+                    game.color_boosts * 2500 - 15982500
                 )
                     can_boost = true
             }
