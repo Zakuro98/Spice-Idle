@@ -1,12 +1,15 @@
 //initializing game variables
 let game = {
-    version: "1.1.2",
+    version: "1.2.0",
 
     tickspeed: 100,
 
     notation: 2,
     hotkeys: false,
     condensed: false,
+    ascend_confirm: true,
+    challenge_confirm: true,
+    exponent_notation: 0,
 
     global_spice_boost: new Decimal(1),
 
@@ -272,10 +275,9 @@ let game = {
     total_rune_power: 0,
     rune_boost: [new Decimal(1), new Decimal(1), new Decimal(1)],
     distribute_unlocked: false,
+    half_distribute_unlocked: false,
 
-    ascend_confirm: true,
-
-    ascend_bought: new Array(13).fill(false),
+    ascend_bought: new Array(26).fill(false),
     autoup_toggle: false,
     autocr_toggle: false,
 
@@ -286,6 +288,66 @@ let game = {
     ascend_time_history: new Array(10).fill(-1),
 
     ascend_time_played: 0,
+
+    ascend_challenge: 0,
+    ascend_complete: new Array(3).fill(false),
+
+    arcane_spice: new Decimal(0),
+    arcane_spice_gen: [
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+    ],
+    arcane_spice_price: [
+        20000,
+        100000,
+        600000,
+        3.5 * 10 ** 7,
+        3 * 10 ** 9,
+        4 * 10 ** 11,
+    ],
+    arcane_spice_bought: [0, 0, 0, 0, 0, 0],
+    arcane_spice_boost: [
+        new Decimal(1),
+        new Decimal(1),
+        new Decimal(1),
+        new Decimal(1),
+        new Decimal(1),
+        new Decimal(1),
+    ],
+    total_arcane_spice_boost: [
+        new Decimal(1),
+        new Decimal(1),
+        new Decimal(1),
+        new Decimal(1),
+        new Decimal(1),
+        new Decimal(1),
+    ],
+    arcane_unlocked: [true, false, false, false, false, false],
+    arcane_max_unlocked: false,
+
+    arcane_strengthener: 0,
+    arcane_strengthener_price: 5000000,
+
+    arcane_enchantment: 0,
+    arcane_enchantment_price: new Decimal(25),
+    autoen_toggle: false,
+}
+
+let key = {
+    digit: [false, false, false, false, false, false],
+    shift: false,
+
+    s: false,
+    m: false,
+    b: false,
+    p: false,
+    i: false,
+    a: false,
+    n: false,
 }
 
 function format_small(num) {
@@ -298,12 +360,39 @@ function format_small(num) {
     }
 }
 
+function format_inum(num, not) {
+    switch (game.exponent_notation) {
+        case 0:
+            return format_inf(num, not, 0)
+        case 1:
+            return format_inf(num, not, 2)
+        case 2:
+            return format_inf(num, not, 3)
+        case 3:
+            return format_inf(num, not, 4)
+    }
+}
+
+function format_idec(num, not) {
+    switch (game.exponent_notation) {
+        case 0:
+            return format_infdec(num, not, 0)
+        case 1:
+            return format_infdec(num, not, 2)
+        case 2:
+            return format_infdec(num, not, 3)
+        case 3:
+            return format_infdec(num, not, 4)
+    }
+}
+
 //initialize map
 const spice_map = new Map()
 const prestige_map = new Map()
 const ascension_map = new Map()
 const ascension_map2 = new Map()
 const ascension_map3 = new Map()
+const challenge_map = new Map()
 
 //spice generator class
 class spice_gen {
@@ -384,6 +473,15 @@ class spice_gen {
                 '" class="' +
                 this.color +
                 '_cost">---</span>'
+        if (this.color === "arcane")
+            gen_until.innerHTML =
+                'Buy until 3: <span id="' +
+                this.color +
+                "_ucost" +
+                this.id +
+                '" class="' +
+                this.color +
+                '_cost">---</span>'
         gen_until.className = "spice_buy"
         gen_until.addEventListener("click", () => {
             buy_until10(this.color, this.id)
@@ -458,14 +556,15 @@ new spice_gen("crystal", 0, Decimal.pow(2, 56), "furnace", "furnaces")
 new spice_gen("crystal", 1, Decimal.pow(2, 62), "refinery", "refineries")
 new spice_gen("crystal", 2, Decimal.pow(2, 68), "headquarters", "headquarters")
 new spice_gen("crystal", 3, Decimal.pow(2, 84), "industry", "industries")
-new spice_gen(
-    "crystal",
-    4,
-    Decimal.pow(2, 100),
-    "intelligence",
-    "intelligences"
-)
+new spice_gen("crystal", 4, Decimal.pow(2, 100), "empire", "empires")
 new spice_gen("crystal", 5, Decimal.pow(2, 124), "singularity", "singularities")
+//arcane
+new spice_gen("arcane", 0, 20000, "glyph", "glyphs")
+new spice_gen("arcane", 1, 100000, "spellbook", "spellbooks")
+new spice_gen("arcane", 2, 600000, "wizard", "wizards")
+new spice_gen("arcane", 3, 3.5 * 10 ** 7, "shrine", "shrines")
+new spice_gen("arcane", 4, 3 * 10 ** 9, "cult", "cults")
+new spice_gen("arcane", 5, 4 * 10 ** 11, "deity", "deities")
 //done initializing spice generators
 
 //prestige upgrade class
@@ -662,12 +761,13 @@ class ascension_upgrade {
     y
 
     //upgrade constructor
-    constructor(desc, price, req, req2, x, y) {
+    constructor(desc, price, req, req2, x, y, challenge) {
         this.desc = desc
         this.id = ascension_upgrade.upgrades.length
         this.price = price
         this.req = req
         this.req2 = req2
+        this.challenge = challenge
 
         ascension_upgrade.upgrades.push(this)
 
@@ -675,6 +775,7 @@ class ascension_upgrade {
         let button = document.createElement("BUTTON")
         button.innerHTML = this.desc + '<br><span class="bold">---</span>'
         button.className = "ascension_upgrade a_locked"
+        if (challenge !== 0) button.className = "ascension_upgrade ac_locked"
         button.style.left = "calc(50% - 8.5em + " + x + ")"
         button.style.top = "calc(15em + " + y + ")"
         button.addEventListener("click", () => {
@@ -689,6 +790,9 @@ class ascension_upgrade {
         if (req !== undefined) {
             let line = document.createElement("DIV")
             line.className = "ascension_line"
+            if (challenge !== 0) line.className = "ascension_line2"
+            if (ascension_upgrade.upgrades[req].challenge !== 0)
+                line.className = "ascension_line2"
 
             ascension_map2.set(this, line)
             document.getElementById("ascension_upgrade_lines").appendChild(line)
@@ -697,6 +801,9 @@ class ascension_upgrade {
         if (req2 !== undefined) {
             let line = document.createElement("DIV")
             line.className = "ascension_line"
+            if (challenge !== 0) line.className = "ascension_line2"
+            if (ascension_upgrade.upgrades[req].challenge !== 0)
+                line.className = "ascension_line2"
 
             ascension_map3.set(this, line)
             document.getElementById("ascension_upgrade_lines").appendChild(line)
@@ -712,7 +819,8 @@ new ascension_upgrade(
     undefined,
     undefined,
     "0em",
-    "0em"
+    "0em",
+    0
 )
 //[1]
 new ascension_upgrade(
@@ -721,7 +829,8 @@ new ascension_upgrade(
     0,
     undefined,
     "0em",
-    "12em"
+    "12em",
+    0
 )
 //[2]
 new ascension_upgrade(
@@ -730,7 +839,8 @@ new ascension_upgrade(
     1,
     undefined,
     "0em",
-    "24em"
+    "24em",
+    0
 )
 //[3]
 new ascension_upgrade(
@@ -739,7 +849,8 @@ new ascension_upgrade(
     2,
     undefined,
     "0em",
-    "36em"
+    "36em",
+    0
 )
 //[4]
 new ascension_upgrade(
@@ -748,7 +859,8 @@ new ascension_upgrade(
     3,
     undefined,
     "10em",
-    "48em"
+    "48em",
+    0
 )
 //[5]
 new ascension_upgrade(
@@ -757,7 +869,8 @@ new ascension_upgrade(
     4,
     undefined,
     "10em",
-    "60em"
+    "60em",
+    0
 )
 //[6]
 new ascension_upgrade(
@@ -766,7 +879,8 @@ new ascension_upgrade(
     5,
     undefined,
     "10em",
-    "72em"
+    "72em",
+    0
 )
 //[7]
 new ascension_upgrade(
@@ -775,7 +889,8 @@ new ascension_upgrade(
     6,
     undefined,
     "20em",
-    "84em"
+    "84em",
+    0
 )
 //[8]
 new ascension_upgrade(
@@ -784,7 +899,8 @@ new ascension_upgrade(
     3,
     undefined,
     "-10em",
-    "48em"
+    "48em",
+    0
 )
 //[9]
 new ascension_upgrade(
@@ -793,7 +909,8 @@ new ascension_upgrade(
     8,
     undefined,
     "-10em",
-    "60em"
+    "60em",
+    0
 )
 //[10]
 new ascension_upgrade(
@@ -802,7 +919,8 @@ new ascension_upgrade(
     9,
     undefined,
     "-10em",
-    "72em"
+    "72em",
+    0
 )
 //[11]
 new ascension_upgrade(
@@ -811,7 +929,8 @@ new ascension_upgrade(
     10,
     undefined,
     "-20em",
-    "84em"
+    "84em",
+    0
 )
 //[12]
 new ascension_upgrade(
@@ -820,6 +939,219 @@ new ascension_upgrade(
     6,
     10,
     "0em",
-    "84em"
+    "84em",
+    0
+)
+//[13]
+new ascension_upgrade(
+    "Pink spice boosts crystallized spice by its amount",
+    5000,
+    12,
+    undefined,
+    "0em",
+    "96em",
+    0
+)
+//[14]
+new ascension_upgrade(
+    "Increase boost from strengtheners/boosts<br>(4.00x -> 6.00x)",
+    30000,
+    13,
+    undefined,
+    "0em",
+    "108em",
+    0
+)
+//[15]
+new ascension_upgrade(
+    "Times Ascended stat boosts rainbow spice gains<br>(Currently: 1.00x)",
+    140000,
+    14,
+    undefined,
+    "0em",
+    "120em",
+    0
+)
+//[16]
+new ascension_upgrade(
+    "Unlocks Challenge 1",
+    500000,
+    15,
+    undefined,
+    "0em",
+    "132em",
+    1
+)
+//[17]
+new ascension_upgrade(
+    "Unlocks automation for arcane enchantments",
+    1000000,
+    16,
+    undefined,
+    "-10em",
+    "144em",
+    0
+)
+//[18]
+new ascension_upgrade(
+    "Red spice boosts crystallized spice by its amount",
+    3 * 10 ** 7,
+    17,
+    undefined,
+    "-10em",
+    "156em",
+    0
+)
+//[19]
+new ascension_upgrade(
+    "Arcane spice is boosted based on unused Ansuz runes<br>(Currently: 1.00x)",
+    2.5 * 10 ** 11,
+    18,
+    undefined,
+    "-10em",
+    "168em",
+    0
+)
+//[20]
+new ascension_upgrade(
+    "Unlocks Challenge 2",
+    10 ** 8,
+    18,
+    undefined,
+    "-30em",
+    "156em",
+    2
+)
+//[21]
+new ascension_upgrade(
+    "You gain 1x more Times Prestiged stat<br>(based on color boosts)",
+    5000000,
+    16,
+    undefined,
+    "10em",
+    "144em",
+    0
+)
+//[22]
+new ascension_upgrade(
+    "Arcane spice boosts crystallized spice by its amount",
+    10 ** 9,
+    21,
+    undefined,
+    "10em",
+    "156em",
+    0
+)
+//[23]
+new ascension_upgrade(
+    "Times Prestiged stat is no longer reset by Ascension",
+    10 ** 10,
+    22,
+    undefined,
+    "10em",
+    "168em",
+    0
+)
+//[24]
+new ascension_upgrade(
+    "Unlocks Challenge 3",
+    5 * 10 ** 10,
+    22,
+    undefined,
+    "30em",
+    "156em",
+    3
+)
+//[25]
+new ascension_upgrade(
+    "You gain 10% of your pending rainbow spice every second",
+    10 ** 12,
+    19,
+    23,
+    "0em",
+    "180em",
+    0
 )
 //done initializing ascension upgrades
+
+//ascension challenge class
+class ascension_challenge {
+    static challenges = []
+
+    desc
+    goal
+    unlock
+
+    //upgrade constructor
+    constructor(desc, goal, unlock) {
+        this.desc = desc
+        this.id = ascension_challenge.challenges.length
+        this.goal = goal
+        this.unlock = unlock
+
+        ascension_challenge.challenges.push(this)
+
+        //entire challenge panel
+        let panel = document.createElement("DIV")
+        panel.className = "a_challenge_panel"
+
+        //all text div
+        let text = document.createElement("DIV")
+        text.className = "a_challenge_block"
+
+        //challenge header
+        let header = document.createElement("P")
+        header.innerHTML = "Challenge " + format_small(this.id + 1)
+        header.className = "a_challenge_header"
+
+        //challenge desc
+        let info = document.createElement("P")
+        info.innerHTML =
+            this.desc +
+            "<br>Goal: <span class='rainbow_spice'>" +
+            format_infdec(this.goal, game.notation) +
+            " μg rainbow spice</span>"
+        info.className = "a_challenge_text"
+
+        //attaching text to text div
+        text.appendChild(header)
+        text.appendChild(info)
+
+        //challenge button
+        let button = document.createElement("BUTTON")
+        button.innerHTML = "Enter Challenge"
+        button.className = "a_challenge_button incomplete"
+        button.addEventListener("click", () => {
+            enter_ascension_challenge(this.id + 1)
+        })
+
+        //attaching stuff to challenge panel
+        panel.appendChild(text)
+        panel.appendChild(button)
+
+        //attaching challenge to ascension challenges page
+        challenge_map.set(this, panel)
+        document.getElementById("challenges_page").appendChild(panel)
+    }
+}
+
+//initializing ascension challenges
+//challenge 1
+new ascension_challenge(
+    "All spice production boosts from upgrades are disabled<br>Reward: Unlock arcane spice",
+    Decimal.pow(10, 540),
+    16
+)
+//challenge 2
+new ascension_challenge(
+    "Crystallized & arcane spice production is disabled<br>Reward: Crystallized spice multipliers are even stronger",
+    Decimal.pow(10, 1100),
+    20
+)
+//challenge 3
+new ascension_challenge(
+    "Color boost requirements scale 10x harder<br>Reward: Strengtheners and infusions are even stronger",
+    Decimal.pow(10, 720),
+    24
+)
+//done initializing ascension challenges
