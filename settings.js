@@ -12,6 +12,8 @@ function goto_tab(id) {
             document.getElementById("prestige_tabs").style.display = "none"
             document.getElementById("ascension_page").style.display = "none"
             document.getElementById("ascension_page2").style.display = "none"
+            document.getElementById("challenges_page").style.display = "none"
+            document.getElementById("arcane_page").style.display = "none"
             document.getElementById("ascension_tabs").style.display = "none"
             document.getElementById("statistics_page").style.display = "none"
             document.getElementById("prestige_statistics_page").style.display =
@@ -49,6 +51,9 @@ function goto_tab(id) {
                 document.getElementById("ascension_page").style.display = "none"
                 document.getElementById("ascension_page2").style.display =
                     "none"
+                document.getElementById("challenges_page").style.display =
+                    "none"
+                document.getElementById("arcane_page").style.display = "none"
                 document.getElementById("ascension_tabs").style.display = "none"
                 document.getElementById("statistics_page").style.display =
                     "none"
@@ -125,6 +130,8 @@ function goto_tab(id) {
             document.getElementById("prestige_tabs").style.display = "none"
             document.getElementById("ascension_page").style.display = "none"
             document.getElementById("ascension_page2").style.display = "none"
+            document.getElementById("challenges_page").style.display = "none"
+            document.getElementById("arcane_page").style.display = "none"
             document.getElementById("ascension_tabs").style.display = "none"
             document.getElementById("settings_page").style.display = "none"
 
@@ -154,6 +161,8 @@ function goto_tab(id) {
             document.getElementById("prestige_tabs").style.display = "none"
             document.getElementById("ascension_page").style.display = "none"
             document.getElementById("ascension_page2").style.display = "none"
+            document.getElementById("challenges_page").style.display = "none"
+            document.getElementById("arcane_page").style.display = "none"
             document.getElementById("ascension_tabs").style.display = "none"
             document.getElementById("statistics_page").style.display = "none"
             document.getElementById("prestige_statistics_page").style.display =
@@ -355,25 +364,107 @@ function goto_subtab(id) {
     } else if (game.tab === 2) {
         game.subtab[3] = id
 
-        document.getElementById("ascension_page").style.display = "none"
-        document.getElementById("ascension_page2").style.display = "none"
-
         switch (id) {
             case 0:
                 document.getElementById("ascension_page").style.display =
                     "block"
+                document.getElementById("ascension_page2").style.display =
+                    "none"
+                document.getElementById("challenges_page").style.display =
+                    "none"
+                document.getElementById("arcane_page").style.display = "none"
 
                 document.getElementById("runes").className = "subtab selected"
                 document.getElementById("ascension_upgrades").className =
                     "subtab unlocked"
+                if (game.ascend_bought[16])
+                    document.getElementById("ascension_challenges").className =
+                        "subtab unlocked"
+                else
+                    document.getElementById("ascension_challenges").className =
+                        "subtab locked"
+                if (game.ascend_complete[0])
+                    document.getElementById("arcane_spice").className =
+                        "subtab unlocked"
+                else
+                    document.getElementById("arcane_spice").className =
+                        "subtab locked"
                 break
             case 1:
                 document.getElementById("ascension_page2").style.display =
                     "block"
+                document.getElementById("ascension_page").style.display = "none"
+                document.getElementById("challenges_page").style.display =
+                    "none"
+                document.getElementById("arcane_page").style.display = "none"
 
                 document.getElementById("ascension_upgrades").className =
                     "subtab selected"
                 document.getElementById("runes").className = "subtab unlocked"
+                if (game.ascend_bought[16])
+                    document.getElementById("ascension_challenges").className =
+                        "subtab unlocked"
+                else
+                    document.getElementById("ascension_challenges").className =
+                        "subtab locked"
+                if (game.ascend_complete[0])
+                    document.getElementById("arcane_spice").className =
+                        "subtab unlocked"
+                else
+                    document.getElementById("arcane_spice").className =
+                        "subtab locked"
+                break
+            case 2:
+                if (game.ascend_bought[16]) {
+                    document.getElementById("challenges_page").style.display =
+                        "block"
+                    document.getElementById("ascension_page").style.display =
+                        "none"
+                    document.getElementById("ascension_page2").style.display =
+                        "none"
+                    document.getElementById("arcane_page").style.display =
+                        "none"
+
+                    document.getElementById("ascension_challenges").className =
+                        "subtab selected"
+                    document.getElementById("runes").className =
+                        "subtab unlocked"
+                    document.getElementById("ascension_upgrades").className =
+                        "subtab unlocked"
+                    if (game.ascend_complete[0])
+                        document.getElementById("arcane_spice").className =
+                            "subtab unlocked"
+                    else
+                        document.getElementById("arcane_spice").className =
+                            "subtab locked"
+                }
+                break
+            case 3:
+                if (game.ascend_complete[0]) {
+                    document.getElementById("arcane_page").style.display =
+                        "block"
+                    document.getElementById("ascension_page").style.display =
+                        "none"
+                    document.getElementById("ascension_page2").style.display =
+                        "none"
+                    document.getElementById("challenges_page").style.display =
+                        "none"
+
+                    document.getElementById("arcane_spice").className =
+                        "subtab selected"
+                    document.getElementById("runes").className =
+                        "subtab unlocked"
+                    document.getElementById("ascension_upgrades").className =
+                        "subtab unlocked"
+                    if (game.ascend_bought[16])
+                        document.getElementById(
+                            "ascension_challenges"
+                        ).className = "subtab unlocked"
+                    else
+                        document.getElementById(
+                            "ascension_challenges"
+                        ).className = "subtab locked"
+                }
                 break
         }
     } else if (game.tab === 5) {
@@ -527,6 +618,46 @@ function confirmations(type, ignore) {
                 document.getElementById("ascend_confirm").innerHTML =
                     "Ascension Confirmations<br>ENABLED"
             }
+            break
+        case "challenge":
+            if (game.challenge_confirm) {
+                game.challenge_confirm = false
+                document.getElementById("challenge_confirm").innerHTML =
+                    "Challenge Confirmations<br>DISABLED"
+            } else {
+                game.challenge_confirm = true
+                document.getElementById("challenge_confirm").innerHTML =
+                    "Challenge Confirmations<br>ENABLED"
+            }
+            break
+    }
+}
+
+//change exponent notation
+function exponent_notation(not) {
+    if (not === undefined) {
+        game.exponent_notation++
+        if (game.exponent_notation > 3) game.exponent_notation = 0
+    } else {
+        game.exponent_notation = not
+    }
+
+    switch (game.exponent_notation) {
+        case 0:
+            document.getElementById("exponent_notation").innerHTML =
+                "Exponent Notation<br>LONG"
+            break
+        case 1:
+            document.getElementById("exponent_notation").innerHTML =
+                "Exponent Notation<br>SCIENTIFIC"
+            break
+        case 2:
+            document.getElementById("exponent_notation").innerHTML =
+                "Exponent Notation<br>ENGINEERING"
+            break
+        case 3:
+            document.getElementById("exponent_notation").innerHTML =
+                "Exponent Notation<br>STANDARD"
             break
     }
 }
