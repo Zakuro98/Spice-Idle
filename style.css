@@ -5,6 +5,8 @@
     --ascension3: #05282e;
     --ascension4: #0a505c;
     --ascension5: #087d91;
+    --arcane_spice: #a04dff;
+    --arcane_spice2: #8519ff;
 }
 
 html {
@@ -84,11 +86,11 @@ main {
     margin-left: 2em;
 }
 
-#crystal_buy_i {
+#crystal_buy_i, #arcane_buy_n {
     display: inline;
 }
 
-#statistics_page, #yellow_page, #green_page, #blue_page, #pink_page, #prestige_page, #crystal_page, #crystal_page2, #ascension_page, #ascension_page2, #settings_page {
+#statistics_page, #yellow_page, #green_page, #blue_page, #pink_page, #prestige_page, #crystal_page, #crystal_page2, #ascension_page, #ascension_page2, #challenges_page, #settings_page {
     display: none;
 }
 
@@ -171,6 +173,9 @@ main {
 .center_button {
     display: flex;
     justify-content: center;
+}
+
+.prestige_upgrade_auto {
     margin-top: 5em;
     margin-bottom: 0.5em;
 }
@@ -246,7 +251,7 @@ main {
     color: #25dd8a;
 }
 
-#boost_auto, #infusion_auto, #prestige_auto_toggle {
+#boost_auto, #infusion_auto, #enchantment_auto, #prestige_auto_toggle {
     font-size: 1em;
 }
 
@@ -278,6 +283,11 @@ main {
 .crystal_spice {
     color: white;
     text-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
+}
+
+.arcane_spice {
+    color: var(--arcane_spice);
+    text-shadow: 0em 0em 0.2em var(--arcane_spice), 0em 0em 0.5em var(--arcane_spice2)
 }
 
 .red_cost {
@@ -317,6 +327,18 @@ main {
     font-weight: 700;
 }
 
+.rune_cost {
+    color: var(--ascension2);
+    text-shadow: 0em 0em 0.2em var(--ascension);
+    font-weight: 700;
+}
+
+.arcane_cost {
+    color: var(--arcane_spice);
+    text-shadow: 0em 0em 0.2em var(--arcane_spice), 0em 0em 0.5em var(--arcane_spice2);
+    font-weight: 700;
+}
+
 .empty_cost {
     color: #9b9b9b;
     font-weight: 700;
@@ -334,6 +356,10 @@ main {
     display: flex;
     justify-content: right;
     align-items: center;
+    flex-grow: 1;
+}
+
+#rainbow_spice_up, #prestige_auto_block, #rune_control_block, #ascend_auto_block {
     flex-grow: 1;
 }
 
@@ -503,7 +529,7 @@ main {
     flex-grow: 1;
 }
 
-#rainbow_spice_num2, #rainbow_spice_text2 {
+#rainbow_spice_num2, #rainbow_spice_text2, #rainbow_spice_up2 {
     text-align: right;
 }
 
@@ -674,6 +700,44 @@ main {
     box-shadow: 0 0 0.8em var(--ascension);
 }
 
+.ac_locked {
+    background-color: black;
+    color: #cccccc;
+    border: 1px solid #cccccc;
+}
+
+.ac_unlocked {
+    background-color: #333333;
+    color: white;
+    text-shadow: 0 0 0.5em #cccccc;
+    border: 1px solid white;
+    box-shadow: 0 0 0.6em white, 0 0 0.6em white inset, 0 0 2em #cccccc inset;
+}
+
+.ac_unlocked:hover {
+    background-color: #555555;
+    color: white;
+    text-shadow: 0 0 0.25em white, 0 0 0.5em #cccccc;
+    border: 1px solid white;
+    box-shadow: 0 0 0.6em white, 0 0 0.6em white inset, 0 0 2em white inset;
+}
+
+.ac_unlocked:active {
+    background-color: white;
+    color: black;
+    text-shadow: none;
+    border: 1px solid white;
+    box-shadow: 0 0 0.8em #cccccc;
+}
+
+.ac_bought {
+    background-color: white;
+    color: black;
+    text-shadow: none;
+    border: 1px solid white;
+    box-shadow: 0 0 0.8em #cccccc;
+}
+
 .runes {
     color: var(--ascension2);
     text-shadow: 0 0 0.2em var(--ascension);
@@ -717,14 +781,25 @@ main {
     margin-bottom: 3em;
 }
 
+#arcane_rune_control {
+    justify-content: right;
+}
+
 .rune_button {
     font-size: 1.25em;
     font-family: "Fira Code";
     margin-right: 0.5em;
 }
 
+.ascend_info {
+    color: white;
+    font-size: 1.35em;
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+
 #ascension_upgrade_screen {
-    height: 76em;
+    height: 165em;
 }
 
 .ascension_upgrade {
@@ -746,6 +821,126 @@ main {
     line-height: 1px;
     position: absolute;
     height: 2em;
+}
+
+.ascension_line2 {
+    padding: 0em;
+    margin: 0em;
+    background-color: #777777;
+    line-height: 1px;
+    position: absolute;
+    height: 2em;
+}
+
+.challenge_info {
+    color: white;
+    font-size: 1.35em;
+    text-align: center;
+    margin-top: 0em;
+    margin-bottom: 3em;
+}
+
+.a_challenge_panel {
+    display: flex;
+    width: 70em;
+    padding: 1em;
+    background-color: black;
+    border: 1px solid var(--ascension2);
+    box-shadow: 0 0 0.4em var(--ascension), 0 0 0.4em var(--ascension) inset;
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.a_challenge_text {
+    font-size: 1.35em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.a_challenge_header {
+    font-size: 1.35em;
+    font-weight: 400;
+    color: var(--ascension2);
+    text-shadow: 0 0 0.2em var(--ascension);
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.a_challenge_block {
+    flex-grow: 1;
+}
+
+.a_challenge_button {
+    font-family: "Fira Code";
+    font-size: 1.85em;
+    font-weight: 700;
+    width: 7.5em;
+    flex-grow: 0;
+    margin-left: 1em;
+}
+
+.incomplete {
+    background-color: var(--ascension3);
+    color: var(--ascension2);
+    text-shadow: 0 0 0.2em var(--ascension);
+    border: 1px solid var(--ascension2);
+    box-shadow: 0 0 0.4em var(--ascension), 0 0 1em var(--ascension) inset;
+}
+
+.incomplete:hover {
+    background-color: var(--ascension4);
+    color: white;
+    text-shadow: 0 0 0.1em white, 0 0 0.2em var(--ascension);
+    border: 1px solid var(--ascension2);
+    box-shadow: 0 0 0.4em var(--ascension), 0 0 1em var(--ascension) inset;
+}
+
+.incomplete:active {
+    background-color: var(--ascension);
+    color: black;
+    text-shadow: none;
+    border: 1px solid var(--ascension);
+    box-shadow: 0 0 0.4em var(--ascension);
+}
+
+.inprogress {
+    background-color: var(--ascension);
+    color: black;
+    text-shadow: none;
+    border: 1px solid var(--ascension);
+    box-shadow: 0 0 0.4em var(--ascension);
+}
+
+.complete {
+    background-color: white;
+    color: black;
+    text-shadow: none;
+    border: 1px solid white;
+    box-shadow: 0 0 0.4em white;
+}
+
+.arcane_header {
+    display: flex;
+}
+
+.arcane_panel {
+    flex-grow: 1;
+}
+
+#ansuz_num3, #ansuz_text2 {
+    text-align: right;
+}
+
+#arcane_buy_n, #arcane_max_n {
+    display: inline;
+}
+
+#arcane_gen_n {
+    margin-top: 0em;
+    margin-bottom: 3.5em;
 }
 
 .statistics_text {
