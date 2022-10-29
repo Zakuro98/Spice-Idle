@@ -1,5 +1,5 @@
 //purchasing spice generators
-function buy_gen(color, id) {
+function buy_gen(color, id, budget) {
     switch (color) {
         case "red":
             if (game.red_spice.cmp(game.red_spice_price[id]) >= 0) {
@@ -11,6 +11,10 @@ function buy_gen(color, id) {
                 game.red_spice_boost[id] = new Decimal(
                     Math.floor(game.red_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
+                if (game.ascend_challenge === 1)
+                    game.red_spice_boost[id] = new Decimal(
+                        Math.floor(game.red_spice_bought[id] / 10) + 1
+                    )
             }
             break
         case "yellow":
@@ -26,6 +30,10 @@ function buy_gen(color, id) {
                 game.yellow_spice_boost[id] = new Decimal(
                     Math.floor(game.yellow_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
+                if (game.ascend_challenge === 1)
+                    game.yellow_spice_boost[id] = new Decimal(
+                        Math.floor(game.yellow_spice_bought[id] / 10) + 1
+                    )
             }
             break
         case "green":
@@ -40,6 +48,10 @@ function buy_gen(color, id) {
                 game.green_spice_boost[id] = new Decimal(
                     Math.floor(game.green_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
+                if (game.ascend_challenge === 1)
+                    game.green_spice_boost[id] = new Decimal(
+                        Math.floor(game.green_spice_bought[id] / 10) + 1
+                    )
             }
             break
         case "blue":
@@ -52,6 +64,10 @@ function buy_gen(color, id) {
                 game.blue_spice_boost[id] = new Decimal(
                     Math.floor(game.blue_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
+                if (game.ascend_challenge === 1)
+                    game.blue_spice_boost[id] = new Decimal(
+                        Math.floor(game.blue_spice_bought[id] / 10) + 1
+                    )
             }
             break
         case "pink":
@@ -64,6 +80,10 @@ function buy_gen(color, id) {
                 game.pink_spice_boost[id] = new Decimal(
                     Math.floor(game.pink_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
+                if (game.ascend_challenge === 1)
+                    game.pink_spice_boost[id] = new Decimal(
+                        Math.floor(game.pink_spice_bought[id] / 10) + 1
+                    )
             }
             break
         case "crystal":
@@ -82,10 +102,40 @@ function buy_gen(color, id) {
                 )
             }
             break
+        case "arcane":
+            if (budget !== undefined) {
+                if (budget >= Math.round(game.arcane_spice_price[id])) {
+                    game.ansuz -= Math.round(game.arcane_spice_price[id])
+                    budget -= Math.round(game.arcane_spice_price[id])
+                    game.arcane_spice_price[id] *= 1.1
+                    game.arcane_spice_gen[id] = game.arcane_spice_gen[id].add(1)
+                    game.arcane_spice_bought[id] += 1
+
+                    game.arcane_spice_boost[id] = Decimal.pow(
+                        3,
+                        Math.floor(game.arcane_spice_bought[id] / 3)
+                    )
+
+                    return budget
+                }
+            } else {
+                if (game.ansuz >= Math.round(game.arcane_spice_price[id])) {
+                    game.ansuz -= Math.round(game.arcane_spice_price[id])
+                    game.arcane_spice_price[id] *= 1.1
+                    game.arcane_spice_gen[id] = game.arcane_spice_gen[id].add(1)
+                    game.arcane_spice_bought[id] += 1
+
+                    game.arcane_spice_boost[id] = Decimal.pow(
+                        3,
+                        Math.floor(game.arcane_spice_bought[id] / 3)
+                    )
+                }
+            }
+            break
     }
 }
 
-function buy_until10(color, id) {
+function buy_until10(color, id, budget) {
     let n = 0
     let price = 0
     switch (color) {
@@ -108,6 +158,10 @@ function buy_until10(color, id) {
                 game.red_spice_boost[id] = new Decimal(
                     Math.floor(game.red_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
+                if (game.ascend_challenge === 1)
+                    game.red_spice_boost[id] = new Decimal(
+                        Math.floor(game.red_spice_bought[id] / 10) + 1
+                    )
             }
             break
         case "yellow":
@@ -129,6 +183,10 @@ function buy_until10(color, id) {
                 game.yellow_spice_boost[id] = new Decimal(
                     Math.floor(game.yellow_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
+                if (game.ascend_challenge === 1)
+                    game.yellow_spice_boost[id] = new Decimal(
+                        Math.floor(game.yellow_spice_bought[id] / 10) + 1
+                    )
             }
             break
         case "green":
@@ -150,6 +208,10 @@ function buy_until10(color, id) {
                 game.green_spice_boost[id] = new Decimal(
                     Math.floor(game.green_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
+                if (game.ascend_challenge === 1)
+                    game.green_spice_boost[id] = new Decimal(
+                        Math.floor(game.green_spice_bought[id] / 10) + 1
+                    )
             }
             break
         case "blue":
@@ -171,6 +233,10 @@ function buy_until10(color, id) {
                 game.blue_spice_boost[id] = new Decimal(
                     Math.floor(game.blue_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
+                if (game.ascend_challenge === 1)
+                    game.blue_spice_boost[id] = new Decimal(
+                        Math.floor(game.blue_spice_bought[id] / 10) + 1
+                    )
             }
             break
         case "pink":
@@ -192,6 +258,10 @@ function buy_until10(color, id) {
                 game.pink_spice_boost[id] = new Decimal(
                     Math.floor(game.pink_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
+                if (game.ascend_challenge === 1)
+                    game.pink_spice_boost[id] = new Decimal(
+                        Math.floor(game.pink_spice_bought[id] / 10) + 1
+                    )
             }
             break
         case "crystal":
@@ -214,6 +284,54 @@ function buy_until10(color, id) {
                     2,
                     Math.floor(game.crystal_spice_bought[id] / 5)
                 )
+            }
+            break
+        case "arcane":
+            if (budget !== undefined) {
+                n =
+                    Math.floor(game.arcane_spice_bought[id] / 3) * 3 +
+                    3 -
+                    game.arcane_spice_bought[id]
+
+                price = Math.round(
+                    (game.arcane_spice_price[id] * (1 - 1.1 ** n)) / -0.1
+                )
+
+                if (budget >= price) {
+                    game.ansuz -= price
+                    budget -= price
+                    game.arcane_spice_price[id] *= 1.1 ** n
+                    game.arcane_spice_gen[id] = game.arcane_spice_gen[id].add(n)
+                    game.arcane_spice_bought[id] += n
+
+                    game.arcane_spice_boost[id] = Decimal.pow(
+                        3,
+                        Math.floor(game.arcane_spice_bought[id] / 3)
+                    )
+
+                    return budget
+                }
+            } else {
+                n =
+                    Math.floor(game.arcane_spice_bought[id] / 3) * 3 +
+                    3 -
+                    game.arcane_spice_bought[id]
+
+                price = Math.round(
+                    (game.arcane_spice_price[id] * (1 - 1.1 ** n)) / -0.1
+                )
+
+                if (game.ansuz >= price) {
+                    game.ansuz -= price
+                    game.arcane_spice_price[id] *= 1.1 ** n
+                    game.arcane_spice_gen[id] = game.arcane_spice_gen[id].add(n)
+                    game.arcane_spice_bought[id] += n
+
+                    game.arcane_spice_boost[id] = Decimal.pow(
+                        3,
+                        Math.floor(game.arcane_spice_bought[id] / 3)
+                    )
+                }
             }
             break
     }
@@ -322,6 +440,13 @@ function buy_strengthener(color) {
                 game.crystal_strengthener += 1
             }
             break
+        case "arcane":
+            if (game.ansuz >= Math.round(game.arcane_strengthener_price)) {
+                game.ansuz -= Math.round(game.arcane_strengthener_price)
+                game.arcane_strengthener_price *= 8
+                game.arcane_strengthener += 1
+            }
+            break
     }
 }
 
@@ -345,6 +470,7 @@ function max_all(color) {
             a = 3
             break
     }
+    if (game.ascend_complete[2]) a = 2
     let b = (49 * Math.log(a) - 2 * Math.log(10000)) / (2 * Math.log(a))
     let c =
         Math.log(a) ** 2 -
@@ -487,6 +613,10 @@ function max_all(color) {
                     game.red_spice_boost[i] = new Decimal(
                         Math.floor(game.red_spice_bought[i] / 10) + 1
                     ).pow(game.prestige_bought[3] + 1)
+                    if (game.ascend_challenge === 1)
+                        game.red_spice_boost[i] = new Decimal(
+                            Math.floor(game.red_spice_bought[i] / 10) + 1
+                        )
                 }
             }
             break
@@ -632,6 +762,10 @@ function max_all(color) {
                     game.yellow_spice_boost[i] = new Decimal(
                         Math.floor(game.yellow_spice_bought[i] / 10) + 1
                     ).pow(game.prestige_bought[3] + 1)
+                    if (game.ascend_challenge === 1)
+                        game.yellow_spice_boost[i] = new Decimal(
+                            Math.floor(game.yellow_spice_bought[i] / 10) + 1
+                        )
                 }
             }
             break
@@ -775,6 +909,10 @@ function max_all(color) {
                     game.green_spice_boost[i] = new Decimal(
                         Math.floor(game.green_spice_bought[i] / 10) + 1
                     ).pow(game.prestige_bought[3] + 1)
+                    if (game.ascend_challenge === 1)
+                        game.green_spice_boost[i] = new Decimal(
+                            Math.floor(game.green_spice_bought[i] / 10) + 1
+                        )
                 }
             }
             break
@@ -914,6 +1052,10 @@ function max_all(color) {
                     game.blue_spice_boost[i] = new Decimal(
                         Math.floor(game.blue_spice_bought[i] / 10) + 1
                     ).pow(game.prestige_bought[3] + 1)
+                    if (game.ascend_challenge === 1)
+                        game.blue_spice_boost[i] = new Decimal(
+                            Math.floor(game.blue_spice_bought[i] / 10) + 1
+                        )
                 }
             }
             break
@@ -1053,6 +1195,10 @@ function max_all(color) {
                     game.pink_spice_boost[i] = new Decimal(
                         Math.floor(game.pink_spice_bought[i] / 10) + 1
                     ).pow(game.prestige_bought[3] + 1)
+                    if (game.ascend_challenge === 1)
+                        game.pink_spice_boost[i] = new Decimal(
+                            Math.floor(game.pink_spice_bought[i] / 10) + 1
+                        )
                 }
             }
             break
@@ -1102,6 +1248,90 @@ function max_all(color) {
                     game.crystal_spice_boost[i] = Decimal.pow(
                         2,
                         Math.floor(game.crystal_spice_bought[i] / 5)
+                    )
+                }
+            }
+            break
+        case "arcane":
+            n = Math.floor(
+                Math.log10(
+                    1 - (game.ansuz * -7) / game.arcane_strengthener_price
+                ) / Math.log10(8)
+            )
+            if (n > 0) {
+                let price = Math.round(
+                    (game.arcane_strengthener_price * (1 - 8 ** n)) / -7
+                )
+                game.ansuz -= price
+                game.arcane_strengthener_price *= 8 ** n
+                game.arcane_strengthener += n
+            }
+            for (let i = 5; i >= 0; i--) {
+                if (game.arcane_spice_bought[i] === 0) buy_gen("arcane", i)
+                buy_until10("arcane", i)
+                let n = Math.floor(
+                    Math.log10(
+                        1 - (game.ansuz * -0.1) / game.arcane_spice_price[i]
+                    ) / Math.log10(1.1)
+                )
+                if (game.arcane_spice_bought[i] >= 3) n = Math.floor(n / 3) * 3
+                if (n > 0) {
+                    let price = Math.round(
+                        (game.arcane_spice_price[i] * (1 - 1.1 ** n)) / -0.1
+                    )
+                    game.ansuz -= price
+                    game.arcane_spice_price[i] *= 1.1 ** n
+                    game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(n)
+                    game.arcane_spice_bought[i] += n
+
+                    game.arcane_spice_boost[i] = Decimal.pow(
+                        3,
+                        Math.floor(game.arcane_spice_bought[i] / 3)
+                    )
+                }
+            }
+            break
+        case "arcane_half":
+            let budget = game.ansuz / 2
+            n = Math.floor(
+                Math.log10(1 - (budget * -7) / game.arcane_strengthener_price) /
+                    Math.log10(8)
+            )
+            if (n > 0) {
+                let price = Math.round(
+                    (game.arcane_strengthener_price * (1 - 8 ** n)) / -7
+                )
+                game.ansuz -= price
+                budget -= price
+                game.arcane_strengthener_price *= 8 ** n
+                game.arcane_strengthener += n
+            }
+            for (let i = 5; i >= 0; i--) {
+                let temp_budget = budget
+                if (game.arcane_spice_bought[i] === 0)
+                    temp_budget = buy_gen("arcane", i, budget)
+                if (temp_budget !== undefined) budget = temp_budget
+                temp_budget = buy_until10("arcane", i, budget)
+                if (temp_budget !== undefined) budget = temp_budget
+                let n = Math.floor(
+                    Math.log10(
+                        1 - (budget * -0.1) / game.arcane_spice_price[i]
+                    ) / Math.log10(1.1)
+                )
+                if (game.arcane_spice_bought[i] >= 3) n = Math.floor(n / 3) * 3
+                if (n > 0) {
+                    let price = Math.round(
+                        (game.arcane_spice_price[i] * (1 - 1.1 ** n)) / -0.1
+                    )
+                    game.ansuz -= price
+                    budget -= price
+                    game.arcane_spice_price[i] *= 1.1 ** n
+                    game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(n)
+                    game.arcane_spice_bought[i] += n
+
+                    game.arcane_spice_boost[i] = Decimal.pow(
+                        3,
+                        Math.floor(game.arcane_spice_bought[i] / 3)
                     )
                 }
             }
@@ -1296,6 +1526,21 @@ function auto_toggle(color, unless) {
                 }
             }
             break
+        case "enchantment":
+            if (game.autoen_toggle) {
+                game.autoen_toggle = false
+                document.getElementById("enchantment_auto").innerHTML =
+                    "Auto: OFF"
+                document.getElementById("enchantment_auto").className =
+                    "spice_buy a_disabled"
+            } else {
+                game.autoen_toggle = true
+                document.getElementById("enchantment_auto").innerHTML =
+                    "Auto: ON"
+                document.getElementById("enchantment_auto").className =
+                    "spice_buy a_enabled"
+            }
+            break
     }
 }
 
@@ -1388,12 +1633,18 @@ function buy_infusion() {
         if (game.crystal_infusion >= 160) {
             game.crystal_infusion_price = game.crystal_infusion_price.mul(10)
         }
+        if (game.crystal_infusion >= 22500) {
+            game.crystal_infusion_price = game.crystal_infusion_price.mul(
+                1.2 * 10 ** 9
+            )
+        }
         game.crystal_infusion += 1
     }
 }
 
 //maxing crystal infusions
 function max_infusion() {
+    let n = 0
     if (game.crystal_spice.cmp(game.crystal_infusion_price) >= 0) {
         if (game.crystal_infusion < 20) {
             n = Math.floor(
@@ -1462,22 +1713,45 @@ function max_infusion() {
                 game.crystal_infusion += n
             }
         }
+        if (game.crystal_infusion < 22500) {
+            n = Math.floor(
+                new Decimal(1)
+                    .sub(
+                        game.crystal_spice
+                            .mul(-1919)
+                            .div(game.crystal_infusion_price)
+                    )
+                    .log(10) / Math.log10(1920)
+            )
+            if (game.crystal_infusion + n >= 22500)
+                n = 22500 - game.crystal_infusion
+            if (n > 0) {
+                let price = game.crystal_infusion_price
+                    .mul(new Decimal(1).sub(new Decimal(1920).pow(n)))
+                    .div(-1919)
+                game.crystal_spice = game.crystal_spice.sub(price)
+                game.crystal_infusion_price = game.crystal_infusion_price.mul(
+                    new Decimal(1920).pow(n)
+                )
+                game.crystal_infusion += n
+            }
+        }
         n = Math.floor(
             new Decimal(1)
                 .sub(
                     game.crystal_spice
-                        .mul(-1919)
+                        .mul(-2.304 * 10 ** 12 + 1)
                         .div(game.crystal_infusion_price)
                 )
-                .log(10) / Math.log10(1920)
+                .log(10) / Math.log10(2.304 * 10 ** 12)
         )
         if (n > 0) {
             let price = game.crystal_infusion_price
-                .mul(new Decimal(1).sub(new Decimal(1920).pow(n)))
-                .div(-1919)
+                .mul(new Decimal(1).sub(new Decimal(2.304 * 10 ** 12).pow(n)))
+                .div(-2.304 * 10 ** 12 + 1)
             game.crystal_spice = game.crystal_spice.sub(price)
             game.crystal_infusion_price = game.crystal_infusion_price.mul(
-                new Decimal(1920).pow(n)
+                new Decimal(2.304 * 10 ** 12).pow(n)
             )
             game.crystal_infusion += n
         }
@@ -1498,14 +1772,22 @@ function convert_rune(id, max) {
 }
 
 //distribute runes
-function distribute_runes() {
-    if (game.ansuz >= 3) {
-        let amount = Math.floor(game.ansuz / 3)
-
-        game.ansuz -= amount * 3
-        for (let i = 0; i < 3; i++) {
-            game.rune[i] += amount
+function distribute_runes(mode) {
+    let amount = 0
+    if (mode === "all") {
+        if (game.ansuz >= 3) {
+            amount = Math.floor(game.ansuz / 3)
         }
+    }
+    if (mode === "half") {
+        if (game.ansuz >= 6) {
+            amount = Math.floor(game.ansuz / 6)
+        }
+    }
+
+    game.ansuz -= amount * 3
+    for (let i = 0; i < 3; i++) {
+        game.rune[i] += amount
     }
 }
 
@@ -1523,7 +1805,6 @@ function recall_runes(mode) {
         } else {
             recall_ready = true
         }
-        
 
         if (recall_ready) {
             for (let i = 0; i < 3; i++) {
@@ -1535,12 +1816,16 @@ function recall_runes(mode) {
         }
     } else if (mode === 2) {
         let recall_ready = false
-        if (
-            confirm(
-                "Are you sure you want to recall all spent runes? You will Ascend!"
+        if (game.ascend_confirm) {
+            if (
+                confirm(
+                    "Are you sure you want to recall all runes spent on upgrades? You will Ascend!"
+                )
             )
-        )
+                recall_ready = true
+        } else {
             recall_ready = true
+        }
 
         if (recall_ready) {
             for (const u of ascension_upgrade.upgrades) {
@@ -1558,12 +1843,54 @@ function recall_runes(mode) {
         }
     } else if (mode === 3) {
         let recall_ready = false
-        if (
-            confirm(
-                "Are you sure you want to recall runes from ALL sources? You will Ascend!"
+        if (game.ascend_confirm) {
+            if (
+                confirm(
+                    "Are you sure you want to recall all runes spent on arcane spice? You will Ascend!"
+                )
             )
-        )
+                recall_ready = true
+        } else {
             recall_ready = true
+        }
+
+        if (recall_ready) {
+            for (let i = 0; i < 6; i++) {
+                console.log(game.arcane_spice_bought[i] > 0)
+                if (game.arcane_spice_bought[i] > 0) {
+                    game.ansuz += Math.floor(
+                        (spice_gen.generators[36 + i].base_price *
+                            (1 - 1.1 ** game.arcane_spice_bought[i])) /
+                            -0.1
+                    )
+                    game.arcane_spice_bought[i] = 0
+                    game.arcane_spice_price[i] =
+                        spice_gen.generators[36 + i].base_price
+                    game.arcane_spice_boost[i] = new Decimal(1)
+                }
+            }
+
+            if (game.arcane_strengthener > 0) {
+                game.ansuz +=
+                    (5000000 * (1 - 8 ** game.arcane_strengthener)) / -7
+                game.arcane_strengthener = 0
+                game.arcane_strengthener_price = 5000000
+            }
+
+            ascend(true)
+        }
+    } else if (mode === 4) {
+        let recall_ready = false
+        if (game.ascend_confirm) {
+            if (
+                confirm(
+                    "Are you sure you want to recall runes from ALL sources? You will Ascend!"
+                )
+            )
+                recall_ready = true
+        } else {
+            recall_ready = true
+        }
 
         if (recall_ready) {
             for (let i = 0; i < 3; i++) {
@@ -1582,6 +1909,27 @@ function recall_runes(mode) {
                 auto_toggle("prestige_mode")
             }
 
+            for (let i = 0; i < 6; i++) {
+                if (game.arcane_spice_bought[i] > 0) {
+                    game.ansuz += Math.floor(
+                        (spice_gen.generators[36 + i].base_price *
+                            (1 - 1.1 ** game.arcane_spice_bought[i])) /
+                            -0.1
+                    )
+                    game.arcane_spice_bought[i] = 0
+                    game.arcane_spice_price[i] =
+                        spice_gen.generator[36 + i].base_price
+                    game.arcane_spice_boost[i] = new Decimal(1)
+                }
+            }
+
+            if (game.arcane_strengthener > 0) {
+                game.ansuz +=
+                    (5000000 * (1 - 8 ** game.arcane_strengthener)) / -7
+                game.arcane_strengthener = 0
+                game.arcane_strengthener_price = 5000000
+            }
+
             ascend(true)
         }
     }
@@ -1591,17 +1939,39 @@ function recall_runes(mode) {
 function buy_ascension_upgrade(id) {
     let condition1 = false
     let condition2 = false
-    if (ascension_upgrade.upgrades[id].req !== undefined) {
-        if (game.ascend_bought[ascension_upgrade.upgrades[id].req])
-            condition1 = true
-        else condition1 = false
+    let upgrade1 = ascension_upgrade.upgrades[id].req
+    let upgrade2 = ascension_upgrade.upgrades[id].req2
+    if (upgrade1 !== undefined) {
+        if (game.ascend_bought[upgrade1]) {
+            if (ascension_upgrade.upgrades[upgrade1].challenge !== 0) {
+                if (
+                    game.ascend_complete[
+                        ascension_upgrade.upgrades[upgrade1].challenge - 1
+                    ]
+                )
+                    condition1 = true
+                else condition1 = false
+            } else {
+                condition1 = true
+            }
+        } else condition1 = false
     } else {
         condition1 = true
     }
-    if (ascension_upgrade.upgrades[id].req2 !== undefined) {
-        if (game.ascend_bought[ascension_upgrade.upgrades[id].req2])
-            condition2 = true
-        else condition2 = false
+    if (upgrade2 !== undefined) {
+        if (game.ascend_bought[upgrade2]) {
+            if (ascension_upgrade.upgrades[upgrade2].challenge !== 0) {
+                if (
+                    game.ascend_complete[
+                        ascension_upgrade.upgrades[upgrade1].challenge - 1
+                    ]
+                )
+                    condition2 = true
+                else condition2 = false
+            } else {
+                condition2 = true
+            }
+        } else condition2 = false
     } else {
         condition2 = true
     }
@@ -1614,5 +1984,123 @@ function buy_ascension_upgrade(id) {
     ) {
         game.ansuz -= ascension_upgrade.upgrades[id].price
         game.ascend_bought[id] = true
+    }
+}
+
+//entering an ascension challenge
+function enter_ascension_challenge(id) {
+    if (game.ascend_challenge === 0 && !game.ascend_complete[id - 1]) {
+        let challenge_ready = false
+        if (!game.challenge_confirm) challenge_ready = true
+        else {
+            if (
+                confirm(
+                    "Are you sure you want to enter Challenge " +
+                        format_num(id, 0) +
+                        "? You will Ascend!"
+                )
+            ) {
+                challenge_ready = true
+            }
+        }
+
+        if (challenge_ready) {
+            ascend(true)
+            game.ascend_challenge = id
+        }
+    } else {
+        alert(
+            "You cannot enter an Ascension Challenge if you are already in one!"
+        )
+    }
+}
+
+//exiting an ascension challenge
+function exit_ascension_challenge() {
+    if (game.ascend_challenge !== 0) {
+        game.ascend_challenge = 0
+        ascend(true)
+    }
+}
+
+//buying arcane enchantments
+function buy_enchantment() {
+    if (game.arcane_spice.cmp(game.arcane_enchantment_price) >= 0) {
+        game.arcane_spice = game.arcane_spice.sub(game.arcane_enchantment_price)
+        game.arcane_enchantment_price = game.arcane_enchantment_price.mul(4)
+        if (game.arcane_enchantment >= 25)
+            game.arcane_enchantment_price = game.arcane_enchantment_price.mul(5)
+        if (game.arcane_enchantment >= 125)
+            game.arcane_enchantment_price = game.arcane_enchantment_price.mul(6)
+
+        game.arcane_enchantment += 1
+    }
+}
+
+//maxing arcane enchantments
+function max_enchantment() {
+    if (game.arcane_spice.cmp(game.arcane_enchantment_price) >= 0) {
+        if (game.arcane_enchantment < 25) {
+            n = Math.floor(
+                new Decimal(1)
+                    .sub(
+                        game.arcane_spice
+                            .mul(-3)
+                            .div(game.arcane_enchantment_price)
+                    )
+                    .log(10) / Math.log10(4)
+            )
+            if (game.crystal_infusion + n >= 25) n = 25 - game.crystal_infusion
+            if (n > 0) {
+                let price = game.arcane_enchantment_price
+                    .mul(new Decimal(1).sub(new Decimal(4).pow(n)))
+                    .div(-3)
+                game.arcane_spice = game.arcane_spice.sub(price)
+                game.arcane_enchantment_price =
+                    game.arcane_enchantment_price.mul(new Decimal(4).pow(n))
+                game.arcane_enchantment += n
+            }
+        }
+        if (game.arcane_enchantment < 125) {
+            n = Math.floor(
+                new Decimal(1)
+                    .sub(
+                        game.arcane_spice
+                            .mul(-19)
+                            .div(game.arcane_enchantment_price)
+                    )
+                    .log(10) / Math.log10(20)
+            )
+            if (game.crystal_infusion + n >= 125)
+                n = 125 - game.crystal_infusion
+            if (n > 0) {
+                let price = game.arcane_enchantment_price
+                    .mul(new Decimal(1).sub(new Decimal(20).pow(n)))
+                    .div(-19)
+                game.arcane_spice = game.arcane_spice.sub(price)
+                game.arcane_enchantment_price =
+                    game.arcane_enchantment_price.mul(new Decimal(20).pow(n))
+                game.arcane_enchantment += n
+            }
+        }
+        n = Math.floor(
+            new Decimal(1)
+                .sub(
+                    game.arcane_spice
+                        .mul(-119)
+                        .div(game.arcane_enchantment_price)
+                )
+                .log(10) / Math.log10(120)
+        )
+        if (n > 0) {
+            let price = game.arcane_enchantment_price
+                .mul(new Decimal(1).sub(new Decimal(120).pow(n)))
+                .div(-119)
+            game.arcane_spice = game.arcane_spice.sub(price)
+            game.arcane_enchantment_price = game.arcane_enchantment_price.mul(
+                new Decimal(120).pow(n)
+            )
+            game.arcane_enchantment += n
+        }
     }
 }
