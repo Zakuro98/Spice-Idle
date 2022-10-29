@@ -1,4 +1,4 @@
-function format_num(num, not) {
+function format_num(num, not, nospace) {
     let negative = false
     let cutoff = 1000000
 
@@ -170,7 +170,8 @@ function format_num(num, not) {
                     lead_str2 = lead2.toFixed(1)
                 }
 
-                output = lead_str2 + " " + one_str2 + ten_str2
+                if (nospace) output = lead_str2 + one_str2 + ten_str2
+                else output = lead_str2 + " " + one_str2 + ten_str2
                 break
             case 5:
                 let exponent3 = Math.log10(num)
@@ -608,7 +609,7 @@ function format_num(num, not) {
     return output
 }
 
-function format_inf(num, not) {
+function format_inf(num, not, enot) {
     let negative = false
     let cutoff = 1000000
 
@@ -897,7 +898,8 @@ function format_inf(num, not) {
             case 2:
                 let exponent = Math.floor(num.exponent)
                 let mantissa = num.mantissa
-                output = mantissa.toFixed(3) + "e" + format_num(exponent)
+                output =
+                    mantissa.toFixed(3) + "e" + format_num(exponent, enot, true)
                 break
             case 3:
                 let exponent2 = Math.floor(num.exponent / 3) * 3
@@ -905,11 +907,20 @@ function format_inf(num, not) {
                     .div(new Decimal(10).pow(exponent2))
                     .toNumber()
                 if (mantissa2 < 10) {
-                    output = mantissa2.toFixed(3) + "e" + format_num(exponent2)
+                    output =
+                        mantissa2.toFixed(3) +
+                        "e" +
+                        format_num(exponent2, enot, true)
                 } else if (mantissa2 < 100) {
-                    output = mantissa2.toFixed(2) + "e" + format_num(exponent2)
+                    output =
+                        mantissa2.toFixed(2) +
+                        "e" +
+                        format_num(exponent2, enot, true)
                 } else {
-                    output = mantissa2.toFixed(1) + "e" + format_num(exponent2)
+                    output =
+                        mantissa2.toFixed(1) +
+                        "e" +
+                        format_num(exponent2, enot, true)
                 }
                 break
             case 4:
@@ -1031,6 +1042,16 @@ function format_inf(num, not) {
             case 5:
                 let exponent3 = num.log10()
                 output = "e" + exponent3.toFixed(3)
+
+                if (enot === 0 || exponent3 < cutoff) {
+                    let decimal = (exponent3 - Math.floor(exponent3)).toFixed(3)
+                    output =
+                        "e" +
+                        format_num(Math.floor(exponent3), 0) +
+                        decimal.substr(1)
+                } else {
+                    output = "e" + format_num(exponent3, enot, true)
+                }
                 break
             case 6:
                 const alphabet = [
@@ -1639,13 +1660,13 @@ function format_dec(num, not) {
     }
 }
 
-function format_infdec(num, not) {
+function format_infdec(num, not, enot) {
     if (not === undefined) not = 0
 
     if (num.cmp(1.7976931348622053 * 10 ** 308) === -1) {
         return format_dec(num.toNumber(), not)
     } else {
-        return format_inf(num, not)
+        return format_inf(num, not, enot)
     }
 }
 
