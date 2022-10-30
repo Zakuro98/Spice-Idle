@@ -1301,6 +1301,7 @@ function load(savegame) {
             game.autoas_mode = 0
             let old_goal = game.autoas_goal
             game.autoas_goal = [old_goal, 30]
+            game.prestige_price[8] = new Decimal(32768)
         }
     }
 
