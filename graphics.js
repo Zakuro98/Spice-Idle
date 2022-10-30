@@ -95,7 +95,7 @@ function spice_update() {
             game.notation
         ) +
         " g yellow spice/sec"
-    if (game.prestige_bought[7] >= 1 && game.ascend_challenge !== 1)
+    if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1)
         document.getElementById("yellow_spice_up").innerHTML =
             "+" +
             format_idec(
@@ -119,7 +119,7 @@ function spice_update() {
             game.notation
         ) +
         " g green spice/sec"
-    if (game.prestige_bought[7] >= 1 && game.ascend_challenge !== 1)
+    if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1)
         document.getElementById("green_spice_up").innerHTML =
             "+" +
             format_idec(
@@ -141,7 +141,7 @@ function spice_update() {
             game.notation
         ) +
         " g blue spice/sec"
-    if (game.prestige_bought[7] >= 1 && game.ascend_challenge !== 1)
+    if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1)
         document.getElementById("blue_spice_up").innerHTML =
             "+" +
             format_idec(
@@ -166,7 +166,7 @@ function spice_update() {
         " g pink spice/sec"
 
     if (game.ascend_bought[13] && game.ascend_challenge !== 1) {
-        if (game.prestige_bought[7] >= 1 && game.ascend_challenge !== 1)
+        if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1)
             pink_str +=
                 "<br>Your pink spice is boosting blue spice production " +
                 format_idec(game.pink_spice.pow(0.075).add(1), game.notation) +
@@ -185,7 +185,7 @@ function spice_update() {
                 ) +
                 "x"
     } else {
-        if (game.prestige_bought[7] >= 1 && game.ascend_challenge !== 1)
+        if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1)
             pink_str +=
                 "<br>Your pink spice is boosting blue spice production " +
                 format_idec(game.pink_spice.pow(0.075).add(1), game.notation) +
@@ -1695,7 +1695,7 @@ function spice_update() {
             document.getElementById("pink_auto").style.display = "inline"
         else document.getElementById("pink_auto").style.display = "none"
 
-        if (game.prestige_bought[8] >= 1)
+        if (game.prestige_bought[7] >= 1)
             document.getElementById("boost_auto").style.display = "inline"
         else document.getElementById("boost_auto").style.display = "none"
     } else {
@@ -2036,7 +2036,7 @@ function prestige_update() {
                     u.desc =
                         "All spice production is boosted based on unspent rainbow spice<br>(Disabled)"
                 break
-            case 7:
+            case 8:
                 u.desc =
                     "All spices boost the previous color based on that spice's amount"
                 if (game.ascend_challenge === 1)
@@ -3016,6 +3016,14 @@ function ascension_update() {
 
     if (game.ascend_bought[12] && game.ascend_challenge === 0) {
         document.getElementById("ascend_auto_block").style.display = "block"
+
+        if (game.autoas_mode === 0) {
+            document.getElementById("ascend_runes").style.display = "flex"
+            document.getElementById("ascend_time").style.display = "none"
+        } else if (game.autoas_mode === 1) {
+            document.getElementById("ascend_runes").style.display = "none"
+            document.getElementById("ascend_time").style.display = "flex"
+        }
     } else {
         document.getElementById("ascend_auto_block").style.display = "none"
     }
