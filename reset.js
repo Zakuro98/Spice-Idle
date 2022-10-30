@@ -373,7 +373,7 @@ function prestige(override) {
 
         game.prestige_time_played = 0
 
-        if (game.ascend_bought[9]) {
+        if (game.ascend_bought[9] && !override) {
             if (game.autopr_mode === 0) {
                 game.autopr_goal2[0] += game.autopr_delta[0]
             }
