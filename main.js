@@ -51,7 +51,7 @@ function tick() {
             "%)"
     )
 
-    if (game.autocb_toggle && game.prestige_bought[8] >= 1) color_boost()
+    if (game.autocb_toggle && game.prestige_bought[7] >= 1) color_boost()
 
     if (game.autoin_toggle && game.prestige_bought[13] >= 1) max_infusion()
 
@@ -389,7 +389,7 @@ function tick() {
             Decimal.pow(4, game.crystal_strengthener)
         )
 
-        if (game.prestige_bought[7] >= 1 && game.ascend_challenge !== 1) {
+        if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1) {
             game.total_red_spice_boost[i] = game.total_red_spice_boost[i].mul(
                 game.yellow_spice.pow(0.075).add(1)
             )
@@ -859,21 +859,29 @@ function tick() {
         game.arcane_max_unlocked = true
     }
 
-    game.autoas_goal = Number(document.getElementById("a_runes_input").value)
-    if (game.autoas_goal === NaN) game.autoas_goal = 1
-    if (game.autoas_goal < 1) game.autoas_goal = 1
+    game.autoas_goal[0] = Number(document.getElementById("a_runes_input").value)
+    if (game.autoas_goal[0] === NaN) game.autoas_goal[0] = 1
+    if (game.autoas_goal[0] < 1) game.autoas_goal[0] = 1
+
+    game.autoas_goal[1] = Number(document.getElementById("a_time_input").value)
+    if (game.autoas_goal[1] === NaN) game.autoas_goal[1] = 30
+    if (game.autoas_goal[1] < 0.01) game.autoas_goal[1] = 0.01
 
     if (
         game.ascend_bought[12] &&
         game.autoas_toggle &&
         game.ascend_challenge === 0
     ) {
-        if (game.rainbow_spice.cmp(0) === 1) {
-            let amount = Math.floor(
-                (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8
-            )
+        if (game.autoas_mode === 0) {
+            if (game.rainbow_spice.cmp(0) === 1) {
+                let amount = Math.floor(
+                    (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8
+                )
 
-            if (amount >= game.autoas_goal) ascend(true)
+                if (amount >= game.autoas_goal[0]) ascend()
+            }
+        } else if (game.autoas_mode === 1) {
+            if (game.ascend_time_played >= game.autoas_goal[1]) ascend()
         }
     }
 
@@ -898,6 +906,7 @@ document.body.addEventListener("keydown", function (event) {
     }
 
     if (event.shiftKey) key.shift = true
+    else key.shift = false
 
     if (event.code === "KeyS") key.s = true
     if (event.code === "KeyM") key.m = true
@@ -912,8 +921,6 @@ document.body.addEventListener("keyup", function (event) {
     for (let i = 0; i < 6; i++) {
         if (event.code === "Digit" + (i + 1)) key.digit[i] = false
     }
-
-    if (event.shiftKey) key.shift = false
 
     if (event.code === "KeyS") key.s = false
     if (event.code === "KeyM") key.m = false
@@ -1078,7 +1085,7 @@ function hotkey_tick() {
 
 //saving the game
 function save() {
-    game.version = "1.2.0"
+    game.version = "1.2.1"
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
         game.prestige_price[u.id] = u.price
@@ -1289,8 +1296,15 @@ function load(savegame) {
         game.challenge_confirm = true
         game.exponent_notation = 0
     }
+    if (major <= 2) {
+        if ((major === 2 && minor < 1) || major < 2) {
+            game.autoas_mode = 0
+            let old_goal = game.autoas_goal
+            game.autoas_goal = [old_goal, 30]
+        }
+    }
 
-    game.version = "1.2.0"
+    game.version = "1.2.1"
 
     game.red_spice = new Decimal(game.red_spice)
     game.red_strengthener_price = new Decimal(game.red_strengthener_price)
@@ -1404,6 +1418,8 @@ function load(savegame) {
     auto_toggle("ascend", true)
     auto_toggle("enchantment")
     auto_toggle("enchantment")
+    auto_toggle("ascend_mode")
+    auto_toggle("ascend_mode")
 
     notation(game.notation)
     hotkeys()
@@ -1421,7 +1437,8 @@ function load(savegame) {
     document.getElementById("p_spice_input").value = game.autopr_goal[1]
     document.getElementById("p_spice_input2").value = game.autopr_delta[1]
     document.getElementById("p_time_input").value = game.autopr_goal[2]
-    document.getElementById("a_runes_input").value = game.autoas_goal
+    document.getElementById("a_runes_input").value = game.autoas_goal[0]
+    document.getElementById("a_time_input").value = game.autoas_goal[1]
 }
 
 //load the game when opened
