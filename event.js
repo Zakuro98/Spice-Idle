@@ -1541,6 +1541,17 @@ function auto_toggle(color, unless) {
                     "spice_buy a_enabled"
             }
             break
+        case "ascend_mode":
+            if (game.autoas_mode === 0) {
+                game.autoas_mode = 1
+                document.getElementById("ascend_auto_mode").innerHTML =
+                    "Mode: TIME"
+            } else if (game.autoas_mode === 1) {
+                game.autoas_mode = 0
+                document.getElementById("ascend_auto_mode").innerHTML =
+                    "Mode: RUNES"
+            }
+            break
     }
 }
 
@@ -1574,8 +1585,8 @@ function buy_prestige_upgrade(id) {
                             break
                         case 4:
                             prestige_upgrade.upgrades[id].price = new Decimal(
-                                2
-                            ).pow(24)
+                                65536
+                            )
                             break
                         default:
                             prestige_upgrade.upgrades[id].price = new Decimal(1)
@@ -1585,10 +1596,15 @@ function buy_prestige_upgrade(id) {
                 case 2:
                     if (game.prestige_bought[id] > 9) {
                         prestige_upgrade.upgrades[id].price =
-                            prestige_upgrade.upgrades[id].price.mul(32)
-                    } else {
+                            prestige_upgrade.upgrades[id].price.mul(
+                                Decimal.pow(2, game.prestige_bought[id] - 6)
+                            )
+                    } else if (game.prestige_bought[id] > 5) {
                         prestige_upgrade.upgrades[id].price =
                             prestige_upgrade.upgrades[id].price.mul(8)
+                    } else {
+                        prestige_upgrade.upgrades[id].price =
+                            prestige_upgrade.upgrades[id].price.mul(4)
                     }
                     break
                 case 3:
@@ -1602,7 +1618,7 @@ function buy_prestige_upgrade(id) {
                 case 5:
                     prestige_upgrade.upgrades[id].price =
                         prestige_upgrade.upgrades[id].price.mul(
-                            2 ** (game.prestige_bought[id] + 4)
+                            2 ** (game.prestige_bought[id] + 3)
                         )
                     break
                 case 9:
