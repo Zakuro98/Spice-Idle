@@ -1,6 +1,6 @@
 //initializing game variables
 let game = {
-    version: "1.2.0",
+    version: "1.2.1",
 
     tickspeed: 100,
 
@@ -62,11 +62,11 @@ let game = {
     ],
     yellow_spice_price: [
         new Decimal(5),
-        new Decimal(300),
-        new Decimal(100000),
-        new Decimal(3.5 * 10 ** 9),
-        new Decimal(1.5 * 10 ** 15),
-        new Decimal(6 * 10 ** 22),
+        new Decimal(250),
+        new Decimal(60000),
+        new Decimal(2 * 10 ** 9),
+        new Decimal(3 * 10 ** 14),
+        new Decimal(5.5 * 10 ** 21),
     ],
     yellow_spice_bought: [0, 0, 0, 0, 0, 0],
     yellow_spice_boost: [
@@ -87,7 +87,7 @@ let game = {
     ],
 
     yellow_strengthener: 0,
-    yellow_strengthener_price: new Decimal(6000000),
+    yellow_strengthener_price: new Decimal(3000000),
 
     green_spice: new Decimal(5),
     green_spice_gen: [
@@ -100,11 +100,11 @@ let game = {
     ],
     green_spice_price: [
         new Decimal(5),
-        new Decimal(600),
-        new Decimal(500000),
-        new Decimal(3 * 10 ** 10),
-        new Decimal(3.5 * 10 ** 16),
-        new Decimal(3.5 * 10 ** 24),
+        new Decimal(350),
+        new Decimal(100000),
+        new Decimal(7 * 10 ** 9),
+        new Decimal(1.5 * 10 ** 15),
+        new Decimal(3 * 10 ** 22),
     ],
     green_spice_bought: [0, 0, 0, 0, 0, 0],
     green_spice_boost: [
@@ -125,7 +125,7 @@ let game = {
     ],
 
     green_strengthener: 0,
-    green_strengthener_price: new Decimal(3.5 * 10 ** 7),
+    green_strengthener_price: new Decimal(9000000),
 
     blue_spice: new Decimal(5),
     blue_spice_gen: [
@@ -138,11 +138,11 @@ let game = {
     ],
     blue_spice_price: [
         new Decimal(5),
-        new Decimal(1000),
-        new Decimal(2000000),
-        new Decimal(2.5 * 10 ** 11),
-        new Decimal(8.5 * 10 ** 17),
-        new Decimal(2.5 * 10 ** 26),
+        new Decimal(500),
+        new Decimal(250000),
+        new Decimal(3 * 10 ** 10),
+        new Decimal(7.5 * 10 ** 15),
+        new Decimal(2 * 10 ** 23),
     ],
     blue_spice_bought: [0, 0, 0, 0, 0, 0],
     blue_spice_boost: [
@@ -163,7 +163,7 @@ let game = {
     ],
 
     blue_strengthener: 0,
-    blue_strengthener_price: new Decimal(2 * 10 ** 8),
+    blue_strengthener_price: new Decimal(2.5 * 10 ** 7),
 
     pink_spice: new Decimal(5),
     pink_spice_gen: [
@@ -176,11 +176,11 @@ let game = {
     ],
     pink_spice_price: [
         new Decimal(5),
-        new Decimal(2500),
-        new Decimal(4000000),
-        new Decimal(2 * 10 ** 12),
-        new Decimal(2 * 10 ** 19),
-        new Decimal(1.5 * 10 ** 28),
+        new Decimal(750),
+        new Decimal(500000),
+        new Decimal(10 ** 11),
+        new Decimal(4 * 10 ** 16),
+        new Decimal(10 ** 22),
     ],
     pink_spice_bought: [0, 0, 0, 0, 0, 0],
     pink_spice_boost: [
@@ -201,7 +201,7 @@ let game = {
     ],
 
     pink_strengthener: 0,
-    pink_strengthener_price: new Decimal(1.5 * 10 ** 9),
+    pink_strengthener_price: new Decimal(8 * 10 ** 7),
 
     total_spice: new Decimal(5),
     total_time_played: 0,
@@ -282,7 +282,8 @@ let game = {
     autocr_toggle: false,
 
     autoas_toggle: false,
-    autoas_goal: 1,
+    autoas_mode: 0,
+    autoas_goal: [1, 30],
 
     ascend_amount_history: new Array(10).fill(-1),
     ascend_time_history: new Array(10).fill(-1),
@@ -525,32 +526,32 @@ new spice_gen("red", 4, new Decimal(6 * 10 ** 13), "planet", "planets")
 new spice_gen("red", 5, new Decimal(9 * 10 ** 20), "galaxy", "galaxies")
 //yellow
 new spice_gen("yellow", 0, new Decimal(5), "harvester", "harvesters")
-new spice_gen("yellow", 1, new Decimal(300), "machine", "machines")
-new spice_gen("yellow", 2, new Decimal(100000), "factory", "factories")
-new spice_gen("yellow", 3, new Decimal(3.5 * 10 ** 9), "agency", "agencies")
-new spice_gen("yellow", 4, new Decimal(1.5 * 10 ** 15), "planet", "planets")
-new spice_gen("yellow", 5, new Decimal(6 * 10 ** 22), "galaxy", "galaxies")
+new spice_gen("yellow", 1, new Decimal(250), "machine", "machines")
+new spice_gen("yellow", 2, new Decimal(60000), "factory", "factories")
+new spice_gen("yellow", 3, new Decimal(2 * 10 ** 9), "agency", "agencies")
+new spice_gen("yellow", 4, new Decimal(3 * 10 ** 14), "planet", "planets")
+new spice_gen("yellow", 5, new Decimal(5.5 * 10 ** 21), "galaxy", "galaxies")
 //green
 new spice_gen("green", 0, new Decimal(5), "harvester", "harvesters")
-new spice_gen("green", 1, new Decimal(600), "machine", "machines")
-new spice_gen("green", 2, new Decimal(500000), "factory", "factories")
-new spice_gen("green", 3, new Decimal(3 * 10 ** 10), "agency", "agencies")
-new spice_gen("green", 4, new Decimal(3.5 * 10 ** 16), "planet", "planets")
-new spice_gen("green", 5, new Decimal(3.5 * 10 ** 24), "galaxy", "galaxies")
+new spice_gen("green", 1, new Decimal(350), "machine", "machines")
+new spice_gen("green", 2, new Decimal(100000), "factory", "factories")
+new spice_gen("green", 3, new Decimal(7 * 10 ** 9), "agency", "agencies")
+new spice_gen("green", 4, new Decimal(1.5 * 10 ** 15), "planet", "planets")
+new spice_gen("green", 5, new Decimal(3 * 10 ** 22), "galaxy", "galaxies")
 //blue
 new spice_gen("blue", 0, new Decimal(5), "harvester", "harvesters")
-new spice_gen("blue", 1, new Decimal(1000), "machine", "machines")
-new spice_gen("blue", 2, new Decimal(2000000), "factory", "factories")
-new spice_gen("blue", 3, new Decimal(2.5 * 10 ** 11), "agency", "agencies")
-new spice_gen("blue", 4, new Decimal(8.5 * 10 ** 17), "planet", "planets")
-new spice_gen("blue", 5, new Decimal(2.5 * 10 ** 26), "galaxy", "galaxies")
+new spice_gen("blue", 1, new Decimal(500), "machine", "machines")
+new spice_gen("blue", 2, new Decimal(250000), "factory", "factories")
+new spice_gen("blue", 3, new Decimal(3 * 10 ** 10), "agency", "agencies")
+new spice_gen("blue", 4, new Decimal(7.5 * 10 ** 15), "planet", "planets")
+new spice_gen("blue", 5, new Decimal(2 * 10 ** 23), "galaxy", "galaxies")
 //pink
 new spice_gen("pink", 0, new Decimal(5), "harvester", "harvesters")
-new spice_gen("pink", 1, new Decimal(2500), "machine", "machines")
-new spice_gen("pink", 2, new Decimal(8000000), "factory", "factories")
-new spice_gen("pink", 3, new Decimal(2 * 10 ** 12), "agency", "agencies")
-new spice_gen("pink", 4, new Decimal(2 * 10 ** 19), "planet", "planets")
-new spice_gen("pink", 5, new Decimal(1.5 * 10 ** 28), "galaxy", "galaxies")
+new spice_gen("pink", 1, new Decimal(750), "machine", "machines")
+new spice_gen("pink", 2, new Decimal(500000), "factory", "factories")
+new spice_gen("pink", 3, new Decimal(10 ** 11), "agency", "agencies")
+new spice_gen("pink", 4, new Decimal(4 * 10 ** 16), "planet", "planets")
+new spice_gen("pink", 5, new Decimal(10 ** 24), "galaxy", "galaxies")
 //crystal
 new spice_gen("crystal", 0, Decimal.pow(2, 56), "furnace", "furnaces")
 new spice_gen("crystal", 1, Decimal.pow(2, 62), "refinery", "refineries")
@@ -636,14 +637,14 @@ new prestige_upgrade(
 )
 //[7]
 new prestige_upgrade(
-    "All spices boost the previous color based on that spice's amount",
+    "Unlocks automation for color boosts",
     new Decimal(4096),
     1
 )
 //[8]
 new prestige_upgrade(
-    "Unlocks automation for color boosts",
-    new Decimal(65536),
+    "All spices boost the previous color based on that spice's amount",
+    new Decimal(32768),
     1
 )
 //[9]
