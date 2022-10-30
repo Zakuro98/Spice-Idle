@@ -157,13 +157,13 @@ function color_boost(override) {
             ]
             game.yellow_spice_price = [
                 new Decimal(5),
-                new Decimal(300),
-                new Decimal(100000),
-                new Decimal(3.5 * 10 ** 9),
-                new Decimal(1.5 * 10 ** 15),
-                new Decimal(6 * 10 ** 22),
+                new Decimal(250),
+                new Decimal(60000),
+                new Decimal(2 * 10 ** 9),
+                new Decimal(3 * 10 ** 14),
+                new Decimal(5.5 * 10 ** 21),
             ]
-            game.yellow_strengthener_price = new Decimal(6000000)
+            game.yellow_strengthener_price = new Decimal(3000000)
             game.yellow_strengthener = 0
 
             game.green_spice_gen = [
@@ -193,13 +193,13 @@ function color_boost(override) {
             ]
             game.green_spice_price = [
                 new Decimal(5),
-                new Decimal(600),
-                new Decimal(500000),
-                new Decimal(3 * 10 ** 10),
-                new Decimal(3.5 * 10 ** 16),
-                new Decimal(3.5 * 10 ** 24),
+                new Decimal(350),
+                new Decimal(100000),
+                new Decimal(7 * 10 ** 9),
+                new Decimal(1.5 * 10 ** 15),
+                new Decimal(3 * 10 ** 22),
             ]
-            game.green_strengthener_price = new Decimal(3.5 * 10 ** 7)
+            game.green_strengthener_price = new Decimal(9000000)
             game.green_strengthener = 0
 
             game.blue_spice_gen = [
@@ -229,13 +229,13 @@ function color_boost(override) {
             ]
             game.blue_spice_price = [
                 new Decimal(5),
-                new Decimal(1000),
-                new Decimal(2000000),
-                new Decimal(2.5 * 10 ** 11),
-                new Decimal(8.5 * 10 ** 17),
-                new Decimal(2.5 * 10 ** 26),
+                new Decimal(500),
+                new Decimal(250000),
+                new Decimal(3 * 10 ** 10),
+                new Decimal(7.5 * 10 ** 15),
+                new Decimal(2 * 10 ** 23),
             ]
-            game.blue_strengthener_price = new Decimal(2 * 10 ** 8)
+            game.blue_strengthener_price = new Decimal(2.5 * 10 ** 7)
             game.blue_strengthener = 0
 
             game.pink_spice_gen = [
@@ -265,13 +265,13 @@ function color_boost(override) {
             ]
             game.pink_spice_price = [
                 new Decimal(5),
-                new Decimal(2500),
-                new Decimal(8000000),
-                new Decimal(2 * 10 ** 12),
-                new Decimal(2 * 10 ** 19),
-                new Decimal(1.5 * 10 ** 28),
+                new Decimal(750),
+                new Decimal(500000),
+                new Decimal(10 ** 11),
+                new Decimal(4 * 10 ** 16),
+                new Decimal(10 ** 24),
             ]
-            game.pink_strengthener_price = new Decimal(1.5 * 10 ** 9)
+            game.pink_strengthener_price = new Decimal(8 * 10 ** 7)
             game.pink_strengthener = 0
 
             game.color_boosts++
@@ -467,7 +467,7 @@ function ascend(override) {
 
             if (game.ascend_bought[3]) {
                 game.prestige_bought[0] = 5
-                prestige_upgrade.upgrades[0].price = new Decimal(2).pow(24)
+                prestige_upgrade.upgrades[0].price = new Decimal(65536)
                 game.prestige_bought[4] = 4
                 prestige_upgrade.upgrades[4].price = new Decimal(2048)
                 game.prestige_bought[8] = 1
