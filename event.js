@@ -1918,7 +1918,7 @@ function recall_runes(mode) {
                     )
                     game.arcane_spice_bought[i] = 0
                     game.arcane_spice_price[i] =
-                        spice_gen.generator[36 + i].base_price
+                        spice_gen.generators[36 + i].base_price
                     game.arcane_spice_boost[i] = new Decimal(1)
                 }
             }
