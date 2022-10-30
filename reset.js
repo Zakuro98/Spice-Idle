@@ -470,7 +470,7 @@ function ascend(override) {
                 prestige_upgrade.upgrades[0].price = new Decimal(65536)
                 game.prestige_bought[4] = 4
                 prestige_upgrade.upgrades[4].price = new Decimal(2048)
-                game.prestige_bought[8] = 1
+                game.prestige_bought[7] = 1
                 game.prestige_bought[13] = 1
                 game.prestige_bought[15] = 1
                 game.prestige_bought[22] = 1
@@ -548,7 +548,7 @@ function ascend(override) {
                 prestige_upgrade.upgrades[0].price = new Decimal(2).pow(24)
                 game.prestige_bought[4] = 4
                 prestige_upgrade.upgrades[4].price = new Decimal(2048)
-                game.prestige_bought[8] = 1
+                game.prestige_bought[7] = 1
                 game.prestige_bought[13] = 1
                 game.prestige_bought[15] = 1
                 game.prestige_bought[22] = 1
