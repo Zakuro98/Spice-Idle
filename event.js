@@ -2066,7 +2066,8 @@ function max_enchantment() {
                     )
                     .log(10) / Math.log10(4)
             )
-            if (game.crystal_infusion + n >= 25) n = 25 - game.crystal_infusion
+            if (game.arcane_enchantment + n >= 25)
+                n = 25 - game.arcane_enchantment
             if (n > 0) {
                 let price = game.arcane_enchantment_price
                     .mul(new Decimal(1).sub(new Decimal(4).pow(n)))
@@ -2087,8 +2088,8 @@ function max_enchantment() {
                     )
                     .log(10) / Math.log10(20)
             )
-            if (game.crystal_infusion + n >= 125)
-                n = 125 - game.crystal_infusion
+            if (game.arcane_enchantment + n >= 125)
+                n = 125 - game.arcane_enchantment
             if (n > 0) {
                 let price = game.arcane_enchantment_price
                     .mul(new Decimal(1).sub(new Decimal(20).pow(n)))
