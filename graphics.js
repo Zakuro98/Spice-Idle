@@ -32,7 +32,31 @@ function spice_update() {
             game.notation
         ) +
         " g red spice/sec"
-    if (game.ascend_bought[18]) {
+    if (game.ascend_bought[30] && game.ascend_challenge !== 6) {
+        if (game.prestige_bought[11] >= 1) {
+            document.getElementById("red_spice_up").innerHTML =
+                "+" +
+                format_idec(
+                    game.red_spice_gen[0]
+                        .floor()
+                        .mul(game.total_red_spice_boost[0]),
+                    game.notation
+                ) +
+                " g red spice/sec<br>Your red spice is boosting yellow, green, blue, & pink spice production " +
+                format_idec(game.red_spice.pow(0.0075).add(1), game.notation) +
+                "x,<br>boosting crystallized spice production " +
+                format_idec(game.red_spice.pow(0.00004).add(1), game.notation) +
+                "x,<br>and boosting arcane spice production " +
+                format_idec(
+                    game.red_spice.pow(0.00000025).add(1),
+                    game.notation
+                )
+        }
+    } else if (
+        game.ascend_bought[18] &&
+        game.ascend_challenge !== 1 &&
+        game.ascend_challenge !== 6
+    ) {
         if (game.prestige_bought[11] >= 1) {
             document.getElementById("red_spice_up").innerHTML =
                 "+" +
@@ -95,7 +119,11 @@ function spice_update() {
             game.notation
         ) +
         " g yellow spice/sec"
-    if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1)
+    if (
+        game.prestige_bought[8] >= 1 &&
+        game.ascend_challenge !== 1 &&
+        game.ascend_challenge !== 6
+    )
         document.getElementById("yellow_spice_up").innerHTML =
             "+" +
             format_idec(
@@ -119,7 +147,11 @@ function spice_update() {
             game.notation
         ) +
         " g green spice/sec"
-    if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1)
+    if (
+        game.prestige_bought[8] >= 1 &&
+        game.ascend_challenge !== 1 &&
+        game.ascend_challenge !== 6
+    )
         document.getElementById("green_spice_up").innerHTML =
             "+" +
             format_idec(
@@ -141,7 +173,11 @@ function spice_update() {
             game.notation
         ) +
         " g blue spice/sec"
-    if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1)
+    if (
+        game.prestige_bought[8] >= 1 &&
+        game.ascend_challenge !== 1 &&
+        game.ascend_challenge !== 6
+    )
         document.getElementById("blue_spice_up").innerHTML =
             "+" +
             format_idec(
@@ -165,8 +201,16 @@ function spice_update() {
         ) +
         " g pink spice/sec"
 
-    if (game.ascend_bought[13] && game.ascend_challenge !== 1) {
-        if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1)
+    if (
+        game.ascend_bought[13] &&
+        game.ascend_challenge !== 1 &&
+        game.ascend_challenge !== 6
+    ) {
+        if (
+            game.prestige_bought[8] >= 1 &&
+            game.ascend_challenge !== 1 &&
+            game.ascend_challenge !== 6
+        )
             pink_str +=
                 "<br>Your pink spice is boosting blue spice production " +
                 format_idec(game.pink_spice.pow(0.075).add(1), game.notation) +
@@ -185,7 +229,11 @@ function spice_update() {
                 ) +
                 "x"
     } else {
-        if (game.prestige_bought[8] >= 1 && game.ascend_challenge !== 1)
+        if (
+            game.prestige_bought[8] >= 1 &&
+            game.ascend_challenge !== 1 &&
+            game.ascend_challenge !== 6
+        )
             pink_str +=
                 "<br>Your pink spice is boosting blue spice production " +
                 format_idec(game.pink_spice.pow(0.075).add(1), game.notation) +
@@ -852,7 +900,7 @@ function spice_update() {
                     game.notation
                 ) +
                 "x"
-        if (game.ascend_challenge === 1)
+        if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
             "You have " +
                 format_small(game.red_strengthener) +
                 " red spice strengtheners,<br>boosting all red spice generators " +
@@ -864,7 +912,8 @@ function spice_update() {
         if (
             game.prestige_bought[5] >= 1 &&
             game.color_boosts >= 1 &&
-            game.ascend_challenge !== 1
+            game.ascend_challenge !== 1 &&
+            game.ascend_challenge !== 6
         )
             s_str +=
                 ",<br>boosting all yellow spice generators " +
@@ -941,7 +990,7 @@ function spice_update() {
                     game.notation
                 ) +
                 "x"
-        if (game.ascend_challenge === 1)
+        if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
             s_str =
                 "You have " +
                 format_small(game.yellow_strengthener) +
@@ -954,7 +1003,8 @@ function spice_update() {
         if (
             game.prestige_bought[5] >= 1 &&
             game.color_boosts >= 2 &&
-            game.ascend_challenge !== 1
+            game.ascend_challenge !== 1 &&
+            game.ascend_challenge !== 6
         )
             s_str +=
                 ",<br>boosting all green spice generators " +
@@ -1029,7 +1079,7 @@ function spice_update() {
                     game.notation
                 ) +
                 "x"
-        if (game.ascend_challenge === 1)
+        if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
             s_str =
                 "You have " +
                 format_small(game.green_strengthener) +
@@ -1042,7 +1092,8 @@ function spice_update() {
         if (
             game.prestige_bought[5] >= 1 &&
             game.color_boosts >= 3 &&
-            game.ascend_challenge !== 1
+            game.ascend_challenge !== 1 &&
+            game.ascend_challenge !== 6
         )
             s_str +=
                 ",<br>boosting all blue spice generators " +
@@ -1117,7 +1168,7 @@ function spice_update() {
                     game.notation
                 ) +
                 "x"
-        if (game.ascend_challenge === 1)
+        if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
             s_str =
                 "You have " +
                 format_small(game.blue_strengthener) +
@@ -1130,7 +1181,8 @@ function spice_update() {
         if (
             game.prestige_bought[5] >= 1 &&
             game.color_boosts >= 4 &&
-            game.ascend_challenge !== 1
+            game.ascend_challenge !== 1 &&
+            game.ascend_challenge !== 6
         )
             s_str +=
                 ",<br>boosting all pink spice generators " +
@@ -1204,7 +1256,7 @@ function spice_update() {
                     game.notation
                 ) +
                 "x"
-        if (game.ascend_challenge === 1)
+        if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
             document.getElementById("pink_info_s").innerHTML =
                 "You have " +
                 format_small(game.pink_strengthener) +
@@ -1268,7 +1320,7 @@ function spice_update() {
                         game.notation
                     ) +
                     "x"
-            if (game.ascend_challenge === 1)
+            if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                 document.getElementById("color_shift_info").innerHTML =
                     "You have " +
                     format_small(game.color_boosts) +
@@ -1311,7 +1363,7 @@ function spice_update() {
                         game.notation
                     ) +
                     "x"
-            if (game.ascend_challenge === 1)
+            if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                 document.getElementById("color_shift_info").innerHTML =
                     "You have " +
                     format_small(game.color_boosts) +
@@ -1424,11 +1476,21 @@ function spice_update() {
                                 (game.color_boosts * 1000 - 4733000) * scaling
                             ) +
                             " pink spice galaxies"
+                    else if (game.color_boosts <= 2000000)
+                        document.getElementById("color_shift_req").innerHTML =
+                            "Requires " +
+                            format_small(
+                                (game.color_boosts * 2500 - 79737500) * scaling
+                            ) +
+                            " pink spice galaxies"
                     else
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
                             format_small(
-                                (game.color_boosts * 10000 - 454760000) *
+                                (((game.color_boosts - 1997500) *
+                                    (game.color_boosts - 1997499)) /
+                                    2 +
+                                    4917136250) *
                                     scaling
                             ) +
                             " pink spice galaxies"
@@ -1496,11 +1558,21 @@ function spice_update() {
                                 (game.color_boosts * 1000 - 4733000) * scaling
                             ) +
                             " bought pink spice galaxies"
+                    else if (game.color_boosts <= 2000000)
+                        document.getElementById("color_shift_req").innerHTML =
+                            "Requires " +
+                            format_small(
+                                (game.color_boosts * 2500 - 79737500) * scaling
+                            ) +
+                            " bought pink spice galaxies"
                     else
                         document.getElementById("color_shift_req").innerHTML =
                             "Requires " +
                             format_small(
-                                (game.color_boosts * 10000 - 454760000) *
+                                (((game.color_boosts - 1997500) *
+                                    (game.color_boosts - 1997499)) /
+                                    2 +
+                                    4917136250) *
                                     scaling
                             ) +
                             " bought pink spice galaxies"
@@ -1584,7 +1656,7 @@ function spice_update() {
             } else {
                 if (
                     game.pink_spice_bought[5] >=
-                    (game.color_boosts * 10000 - 454760000) * scaling
+                    (game.color_boosts * 2500 - 79737500) * scaling
                 )
                     can_boost = true
             }
@@ -1721,7 +1793,11 @@ function prestige_update() {
         document.getElementById("prestige_button").className =
             "prestige_button p_unlocked"
         document.getElementById("prestige_up").style.display = "block"
-        if (game.ascend_bought[15] && game.ascend_challenge !== 1) {
+        if (
+            game.ascend_bought[15] &&
+            game.ascend_challenge !== 1 &&
+            game.ascend_challenge !== 6
+        ) {
             if (game.color_boosts <= 16)
                 document.getElementById("prestige_up").innerHTML =
                     "+" +
@@ -1837,7 +1913,11 @@ function prestige_update() {
         if (game.color_boosts <= 16)
             amount = new Decimal(2).pow((game.color_boosts - 10) / 3)
         else amount = new Decimal(2).pow((game.color_boosts - 8) / 4)
-        if (game.ascend_bought[15] && game.ascend_challenge !== 1)
+        if (
+            game.ascend_bought[15] &&
+            game.ascend_challenge !== 1 &&
+            game.ascend_challenge !== 6
+        )
             amount = amount.mul(Decimal.pow(2, game.ascend / 20))
 
         let str =
@@ -1918,7 +1998,7 @@ function prestige_update() {
                         "Times Prestiged stat boosts all spice production<br>(Currently: " +
                         format_num(1, game.notation) +
                         "x)"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Times Prestiged stat boosts all spice production<br>(Disabled)"
                 break
@@ -1941,12 +2021,15 @@ function prestige_update() {
                         "Increase boost from strengtheners/shifts<br>(" +
                         format_dec(5, game.notation) +
                         "x)"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Increase boost from strengtheners/shifts<br>(Disabled)"
                 break
             case 3:
-                if (game.ascend_challenge === 1) {
+                if (
+                    game.ascend_challenge === 1 ||
+                    game.ascend_challenge === 6
+                ) {
                     switch (game.prestige_bought[u.id]) {
                         case 0:
                             u.desc =
@@ -2020,7 +2103,7 @@ function prestige_update() {
                         "Strengtheners boost the next color more<br>(" +
                         format_dec(2, 0) +
                         "x)"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Strengtheners boost the next color more<br>(Disabled)"
                 break
@@ -2032,14 +2115,14 @@ function prestige_update() {
                         game.notation
                     ) +
                     "x)"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "All spice production is boosted based on unspent rainbow spice<br>(Disabled)"
                 break
             case 8:
                 u.desc =
                     "All spices boost the previous color based on that spice's amount"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "All spices boost the previous color based on that spice's amount<br>(Disabled)"
                 break
@@ -2087,20 +2170,20 @@ function prestige_update() {
                 break
             case 11:
                 u.desc = "Red spice boosts every other color by its amount"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Red spice boosts every other color by its amount<br>(Disabled)"
                 break
             case 14:
                 u.desc = "Crystallized spice boosts pink spice by its amount"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Crystallized spice boosts pink spice by its amount<br>(Disabled)"
                 break
             case 16:
                 u.desc =
                     "Crystallized spice also boosts other colors by its amount"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Crystallized spice also boosts other colors by its amount<br>(Disabled)"
                 break
@@ -2112,7 +2195,7 @@ function prestige_update() {
                         game.notation
                     ) +
                     "x)"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Crystallized spice production is boosted based on your color boosts<br>(Disabled)"
                 break
@@ -2133,14 +2216,14 @@ function prestige_update() {
                             "x)"
                         break
                 }
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Increase boost from strengtheners/boosts<br>(Disabled)"
                 break
             case 19:
                 u.desc =
                     "Crystal infusions also boost crystallized spice production 1.08x"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Crystal infusions also boost crystallized spice production 1.08x<br>(Disabled)"
                 break
@@ -2170,14 +2253,14 @@ function prestige_update() {
                         game.notation
                     ) +
                     "x)"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Crystallized spice production is boosted by unspent rainbow spice<br>(Disabled)"
                 break
             case 23:
                 u.desc =
                     "Crystallized spice furnace multipliers are raised to the 1.25 power"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Crystallized spice furnace multipliers are raised to the 1.25 power<br>(Disabled)"
                 break
@@ -2247,7 +2330,11 @@ function crystal_update() {
             game.notation
         ) +
         " g crystallized spice/sec"
-    if (game.prestige_bought[14] >= 1 && game.ascend_challenge !== 1) {
+    if (
+        game.prestige_bought[14] >= 1 &&
+        game.ascend_challenge !== 1 &&
+        game.ascend_challenge !== 6
+    ) {
         document.getElementById("crystal_spice_up").innerHTML =
             "+" +
             format_idec(
@@ -2459,7 +2546,11 @@ function crystal_update() {
                 game.prestige_bought[20] * 12 * (1 + game.ascend_bought[5])
             ) +
             " free)"
-    if (game.ascend_complete[2] && game.ascend_challenge !== 1) {
+    if (
+        game.ascend_complete[2] &&
+        game.ascend_challenge !== 1 &&
+        game.ascend_challenge !== 6
+    ) {
         s_str +=
             ",<br>boosting all normal spice generators " +
             format_idec(
@@ -2474,7 +2565,11 @@ function crystal_update() {
                 game.notation
             ) +
             "x"
-    } else if (game.ascend_bought[7] && game.ascend_challenge !== 1) {
+    } else if (
+        game.ascend_bought[7] &&
+        game.ascend_challenge !== 1 &&
+        game.ascend_challenge !== 6
+    ) {
         s_str +=
             ",<br>boosting all normal spice generators " +
             format_idec(
@@ -2505,7 +2600,11 @@ function crystal_update() {
             ) +
             "x"
     }
-    if (game.prestige_bought[19] >= 1 && game.ascend_challenge !== 1)
+    if (
+        game.prestige_bought[19] >= 1 &&
+        game.ascend_challenge !== 1 &&
+        game.ascend_challenge !== 6
+    )
         s_str +=
             ",<br>boosting all crystallized spice generators " +
             format_idec(
@@ -2579,11 +2678,15 @@ function ascension_update() {
 
     document.getElementById("ansuz_num").innerHTML =
         format_num(game.ansuz, game.notation) + " ᚫ"
+
+    let rune_speed = 1
+    if (game.ascend_challenge === 6) rune_speed = 0
+
     document.getElementById("jera_text").innerHTML =
         "You have " +
         format_num(game.rune[0], game.notation) +
         " ᛡ, producing " +
-        format_num(game.rune[0], game.notation) +
+        format_num(game.rune[0] * rune_speed, game.notation) +
         " ᛡ power/sec<br>You have " +
         format_num(Math.floor(game.rune_power[0]), game.notation) +
         " ᛡ power, boosting red spice production " +
@@ -2593,7 +2696,7 @@ function ascension_update() {
         "You have " +
         format_num(game.rune[1], game.notation) +
         " ᚱ, producing " +
-        format_num(game.rune[1], game.notation) +
+        format_num(game.rune[1] * rune_speed, game.notation) +
         " ᚱ power/sec<br>You have " +
         format_num(Math.floor(game.rune_power[1]), game.notation) +
         " ᚱ power, boosting yellow, green, & blue spice production " +
@@ -2603,7 +2706,7 @@ function ascension_update() {
         "You have " +
         format_num(game.rune[2], game.notation) +
         " ᛟ, producing " +
-        format_num(game.rune[2], game.notation) +
+        format_num(game.rune[2] * rune_speed, game.notation) +
         " ᛟ power/sec<br>You have " +
         format_num(Math.floor(game.rune_power[2]), game.notation) +
         " ᛟ power, boosting pink spice production " +
@@ -2675,7 +2778,7 @@ function ascension_update() {
                     "The boost from red spice amount is " +
                     format_small(50) +
                     "% stronger"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "The boost from red spice amount is " +
                         format_small(50) +
@@ -2683,7 +2786,7 @@ function ascension_update() {
                 break
             case 1:
                 u.desc = "The boost from Times Prestiged stat is stronger"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "The boost from Times Prestiged stat is stronger<br>(Disabled)"
                 break
@@ -2708,13 +2811,13 @@ function ascension_update() {
                             game.notation
                         ) +
                         "x)"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Increase boost from strengtheners/boosts<br>(Disabled)"
                 break
             case 4:
                 u.desc = "Crystallized spice generator multipliers are stronger"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Crystallized spice generator multipliers are stronger<br>(Disabled)"
                 break
@@ -2723,7 +2826,7 @@ function ascension_update() {
                     "Crystal infusions boost crystallized spice production " +
                     format_dec(1.12) +
                     "x"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Crystal infusions boost crystallized spice production " +
                         format_dec(1.12) +
@@ -2732,7 +2835,7 @@ function ascension_update() {
             case 7:
                 u.desc =
                     "Crystal infusions are " + format_small(10) + "% stronger"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Crystal infusions are " +
                         format_small(10) +
@@ -2740,7 +2843,7 @@ function ascension_update() {
                 break
             case 11:
                 u.desc = "Strengtheners are " + format_small(2) + "x stronger"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Strengtheners are " +
                         format_small(2) +
@@ -2748,7 +2851,7 @@ function ascension_update() {
                 break
             case 13:
                 u.desc = "Pink spice boosts crystallized spice by its amount"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Pink spice boosts crystallized spice by its amount<br>(Disabled)"
                 break
@@ -2773,7 +2876,7 @@ function ascension_update() {
                             game.notation
                         ) +
                         "x)"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Increase boost from strengtheners/boosts<br>(Disabled)"
                 break
@@ -2797,9 +2900,15 @@ function ascension_update() {
                             game.notation
                         ) +
                         "x)"
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     u.desc =
                         "Times Ascended stat boosts rainbow spice gains<br>(Disabled)"
+                break
+            case 18:
+                u.desc = "Red spice boosts crystallized spice by its amount"
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
+                    u.desc =
+                        "Red spice boosts crystallized spice by its amount<br>(Disabled)"
                 break
             case 19:
                 if (game.ansuz >= 2.5 * 10 ** 11) {
@@ -2830,12 +2939,56 @@ function ascension_update() {
                         ) +
                         "x)"
                 }
+                if (game.ascend_challenge === 6)
+                    u.desc =
+                        "Arcane spice is boosted based on unused Ansuz runes<br>(Disabled)"
                 break
             case 21:
                 u.desc =
                     "You gain " +
                     format_small(Math.floor(game.color_boosts / 50) + 1) +
                     "x more Times Prestiged stat<br>(based on color boosts)"
+                break
+            case 22:
+                u.desc = "Arcane spice boosts crystallized spice by its amount"
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
+                    u.desc =
+                        "Arcane spice boosts crystallized spice by its amount<br>(Disabled)"
+                break
+            case 26:
+                u.desc =
+                    "Boosts from rune power are " +
+                    format_small(2) +
+                    "x stronger"
+                break
+            case 29:
+                u.desc =
+                    "Arcane enchantments also boost arcane spice production " +
+                    format_dec(4 / 3, game.notation) +
+                    "x"
+                if (game.ascend_challenge === 6)
+                    u.desc =
+                        "Arcane enchantments also boost arcane spice production " +
+                        format_dec(4 / 3, game.notation) +
+                        "x<br>(Disabled)"
+                break
+            case 30:
+                u.desc = "Red spice boosts arcane spice by its amount"
+                if (game.ascend_challenge === 6)
+                    u.desc =
+                        "Red spice boosts arcane spice by its amount<br>(Disabled)"
+                break
+            case 31:
+                u.desc = "Arcane spice boosts itself by its amount"
+                if (game.ascend_challenge === 6)
+                    u.desc =
+                        "Arcane spice boosts itself by its amount<br>(Disabled)"
+                break
+            case 33:
+                u.desc =
+                    "Boosts from rune power are " +
+                    format_small(8) +
+                    "x stronger"
                 break
         }
 
@@ -2845,6 +2998,9 @@ function ascension_update() {
             '<br><span class="bold">-' +
             format_num(u.price, game.notation) +
             " ᚫ</span>"
+        if (u.id === 34) {
+            button.innerHTML = u.desc
+        }
 
         let visible = true
 
@@ -2942,7 +3098,12 @@ function ascension_update() {
                 condition2 = true
             }
 
-            if (game.ansuz >= u.price && condition1 && condition2) {
+            if (
+                game.ansuz >= u.price &&
+                condition1 &&
+                condition2 &&
+                u.id < 34
+            ) {
                 button.className = "ascension_upgrade a_unlocked2"
                 if (u.challenge !== 0)
                     button.className = "ascension_upgrade ac_unlocked"
@@ -3067,7 +3228,26 @@ function arcane_update() {
             game.notation
         ) +
         " g arcane spice/sec"
-    if (game.ascend_bought[22]) {
+    if (game.ascend_bought[31] && game.ascend_challenge !== 6) {
+        document.getElementById("arcane_spice_up").innerHTML =
+            "+" +
+            format_idec(
+                game.arcane_spice_gen[0]
+                    .floor()
+                    .mul(game.total_arcane_spice_boost[0])
+                    .mul(5),
+                game.notation
+            ) +
+            " g arcane spice/sec<br>Your arcane spice is boosting crystallized spice production " +
+            format_idec(game.arcane_spice.pow(10).add(1), game.notation) +
+            "x,<br>and boosting arcane spice production " +
+            format_idec(game.arcane_spice.pow(0.0175).add(1), game.notation) +
+            "x"
+    } else if (
+        game.ascend_bought[22] &&
+        game.ascend_challenge !== 1 &&
+        game.ascend_challenge !== 6
+    ) {
         document.getElementById("arcane_spice_up").innerHTML =
             "+" +
             format_idec(
@@ -3121,6 +3301,15 @@ function arcane_update() {
                                 .mul(5),
                             game.notation
                         ) + " g arcane spice/sec"
+                    if (game.ascend_bought[32] && game.ascend_challenge !== 2) {
+                        info_str +=
+                            ",<br>and producing " +
+                            format_idec(
+                                game.arcane_spice_gen[gen.id].floor().pow(60),
+                                game.notation
+                            ) +
+                            " crystallized spice galaxies/sec"
+                    }
                 } else {
                     info_str +=
                         format_idec(
@@ -3255,6 +3444,19 @@ function arcane_update() {
             game.notation
         ) +
         "x"
+
+    if (game.ascend_bought[29] && game.ascend_challenge !== 6) {
+        s_str +=
+            ",<br>and boosting all arcane spice generators " +
+            format_idec(
+                Decimal.pow(4 / 3, game.arcane_enchantment),
+                game.notation
+            ) +
+            "x"
+    }
+    if (game.ascend_challenge === 5) {
+        s_str = "Arcane enchantments refresh spice production for 1 second"
+    }
 
     document.getElementById("arcane_info_n").innerHTML = s_str
     document.getElementById("arcane_cost_n").innerHTML =
@@ -3394,7 +3596,7 @@ function stats_update() {
             format_num(Math.floor(game.total_rune_power), game.notation) +
             " rune power."
 
-        if (game.ascend_complete[1])
+        if (game.ascend_complete[0])
             stats_str +=
                 "<br>You have " +
                 format_idec(game.arcane_spice, game.notation) +
