@@ -72,10 +72,20 @@ function color_boost(override) {
                     (game.color_boosts * 1000 - 4733000) * scaling
                 )
                     can_boost = true
+            } else if (game.color_boosts <= 2000000) {
+                if (
+                    game.pink_spice_bought[5] >=
+                    (game.color_boosts * 2500 - 79737500) * scaling
+                )
+                    can_boost = true
             } else {
                 if (
                     game.pink_spice_bought[5] >=
-                    (game.color_boosts * 10000 - 454760000) * scaling
+                    (((game.color_boosts - 1997500) *
+                        (game.color_boosts - 1997499)) /
+                        2 +
+                        4917136250) *
+                        scaling
                 )
                     can_boost = true
             }
@@ -327,11 +337,21 @@ function color_boost(override) {
                             (game.pink_spice_bought[5] + 4733000) /
                                 (1000 * scaling)
                         ) + 1
+                } else if (game.pink_spice_bought[5] <= 4920262500) {
+                    game.color_boosts =
+                        Math.floor(
+                            (game.pink_spice_bought[5] + 79737500) /
+                                (2500 * scaling)
+                        ) + 1
                 } else {
                     game.color_boosts =
                         Math.floor(
-                            (game.pink_spice_bought[5] + 454760000) /
-                                (10000 * scaling)
+                            (0.5 *
+                                (3994999 +
+                                    (8 * game.pink_spice_bought[5] -
+                                        39337089999) **
+                                        0.5)) /
+                                scaling
                         ) + 1
                 }
             } else {
@@ -353,7 +373,11 @@ function prestige(override) {
         if (game.color_boosts <= 16)
             amount = new Decimal(2).pow((game.color_boosts - 10) / 3)
         else amount = new Decimal(2).pow((game.color_boosts - 8) / 4)
-        if (game.ascend_bought[15] && game.ascend_challenge !== 1) {
+        if (
+            game.ascend_bought[15] &&
+            game.ascend_challenge !== 1 &&
+            game.ascend_challenge !== 6
+        ) {
             if (game.ascend < 20480)
                 amount = amount.mul(Decimal.pow(2, game.ascend / 20))
             else
@@ -467,7 +491,7 @@ function ascend(override) {
 
             if (game.ascend_bought[3]) {
                 game.prestige_bought[0] = 5
-                prestige_upgrade.upgrades[0].price = new Decimal(65536)
+                prestige_upgrade.upgrades[0].price = new Decimal(32768)
                 game.prestige_bought[4] = 4
                 prestige_upgrade.upgrades[4].price = new Decimal(2048)
                 game.prestige_bought[7] = 1
