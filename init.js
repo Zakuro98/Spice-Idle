@@ -1,6 +1,6 @@
 //initializing game variables
 let game = {
-    version: "1.2.1",
+    version: "1.3.0",
 
     tickspeed: 100,
 
@@ -277,7 +277,7 @@ let game = {
     distribute_unlocked: false,
     half_distribute_unlocked: false,
 
-    ascend_bought: new Array(26).fill(false),
+    ascend_bought: new Array(35).fill(false),
     autoup_toggle: false,
     autocr_toggle: false,
 
@@ -291,7 +291,7 @@ let game = {
     ascend_time_played: 0,
 
     ascend_challenge: 0,
-    ascend_complete: new Array(3).fill(false),
+    ascend_complete: new Array(6).fill(false),
 
     arcane_spice: new Decimal(0),
     arcane_spice_gen: [
@@ -336,6 +336,8 @@ let game = {
     arcane_enchantment: 0,
     arcane_enchantment_price: new Decimal(25),
     autoen_toggle: false,
+
+    ascend_challenge_timer: 0,
 }
 
 let key = {
@@ -1073,6 +1075,96 @@ new ascension_upgrade(
     "180em",
     0
 )
+//[26]
+new ascension_upgrade(
+    "Boosts from rune power are 2x stronger",
+    10 ** 13,
+    25,
+    undefined,
+    "0em",
+    "192em",
+    0
+)
+//[27]
+new ascension_upgrade(
+    "Unlocks Challenge 4",
+    3 * 10 ** 14,
+    26,
+    undefined,
+    "-10em",
+    "204em",
+    4
+)
+//[28]
+new ascension_upgrade(
+    "Unlocks Challenge 5",
+    10 ** 17,
+    26,
+    undefined,
+    "10em",
+    "204em",
+    5
+)
+//[29]
+new ascension_upgrade(
+    "Arcane enchantments also boost arcane spice production 1.34x",
+    6 * 10 ** 15,
+    27,
+    undefined,
+    "-20em",
+    "216em",
+    0
+)
+//[30]
+new ascension_upgrade(
+    "Red spice boosts arcane spice by its amount",
+    10 ** 18,
+    28,
+    undefined,
+    "20em",
+    "216em",
+    0
+)
+//[31]
+new ascension_upgrade(
+    "Arcane spice boosts itself by its amount",
+    3 * 10 ** 19,
+    27,
+    28,
+    "0em",
+    "216em",
+    0
+)
+//[32]
+new ascension_upgrade(
+    "Arcane spice glyphs produce crystallized spice singularities",
+    5 * 10 ** 20,
+    31,
+    undefined,
+    "0em",
+    "228em",
+    0
+)
+//[33]
+new ascension_upgrade(
+    "Boosts from rune power are 8x stronger",
+    10 ** 22,
+    32,
+    undefined,
+    "0em",
+    "240em",
+    0
+)
+//[34]
+new ascension_upgrade(
+    "Coming soon...",
+    10 ** 24,
+    33,
+    undefined,
+    "0em",
+    "252em",
+    6
+)
 //done initializing ascension upgrades
 
 //ascension challenge class
@@ -1154,5 +1246,23 @@ new ascension_challenge(
     "Color boost requirements scale 10x harder<br>Reward: Strengtheners and infusions are even stronger",
     Decimal.pow(10, 720),
     24
+)
+//challenge 4
+new ascension_challenge(
+    "Generators 4-6 don't produce anything<br>Reward: Multipliers for generators 4-6 are slightly stronger",
+    Decimal.pow(10, 5850),
+    27
+)
+//challenge 5
+new ascension_challenge(
+    "Normal/crystallized spice production stops after 1 second,<br>arcane enchantments do nothing except refresh production<br>Reward: Boosts from rune power are 4x stronger",
+    Decimal.pow(10, 15000),
+    28
+)
+//challenge 6
+new ascension_challenge(
+    "Nice try<br>",
+    Decimal.pow(10, 999999).mul(9.999),
+    34
 )
 //done initializing ascension challenges
