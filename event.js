@@ -11,7 +11,7 @@ function buy_gen(color, id, budget) {
                 game.red_spice_boost[id] = new Decimal(
                     Math.floor(game.red_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     game.red_spice_boost[id] = new Decimal(
                         Math.floor(game.red_spice_bought[id] / 10) + 1
                     )
@@ -30,7 +30,7 @@ function buy_gen(color, id, budget) {
                 game.yellow_spice_boost[id] = new Decimal(
                     Math.floor(game.yellow_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     game.yellow_spice_boost[id] = new Decimal(
                         Math.floor(game.yellow_spice_bought[id] / 10) + 1
                     )
@@ -48,7 +48,7 @@ function buy_gen(color, id, budget) {
                 game.green_spice_boost[id] = new Decimal(
                     Math.floor(game.green_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     game.green_spice_boost[id] = new Decimal(
                         Math.floor(game.green_spice_bought[id] / 10) + 1
                     )
@@ -64,7 +64,7 @@ function buy_gen(color, id, budget) {
                 game.blue_spice_boost[id] = new Decimal(
                     Math.floor(game.blue_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     game.blue_spice_boost[id] = new Decimal(
                         Math.floor(game.blue_spice_bought[id] / 10) + 1
                     )
@@ -80,7 +80,7 @@ function buy_gen(color, id, budget) {
                 game.pink_spice_boost[id] = new Decimal(
                     Math.floor(game.pink_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     game.pink_spice_boost[id] = new Decimal(
                         Math.floor(game.pink_spice_bought[id] / 10) + 1
                     )
@@ -158,7 +158,7 @@ function buy_until10(color, id, budget) {
                 game.red_spice_boost[id] = new Decimal(
                     Math.floor(game.red_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     game.red_spice_boost[id] = new Decimal(
                         Math.floor(game.red_spice_bought[id] / 10) + 1
                     )
@@ -183,7 +183,7 @@ function buy_until10(color, id, budget) {
                 game.yellow_spice_boost[id] = new Decimal(
                     Math.floor(game.yellow_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     game.yellow_spice_boost[id] = new Decimal(
                         Math.floor(game.yellow_spice_bought[id] / 10) + 1
                     )
@@ -208,7 +208,7 @@ function buy_until10(color, id, budget) {
                 game.green_spice_boost[id] = new Decimal(
                     Math.floor(game.green_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     game.green_spice_boost[id] = new Decimal(
                         Math.floor(game.green_spice_bought[id] / 10) + 1
                     )
@@ -233,7 +233,7 @@ function buy_until10(color, id, budget) {
                 game.blue_spice_boost[id] = new Decimal(
                     Math.floor(game.blue_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     game.blue_spice_boost[id] = new Decimal(
                         Math.floor(game.blue_spice_bought[id] / 10) + 1
                     )
@@ -258,7 +258,7 @@ function buy_until10(color, id, budget) {
                 game.pink_spice_boost[id] = new Decimal(
                     Math.floor(game.pink_spice_bought[id] / 10) + 1
                 ).pow(game.prestige_bought[3] + 1)
-                if (game.ascend_challenge === 1)
+                if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
                     game.pink_spice_boost[id] = new Decimal(
                         Math.floor(game.pink_spice_bought[id] / 10) + 1
                     )
@@ -613,7 +613,10 @@ function max_all(color) {
                     game.red_spice_boost[i] = new Decimal(
                         Math.floor(game.red_spice_bought[i] / 10) + 1
                     ).pow(game.prestige_bought[3] + 1)
-                    if (game.ascend_challenge === 1)
+                    if (
+                        game.ascend_challenge === 1 ||
+                        game.ascend_challenge === 6
+                    )
                         game.red_spice_boost[i] = new Decimal(
                             Math.floor(game.red_spice_bought[i] / 10) + 1
                         )
@@ -762,7 +765,10 @@ function max_all(color) {
                     game.yellow_spice_boost[i] = new Decimal(
                         Math.floor(game.yellow_spice_bought[i] / 10) + 1
                     ).pow(game.prestige_bought[3] + 1)
-                    if (game.ascend_challenge === 1)
+                    if (
+                        game.ascend_challenge === 1 ||
+                        game.ascend_challenge === 6
+                    )
                         game.yellow_spice_boost[i] = new Decimal(
                             Math.floor(game.yellow_spice_bought[i] / 10) + 1
                         )
@@ -909,7 +915,10 @@ function max_all(color) {
                     game.green_spice_boost[i] = new Decimal(
                         Math.floor(game.green_spice_bought[i] / 10) + 1
                     ).pow(game.prestige_bought[3] + 1)
-                    if (game.ascend_challenge === 1)
+                    if (
+                        game.ascend_challenge === 1 ||
+                        game.ascend_challenge === 6
+                    )
                         game.green_spice_boost[i] = new Decimal(
                             Math.floor(game.green_spice_bought[i] / 10) + 1
                         )
@@ -1052,7 +1061,10 @@ function max_all(color) {
                     game.blue_spice_boost[i] = new Decimal(
                         Math.floor(game.blue_spice_bought[i] / 10) + 1
                     ).pow(game.prestige_bought[3] + 1)
-                    if (game.ascend_challenge === 1)
+                    if (
+                        game.ascend_challenge === 1 ||
+                        game.ascend_challenge === 6
+                    )
                         game.blue_spice_boost[i] = new Decimal(
                             Math.floor(game.blue_spice_bought[i] / 10) + 1
                         )
@@ -1195,7 +1207,10 @@ function max_all(color) {
                     game.pink_spice_boost[i] = new Decimal(
                         Math.floor(game.pink_spice_bought[i] / 10) + 1
                     ).pow(game.prestige_bought[3] + 1)
-                    if (game.ascend_challenge === 1)
+                    if (
+                        game.ascend_challenge === 1 ||
+                        game.ascend_challenge === 6
+                    )
                         game.pink_spice_boost[i] = new Decimal(
                             Math.floor(game.pink_spice_bought[i] / 10) + 1
                         )
@@ -1996,7 +2011,8 @@ function buy_ascension_upgrade(id) {
         game.ansuz >= ascension_upgrade.upgrades[id].price &&
         !game.ascend_bought[id] &&
         condition1 &&
-        condition2
+        condition2 &&
+        id < 34
     ) {
         game.ansuz -= ascension_upgrade.upgrades[id].price
         game.ascend_bought[id] = true
@@ -2044,19 +2060,23 @@ function buy_enchantment() {
     if (game.arcane_spice.cmp(game.arcane_enchantment_price) >= 0) {
         game.arcane_spice = game.arcane_spice.sub(game.arcane_enchantment_price)
         game.arcane_enchantment_price = game.arcane_enchantment_price.mul(4)
-        if (game.arcane_enchantment >= 25)
+        if (game.arcane_enchantment >= 25 && game.ascend_challenge !== 5)
             game.arcane_enchantment_price = game.arcane_enchantment_price.mul(5)
-        if (game.arcane_enchantment >= 125)
+        if (game.arcane_enchantment >= 125 && game.ascend_challenge !== 5)
             game.arcane_enchantment_price = game.arcane_enchantment_price.mul(6)
+        if (game.arcane_enchantment >= 5000 && game.ascend_challenge !== 5)
+            game.arcane_enchantment_price =
+                game.arcane_enchantment_price.mul(665280)
 
         game.arcane_enchantment += 1
+        game.ascend_challenge_timer = 0
     }
 }
 
 //maxing arcane enchantments
 function max_enchantment() {
     if (game.arcane_spice.cmp(game.arcane_enchantment_price) >= 0) {
-        if (game.arcane_enchantment < 25) {
+        if (game.ascend_challenge === 5) {
             n = Math.floor(
                 new Decimal(1)
                     .sub(
@@ -2066,8 +2086,6 @@ function max_enchantment() {
                     )
                     .log(10) / Math.log10(4)
             )
-            if (game.arcane_enchantment + n >= 25)
-                n = 25 - game.arcane_enchantment
             if (n > 0) {
                 let price = game.arcane_enchantment_price
                     .mul(new Decimal(1).sub(new Decimal(4).pow(n)))
@@ -2076,48 +2094,103 @@ function max_enchantment() {
                 game.arcane_enchantment_price =
                     game.arcane_enchantment_price.mul(new Decimal(4).pow(n))
                 game.arcane_enchantment += n
+                game.ascend_challenge_timer = 0
             }
-        }
-        if (game.arcane_enchantment < 125) {
+        } else {
+            if (game.arcane_enchantment < 25) {
+                n = Math.floor(
+                    new Decimal(1)
+                        .sub(
+                            game.arcane_spice
+                                .mul(-3)
+                                .div(game.arcane_enchantment_price)
+                        )
+                        .log(10) / Math.log10(4)
+                )
+                if (game.arcane_enchantment + n >= 25)
+                    n = 25 - game.arcane_enchantment
+                if (n > 0) {
+                    let price = game.arcane_enchantment_price
+                        .mul(new Decimal(1).sub(new Decimal(4).pow(n)))
+                        .div(-3)
+                    game.arcane_spice = game.arcane_spice.sub(price)
+                    game.arcane_enchantment_price =
+                        game.arcane_enchantment_price.mul(new Decimal(4).pow(n))
+                    game.arcane_enchantment += n
+                    game.ascend_challenge_timer = 0
+                }
+            }
+            if (game.arcane_enchantment < 125) {
+                n = Math.floor(
+                    new Decimal(1)
+                        .sub(
+                            game.arcane_spice
+                                .mul(-19)
+                                .div(game.arcane_enchantment_price)
+                        )
+                        .log(10) / Math.log10(20)
+                )
+                if (game.arcane_enchantment + n >= 125)
+                    n = 125 - game.arcane_enchantment
+                if (n > 0) {
+                    let price = game.arcane_enchantment_price
+                        .mul(new Decimal(1).sub(new Decimal(20).pow(n)))
+                        .div(-19)
+                    game.arcane_spice = game.arcane_spice.sub(price)
+                    game.arcane_enchantment_price =
+                        game.arcane_enchantment_price.mul(
+                            new Decimal(20).pow(n)
+                        )
+                    game.arcane_enchantment += n
+                    game.ascend_challenge_timer = 0
+                }
+            }
+            if (game.arcane_enchantment < 5000) {
+                n = Math.floor(
+                    new Decimal(1)
+                        .sub(
+                            game.arcane_spice
+                                .mul(-119)
+                                .div(game.arcane_enchantment_price)
+                        )
+                        .log(10) / Math.log10(120)
+                )
+                if (game.arcane_enchantment + n >= 5000)
+                    n = 5000 - game.arcane_enchantment
+                if (n > 0) {
+                    let price = game.arcane_enchantment_price
+                        .mul(new Decimal(1).sub(new Decimal(120).pow(n)))
+                        .div(-119)
+                    game.arcane_spice = game.arcane_spice.sub(price)
+                    game.arcane_enchantment_price =
+                        game.arcane_enchantment_price.mul(
+                            new Decimal(120).pow(n)
+                        )
+                    game.arcane_enchantment += n
+                    game.ascend_challenge_timer = 0
+                }
+            }
             n = Math.floor(
                 new Decimal(1)
                     .sub(
                         game.arcane_spice
-                            .mul(-19)
+                            .mul(-79833599)
                             .div(game.arcane_enchantment_price)
                     )
-                    .log(10) / Math.log10(20)
+                    .log(10) / Math.log10(79833600)
             )
-            if (game.arcane_enchantment + n >= 125)
-                n = 125 - game.arcane_enchantment
             if (n > 0) {
                 let price = game.arcane_enchantment_price
-                    .mul(new Decimal(1).sub(new Decimal(20).pow(n)))
-                    .div(-19)
+                    .mul(new Decimal(1).sub(new Decimal(79833600).pow(n)))
+                    .div(-779833599)
                 game.arcane_spice = game.arcane_spice.sub(price)
                 game.arcane_enchantment_price =
-                    game.arcane_enchantment_price.mul(new Decimal(20).pow(n))
+                    game.arcane_enchantment_price.mul(
+                        new Decimal(79833600).pow(n)
+                    )
                 game.arcane_enchantment += n
+                game.ascend_challenge_timer = 0
             }
-        }
-        n = Math.floor(
-            new Decimal(1)
-                .sub(
-                    game.arcane_spice
-                        .mul(-119)
-                        .div(game.arcane_enchantment_price)
-                )
-                .log(10) / Math.log10(120)
-        )
-        if (n > 0) {
-            let price = game.arcane_enchantment_price
-                .mul(new Decimal(1).sub(new Decimal(120).pow(n)))
-                .div(-119)
-            game.arcane_spice = game.arcane_spice.sub(price)
-            game.arcane_enchantment_price = game.arcane_enchantment_price.mul(
-                new Decimal(120).pow(n)
-            )
-            game.arcane_enchantment += n
         }
     }
 }
