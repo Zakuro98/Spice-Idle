@@ -383,7 +383,7 @@ function goto_subtab(id) {
                 else
                     document.getElementById("ascension_challenges").className =
                         "subtab locked"
-                if (game.ascend_complete[0])
+                if (game.ascend_complete[0] && game.ascend_bought[16])
                     document.getElementById("arcane_spice").className =
                         "subtab unlocked"
                 else
@@ -407,7 +407,7 @@ function goto_subtab(id) {
                 else
                     document.getElementById("ascension_challenges").className =
                         "subtab locked"
-                if (game.ascend_complete[0])
+                if (game.ascend_complete[0] && game.ascend_bought[16])
                     document.getElementById("arcane_spice").className =
                         "subtab unlocked"
                 else
@@ -431,7 +431,7 @@ function goto_subtab(id) {
                         "subtab unlocked"
                     document.getElementById("ascension_upgrades").className =
                         "subtab unlocked"
-                    if (game.ascend_complete[0])
+                    if (game.ascend_complete[0] && game.ascend_bought[16])
                         document.getElementById("arcane_spice").className =
                             "subtab unlocked"
                     else
@@ -440,7 +440,7 @@ function goto_subtab(id) {
                 }
                 break
             case 3:
-                if (game.ascend_complete[0]) {
+                if (game.ascend_complete[0] && game.ascend_bought[16]) {
                     document.getElementById("arcane_page").style.display =
                         "block"
                     document.getElementById("ascension_page").style.display =
