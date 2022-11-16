@@ -10,85 +10,87 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <div class="menu">
-            <button id="spices" class="tab selected" onclick="goto_tab(0)">
-                SPICES
-            </button>
-            <button id="prestige" class="tab locked" onclick="goto_tab(1)">
-                LOCKED
-            </button>
-            <button id="ascension" class="tab locked" onclick="goto_tab(2)">
-                LOCKED
-            </button>
-            <button id="collapse" class="tab locked">
-                LOCKED
-            </button>
-            <button id="expansion" class="tab locked">
-                LOCKED
-            </button>
-            <button id="statistics" class="tab unlocked" onclick="goto_tab(5)">
-                STATISTICS
-            </button>
-            <button id="settings" class="tab unlocked" onclick="goto_tab(6)">
-                SETTINGS
-            </button>
-        </div>
+        <div class="tabs_block">
+            <div class="menu">
+                <button id="spices" class="tab selected" onclick="goto_tab(0)">
+                    SPICES
+                </button>
+                <button id="prestige" class="tab locked" onclick="goto_tab(1)">
+                    LOCKED
+                </button>
+                <button id="ascension" class="tab locked" onclick="goto_tab(2)">
+                    LOCKED
+                </button>
+                <button id="collapse" class="tab locked">
+                    LOCKED
+                </button>
+                <button id="expansion" class="tab locked">
+                    LOCKED
+                </button>
+                <button id="statistics" class="tab unlocked" onclick="goto_tab(5)">
+                    STATISTICS
+                </button>
+                <button id="settings" class="tab unlocked" onclick="goto_tab(6)">
+                    SETTINGS
+                </button>
+            </div>
 
-        <div id="spices_tabs" class="submenu">
-            <button id="red" class="subtab selected" onclick="goto_subtab(0)">
-                RED
-            </button>
-            <button id="yellow" class="subtab unlocked" onclick="goto_subtab(1)">
-                YELLOW
-            </button>
-            <button id="green" class="subtab locked" onclick="goto_subtab(2)">
-                LOCKED
-            </button>
-            <button id="blue" class="subtab locked" onclick="goto_subtab(3)">
-                LOCKED
-            </button>
-            <button id="pink" class="subtab locked" onclick="goto_subtab(4)">
-                LOCKED
-            </button>
-        </div>
+            <div id="spices_tabs" class="submenu">
+                <button id="red" class="subtab selected" onclick="goto_subtab(0)">
+                    RED
+                </button>
+                <button id="yellow" class="subtab unlocked" onclick="goto_subtab(1)">
+                    YELLOW
+                </button>
+                <button id="green" class="subtab locked" onclick="goto_subtab(2)">
+                    LOCKED
+                </button>
+                <button id="blue" class="subtab locked" onclick="goto_subtab(3)">
+                    LOCKED
+                </button>
+                <button id="pink" class="subtab locked" onclick="goto_subtab(4)">
+                    LOCKED
+                </button>
+            </div>
 
-        <div id="prestige_tabs" class="submenu">
-            <button id="prestige_upgrades" class="subtab selected" onclick="goto_subtab(0)">
-                PRESTIGE UPGRADES
-            </button>
-            <button id="crystallized_spice" class="subtab unlocked" onclick="goto_subtab(1)">
-                CRYSTALLIZED SPICE
-            </button>
-            <button id="crystal_upgrades" class="subtab unlocked" onclick="goto_subtab(2)">
-                CRYSTAL UPGRADES
-            </button>
-        </div>
+            <div id="prestige_tabs" class="submenu">
+                <button id="prestige_upgrades" class="subtab selected" onclick="goto_subtab(0)">
+                    PRESTIGE&nbsp;UPGRADES
+                </button>
+                <button id="crystallized_spice" class="subtab unlocked" onclick="goto_subtab(1)">
+                    CRYSTALLIZED&nbsp;SPICE
+                </button>
+                <button id="crystal_upgrades" class="subtab unlocked" onclick="goto_subtab(2)">
+                    CRYSTAL&nbsp;UPGRADES
+                </button>
+            </div>
 
-        <div id="ascension_tabs" class="submenu">
-            <button id="runes" class="subtab selected" onclick="goto_subtab(0)">
-                RUNES
-            </button>
-            <button id="ascension_upgrades" class="subtab unlocked" onclick="goto_subtab(1)">
-                ASCENSION UPGRADES
-            </button>
-            <button id="ascension_challenges" class="subtab locked" onclick="goto_subtab(2)">
-                LOCKED
-            </button>
-            <button id="arcane_spice" class="subtab locked" onclick="goto_subtab(3)">
-                LOCKED
-            </button>
-        </div>
+            <div id="ascension_tabs" class="submenu">
+                <button id="runes" class="subtab selected" onclick="goto_subtab(0)">
+                    RUNES
+                </button>
+                <button id="ascension_upgrades" class="subtab unlocked" onclick="goto_subtab(1)">
+                    ASCENSION&nbsp;UPGRADES
+                </button>
+                <button id="ascension_challenges" class="subtab locked" onclick="goto_subtab(2)">
+                    LOCKED
+                </button>
+                <button id="arcane_spice" class="subtab locked" onclick="goto_subtab(3)">
+                    LOCKED
+                </button>
+            </div>
 
-        <div id="statistics_tabs" class="submenu">
-            <button id="statistics_subtab" class="subtab selected" onclick="goto_subtab(0)">
-                STATISTICS
-            </button>
-            <button id="past_prestiges" class="subtab unlocked" onclick="goto_subtab(1)">
-                PAST PRESTIGES
-            </button>
-            <button id="past_ascensions" class="subtab locked" onclick="goto_subtab(2)">
-                LOCKED
-            </button>
+            <div id="statistics_tabs" class="submenu">
+                <button id="statistics_subtab" class="subtab selected" onclick="goto_subtab(0)">
+                    STATISTICS
+                </button>
+                <button id="past_prestiges" class="subtab unlocked" onclick="goto_subtab(1)">
+                    PAST&nbsp;PRESTIGES
+                </button>
+                <button id="past_ascensions" class="subtab locked" onclick="goto_subtab(2)">
+                    LOCKED
+                </button>
+            </div>
         </div>
 
         <main>
@@ -838,7 +840,7 @@
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.3.0<br>Made by Zakuro
+                Spice Idle v1.3.1<br>Made by Zakuro
             </p>
             <a href="changelog.html" target="_blank" class="info link">Changelog</a>
             <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
