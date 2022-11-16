@@ -27,9 +27,16 @@ main {
     margin: 32px;
 }
 
+.tabs_block {
+    position: sticky;
+    top: 0em;
+    z-index: 1;
+}
+
 .menu, .submenu {
     display: flex;
     margin: 0em;
+    flex-wrap: wrap;
 }
 
 #spices_tabs {
@@ -38,8 +45,7 @@ main {
 
 .tab {
     background: black;
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
+    padding: 0.3em 0.5em;
     font-family: "Fira Code";
     font-size: 2em;
     border: none;
@@ -48,8 +54,7 @@ main {
 
 .subtab {
     background: #151116;
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
+    padding: 0.3em 0.5em;
     font-family: "Fira Code";
     font-size: 1.5em;
     border: none;
@@ -949,10 +954,11 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 0.6em;
 }
 
-#settings_block2 {
-    margin-top: 0.6em;
+#settings_block1 {
+    margin-top: 0em;
 }
 
 #save_block {
