@@ -877,7 +877,10 @@ function spice_update() {
                         2 * (game.ascend_bought[2] + game.ascend_bought[14]),
                     game.red_strengthener *
                         (1 + game.ascend_bought[11]) *
-                        (1 + 2 * game.ascend_complete[2])
+                        (1 +
+                            2 *
+                                game.ascend_complete[2] *
+                                game.ascend_bought[24])
                 ),
                 game.notation
             ) +
@@ -895,7 +898,10 @@ function spice_update() {
                                     game.ascend_bought[14]),
                         game.red_strengthener *
                             (1 + game.ascend_bought[11]) *
-                            (1 + 2 * game.ascend_complete[2])
+                            (1 +
+                                2 *
+                                    game.ascend_complete[2] *
+                                    game.ascend_bought[24])
                     ),
                     game.notation
                 ) +
@@ -969,7 +975,10 @@ function spice_update() {
                 ).pow(
                     game.yellow_strengthener *
                         (1 + game.ascend_bought[11]) *
-                        (1 + 2 * game.ascend_complete[2])
+                        (1 +
+                            2 *
+                                game.ascend_complete[2] *
+                                game.ascend_bought[24])
                 ),
                 game.notation
             ) +
@@ -985,7 +994,10 @@ function spice_update() {
                     ).pow(
                         game.yellow_strengthener *
                             (1 + game.ascend_bought[11]) *
-                            (1 + 2 * game.ascend_complete[2])
+                            (1 +
+                                2 *
+                                    game.ascend_complete[2] *
+                                    game.ascend_bought[24])
                     ),
                     game.notation
                 ) +
@@ -1058,7 +1070,10 @@ function spice_update() {
                 ).pow(
                     game.green_strengthener *
                         (1 + game.ascend_bought[11]) *
-                        (1 + 2 * game.ascend_complete[2])
+                        (1 +
+                            2 *
+                                game.ascend_complete[2] *
+                                game.ascend_bought[24])
                 ),
                 game.notation
             ) +
@@ -1074,7 +1089,10 @@ function spice_update() {
                     ).pow(
                         game.green_strengthener *
                             (1 + game.ascend_bought[11]) *
-                            (1 + 2 * game.ascend_complete[2])
+                            (1 +
+                                2 *
+                                    game.ascend_complete[2] *
+                                    game.ascend_bought[24])
                     ),
                     game.notation
                 ) +
@@ -1147,7 +1165,10 @@ function spice_update() {
                 ).pow(
                     game.blue_strengthener *
                         (1 + game.ascend_bought[11]) *
-                        (1 + 2 * game.ascend_complete[2])
+                        (1 +
+                            2 *
+                                game.ascend_complete[2] *
+                                game.ascend_bought[24])
                 ),
                 game.notation
             ) +
@@ -1163,7 +1184,10 @@ function spice_update() {
                     ).pow(
                         game.blue_strengthener *
                             (1 + game.ascend_bought[11]) *
-                            (1 + 2 * game.ascend_complete[2])
+                            (1 +
+                                2 *
+                                    game.ascend_complete[2] *
+                                    game.ascend_bought[24])
                     ),
                     game.notation
                 ) +
@@ -1235,7 +1259,10 @@ function spice_update() {
                 ).pow(
                     game.pink_strengthener *
                         (1 + game.ascend_bought[11]) *
-                        (1 + 2 * game.ascend_complete[2])
+                        (1 +
+                            2 *
+                                game.ascend_complete[2] *
+                                game.ascend_bought[24])
                 ),
                 game.notation
             ) +
@@ -1251,7 +1278,10 @@ function spice_update() {
                     ).pow(
                         game.pink_strengthener *
                             (1 + game.ascend_bought[11]) *
-                            (1 + 2 * game.ascend_complete[2])
+                            (1 +
+                                2 *
+                                    game.ascend_complete[2] *
+                                    game.ascend_bought[24])
                     ),
                     game.notation
                 ) +
@@ -2548,6 +2578,7 @@ function crystal_update() {
             " free)"
     if (
         game.ascend_complete[2] &&
+        game.ascend_bought[24] &&
         game.ascend_challenge !== 1 &&
         game.ascend_challenge !== 6
     ) {
@@ -2730,22 +2761,9 @@ function ascension_update() {
     document.getElementById("ansuz_num3").innerHTML =
         format_num(game.ansuz, game.notation) + " ᚫ"
 
-    if (game.ascend >= 1) {
-        document.getElementById("past_ascensions").innerHTML = "PAST ASCENSIONS"
-        if (game.subtab[2] === 2)
-            document.getElementById("past_ascensions").className =
-                "subtab selected"
-        else
-            document.getElementById("past_ascensions").className =
-                "subtab unlocked"
-    } else {
-        document.getElementById("past_ascensions").innerHTML = "LOCKED"
-        document.getElementById("past_ascensions").className = "subtab locked"
-    }
-
     if (game.ascend_bought[16]) {
         document.getElementById("ascension_challenges").innerHTML =
-            "ASCENSION CHALLENGES"
+            "ASCENSION&nbsp;CHALLENGES"
         if (game.subtab[3] === 2)
             document.getElementById("ascension_challenges").className =
                 "subtab selected"
@@ -2758,8 +2776,8 @@ function ascension_update() {
             "subtab locked"
     }
 
-    if (game.ascend_complete[0]) {
-        document.getElementById("arcane_spice").innerHTML = "ARCANE SPICE"
+    if (game.ascend_complete[0] && game.ascend_bought[16]) {
+        document.getElementById("arcane_spice").innerHTML = "ARCANE&nbsp;SPICE"
         if (game.subtab[3] === 3)
             document.getElementById("arcane_spice").className =
                 "subtab selected"
@@ -3596,7 +3614,7 @@ function stats_update() {
             format_num(Math.floor(game.total_rune_power), game.notation) +
             " rune power."
 
-        if (game.ascend_complete[0])
+        if (game.ascend_complete[0] && game.ascend_bought[16])
             stats_str +=
                 "<br>You have " +
                 format_idec(game.arcane_spice, game.notation) +
@@ -3696,6 +3714,20 @@ function stats_update() {
     }
 
     document.getElementById("prestige_statistics_text").innerHTML = stats_str
+
+    if (game.ascend >= 1) {
+        document.getElementById("past_ascensions").innerHTML =
+            "PAST&nbsp;ASCENSIONS"
+        if (game.subtab[2] === 2)
+            document.getElementById("past_ascensions").className =
+                "subtab selected"
+        else
+            document.getElementById("past_ascensions").className =
+                "subtab unlocked"
+    } else {
+        document.getElementById("past_ascensions").innerHTML = "LOCKED"
+        document.getElementById("past_ascensions").className = "subtab locked"
+    }
 
     stats_str = "Last 10 Ascensions:"
     entries = 0
