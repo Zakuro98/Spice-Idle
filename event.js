@@ -470,7 +470,7 @@ function max_all(color) {
             a = 3
             break
     }
-    if (game.ascend_complete[2]) a = 2
+    if (game.ascend_complete[2] && game.ascend_bought[24]) a = 2
     let b = (49 * Math.log(a) - 2 * Math.log(10000)) / (2 * Math.log(a))
     let c =
         Math.log(a) ** 2 -
@@ -1469,15 +1469,9 @@ function auto_toggle(color, unless) {
                 document.getElementById("prestige_auto_mode").innerHTML =
                     "Mode: SPICE"
             } else if (game.autopr_mode === 1) {
-                if (game.ascend_bought[9]) {
-                    game.autopr_mode = 2
-                    document.getElementById("prestige_auto_mode").innerHTML =
-                        "Mode: TIME"
-                } else {
-                    game.autopr_mode = 0
-                    document.getElementById("prestige_auto_mode").innerHTML =
-                        "Mode: BOOSTS"
-                }
+                game.autopr_mode = 2
+                document.getElementById("prestige_auto_mode").innerHTML =
+                    "Mode: TIME"
             } else if (game.autopr_mode === 2) {
                 game.autopr_mode = 0
                 document.getElementById("prestige_auto_mode").innerHTML =
@@ -1571,82 +1565,159 @@ function auto_toggle(color, unless) {
 }
 
 //buying prestige upgrades
-function buy_prestige_upgrade(id) {
-    if (
-        game.rainbow_spice.cmp(prestige_upgrade.upgrades[id].price) >= 0 &&
-        game.prestige_bought[id] < prestige_upgrade.upgrades[id].max
-    ) {
-        game.rainbow_spice = game.rainbow_spice.sub(
-            prestige_upgrade.upgrades[id].price
-        )
-        game.prestige_bought[id]++
+function buy_prestige_upgrade(id, max) {
+    if (max) {
+        while (
+            game.rainbow_spice.cmp(prestige_upgrade.upgrades[id].price) >= 0 &&
+            game.prestige_bought[id] < prestige_upgrade.upgrades[id].max
+        ) {
+            game.rainbow_spice = game.rainbow_spice.sub(
+                prestige_upgrade.upgrades[id].price
+            )
+            game.prestige_bought[id]++
 
-        if (game.prestige_bought[id] < prestige_upgrade.upgrades[id].max)
-            switch (id) {
-                case 0:
-                    switch (game.prestige_bought[id]) {
-                        case 1:
-                            prestige_upgrade.upgrades[id].price = new Decimal(4)
-                            break
-                        case 2:
-                            prestige_upgrade.upgrades[id].price = new Decimal(
-                                16
-                            )
-                            break
-                        case 3:
-                            prestige_upgrade.upgrades[id].price = new Decimal(
-                                256
-                            )
-                            break
-                        case 4:
-                            prestige_upgrade.upgrades[id].price = new Decimal(
-                                65536
-                            )
-                            break
-                        default:
-                            prestige_upgrade.upgrades[id].price = new Decimal(1)
-                            break
-                    }
-                    break
-                case 2:
-                    if (game.prestige_bought[id] > 9) {
+            if (game.prestige_bought[id] < prestige_upgrade.upgrades[id].max)
+                switch (id) {
+                    case 0:
+                        switch (game.prestige_bought[id]) {
+                            case 1:
+                                prestige_upgrade.upgrades[id].price =
+                                    new Decimal(4)
+                                break
+                            case 2:
+                                prestige_upgrade.upgrades[id].price =
+                                    new Decimal(16)
+                                break
+                            case 3:
+                                prestige_upgrade.upgrades[id].price =
+                                    new Decimal(256)
+                                break
+                            case 4:
+                                prestige_upgrade.upgrades[id].price =
+                                    new Decimal(65536)
+                                break
+                            default:
+                                prestige_upgrade.upgrades[id].price =
+                                    new Decimal(1)
+                                break
+                        }
+                        break
+                    case 2:
+                        if (game.prestige_bought[id] > 9) {
+                            prestige_upgrade.upgrades[id].price =
+                                prestige_upgrade.upgrades[id].price.mul(
+                                    Decimal.pow(2, game.prestige_bought[id] - 6)
+                                )
+                        } else if (game.prestige_bought[id] > 5) {
+                            prestige_upgrade.upgrades[id].price =
+                                prestige_upgrade.upgrades[id].price.mul(8)
+                        } else {
+                            prestige_upgrade.upgrades[id].price =
+                                prestige_upgrade.upgrades[id].price.mul(4)
+                        }
+                        break
+                    case 3:
                         prestige_upgrade.upgrades[id].price =
-                            prestige_upgrade.upgrades[id].price.mul(
-                                Decimal.pow(2, game.prestige_bought[id] - 6)
-                            )
-                    } else if (game.prestige_bought[id] > 5) {
+                            prestige_upgrade.upgrades[id].price.mul(256)
+                        break
+                    case 4:
                         prestige_upgrade.upgrades[id].price =
                             prestige_upgrade.upgrades[id].price.mul(8)
-                    } else {
+                        break
+                    case 5:
                         prestige_upgrade.upgrades[id].price =
-                            prestige_upgrade.upgrades[id].price.mul(4)
-                    }
-                    break
-                case 3:
-                    prestige_upgrade.upgrades[id].price =
-                        prestige_upgrade.upgrades[id].price.mul(256)
-                    break
-                case 4:
-                    prestige_upgrade.upgrades[id].price =
-                        prestige_upgrade.upgrades[id].price.mul(8)
-                    break
-                case 5:
-                    prestige_upgrade.upgrades[id].price =
-                        prestige_upgrade.upgrades[id].price.mul(
-                            2 ** (game.prestige_bought[id] + 3)
-                        )
-                    break
-                case 9:
-                    prestige_upgrade.upgrades[id].price =
-                        prestige_upgrade.upgrades[id].price.mul(1024)
-                    break
-                case 20:
-                    prestige_upgrade.upgrades[id].price =
-                        prestige_upgrade.upgrades[id].price.mul(
-                            Decimal.pow(2, 8 + game.prestige_bought[id] * 8)
-                        )
-                    break
-            }
+                            prestige_upgrade.upgrades[id].price.mul(
+                                2 ** (game.prestige_bought[id] + 3)
+                            )
+                        break
+                    case 9:
+                        prestige_upgrade.upgrades[id].price =
+                            prestige_upgrade.upgrades[id].price.mul(1024)
+                        break
+                    case 20:
+                        prestige_upgrade.upgrades[id].price =
+                            prestige_upgrade.upgrades[id].price.mul(
+                                Decimal.pow(2, 8 + game.prestige_bought[id] * 8)
+                            )
+                        break
+                }
+        }
+    } else {
+        if (
+            game.rainbow_spice.cmp(prestige_upgrade.upgrades[id].price) >= 0 &&
+            game.prestige_bought[id] < prestige_upgrade.upgrades[id].max
+        ) {
+            game.rainbow_spice = game.rainbow_spice.sub(
+                prestige_upgrade.upgrades[id].price
+            )
+            game.prestige_bought[id]++
+
+            if (game.prestige_bought[id] < prestige_upgrade.upgrades[id].max)
+                switch (id) {
+                    case 0:
+                        switch (game.prestige_bought[id]) {
+                            case 1:
+                                prestige_upgrade.upgrades[id].price =
+                                    new Decimal(4)
+                                break
+                            case 2:
+                                prestige_upgrade.upgrades[id].price =
+                                    new Decimal(16)
+                                break
+                            case 3:
+                                prestige_upgrade.upgrades[id].price =
+                                    new Decimal(256)
+                                break
+                            case 4:
+                                prestige_upgrade.upgrades[id].price =
+                                    new Decimal(65536)
+                                break
+                            default:
+                                prestige_upgrade.upgrades[id].price =
+                                    new Decimal(1)
+                                break
+                        }
+                        break
+                    case 2:
+                        if (game.prestige_bought[id] > 9) {
+                            prestige_upgrade.upgrades[id].price =
+                                prestige_upgrade.upgrades[id].price.mul(
+                                    Decimal.pow(2, game.prestige_bought[id] - 6)
+                                )
+                        } else if (game.prestige_bought[id] > 5) {
+                            prestige_upgrade.upgrades[id].price =
+                                prestige_upgrade.upgrades[id].price.mul(8)
+                        } else {
+                            prestige_upgrade.upgrades[id].price =
+                                prestige_upgrade.upgrades[id].price.mul(4)
+                        }
+                        break
+                    case 3:
+                        prestige_upgrade.upgrades[id].price =
+                            prestige_upgrade.upgrades[id].price.mul(256)
+                        break
+                    case 4:
+                        prestige_upgrade.upgrades[id].price =
+                            prestige_upgrade.upgrades[id].price.mul(8)
+                        break
+                    case 5:
+                        prestige_upgrade.upgrades[id].price =
+                            prestige_upgrade.upgrades[id].price.mul(
+                                2 ** (game.prestige_bought[id] + 3)
+                            )
+                        break
+                    case 9:
+                        prestige_upgrade.upgrades[id].price =
+                            prestige_upgrade.upgrades[id].price.mul(1024)
+                        break
+                    case 20:
+                        prestige_upgrade.upgrades[id].price =
+                            prestige_upgrade.upgrades[id].price.mul(
+                                Decimal.pow(2, 8 + game.prestige_bought[id] * 8)
+                            )
+                        break
+                }
+        }
     }
 }
 
