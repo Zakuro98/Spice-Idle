@@ -604,6 +604,7 @@ function condensed() {
             "Condensed Generators<br>ENABLED"
     }
 }
+
 //toggle various confirmations
 function confirmations(type, ignore) {
     switch (type) {
@@ -660,4 +661,45 @@ function exponent_notation(not) {
                 "Exponent Notation<br>STANDARD"
             break
     }
+}
+
+//toggle rainbow color visibility
+function high_visibility() {
+    if (game.high_visibility) {
+        game.high_visibility = false
+        document.getElementById("high_visibility").innerHTML =
+            "Rainbow Visibility<br>DEFAULT"
+    } else {
+        game.high_visibility = true
+        document.getElementById("high_visibility").innerHTML =
+            "Rainbow Visibility<br>HIGH"
+    }
+}
+
+//change refresh rate
+function refresh_rate(ms) {
+    if (ms !== undefined) {
+        game.refresh_rate = ms
+    } else {
+        switch (game.refresh_rate) {
+            case 10:
+                game.refresh_rate = 20
+                break
+            case 20:
+                game.refresh_rate = 30
+                break
+            case 30:
+                game.refresh_rate = 50
+                break
+            case 50:
+                game.refresh_rate = 100
+                break
+            case 100:
+                game.refresh_rate = 10
+                break
+        }
+    }
+
+    document.getElementById("refresh_rate").innerHTML =
+        "Refresh Rate<br>" + game.refresh_rate + " MS"
 }
