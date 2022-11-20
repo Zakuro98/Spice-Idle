@@ -491,7 +491,7 @@ function ascend(override) {
 
             if (game.ascend_bought[3]) {
                 game.prestige_bought[0] = 5
-                prestige_upgrade.upgrades[0].price = new Decimal(32768)
+                prestige_upgrade.upgrades[0].price = new Decimal(65536)
                 game.prestige_bought[4] = 4
                 prestige_upgrade.upgrades[4].price = new Decimal(2048)
                 game.prestige_bought[7] = 1
