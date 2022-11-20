@@ -12,6 +12,16 @@ function tick() {
         "--rainbow_spice",
         "hsl(" + ((game.total_time_played * 36) % 360) + ",100%,50%)"
     )
+    document.documentElement.style.setProperty(
+        "--rainbow_spice2",
+        "hsl(" + ((game.total_time_played * 36) % 360) + ",100%,50%)"
+    )
+
+    if (game.high_visibility)
+        document.documentElement.style.setProperty(
+            "--rainbow_spice2",
+            "hsl(" + ((game.total_time_played * 36) % 360) + ",100%,75%)"
+        )
 
     document.documentElement.style.setProperty(
         "--ascension",
@@ -23,7 +33,9 @@ function tick() {
         "--ascension2",
         "hsl(" +
             (15 * Math.sin(game.total_time_played / 2) + 204) +
-            ",100%,65%)"
+            ",100%," +
+            (5 * Math.sin(game.total_time_played / 2) + 70) +
+            "%)"
     )
     document.documentElement.style.setProperty(
         "--ascension3",
@@ -1340,7 +1352,7 @@ function hotkey_tick() {
 
 //saving the game
 function save() {
-    game.version = "1.3.0"
+    game.version = "1.3.2"
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
         game.prestige_price[u.id] = u.price
@@ -1572,8 +1584,14 @@ function load(savegame) {
         }
         game.ascend_challenge_timer = 0
     }
+    if (major <= 3) {
+        if ((major === 3 && minor < 2) || major < 3) {
+            game.high_visibility = false
+            game.refresh_rate = 20
+        }
+    }
 
-    game.version = "1.3.0"
+    game.version = "1.3.2"
 
     game.red_spice = new Decimal(game.red_spice)
     game.red_strengthener_price = new Decimal(game.red_strengthener_price)
@@ -1700,6 +1718,9 @@ function load(savegame) {
     confirmations("challenge")
     confirmations("challenge")
     exponent_notation(game.exponent_notation)
+    high_visibility()
+    high_visibility()
+    refresh_rate(game.refresh_rate)
 
     document.getElementById("p_boosts_input").value = game.autopr_goal[0]
     document.getElementById("p_boosts_input2").value = game.autopr_delta[0]
@@ -1738,6 +1759,12 @@ function tick_loop() {
         tick()
     }
     hotkey_tick()
+
+    window.setTimeout(tick_loop, 1000 / game.tickspeed)
+}
+
+//setting up the graphics loop
+function graphics_loop() {
     tabs_update()
     if (game.tab === 0) spice_update()
     if (game.tab === 1) {
@@ -1750,9 +1777,11 @@ function tick_loop() {
     }
     if (game.tab === 5) stats_update()
 
-    window.setTimeout(tick_loop, 1000 / game.tickspeed)
+    window.setTimeout(graphics_loop, game.refresh_rate)
 }
+
 tick_loop()
+graphics_loop()
 
 //setting up the autosave loop
 let save_loop = window.setInterval(function () {
