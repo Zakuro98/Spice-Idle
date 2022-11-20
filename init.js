@@ -1,6 +1,6 @@
 //initializing game variables
 let game = {
-    version: "1.3.0",
+    version: "1.3.2",
 
     tickspeed: 100,
 
@@ -10,6 +10,8 @@ let game = {
     ascend_confirm: true,
     challenge_confirm: true,
     exponent_notation: 0,
+    high_visibility: false,
+    refresh_rate: 20,
 
     global_spice_boost: new Decimal(1),
 
@@ -744,6 +746,7 @@ new prestige_upgrade("Unlocks Ascension", new Decimal(2).pow(1024), 1)
 //setting up lines between ascension upgrades
 function get_offset(element) {
     let rect = element.getBoundingClientRect()
+    let page = document.getElementById("ascension_upgrade_panel")
     return {
         left: rect.left + window.pageXOffset,
         top: rect.top + window.pageYOffset,
@@ -780,7 +783,7 @@ class ascension_upgrade {
         button.className = "ascension_upgrade a_locked"
         if (challenge !== 0) button.className = "ascension_upgrade ac_locked"
         button.style.left = "calc(50% - 8.5em + " + x + ")"
-        button.style.top = "calc(15em + " + y + ")"
+        button.style.top = "calc(2.5em + " + y + ")"
         button.addEventListener("click", () => {
             buy_ascension_upgrade(this.id)
         })
@@ -1244,7 +1247,7 @@ new ascension_challenge(
 //challenge 3
 new ascension_challenge(
     "Color boost requirements scale 10x harder<br>Reward: Strengtheners and infusions are even stronger",
-    Decimal.pow(10, 720),
+    Decimal.pow(10, 800),
     24
 )
 //challenge 4
@@ -1261,8 +1264,8 @@ new ascension_challenge(
 )
 //challenge 6
 new ascension_challenge(
-    "Nice try<br>",
-    Decimal.pow(10, 999999).mul(9.999),
+    "Nice try<br>", //Same as Challenge 1, but rune power production is disabled<br>Reward: Unlocks Collapse
+    Decimal.pow(10, 999999).mul(9.999), //Decimal.pow(10, 1440)
     34
 )
 //done initializing ascension challenges
