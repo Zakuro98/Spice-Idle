@@ -1264,8 +1264,8 @@ new ascension_challenge(
 )
 //challenge 6
 new ascension_challenge(
-    "Nice try<br>", //Same as Challenge 1, but rune power production is disabled<br>Reward: Unlocks Collapse
-    Decimal.pow(10, 999999).mul(9.999), //Decimal.pow(10, 1440)
+    "Nice try<br>",
+    Decimal.pow(10, 999999).mul(9.999),
     34
 )
 //done initializing ascension challenges
