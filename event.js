@@ -1937,10 +1937,6 @@ function recall_runes(mode) {
                 }
             }
 
-            if (game.autopr_mode === 2) {
-                auto_toggle("prestige_mode")
-            }
-
             ascend(true)
         }
     } else if (mode === 3) {
@@ -2005,10 +2001,6 @@ function recall_runes(mode) {
                     game.ascend_bought[u.id] = false
                     game.ansuz += u.price
                 }
-            }
-
-            if (game.autopr_mode === 2) {
-                auto_toggle("prestige_mode")
             }
 
             for (let i = 0; i < 6; i++) {
