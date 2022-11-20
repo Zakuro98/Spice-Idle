@@ -1,5 +1,6 @@
 .root {
     --rainbow_spice: #ff0000;
+    --rainbow_spice2: rgb(255, 129, 129);
     --ascension: #00d9ff;
     --ascension2: #80ecff;
     --ascension3: #05282e;
@@ -21,6 +22,14 @@ body {
     font-weight: normal;
     margin: 0em;
     padding: 0em;
+    --mobile: 0;
+}
+
+@media (pointer: coarse) {
+    body {
+        font-size: 2.25vw;
+        --mobile: 1;
+    }
 }
 
 main {
@@ -59,6 +68,16 @@ main {
     font-size: 1.5em;
     border: none;
     flex: 1;
+}
+
+@media (pointer: coarse) {
+    .tab {
+        font-size: 1.75em;
+    }
+
+    .subtab {
+        font-size: 1.3em;
+    }
 }
 
 .locked {
@@ -125,6 +144,18 @@ main {
 
 .spice_gen_page {
     display: flex;
+}
+
+@media (pointer: coarse) {
+    .spice_gen_page {
+        flex-direction: column;
+    }
+}
+
+@media (pointer: fine), (pointer: none) {
+    .spice_gen_page {
+        flex-direction: row;
+    }
 }
 
 .spice_gen_panel {
@@ -238,7 +269,7 @@ main {
 }
 
 .boost {
-    color: var(--rainbow_spice);
+    color: var(--rainbow_spice2);
     text-shadow: 0 0 0.2em var(--rainbow_spice);
 }
 
@@ -316,7 +347,7 @@ main {
 }
 
 .rainbow_cost {
-    color: var(--rainbow_spice);
+    color: var(--rainbow_spice2);
     text-shadow: 0 0 0.2em var(--rainbow_spice);
     font-weight: 700;
 }
@@ -357,6 +388,7 @@ main {
     justify-content: right;
     align-items: center;
     flex-grow: 1;
+    margin-top: 0.75em;
 }
 
 #rainbow_spice_up, #prestige_auto_block, #rune_control_block, #ascend_auto_block {
@@ -403,6 +435,20 @@ main {
     margin-bottom: 18.5em;
 }
 
+@media (pointer: coarse) {
+    #prestige_upgrade_block {
+        width: 32.4em;
+        height: 54em;
+        margin-left: calc(50% - 16.2em);
+    }
+
+    #crystal_upgrade_block {
+        width: 32.4em;
+        height: 54em;
+        margin-left: calc(50% - 16.2em);
+    }
+}
+
 .prestige_upgrade {
     padding: 0.5em 0.5em;
     font-family: "Fira Code";
@@ -418,7 +464,7 @@ main {
 }
 
 .rainbow_spice {
-    color: var(--rainbow_spice);
+    color: var(--rainbow_spice2);
     text-shadow: 0 0 0.2em var(--rainbow_spice);
 }
 
@@ -430,9 +476,9 @@ main {
 
 .p_unlocked {
     background-color: black;
-    color: var(--rainbow_spice);
+    color: var(--rainbow_spice2);
     text-shadow: 0 0 0.2em var(--rainbow_spice);
-    border: 1px solid var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice2);
     box-shadow: 0 0 0.3em var(--rainbow_spice), 0 0 0.3em var(--rainbow_spice) inset;
 }
 
@@ -440,23 +486,23 @@ main {
     background-color: black;
     color: white;
     text-shadow: 0 0 0.2em var(--rainbow_spice);
-    border: 1px solid var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice2);
     box-shadow: 0 0 0.3em var(--rainbow_spice), 0 0 1em var(--rainbow_spice) inset;
 }
 
 .p_unlocked:active {
-    background-color: var(--rainbow_spice);
+    background-color: var(--rainbow_spice2);
     color: black;
     text-shadow: none;
-    border: 1px solid var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice2);
     box-shadow: 0 0 0.4em var(--rainbow_spice);
 }
 
 .p_unlocked2 {
     background-color: black;
-    color: var(--rainbow_spice);
+    color: var(--rainbow_spice2);
     text-shadow: 0 0 0.5em var(--rainbow_spice);
-    border: 1px solid var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice2);
     box-shadow: 0 0 0.5em var(--rainbow_spice), 0 0 0.5em var(--rainbow_spice) inset;
 }
 
@@ -464,23 +510,23 @@ main {
     background-color: black;
     color: white;
     text-shadow: 0 0 0.5em var(--rainbow_spice);
-    border: 1px solid var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice2);
     box-shadow: 0 0 0.5em var(--rainbow_spice), 0 0 3em var(--rainbow_spice) inset;
 }
 
 .p_unlocked2:active {
-    background-color: var(--rainbow_spice);
+    background-color: var(--rainbow_spice2);
     color: black;
     text-shadow: none;
-    border: 1px solid var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice2);
     box-shadow: 0 0 0.5em var(--rainbow_spice);
 }
 
 .p_bought {
-    background-color: var(--rainbow_spice);
+    background-color: var(--rainbow_spice2);
     color: black;
     text-shadow: none;
-    border: 1px solid var(--rainbow_spice);
+    border: 1px solid var(--rainbow_spice2);
     box-shadow: 0 0 0.5em var(--rainbow_spice);
 }
 
@@ -521,6 +567,12 @@ main {
     margin-top: 2.5em;
 }
 
+@media (pointer: coarse) {
+    .p_special {
+        margin-left: 9.625em;
+    }
+}
+
 .crystal_header {
     display: flex;
 }
@@ -545,7 +597,7 @@ main {
 #prestige_auto_buttons, #ascend_auto_buttons {
     display: flex;
     justify-content: right;
-    margin-top: -0.5em;
+    margin-top: 1em;
 }
 
 #prestige_auto_mode, #ascend_auto_mode {
@@ -556,6 +608,50 @@ main {
     display: flex;
     justify-content: right;
     margin-top: 0.25em;
+}
+
+@media (pointer: coarse) {
+    .prestige_header {
+        flex-direction: column;
+    }
+
+    .prestige_text {
+        text-align: left;
+    }
+
+    .prestige_panel {
+        justify-content: left;
+        flex-direction: row-reverse;
+    }
+
+    .prestige_button {
+        margin-left: 0em;
+        margin-right: 0.4em;
+    }
+
+    #prestige_auto_buttons, #prestige_boosts, #prestige_spice, #prestige_time, #prestige_boosts_delta, #prestige_spice_delta {
+        justify-content: left;
+    }
+
+    #rainbow_spice_up, #rainbow_spice_up2 {
+        margin-bottom: 0em;
+    }
+
+    .rainbow_spice_panel {
+        margin-bottom: 1.5em;
+    }
+
+    .crystal_header {
+        flex-direction: column-reverse;
+    }
+
+    #rainbow_spice_num2, #rainbow_spice_text2, #rainbow_spice_up2 {
+        text-align: left;
+    }
+
+    .spice_num {
+        font-size: 3.25em;
+    }
 }
 
 #upgrade_auto_toggle, #upgrade_auto_toggle2 {
@@ -614,6 +710,7 @@ main {
     justify-content: right;
     align-items: center;
     flex-grow: 1;
+    margin-top: 0.75em;
 }
 
 .ascend_text {
@@ -781,6 +878,42 @@ main {
     margin-bottom: 3em;
 }
 
+@media (pointer: coarse) {
+    .ascension_header {
+        flex-direction: column;
+    }
+
+    .ascend_text {
+        text-align: left;
+    }
+
+    .ascension_panel {
+        justify-content: left;
+        flex-direction: row-reverse;
+    }
+
+    .ascend_button {
+        margin-left: 0em;
+        margin-right: 0.4em;
+    }
+
+    #ascend_auto_buttons, #ascend_runes, #ascend_time {
+        justify-content: left;
+    }
+
+    #ascend_auto_block {
+        margin-bottom: 1.5em;
+    }
+
+    #distribute_buttons {
+        margin-bottom: 2em;
+    }
+
+    .ansuz_num {
+        font-size: 3.25em;
+    }
+}
+
 #arcane_rune_control {
     justify-content: right;
 }
@@ -798,8 +931,25 @@ main {
     margin-bottom: 2em;
 }
 
-#ascension_upgrade_screen {
-    height: 230em;
+#ascension_upgrade_panel {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin-left: -32px;
+    margin-right: -32px;
+}
+
+#ascension_upgrade_panel2 {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+#ascension_upgrade_panel3 {
+    position: relative;
+    height: 240em;
+    width: 73em;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .ascension_upgrade {
@@ -943,11 +1093,54 @@ main {
     margin-bottom: 3.5em;
 }
 
+@media (pointer: coarse) {
+    .a_challenge_header {
+        font-size: 1.2em;
+        margin-bottom: 0.15em;
+    }
+
+    .a_challenge_text {
+        font-size: 1em;
+    }
+
+    .a_challenge_button {
+        font-size: 1.35em;
+        width: 100%;
+        margin-left: 0em;
+        margin-top: 0.75em;
+        padding: 0.1em 0em;
+    }
+
+    .a_challenge_panel {
+        width: calc(100% - 2em);
+        flex-direction: column;
+    }
+
+    .arcane_header {
+        flex-direction: column-reverse;
+    }
+
+    #ansuz_text2, #ansuz_num3 {
+        text-align: left;
+    }
+
+    #arcane_rune_control {
+        justify-content: left;
+        margin-bottom: 1.5em;
+    }
+}
+
 .statistics_text {
     font-size: 1.333em;
     font-weight: 400;
     color: white;
     text-align: center;
+}
+
+@media (pointer: coarse) {
+    .statistics_text {
+        font-size: 1.167em;
+    }
 }
 
 .settings_block {
@@ -990,6 +1183,14 @@ main {
 
 .settings_button:active {
     background-color: #571c66;
+}
+
+@media (pointer: coarse) {
+    .settings_button {
+        font-size: 1em;
+        width: 20em;
+        height: 5em;
+    }
 }
 
 .s_big {
