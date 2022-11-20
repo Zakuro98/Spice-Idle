@@ -19,6 +19,30 @@ function tabs_update() {
         document.getElementById("ascension").className = "tab locked"
         document.getElementById("ascension").innerHTML = "LOCKED"
     }
+
+    let mobile = Number(
+        getComputedStyle(document.body).getPropertyValue("--mobile")
+    )
+
+    if (mobile) {
+        document.getElementById("prestige_upgrades").innerHTML = "UPGRADES"
+        document.getElementById("crystallized_spice").innerHTML =
+            "CRYSTAL&nbsp;SPICE"
+        document.getElementById("crystal_upgrades").innerHTML = "C.UPGRADES"
+        document.getElementById("ascension_upgrades").innerHTML = "UPGRADES"
+        document.getElementById("past_prestiges").innerHTML = "PRESTIGES"
+    } else {
+        document.getElementById("prestige_upgrades").innerHTML =
+            "PRESTIGE&nbsp;UPGRADES"
+        document.getElementById("crystallized_spice").innerHTML =
+            "CRYSTALLIZED&nbsp;SPICE"
+        document.getElementById("crystal_upgrades").innerHTML =
+            "CRYSTAL&nbsp;UPGRADES"
+        document.getElementById("ascension_upgrades").innerHTML =
+            "ASCENSION&nbsp;UPGRADES"
+        document.getElementById("past_prestiges").innerHTML =
+            "PAST&nbsp;PRESTIGES"
+    }
 }
 
 //graphics updates for spice generators
@@ -42,7 +66,7 @@ function spice_update() {
                         .mul(game.total_red_spice_boost[0]),
                     game.notation
                 ) +
-                " g red spice/sec<br>Your red spice is boosting yellow, green, blue, & pink spice production " +
+                " g red spice/sec<br><br>Your red spice is boosting yellow, green, blue, & pink spice production " +
                 format_idec(game.red_spice.pow(0.0075).add(1), game.notation) +
                 "x,<br>boosting crystallized spice production " +
                 format_idec(game.red_spice.pow(0.00004).add(1), game.notation) +
@@ -66,7 +90,7 @@ function spice_update() {
                         .mul(game.total_red_spice_boost[0]),
                     game.notation
                 ) +
-                " g red spice/sec<br>Your red spice is boosting yellow, green, blue, & pink spice production " +
+                " g red spice/sec<br><br>Your red spice is boosting yellow, green, blue, & pink spice production " +
                 format_idec(game.red_spice.pow(0.0075).add(1), game.notation) +
                 "x,<br>and boosting crystallized spice production " +
                 format_idec(game.red_spice.pow(0.00004).add(1), game.notation) +
@@ -83,7 +107,7 @@ function spice_update() {
                             .mul(game.total_red_spice_boost[0]),
                         game.notation
                     ) +
-                    " g red spice/sec<br>Your red spice is boosting yellow, green, blue, & pink spice production " +
+                    " g red spice/sec<br><br>Your red spice is boosting yellow, green, blue, & pink spice production " +
                     format_idec(
                         game.red_spice.pow(0.0075).add(1),
                         game.notation
@@ -98,7 +122,7 @@ function spice_update() {
                             .mul(game.total_red_spice_boost[0]),
                         game.notation
                     ) +
-                    " g red spice/sec<br>Your red spice is boosting yellow, green, blue, & pink spice production " +
+                    " g red spice/sec<br><br>Your red spice is boosting yellow, green, blue, & pink spice production " +
                     format_idec(
                         game.red_spice.pow(0.005).add(1),
                         game.notation
@@ -132,7 +156,7 @@ function spice_update() {
                     .mul(game.total_yellow_spice_boost[0]),
                 game.notation
             ) +
-            " g yellow spice/sec<br>Your yellow spice is boosting red spice production " +
+            " g yellow spice/sec<br><br>Your yellow spice is boosting red spice production " +
             format_idec(game.yellow_spice.pow(0.075).add(1), game.notation) +
             "x"
 
@@ -160,7 +184,7 @@ function spice_update() {
                     .mul(game.total_green_spice_boost[0]),
                 game.notation
             ) +
-            " g green spice/sec<br>Your green spice is boosting yellow spice production " +
+            " g green spice/sec<br><br>Your green spice is boosting yellow spice production " +
             format_idec(game.green_spice.pow(0.075).add(1), game.notation) +
             "x"
 
@@ -186,7 +210,7 @@ function spice_update() {
                     .mul(game.total_blue_spice_boost[0]),
                 game.notation
             ) +
-            " g blue spice/sec<br>Your blue spice is boosting green spice production " +
+            " g blue spice/sec<br><br>Your blue spice is boosting green spice production " +
             format_idec(game.blue_spice.pow(0.075).add(1), game.notation) +
             "x"
 
@@ -212,7 +236,7 @@ function spice_update() {
             game.ascend_challenge !== 6
         )
             pink_str +=
-                "<br>Your pink spice is boosting blue spice production " +
+                "<br><br>Your pink spice is boosting blue spice production " +
                 format_idec(game.pink_spice.pow(0.075).add(1), game.notation) +
                 "x,<br>and boosting crystallized spice production " +
                 format_idec(
@@ -222,7 +246,7 @@ function spice_update() {
                 "x"
         else
             pink_str +=
-                "<br>Your pink spice is boosting crystallized spice production " +
+                "<br><br>Your pink spice is boosting crystallized spice production " +
                 format_idec(
                     game.pink_spice.pow(0.00008).add(1),
                     game.notation
@@ -235,7 +259,7 @@ function spice_update() {
             game.ascend_challenge !== 6
         )
             pink_str +=
-                "<br>Your pink spice is boosting blue spice production " +
+                "<br><br>Your pink spice is boosting blue spice production " +
                 format_idec(game.pink_spice.pow(0.075).add(1), game.notation) +
                 "x"
     }
@@ -2374,7 +2398,7 @@ function crystal_update() {
                     .mul(3),
                 game.notation
             ) +
-            " g crystallized spice/sec<br>Your crystallized spice is boosting pink spice production " +
+            " g crystallized spice/sec<br><br>Your crystallized spice is boosting pink spice production " +
             format_idec(game.crystal_spice.pow(3).add(1), game.notation) +
             "x"
         if (game.prestige_bought[16] >= 1)
@@ -2387,7 +2411,7 @@ function crystal_update() {
                         .mul(3),
                     game.notation
                 ) +
-                " g crystallized spice/sec<br>Your crystallized spice is boosting pink spice production " +
+                " g crystallized spice/sec<br><br>Your crystallized spice is boosting pink spice production " +
                 format_idec(game.crystal_spice.pow(3).add(1), game.notation) +
                 "x,<br>and boosting red, yellow, green & blue spice production " +
                 format_idec(game.crystal_spice.pow(12).add(1), game.notation) +
@@ -2761,9 +2785,16 @@ function ascension_update() {
     document.getElementById("ansuz_num3").innerHTML =
         format_num(game.ansuz, game.notation) + " ᚫ"
 
+    let mobile = Number(
+        getComputedStyle(document.body).getPropertyValue("--mobile")
+    )
+
     if (game.ascend_bought[16]) {
         document.getElementById("ascension_challenges").innerHTML =
             "ASCENSION&nbsp;CHALLENGES"
+        if (mobile)
+            document.getElementById("ascension_challenges").innerHTML =
+                "CHALLENGES"
         if (game.subtab[3] === 2)
             document.getElementById("ascension_challenges").className =
                 "subtab selected"
@@ -3153,8 +3184,20 @@ function ascension_update() {
             let cy = (y1 + y2) / 2
             var angle = Math.atan2(y1 - y2, x1 - x2) * (180 / Math.PI)
 
+            let menu = document.getElementById("tabs_block")
+            let ansuz = document.getElementById("ansuz_menu")
+
             line.style.left = cx + "px"
-            line.style.top = "calc(" + cy + "px - 0.5em)"
+            line.style.top =
+                "calc(" +
+                (cy - menu.offsetHeight - ansuz.offsetHeight) +
+                "px - 2.6em)"
+            if (mobile) {
+                line.style.top =
+                    "calc(" +
+                    (cy - menu.offsetHeight - ansuz.offsetHeight) +
+                    "px - 4em)"
+            }
             line.style.width = length + "px"
             line.style.transform = "rotate(" + angle + "deg)"
 
@@ -3180,8 +3223,20 @@ function ascension_update() {
             let cy = (y1 + y2) / 2
             var angle = Math.atan2(y1 - y2, x1 - x2) * (180 / Math.PI)
 
+            let menu = document.getElementById("tabs_block")
+            let ansuz = document.getElementById("ansuz_menu")
+
             line.style.left = cx + "px"
-            line.style.top = "calc(" + cy + "px - 0.5em)"
+            line.style.top =
+                "calc(" +
+                (cy - menu.offsetHeight - ansuz.offsetHeight) +
+                "px - 2.6em)"
+            if (mobile) {
+                line.style.top =
+                    "calc(" +
+                    (cy - menu.offsetHeight - ansuz.offsetHeight) +
+                    "px - 4em)"
+            }
             line.style.width = length + "px"
             line.style.transform = "rotate(" + angle + "deg)"
 
@@ -3256,7 +3311,7 @@ function arcane_update() {
                     .mul(5),
                 game.notation
             ) +
-            " g arcane spice/sec<br>Your arcane spice is boosting crystallized spice production " +
+            " g arcane spice/sec<br><br>Your arcane spice is boosting crystallized spice production " +
             format_idec(game.arcane_spice.pow(10).add(1), game.notation) +
             "x,<br>and boosting arcane spice production " +
             format_idec(game.arcane_spice.pow(0.0175).add(1), game.notation) +
@@ -3275,7 +3330,7 @@ function arcane_update() {
                     .mul(5),
                 game.notation
             ) +
-            " g arcane spice/sec<br>Your arcane spice is boosting crystallized spice production " +
+            " g arcane spice/sec<br><br>Your arcane spice is boosting crystallized spice production " +
             format_idec(game.arcane_spice.pow(10).add(1), game.notation) +
             "x"
     }
@@ -3715,9 +3770,15 @@ function stats_update() {
 
     document.getElementById("prestige_statistics_text").innerHTML = stats_str
 
+    let mobile = Number(
+        getComputedStyle(document.body).getPropertyValue("--mobile")
+    )
+
     if (game.ascend >= 1) {
         document.getElementById("past_ascensions").innerHTML =
             "PAST&nbsp;ASCENSIONS"
+        if (mobile)
+            document.getElementById("past_ascensions").innerHTML = "ASCENSIONS"
         if (game.subtab[2] === 2)
             document.getElementById("past_ascensions").className =
                 "subtab selected"
