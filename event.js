@@ -445,6 +445,12 @@ function buy_strengthener(color) {
                 game.ansuz -= Math.round(game.arcane_strengthener_price)
                 game.arcane_strengthener_price *= 8
                 game.arcane_strengthener += 1
+
+                if (game.research_complete[13] >= 1) {
+                    game.free_enchantment =
+                        Math.floor(game.arcane_enchantment / 10) +
+                        game.arcane_strengthener * 250
+                }
             }
             break
     }
@@ -1280,6 +1286,17 @@ function max_all(color) {
                 game.ansuz -= price
                 game.arcane_strengthener_price *= 8 ** n
                 game.arcane_strengthener += n
+
+                if (game.research_complete[13] >= 1) {
+                    game.free_enchantment =
+                        Math.floor(game.arcane_enchantment / 10) +
+                        game.arcane_strengthener * 200
+                }
+
+                for (let i = 0; i < 3; i++) {
+                    game.autods_budget[i] -= price
+                    if (game.autods_budget[i] < 0) game.autods_budget[i] = 0
+                }
             }
             for (let i = 5; i >= 0; i--) {
                 if (game.arcane_spice_bought[i] === 0) buy_gen("arcane", i)
@@ -1303,6 +1320,11 @@ function max_all(color) {
                         3,
                         Math.floor(game.arcane_spice_bought[i] / 3)
                     )
+
+                    for (let i = 0; i < 3; i++) {
+                        game.autods_budget[i] -= price
+                        if (game.autods_budget[i] < 0) game.autods_budget[i] = 0
+                    }
                 }
             }
             break
@@ -1320,6 +1342,17 @@ function max_all(color) {
                 budget -= price
                 game.arcane_strengthener_price *= 8 ** n
                 game.arcane_strengthener += n
+
+                if (game.research_complete[13] >= 1) {
+                    game.free_enchantment =
+                        Math.floor(game.arcane_enchantment / 10) +
+                        game.arcane_strengthener * 200
+                }
+
+                for (let i = 0; i < 3; i++) {
+                    game.autods_budget[i] -= price
+                    if (game.autods_budget[i] < 0) game.autods_budget[i] = 0
+                }
             }
             for (let i = 5; i >= 0; i--) {
                 let temp_budget = budget
@@ -1340,6 +1373,68 @@ function max_all(color) {
                     )
                     game.ansuz -= price
                     budget -= price
+                    game.arcane_spice_price[i] *= 1.1 ** n
+                    game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(n)
+                    game.arcane_spice_bought[i] += n
+
+                    game.arcane_spice_boost[i] = Decimal.pow(
+                        3,
+                        Math.floor(game.arcane_spice_bought[i] / 3)
+                    )
+
+                    for (let i = 0; i < 3; i++) {
+                        game.autods_budget[i] -= price
+                        if (game.autods_budget[i] < 0) game.autods_budget[i] = 0
+                    }
+                }
+            }
+            break
+        case "arcane_budget":
+            n = Math.floor(
+                Math.log10(
+                    1 -
+                        (game.autods_budget[2] * -7) /
+                            game.arcane_strengthener_price
+                ) / Math.log10(8)
+            )
+            if (n > 0) {
+                let price = Math.round(
+                    (game.arcane_strengthener_price * (1 - 8 ** n)) / -7
+                )
+                game.ansuz -= price
+                game.autods_budget[2] -= price
+                game.arcane_strengthener_price *= 8 ** n
+                game.arcane_strengthener += n
+
+                if (game.research_complete[13] >= 1) {
+                    game.free_enchantment =
+                        Math.floor(game.arcane_enchantment / 10) +
+                        game.arcane_strengthener * 200
+                }
+            }
+            for (let i = 5; i >= 0; i--) {
+                let temp_budget = game.autods_budget[2]
+                if (game.arcane_spice_bought[i] === 0)
+                    temp_budget = buy_gen("arcane", i, game.autods_budget[2])
+                if (temp_budget !== undefined)
+                    game.autods_budget[2] = temp_budget
+                temp_budget = buy_until10("arcane", i, game.autods_budget[2])
+                if (temp_budget !== undefined)
+                    game.autods_budget[2] = temp_budget
+                let n = Math.floor(
+                    Math.log10(
+                        1 -
+                            (game.autods_budget[2] * -0.1) /
+                                game.arcane_spice_price[i]
+                    ) / Math.log10(1.1)
+                )
+                if (game.arcane_spice_bought[i] >= 3) n = Math.floor(n / 3) * 3
+                if (n > 0) {
+                    let price = Math.round(
+                        (game.arcane_spice_price[i] * (1 - 1.1 ** n)) / -0.1
+                    )
+                    game.ansuz -= price
+                    game.autods_budget[2] -= price
                     game.arcane_spice_price[i] *= 1.1 ** n
                     game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(n)
                     game.arcane_spice_bought[i] += n
@@ -1559,6 +1654,53 @@ function auto_toggle(color, unless) {
                 game.autoas_mode = 0
                 document.getElementById("ascend_auto_mode").innerHTML =
                     "Mode: RUNES"
+            }
+            break
+        case "ascend_upgrade":
+            if (game.autods_toggle) {
+                game.autods_toggle = false
+                document.getElementById("distribute_auto_toggle").innerHTML =
+                    "OFF"
+                document.getElementById("distribute_auto_toggle").className =
+                    "rune_button a_unlocked"
+            } else {
+                game.autods_toggle = true
+                document.getElementById("distribute_auto_toggle").innerHTML =
+                    "ON"
+                document.getElementById("distribute_auto_toggle").className =
+                    "rune_button a_active"
+            }
+            break
+        case "collapse":
+            if (game.autoco_toggle) {
+                game.autoco_toggle = false
+                document.getElementById("collapse_auto_toggle").innerHTML =
+                    "Auto: OFF"
+                document.getElementById("collapse_auto_toggle").className =
+                    "spice_buy a_disabled"
+            } else {
+                if (!game.collapse_confirm || unless) {
+                    game.autoco_toggle = true
+                    document.getElementById("collapse_auto_toggle").innerHTML =
+                        "Auto: ON"
+                    document.getElementById("collapse_auto_toggle").className =
+                        "spice_buy a_enabled"
+                } else {
+                    alert(
+                        "Collapse confirmations must be off to turn on Collapse automation!"
+                    )
+                }
+            }
+            break
+        case "collapse_mode":
+            if (game.autoco_mode === 0) {
+                game.autoco_mode = 1
+                document.getElementById("collapse_auto_mode").innerHTML =
+                    "Mode: TIME"
+            } else if (game.autoco_mode === 1) {
+                game.autoco_mode = 0
+                document.getElementById("collapse_auto_mode").innerHTML =
+                    "Mode: SPICE"
             }
             break
     }
@@ -1866,9 +2008,16 @@ function convert_rune(id, max) {
         if (max) {
             game.rune[id] += game.ansuz
             game.ansuz = 0
+
+            game.autods_budget = [0, 0, 0]
         } else {
             game.rune[id]++
             game.ansuz--
+
+            for (let i = 0; i < 3; i++) {
+                game.autods_budget[i]--
+                if (game.autods_budget[i] < 0) game.autods_budget[i] = 0
+            }
         }
     }
 }
@@ -1886,10 +2035,24 @@ function distribute_runes(mode) {
             amount = Math.floor(game.ansuz / 6)
         }
     }
+    if (mode === "budget") {
+        if (game.autods_budget[1] >= 3) {
+            amount = Math.floor(game.autods_budget[1] / 3)
+        }
+    }
 
     game.ansuz -= amount * 3
     for (let i = 0; i < 3; i++) {
         game.rune[i] += amount
+    }
+
+    if (mode !== "budget") {
+        for (let i = 0; i < 3; i++) {
+            game.autods_budget[i] -= amount * 3
+            if (game.autods_budget[i] < 0) game.autods_budget[i] = 0
+        }
+    } else {
+        game.autods_budget[1] -= amount * 3
     }
 }
 
@@ -2030,7 +2193,7 @@ function recall_runes(mode) {
 }
 
 //buying ascension upgrades
-function buy_ascension_upgrade(id) {
+function buy_ascension_upgrade(id, budget) {
     let condition1 = false
     let condition2 = false
     let upgrade1 = ascension_upgrade.upgrades[id].req
@@ -2057,7 +2220,7 @@ function buy_ascension_upgrade(id) {
             if (ascension_upgrade.upgrades[upgrade2].challenge !== 0) {
                 if (
                     game.ascend_complete[
-                        ascension_upgrade.upgrades[upgrade1].challenge - 1
+                        ascension_upgrade.upgrades[upgrade2].challenge - 1
                     ]
                 )
                     condition2 = true
@@ -2070,15 +2233,35 @@ function buy_ascension_upgrade(id) {
         condition2 = true
     }
 
-    if (
-        game.ansuz >= ascension_upgrade.upgrades[id].price &&
-        !game.ascend_bought[id] &&
-        condition1 &&
-        condition2 &&
-        id < 34
-    ) {
-        game.ansuz -= ascension_upgrade.upgrades[id].price
-        game.ascend_bought[id] = true
+    if (!game.ascend_bought[id] && condition1 && condition2) {
+        if (budget) {
+            if (game.autods_budget[0] >= ascension_upgrade.upgrades[id].price) {
+                game.ansuz -= ascension_upgrade.upgrades[id].price
+                game.autods_budget[0] -= ascension_upgrade.upgrades[id].price
+                game.ascend_bought[id] = true
+            }
+        } else {
+            if (game.ansuz >= ascension_upgrade.upgrades[id].price) {
+                game.ansuz -= ascension_upgrade.upgrades[id].price
+                game.ascend_bought[id] = true
+
+                for (let i = 0; i < 3; i++) {
+                    game.autods_budget[i] -=
+                        ascension_upgrade.upgrades[id].price
+                    if (game.autods_budget[i] < 0) game.autods_budget[i] = 0
+                }
+            }
+        }
+
+        if (game.research_complete[8] >= 1) {
+            for (let i = 0; i < 6; i++) {
+                if (
+                    game.ascend_bought[ascension_challenge.challenges[i].unlock]
+                ) {
+                    game.ascend_complete[i] = true
+                }
+            }
+        }
     }
 }
 
@@ -2133,6 +2316,14 @@ function buy_enchantment() {
 
         game.arcane_enchantment += 1
         game.ascend_challenge_timer = 0
+
+        if (game.research_complete[11] >= 1) {
+            game.free_enchantment = Math.floor(game.arcane_enchantment / 10)
+            if (game.research_complete[13] >= 1)
+                game.free_enchantment =
+                    Math.floor(game.arcane_enchantment / 10) +
+                    game.arcane_strengthener * 200
+        }
     }
 }
 
@@ -2255,5 +2446,73 @@ function max_enchantment() {
                 game.ascend_challenge_timer = 0
             }
         }
+
+        if (game.research_complete[11] >= 1) {
+            game.free_enchantment = Math.floor(game.arcane_enchantment / 10)
+            if (game.research_complete[13] >= 1)
+                game.free_enchantment =
+                    Math.floor(game.arcane_enchantment / 10) +
+                    game.arcane_strengthener * 200
+        }
+    }
+}
+
+//activating the spice collider
+function activate_collider() {
+    if (game.atomic_spice.cmp(1) >= 0) {
+        game.total_unstable_spice = game.total_unstable_spice.add(
+            game.atomic_spice.pow(game.atomic_efficiency).floor()
+        )
+        game.unstable_spice = game.unstable_spice.add(
+            game.atomic_spice.pow(game.atomic_efficiency).floor()
+        )
+        game.atomic_spice = new Decimal(0)
+    }
+}
+
+//begin/pause/resume research
+function research_toggle() {
+    if (game.research_view !== 0) {
+        if (!game.research_pause) {
+            if (game.research_view === game.research_select) {
+                game.research_pause = true
+                game.research_select = 0
+            }
+        } else if (
+            game.research_complete[game.research_view - 1] === 0 ||
+            research.researches[game.research_view - 1].repeat > 0
+        ) {
+            game.research_pause = false
+            game.research_select = game.research_view
+        }
+    }
+}
+
+//view research upgrade
+function research_view(id) {
+    game.research_view = id
+}
+
+//upgrading research speed
+function research_upgrade() {
+    if (
+        game.atomic_spice.cmp(
+            Decimal.pow(
+                game.data_boosts + Math.PI / 2,
+                game.data_boosts ** ((game.data_boosts + 1) ** 0.09)
+            )
+                .mul(16384)
+                .round()
+        ) >= 0
+    ) {
+        game.atomic_spice = game.atomic_spice.sub(
+            Decimal.pow(
+                game.data_boosts + Math.PI / 2,
+                game.data_boosts ** ((game.data_boosts + 1) ** 0.09)
+            )
+                .mul(16384)
+                .round()
+        )
+        game.data_boosts++
     }
 }
