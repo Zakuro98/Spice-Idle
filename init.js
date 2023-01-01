@@ -1,17 +1,18 @@
 //initializing game variables
 let game = {
-    version: "1.3.2",
+    version: "1.4.0",
 
     tickspeed: 100,
 
     notation: 2,
-    hotkeys: false,
+    hotkeys: true,
     condensed: false,
     ascend_confirm: true,
     challenge_confirm: true,
     exponent_notation: 0,
     high_visibility: false,
     refresh_rate: 20,
+    collapse_confirm: true,
 
     global_spice_boost: new Decimal(1),
 
@@ -206,11 +207,12 @@ let game = {
     pink_strengthener_price: new Decimal(8 * 10 ** 7),
 
     total_spice: new Decimal(5),
+    collapse_spice: new Decimal(5),
     total_time_played: 0,
 
     color_boosts: 0,
     tab: 0,
-    subtab: [0, 0, 0, 0],
+    subtab: [0, 0, 0, 0, 0],
     autosp_toggle: new Array(5).fill(false),
     autocb_toggle: false,
 
@@ -336,10 +338,42 @@ let game = {
     arcane_strengthener_price: 5000000,
 
     arcane_enchantment: 0,
+    free_enchantment: 0,
     arcane_enchantment_price: new Decimal(25),
     autoen_toggle: false,
 
     ascend_challenge_timer: 0,
+
+    collapse: 0,
+    atomic_spice: new Decimal(0),
+    unstable_spice: new Decimal(0),
+    total_unstable_spice: new Decimal(0),
+    decayed_spice: new Decimal(0),
+    unstable_boost: new Decimal(1),
+
+    halflife: 300,
+    atomic_efficiency: 0.6,
+
+    collapse_amount_history: new Array(10).fill(-1),
+    collapse_time_history: new Array(10).fill(-1),
+
+    collapse_time_played: 0,
+
+    research_view: 0,
+    research_select: 0,
+    research_pause: true,
+    research_complete: new Array(16).fill(0),
+    data: new Array(16).fill(0),
+    data_boosts: 0,
+
+    autods_toggle: false,
+    autods_portion: [0.5, 0, 0, 0, 0],
+    autods_budget: [0, 0, 0],
+
+    autoco_toggle: false,
+    autoco_mode: 0,
+    autoco_goal: [new Decimal(10 ** 50), 120],
+    autoco_stop: [new Decimal(10 ** 25), 60],
 }
 
 let key = {
@@ -353,6 +387,7 @@ let key = {
     i: false,
     a: false,
     n: false,
+    c: false,
 }
 
 function format_small(num) {
@@ -398,6 +433,8 @@ const ascension_map = new Map()
 const ascension_map2 = new Map()
 const ascension_map3 = new Map()
 const challenge_map = new Map()
+const research_map = new Map()
+const research_map2 = new Map()
 
 //spice generator class
 class spice_gen {
@@ -773,6 +810,8 @@ class ascension_upgrade {
         this.price = price
         this.req = req
         this.req2 = req2
+        this.x = x
+        this.y = y
         this.challenge = challenge
 
         ascension_upgrade.upgrades.push(this)
@@ -795,24 +834,60 @@ class ascension_upgrade {
         //lines behind ascension upgrades
         if (req !== undefined) {
             let line = document.createElement("DIV")
+            let rx = parseFloat(ascension_upgrade.upgrades[req].x) * 0.9
+            let ry = parseFloat(ascension_upgrade.upgrades[req].y) * 0.9
+            let tx = parseFloat(x) * 0.9
+            let ty = parseFloat(y) * 0.9
+            let length = ((rx - tx) ** 2 + (ry - ty) ** 2) ** 0.5
+            let cx = (rx + tx) / 2 - length / 2
+            let cy = (ry + ty) / 2
+
             line.className = "ascension_line"
             if (challenge !== 0) line.className = "ascension_line2"
             if (ascension_upgrade.upgrades[req].challenge !== 0)
                 line.className = "ascension_line2"
 
+            line.style.left = "calc(50% + " + cx + "em)"
+            line.style.top = "calc(5.5em + " + cy + "em)"
+            line.style.width = length + "em"
+            line.style.transform =
+                "rotate(" +
+                Math.atan2(ry - ty, rx - tx) * (180 / Math.PI) +
+                "deg)"
+
             ascension_map2.set(this, line)
-            document.getElementById("ascension_upgrade_lines").appendChild(line)
+            document
+                .getElementById("ascension_upgrade_screen")
+                .appendChild(line)
         }
 
         if (req2 !== undefined) {
             let line = document.createElement("DIV")
+            let rx = parseFloat(ascension_upgrade.upgrades[req2].x) * 0.9
+            let ry = parseFloat(ascension_upgrade.upgrades[req2].y) * 0.9
+            let tx = parseFloat(x) * 0.9
+            let ty = parseFloat(y) * 0.9
+            let length = ((rx - tx) ** 2 + (ry - ty) ** 2) ** 0.5
+            let cx = (rx + tx) / 2 - length / 2
+            let cy = (ry + ty) / 2
+
             line.className = "ascension_line"
             if (challenge !== 0) line.className = "ascension_line2"
             if (ascension_upgrade.upgrades[req].challenge !== 0)
                 line.className = "ascension_line2"
 
+            line.style.left = "calc(50% + " + cx + "em)"
+            line.style.top = "calc(5.5em + " + cy + "em)"
+            line.style.width = length + "em"
+            line.style.transform =
+                "rotate(" +
+                Math.atan2(ry - ty, rx - tx) * (180 / Math.PI) +
+                "deg)"
+
             ascension_map3.set(this, line)
-            document.getElementById("ascension_upgrade_lines").appendChild(line)
+            document
+                .getElementById("ascension_upgrade_screen")
+                .appendChild(line)
         }
     }
 }
@@ -1160,7 +1235,7 @@ new ascension_upgrade(
 )
 //[34]
 new ascension_upgrade(
-    "Coming soon...",
+    "Unlocks Challenge 6",
     10 ** 24,
     33,
     undefined,
@@ -1247,7 +1322,7 @@ new ascension_challenge(
 //challenge 3
 new ascension_challenge(
     "Color boost requirements scale 10x harder<br>Reward: Strengtheners and infusions are even stronger",
-    Decimal.pow(10, 800),
+    Decimal.pow(10, 600),
     24
 )
 //challenge 4
@@ -1264,8 +1339,195 @@ new ascension_challenge(
 )
 //challenge 6
 new ascension_challenge(
-    "Nice try<br>",
-    Decimal.pow(10, 999999).mul(9.999),
+    "Same as Challenge 1, but rune power production is disabled<br>Reward: Unlocks Collapse",
+    Decimal.pow(10, 1440),
     34
 )
 //done initializing ascension challenges
+
+//collapse research class
+class research {
+    static researches = []
+
+    desc
+    req
+    repeat
+    special
+    data
+    unit
+    factor
+    factor2
+
+    //upgrade constructor
+    constructor(desc, req, repeat, special, data, unit, factor, factor2) {
+        this.desc = desc
+        this.id = research.researches.length
+        this.req = req
+        this.repeat = repeat
+        this.special = special
+        this.data = data
+        this.unit = unit
+        this.factor = factor
+        this.factor2 = factor2
+
+        research.researches.push(this)
+
+        //available research button
+        let button = document.createElement("BUTTON")
+        button.innerHTML = this.id + 1
+        button.className = "research_button"
+        button.addEventListener("click", () => {
+            research_view(this.id + 1)
+        })
+
+        //attaching research to ascension challenges page
+        research_map.set(this, button)
+        document.getElementById("research_available").appendChild(button)
+
+        //completed research button
+        button = document.createElement("BUTTON")
+        button.innerHTML = this.id + 1
+        button.className = "research_button r_completed"
+        button.addEventListener("click", () => {
+            research_view(this.id + 1)
+        })
+
+        //attaching research to ascension challenges page
+        research_map2.set(this, button)
+        document.getElementById("research_completed").appendChild(button)
+    }
+}
+
+//initializing collapse researches
+//research 0
+new research(
+    "The half-life of unstable spice becomes 33% shorter<br>Current unstable spice half-life: 10 minutes",
+    undefined,
+    true,
+    false,
+    2000,
+    1500,
+    1.5,
+    2
+)
+//research 1
+new research(
+    "Quality of life Ascension upgrades are no longer reset by Collapse",
+    undefined,
+    false,
+    false,
+    1000
+)
+//research 2
+new research(
+    "Unstable spice decay now also boosts crystallized spice production",
+    1,
+    false,
+    false,
+    6000
+)
+//research 3
+new research(
+    "Rune power is produced 5x faster<br>Current rune power production boost: 1x",
+    2,
+    true,
+    false,
+    10000,
+    5000,
+    1.75,
+    2.5
+)
+//research 4
+new research(
+    "Unlocks the Distributor, which can automate Ascension upgrades",
+    2,
+    false,
+    false,
+    4000
+)
+//research 5
+new research(
+    "Atomic spice gains are additionally boosted by total rune power produced<br>Current boost: 1.00x",
+    4,
+    false,
+    true,
+    20000
+)
+//research 6
+new research(
+    "Unlocks automation for runes and arcane spice in the Distributor",
+    5,
+    false,
+    false,
+    8000
+)
+//research 7
+new research(
+    "Atomic spice conversion is 10% more efficient<br>Current atomic spice efficiency: 60%",
+    5,
+    true,
+    false,
+    30000,
+    5000,
+    3,
+    5
+)
+//research 8
+new research(
+    "Ascension Challenges are automatically completed when they are unlocked",
+    6,
+    false,
+    false,
+    50000
+)
+//research 9
+new research(
+    "Unstable spice decay now also boosts arcane spice production",
+    6,
+    false,
+    false,
+    100000
+)
+//research 10
+new research(
+    "Ansuz rune gains from Ascension are boosted by Times Collapsed stat<br>Current boost: 1.00x",
+    8,
+    false,
+    true,
+    200000
+)
+//research 11
+new research(
+    "You get 1 free arcane enchantment for every 10 arcane enchantments you have",
+    9,
+    false,
+    false,
+    400000
+)
+//research 12
+new research(
+    "Rune power boosts are an extra 50% stronger (for up to 12x)",
+    10,
+    false,
+    false,
+    900000
+)
+//research 13
+new research(
+    "You get 200 free arcane enchantments for every arcane strengthener you have",
+    11,
+    false,
+    false,
+    2000000
+)
+//research 14
+new research(
+    "Unstable spice boosts are 50% stronger when unstable spice is completely decayed",
+    11,
+    false,
+    false,
+    5000000
+)
+//research 15
+new research("Unlocks automation for Collapse", 14, false, false, 15000000)
+//done initializing collapse researches
