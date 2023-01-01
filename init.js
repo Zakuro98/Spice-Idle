@@ -1016,7 +1016,7 @@ new ascension_upgrade(
 //[12]
 new ascension_upgrade(
     "Unlocks automation for Ascension",
-    100,
+    1000,
     6,
     10,
     "0em",
