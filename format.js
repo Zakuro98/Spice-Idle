@@ -520,7 +520,7 @@ function format_num(num, not, nospace) {
 
         if (output === "") output = "0"
     }
-    if ((not === 12 || not === 13) && num < 10 ** 36 && num > cutoff) {
+    if ((not === 12 || not === 13) && num < 10 ** 36 && num >= cutoff) {
         const single_array_cond = [
             "",
             "M",
@@ -748,6 +748,7 @@ function format_inf(num, not, enot) {
                 let unit_str = one_str + one_mod + ten_str + hundred_str
                 let thousand_str = ""
                 let million_str = ""
+                let billion_str = ""
 
                 if (order >= 1000) {
                     let orderk = Math.floor(order / 1000) % 1000
@@ -808,7 +809,7 @@ function format_inf(num, not, enot) {
                     if (orderk !== 0) {
                         thousand_str =
                             one_str + one_mod + ten_str + hundred_str + "milli"
-                        if ((unit_str = "")) thousand_str += "n"
+                        if (unit_str === "") thousand_str += "n"
                     }
                 }
 
@@ -839,7 +840,7 @@ function format_inf(num, not, enot) {
                             else one_mod = "n"
                         if (
                             (orderm % 10 === 3 || orderm % 10 === 6) &&
-                            ((r_orderm >= 2 && r_orderk <= 5) ||
+                            ((r_orderm >= 2 && r_orderm <= 5) ||
                                 r_orderm % 10 === 8 ||
                                 r_orderm === 10 ||
                                 r_orderm === 30 ||
@@ -871,7 +872,72 @@ function format_inf(num, not, enot) {
                     if (orderm !== 0) {
                         million_str =
                             one_str + one_mod + ten_str + hundred_str + "micri"
-                        if ((unit_str = "")) million_str += "n"
+                        if (unit_str === "" && thousand_str === "")
+                            million_str += "n"
+                    }
+                }
+
+                if (order >= 1000000000) {
+                    let orderb = Math.floor(order / 1000000000)
+                    one_str = ""
+                    one_mod = ""
+                    ten_str = ""
+                    hundred_str = ""
+                    if (orderb > 1) {
+                        one_str = one_array[orderb % 10]
+                        ten_str = ten_array[Math.floor(orderb / 10) % 10]
+                        hundred_str =
+                            hundred_array[Math.floor(orderb / 100) % 10]
+
+                        const r_orderb = Math.floor(orderb / 10)
+                        if (
+                            (orderb % 10 === 7 || orderb % 10 === 9) &&
+                            r_orderb % 10 !== 9 &&
+                            r_orderb !== 90
+                        )
+                            if (
+                                r_orderb % 10 === 2 ||
+                                r_orderb % 10 === 8 ||
+                                r_orderb === 80
+                            )
+                                one_mod = "m"
+                            else one_mod = "n"
+                        if (
+                            (orderb % 10 === 3 || orderb % 10 === 6) &&
+                            ((r_orderb >= 2 && r_orderb <= 5) ||
+                                r_orderb % 10 === 8 ||
+                                r_orderb === 10 ||
+                                r_orderb === 30 ||
+                                r_orderb === 40 ||
+                                r_orderb === 50 ||
+                                r_orderb === 80)
+                        )
+                            one_mod = "s"
+                        if (
+                            orderb % 10 === 6 &&
+                            (r_orderb % 10 === 8 ||
+                                r_orderb === 10 ||
+                                r_orderb === 80)
+                        )
+                            one_mod = "x"
+
+                        if (
+                            Math.floor(orderb / 100) % 10 !== 0 &&
+                            Math.floor(orderb / 10) % 10 >= 1
+                        ) {
+                            if (Math.floor(orderb / 10) % 10 <= 2) {
+                                ten_str += "i"
+                            } else {
+                                ten_str += "a"
+                            }
+                        }
+                    }
+
+                    if (orderb !== 0) {
+                        billion_str =
+                            one_str + one_mod + ten_str + hundred_str + "nani"
+                        if (unit_str === "" && thousand_str === "")
+                            million_str += "n"
                     }
                 }
 
@@ -890,6 +956,7 @@ function format_inf(num, not, enot) {
                 output =
                     lead_str +
                     " " +
+                    billion_str +
                     million_str +
                     thousand_str +
                     unit_str +
@@ -988,6 +1055,7 @@ function format_inf(num, not, enot) {
                 let unit_str2 = one_str2 + ten_str2 + hundred_str2
                 let thousand_str2 = ""
                 let million_str2 = ""
+                let billion_str2 = ""
 
                 if (order2 >= 1000) {
                     let order2k = Math.floor(order2 / 1000) % 1000
@@ -1021,7 +1089,29 @@ function format_inf(num, not, enot) {
                             hundred_array_cond[Math.floor(order2m / 100) % 10]
                     }
                     million_str2 = one_str2 + ten_str2 + hundred_str2 + "MC"
-                    if (unit_str2 !== "") million_str2 += "-"
+                    if (unit_str2 !== "" || thousand_str2 !== "")
+                        million_str2 += "-"
+                }
+
+                if (order2 >= 1000000000) {
+                    let order2b = Math.floor(order2 / 1000000000)
+                    one_str2 = ""
+                    ten_str2 = ""
+                    hundred_str2 = ""
+
+                    if (order2b > 1) {
+                        one_str2 = one_array_cond[order2b % 10]
+                        ten_str2 = ten_array_cond[Math.floor(order2b / 10) % 10]
+                        hundred_str2 =
+                            hundred_array_cond[Math.floor(order2b / 100) % 10]
+                    }
+                    billion_str2 = one_str2 + ten_str2 + hundred_str2 + "NA"
+                    if (
+                        unit_str2 !== "" ||
+                        thousand_str2 !== "" ||
+                        million_str2 !== ""
+                    )
+                        billion_str2 += "-"
                 }
 
                 let lead2 = num
@@ -1037,7 +1127,12 @@ function format_inf(num, not, enot) {
                 }
 
                 output =
-                    lead_str2 + " " + million_str2 + thousand_str2 + unit_str2
+                    lead_str2 +
+                    " " +
+                    billion_str2 +
+                    million_str2 +
+                    thousand_str2 +
+                    unit_str2
                 break
             case 5:
                 let exponent3 = num.log10()
