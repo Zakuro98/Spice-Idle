@@ -272,21 +272,14 @@ function tick() {
         game.unstable_spice.round()
     )
 
-    if (game.decayed_spice.cmp(250) === -1) {
-        game.unstable_boost = game.decayed_spice
-            .add(1)
-            .pow(game.decayed_spice.add(4).pow(4).div(250))
-    } else if (game.decayed_spice.cmp(500) === -1) {
-        game.unstable_boost = game.decayed_spice
-            .add(1)
-            .pow(
-                Decimal.sub(62500, game.decayed_spice.sub(500).pow(2))
-                    .pow(0.5)
-                    .add(16649257)
+    game.unstable_boost = game.decayed_spice
+        .add(1)
+        .pow(
+            Decimal.pow(
+                16777216,
+                game.decayed_spice.div(game.total_unstable_spice)
             )
-    } else {
-        game.unstable_boost = game.decayed_spice.add(1).pow(16649507)
-    }
+        )
 
     if (game.research_complete[14] >= 1) {
         if (game.unstable_spice.round().cmp(1) === -1) {
