@@ -1,6 +1,11 @@
 //updating whether tabs are available
 function tabs_update() {
-    if (game.color_boosts >= 10 || game.prestige >= 1 || game.ascend >= 1) {
+    if (
+        game.color_boosts >= 10 ||
+        game.prestige >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    ) {
         if (game.tab === 1)
             document.getElementById("prestige").className = "tab selected"
         else document.getElementById("prestige").className = "tab unlocked"
@@ -18,6 +23,16 @@ function tabs_update() {
     } else {
         document.getElementById("ascension").className = "tab locked"
         document.getElementById("ascension").innerHTML = "LOCKED"
+    }
+
+    if (game.ascend_complete[5] || game.collapse >= 1) {
+        if (game.tab === 3)
+            document.getElementById("collapse").className = "tab selected"
+        else document.getElementById("collapse").className = "tab unlocked"
+        document.getElementById("collapse").innerHTML = "COLLAPSE"
+    } else {
+        document.getElementById("collapse").className = "tab locked"
+        document.getElementById("collapse").innerHTML = "LOCKED"
     }
 
     let mobile = Number(
@@ -374,7 +389,8 @@ function spice_update() {
                         game.red_spice_gen[gen.id - 1].cmp(10) >= 0 ||
                         game.color_boosts >= 1 ||
                         game.prestige >= 1 ||
-                        game.ascend >= 1
+                        game.ascend >= 1 ||
+                        game.collapse >= 1
                     ) {
                         element.style.display = "block"
                     } else {
@@ -496,7 +512,8 @@ function spice_update() {
                         game.yellow_spice_gen[gen.id - 1].cmp(10) >= 0 ||
                         game.color_boosts >= 2 ||
                         game.prestige >= 1 ||
-                        game.ascend >= 1
+                        game.ascend >= 1 ||
+                        game.collapse >= 1
                     ) {
                         element.style.display = "block"
                     } else {
@@ -613,7 +630,8 @@ function spice_update() {
                         game.green_spice_gen[gen.id - 1].cmp(10) >= 0 ||
                         game.color_boosts >= 3 ||
                         game.prestige >= 1 ||
-                        game.ascend >= 1
+                        game.ascend >= 1 ||
+                        game.collapse >= 1
                     ) {
                         element.style.display = "block"
                     } else {
@@ -730,7 +748,8 @@ function spice_update() {
                         game.blue_spice_gen[gen.id - 1].cmp(10) >= 0 ||
                         game.color_boosts >= 4 ||
                         game.prestige >= 1 ||
-                        game.ascend >= 1
+                        game.ascend >= 1 ||
+                        game.collapse >= 1
                     ) {
                         element.style.display = "block"
                     } else {
@@ -871,7 +890,8 @@ function spice_update() {
                         game.pink_spice_gen[gen.id - 1].cmp(10) >= 0 ||
                         game.color_boosts >= 5 ||
                         game.prestige >= 1 ||
-                        game.ascend >= 1
+                        game.ascend >= 1 ||
+                        game.collapse >= 1
                     ) {
                         element.style.display = "block"
                     } else {
@@ -886,7 +906,8 @@ function spice_update() {
         game.red_spice_gen[2].cmp(10) >= 0 ||
         game.color_boosts >= 1 ||
         game.prestige >= 1 ||
-        game.ascend >= 1
+        game.ascend >= 1 ||
+        game.collapse >= 1
     ) {
         document.getElementById("red_gen_s").style.display = "block"
 
@@ -982,7 +1003,8 @@ function spice_update() {
         game.yellow_spice_gen[2].cmp(10) >= 0 ||
         game.color_boosts >= 2 ||
         game.prestige >= 1 ||
-        game.ascend >= 1
+        game.ascend >= 1 ||
+        game.collapse >= 1
     ) {
         document.getElementById("yellow_gen_s").style.display = "block"
 
@@ -1077,7 +1099,8 @@ function spice_update() {
         game.green_spice_gen[2].cmp(10) >= 0 ||
         game.color_boosts >= 3 ||
         game.prestige >= 1 ||
-        game.ascend >= 1
+        game.ascend >= 1 ||
+        game.collapse >= 1
     ) {
         document.getElementById("green_gen_s").style.display = "block"
 
@@ -1172,7 +1195,8 @@ function spice_update() {
         game.blue_spice_gen[2].cmp(10) >= 0 ||
         game.color_boosts >= 4 ||
         game.prestige >= 1 ||
-        game.ascend >= 1
+        game.ascend >= 1 ||
+        game.collapse >= 1
     ) {
         document.getElementById("blue_gen_s").style.display = "block"
 
@@ -1267,7 +1291,8 @@ function spice_update() {
         game.pink_spice_gen[2].cmp(10) >= 0 ||
         game.color_boosts >= 5 ||
         game.prestige >= 1 ||
-        game.ascend >= 1
+        game.ascend >= 1 ||
+        game.collapse >= 1
     ) {
         document.getElementById("pink_gen_s").style.display = "block"
 
@@ -1340,9 +1365,12 @@ function spice_update() {
         game.red_spice_gen[5].cmp(10) >= 0 ||
         game.color_boosts >= 1 ||
         game.prestige >= 1 ||
-        game.ascend >= 1
+        game.ascend >= 1 ||
+        game.collapse >= 1
     ) {
         document.getElementById("color_shift").style.display = "block"
+        document.getElementById("color_shift_header").className =
+            "spice_gen_name"
         if (game.color_boosts < 4) {
             document.getElementById("color_shift_header").innerHTML =
                 "Color Shift"
@@ -1386,7 +1414,7 @@ function spice_update() {
                     "x"
             document.getElementById("color_shift_button").innerHTML =
                 "Reset for a new spice color"
-        } else {
+        } else if (game.color_boosts < 2000000) {
             document.getElementById("color_shift_header").innerHTML =
                 "Color Boost"
             document.getElementById("color_shift_info").innerHTML =
@@ -1429,6 +1457,57 @@ function spice_update() {
                     "x"
             document.getElementById("color_shift_button").innerHTML =
                 "Reset for a spice boost"
+            if (game.prestige_bought[22] >= 1)
+                document.getElementById("color_shift_button").innerHTML =
+                    "Gain a spice boost"
+        } else {
+            document.getElementById("color_shift_header").innerHTML =
+                "Color Augment"
+            document.getElementById("color_shift_header").className =
+                "spice_gen_name boost"
+            document.getElementById("color_shift_info").innerHTML =
+                "You have " +
+                format_small(game.color_boosts) +
+                " color augments,<br>boosting ALL spice generators " +
+                format_idec(
+                    new Decimal(
+                        2 +
+                            0.2 * game.prestige_bought[2] +
+                            2 * (game.ascend_bought[2] + game.ascend_bought[14])
+                    ).pow(game.color_boosts * 2 - 4),
+                    game.notation
+                ) +
+                "x<br><br>Color augment scaling is significantly harsher than color boost scaling"
+            if (game.prestige_bought[18] >= 1)
+                document.getElementById("color_shift_info").innerHTML =
+                    "You have " +
+                    format_small(game.color_boosts) +
+                    " color augments,<br>boosting ALL spice generators " +
+                    format_idec(
+                        new Decimal(
+                            6 +
+                                2 *
+                                    (game.ascend_bought[2] +
+                                        game.ascend_bought[14])
+                        ).pow(game.color_boosts * 2 - 4),
+                        game.notation
+                    ) +
+                    "x<br><br>Color augment scaling is significantly harsher than color boost scaling"
+            if (game.ascend_challenge === 1 || game.ascend_challenge === 6)
+                document.getElementById("color_shift_info").innerHTML =
+                    "You have " +
+                    format_small(game.color_boosts) +
+                    " color augments,<br>boosting ALL spice generators " +
+                    format_idec(
+                        new Decimal(2).pow(game.color_boosts * 2 - 4),
+                        game.notation
+                    ) +
+                    "x<br><br>Color augment scaling is significantly harsher than color boost scaling"
+            document.getElementById("color_shift_button").innerHTML =
+                "Reset for a spice boost"
+            if (game.prestige_bought[22] >= 1)
+                document.getElementById("color_shift_button").innerHTML =
+                    "Gain a spice boost"
         }
         if (
             game.color_boosts >= 6 &&
@@ -1798,7 +1877,7 @@ function spice_update() {
         document.getElementById("red_max_all").style.display = "none"
     }
 
-    if (game.prestige >= 1 || game.ascend >= 1) {
+    if (game.prestige >= 1 || game.ascend >= 1 || game.collapse >= 1) {
         document.getElementById("red_max_all").style.display = "inline"
         document.getElementById("yellow_max_all").style.display = "inline"
         document.getElementById("green_max_all").style.display = "inline"
@@ -1893,6 +1972,9 @@ function prestige_update() {
         document.getElementById("prestige_req").style.color = "white"
         document.getElementById("prestige_req").innerHTML =
             format_small(game.color_boosts) + " color boosts done"
+        if (game.color_boosts >= 2000000)
+            document.getElementById("prestige_req").innerHTML =
+                format_small(game.color_boosts) + " color augments done"
     } else {
         document.getElementById("prestige_button").className =
             "prestige_button p_locked"
@@ -2553,7 +2635,8 @@ function crystal_update() {
                 } else {
                     if (
                         game.crystal_spice_gen[gen.id - 1].cmp(5) >= 0 ||
-                        game.ascend >= 1
+                        game.ascend >= 1 ||
+                        game.collapse >= 1
                     ) {
                         element.style.display = "block"
                     } else {
@@ -2564,7 +2647,11 @@ function crystal_update() {
         }
     }
 
-    if (game.crystal_spice_gen[2].cmp(5) >= 0 || game.ascend >= 1) {
+    if (
+        game.crystal_spice_gen[2].cmp(5) >= 0 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    ) {
         document.getElementById("crystal_gen_s").style.display = "block"
 
         let s_str =
@@ -2685,7 +2772,11 @@ function crystal_update() {
         document.getElementById("crystal_cost_i").className = "empty_cost"
     }
 
-    if (game.crystal_spice_bought[5] >= 5 || game.ascend >= 1) {
+    if (
+        game.crystal_spice_bought[5] >= 5 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    ) {
         document.getElementById("crystal_max_all").style.display = "inline"
     } else {
         document.getElementById("crystal_max_all").style.display = "none"
@@ -2714,6 +2805,11 @@ function ascension_update() {
         let amount = Math.floor(
             (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8
         )
+        if (game.research_complete[10] >= 1)
+            amount = Math.floor(
+                (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8 *
+                    (Math.log2((game.collapse + 25) / 25) * 6.27 + 1)
+            )
         document.getElementById("ascend_up").innerHTML =
             "+" + format_num(Math.floor(amount), game.notation) + " ᚫ"
         document.getElementById("ascend_req").style.color = "white"
@@ -2722,6 +2818,17 @@ function ascension_update() {
                 Decimal.pow(2, 1024).pow((amount + 1) ** 0.125),
                 game.notation
             ) + " μg rainbow spice required"
+        if (game.research_complete[10] >= 1)
+            document.getElementById("ascend_req").innerHTML =
+                format_idec(
+                    Decimal.pow(2, 1024).pow(
+                        (amount /
+                            (Math.log2((game.collapse + 25) / 25) * 6.27 + 1) +
+                            1) **
+                            0.125
+                    ),
+                    game.notation
+                ) + " μg rainbow spice required"
     } else {
         document.getElementById("ascend_button").className =
             "ascend_button a_locked"
@@ -2735,6 +2842,11 @@ function ascension_update() {
         format_num(game.ansuz, game.notation) + " ᚫ"
 
     let rune_speed = 1
+    if (game.research_complete[3] >= 1) {
+        if (game.research_complete[3] >= 2)
+            rune_speed = 5 * 3 ** (game.research_complete[3] - 1)
+        else rune_speed = 5
+    }
     if (game.ascend_challenge === 6) rune_speed = 0
 
     document.getElementById("jera_text").innerHTML =
@@ -2778,6 +2890,21 @@ function ascension_update() {
         document.getElementById("half_distribute").style.display = "block"
     } else {
         document.getElementById("half_distribute").style.display = "none"
+    }
+
+    if (game.research_complete[4] >= 1) {
+        document.getElementById("distributor").style.display = "block"
+
+        if (game.research_complete[6] >= 1) {
+            document.getElementById("distributor_block1").style.display = "none"
+            document.getElementById("distributor_block2").style.display =
+                "block"
+        } else {
+            document.getElementById("distributor_block1").style.display = "flex"
+            document.getElementById("distributor_block2").style.display = "none"
+        }
+    } else {
+        document.getElementById("distributor").style.display = "none"
     }
 
     document.getElementById("ansuz_num2").innerHTML =
@@ -3047,57 +3174,58 @@ function ascension_update() {
             '<br><span class="bold">-' +
             format_num(u.price, game.notation) +
             " ᚫ</span>"
-        if (u.id === 34) {
-            button.innerHTML = u.desc
-        }
 
         let visible = true
 
-        if (u.id > 2) {
-            if (u.req !== undefined) {
-                let step = ascension_upgrade.upgrades[u.req]
-                if (step.req !== undefined) {
-                    if (
-                        !game.ascend_bought[
-                            ascension_upgrade.upgrades[step.req].id
-                        ]
-                    ) {
-                        visible = false
-                    }
-                }
-                if (step.req2 !== undefined) {
-                    if (
-                        !game.ascend_bought[
-                            ascension_upgrade.upgrades[step.req2].id
-                        ]
-                    ) {
-                        visible = false
-                    }
-                }
-            }
-            if (u.req2 !== undefined) {
-                let step = ascension_upgrade.upgrades[u.req2]
-                if (step.req !== undefined) {
-                    if (
-                        !game.ascend_bought[
-                            ascension_upgrade.upgrades[step.req].id
-                        ]
-                    ) {
-                        visible = false
-                    }
-                }
-                if (step.req2 !== undefined) {
-                    if (
-                        !game.ascend_bought[
-                            ascension_upgrade.upgrades[step.req2].id
-                        ]
-                    ) {
-                        visible = false
-                    }
-                }
-            }
-        } else {
+        if (game.collapse >= 1) {
             visible = true
+        } else {
+            if (u.id > 2) {
+                if (u.req !== undefined) {
+                    let step = ascension_upgrade.upgrades[u.req]
+                    if (step.req !== undefined) {
+                        if (
+                            !game.ascend_bought[
+                                ascension_upgrade.upgrades[step.req].id
+                            ]
+                        ) {
+                            visible = false
+                        }
+                    }
+                    if (step.req2 !== undefined) {
+                        if (
+                            !game.ascend_bought[
+                                ascension_upgrade.upgrades[step.req2].id
+                            ]
+                        ) {
+                            visible = false
+                        }
+                    }
+                }
+                if (u.req2 !== undefined) {
+                    let step = ascension_upgrade.upgrades[u.req2]
+                    if (step.req !== undefined) {
+                        if (
+                            !game.ascend_bought[
+                                ascension_upgrade.upgrades[step.req].id
+                            ]
+                        ) {
+                            visible = false
+                        }
+                    }
+                    if (step.req2 !== undefined) {
+                        if (
+                            !game.ascend_bought[
+                                ascension_upgrade.upgrades[step.req2].id
+                            ]
+                        ) {
+                            visible = false
+                        }
+                    }
+                }
+            } else {
+                visible = true
+            }
         }
 
         if (game.ascend_bought[u.id]) {
@@ -3133,7 +3261,7 @@ function ascension_update() {
                     if (ascension_upgrade.upgrades[upgrade2].challenge !== 0) {
                         if (
                             game.ascend_complete[
-                                ascension_upgrade.upgrades[upgrade1].challenge -
+                                ascension_upgrade.upgrades[upgrade2].challenge -
                                     1
                             ]
                         )
@@ -3147,12 +3275,7 @@ function ascension_update() {
                 condition2 = true
             }
 
-            if (
-                game.ansuz >= u.price &&
-                condition1 &&
-                condition2 &&
-                u.id < 34
-            ) {
+            if (game.ansuz >= u.price && condition1 && condition2) {
                 button.className = "ascension_upgrade a_unlocked2"
                 if (u.challenge !== 0)
                     button.className = "ascension_upgrade ac_unlocked"
@@ -3166,84 +3289,6 @@ function ascension_update() {
                 button.style.display = "block"
             } else {
                 button.style.display = "none"
-            }
-        }
-
-        if (u.req !== undefined) {
-            let line = ascension_map2.get(u)
-            let button2 = ascension_map.get(ascension_upgrade.upgrades[u.req])
-
-            let off1 = get_offset(button)
-            let off2 = get_offset(button2)
-            let x1 = off1.left + off1.width / 2
-            let y1 = off1.top + off1.height / 2 - 6
-            let x2 = off2.left + off2.width / 2
-            let y2 = off2.top + off2.height / 2 - 6
-            let length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
-            let cx = (x1 + x2) / 2 - length / 2
-            let cy = (y1 + y2) / 2
-            var angle = Math.atan2(y1 - y2, x1 - x2) * (180 / Math.PI)
-
-            let menu = document.getElementById("tabs_block")
-            let ansuz = document.getElementById("ansuz_menu")
-
-            line.style.left = cx + "px"
-            line.style.top =
-                "calc(" +
-                (cy - menu.offsetHeight - ansuz.offsetHeight) +
-                "px - 2.6em)"
-            if (mobile) {
-                line.style.top =
-                    "calc(" +
-                    (cy - menu.offsetHeight - ansuz.offsetHeight) +
-                    "px - 4em)"
-            }
-            line.style.width = length + "px"
-            line.style.transform = "rotate(" + angle + "deg)"
-
-            if (visible) {
-                line.style.display = "block"
-            } else {
-                line.style.display = "none"
-            }
-        }
-
-        if (u.req2 !== undefined) {
-            let line = ascension_map3.get(u)
-            let button2 = ascension_map.get(ascension_upgrade.upgrades[u.req2])
-
-            let off1 = get_offset(button)
-            let off2 = get_offset(button2)
-            let x1 = off1.left + off1.width / 2
-            let y1 = off1.top + off1.height / 2
-            let x2 = off2.left + off2.width / 2
-            let y2 = off2.top + off2.height / 2
-            let length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
-            let cx = (x1 + x2) / 2 - length / 2
-            let cy = (y1 + y2) / 2
-            var angle = Math.atan2(y1 - y2, x1 - x2) * (180 / Math.PI)
-
-            let menu = document.getElementById("tabs_block")
-            let ansuz = document.getElementById("ansuz_menu")
-
-            line.style.left = cx + "px"
-            line.style.top =
-                "calc(" +
-                (cy - menu.offsetHeight - ansuz.offsetHeight) +
-                "px - 2.6em)"
-            if (mobile) {
-                line.style.top =
-                    "calc(" +
-                    (cy - menu.offsetHeight - ansuz.offsetHeight) +
-                    "px - 4em)"
-            }
-            line.style.width = length + "px"
-            line.style.transform = "rotate(" + angle + "deg)"
-
-            if (visible) {
-                line.style.display = "block"
-            } else {
-                line.style.display = "none"
             }
         }
     }
@@ -3265,6 +3310,7 @@ function ascension_update() {
     for (const c of ascension_challenge.challenges) {
         let panel = challenge_map.get(c)
         let button = panel.querySelector(".a_challenge_button")
+        let info = panel.querySelector(".a_challenge_text")
 
         if (game.ascend_bought[c.unlock] || game.ascend_complete[c.id]) {
             panel.style.display = "flex"
@@ -3281,6 +3327,19 @@ function ascension_update() {
                     button.innerHTML = "Enter Challenge"
                 }
             }
+
+            info.innerHTML =
+                c.desc +
+                "<br>Goal: <span class='rainbow_spice'>" +
+                format_infdec(c.goal, game.notation) +
+                " μg rainbow spice</span>"
+
+            if (c.id === 5 && game.collapse >= 1) {
+                info.innerHTML =
+                    "Same as Challenge 1, but rune power production is disabled<br>(The unstable spice boost is also disabled)<br>Completing this Challenge is required to Collapse<br>Goal: <span class='rainbow_spice'>" +
+                    format_infdec(c.goal, game.notation) +
+                    " μg rainbow spice</span>"
+            }
         } else {
             panel.style.display = "none"
         }
@@ -3290,7 +3349,7 @@ function ascension_update() {
 //graphics updates for arcane spice
 function arcane_update() {
     document.getElementById("arcane_spice_num").innerHTML =
-        format_idec(game.arcane_spice, game.notation) + " g"
+        format_idec(game.arcane_spice, game.notation) + " mg"
     document.getElementById("arcane_spice_up").innerHTML =
         "+" +
         format_idec(
@@ -3300,7 +3359,7 @@ function arcane_update() {
                 .mul(5),
             game.notation
         ) +
-        " g arcane spice/sec"
+        " mg arcane spice/sec"
     if (game.ascend_bought[31] && game.ascend_challenge !== 6) {
         document.getElementById("arcane_spice_up").innerHTML =
             "+" +
@@ -3311,7 +3370,7 @@ function arcane_update() {
                     .mul(5),
                 game.notation
             ) +
-            " g arcane spice/sec<br><br>Your arcane spice is boosting crystallized spice production " +
+            " mg arcane spice/sec<br><br>Your arcane spice is boosting crystallized spice production " +
             format_idec(game.arcane_spice.pow(10).add(1), game.notation) +
             "x,<br>and boosting arcane spice production " +
             format_idec(game.arcane_spice.pow(0.0175).add(1), game.notation) +
@@ -3330,7 +3389,7 @@ function arcane_update() {
                     .mul(5),
                 game.notation
             ) +
-            " g arcane spice/sec<br><br>Your arcane spice is boosting crystallized spice production " +
+            " mg arcane spice/sec<br><br>Your arcane spice is boosting crystallized spice production " +
             format_idec(game.arcane_spice.pow(10).add(1), game.notation) +
             "x"
     }
@@ -3373,7 +3432,7 @@ function arcane_update() {
                                 .mul(game.total_arcane_spice_boost[gen.id])
                                 .mul(5),
                             game.notation
-                        ) + " g arcane spice/sec"
+                        ) + " mg arcane spice/sec"
                     if (game.ascend_bought[32] && game.ascend_challenge !== 2) {
                         info_str +=
                             ",<br>and producing " +
@@ -3517,15 +3576,44 @@ function arcane_update() {
             game.notation
         ) +
         "x"
-
-    if (game.ascend_bought[29] && game.ascend_challenge !== 6) {
-        s_str +=
-            ",<br>and boosting all arcane spice generators " +
+    if (game.free_enchantment > 0) {
+        s_str =
+            "You have " +
+            format_small(game.arcane_enchantment) +
+            " arcane enchantments (+" +
+            format_small(game.free_enchantment) +
+            " free),<br>boosting all crystallized spice generators " +
             format_idec(
-                Decimal.pow(4 / 3, game.arcane_enchantment),
+                Decimal.pow(
+                    4,
+                    (game.arcane_enchantment + game.free_enchantment) * 100
+                ),
                 game.notation
             ) +
             "x"
+    }
+
+    if (game.ascend_bought[29] && game.ascend_challenge !== 6) {
+        if (game.free_enchantment > 0) {
+            s_str +=
+                ",<br>and boosting all arcane spice generators " +
+                format_idec(
+                    Decimal.pow(
+                        4 / 3,
+                        game.arcane_enchantment + game.free_enchantment
+                    ),
+                    game.notation
+                ) +
+                "x"
+        } else {
+            s_str +=
+                ",<br>and boosting all arcane spice generators " +
+                format_idec(
+                    Decimal.pow(4 / 3, game.arcane_enchantment),
+                    game.notation
+                ) +
+                "x"
+        }
     }
     if (game.ascend_challenge === 5) {
         s_str = "Arcane enchantments refresh spice production for 1 second"
@@ -3535,7 +3623,7 @@ function arcane_update() {
     document.getElementById("arcane_cost_n").innerHTML =
         "-" +
         format_idec(game.arcane_enchantment_price, game.notation) +
-        " g arcane spice"
+        " mg arcane spice"
     if (game.arcane_spice.cmp(game.arcane_enchantment_price) >= 0) {
         document.getElementById("arcane_cost_n").className = "arcane_cost"
     } else {
@@ -3558,6 +3646,474 @@ function arcane_update() {
     if (game.ascend_bought[17])
         document.getElementById("enchantment_auto").style.display = "inline"
     else document.getElementById("enchantment_auto").style.display = "none"
+}
+
+//graphics updates for collapse
+function collapse_update() {
+    let amount = game.collapse_spice.pow(5 * 10 ** -10).floor()
+
+    if (game.research_complete[5] >= 1)
+        amount = amount
+            .mul(game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1)
+            .mul(Decimal.pow(1.2, (game.total_rune_power / 10 ** 28) ** 0.2))
+
+    if (amount.cmp(10 ** 80) >= 0)
+        amount = amount
+            .div(10 ** 80)
+            .pow(0.35)
+            .mul(10 ** 80)
+
+    if (game.ascend_complete[5] && amount.cmp(1) >= 0) {
+        document.getElementById("collapse_button").className =
+            "collapse_button co_unlocked"
+        document.getElementById("collapse_up").style.display = "block"
+        document.getElementById("collapse_up").innerHTML =
+            "+" + format_inum(amount.floor(), game.notation) + " atomic spice"
+        document.getElementById("collapse_req").style.color = "white"
+        document.getElementById("collapse_req").innerHTML =
+            "Challenge 6 completed"
+    } else {
+        document.getElementById("collapse_button").className =
+            "collapse_button co_locked"
+        document.getElementById("collapse_up").style.display = "none"
+        document.getElementById("collapse_req").style.color = "grey"
+        document.getElementById("collapse_req").innerHTML =
+            "Challenge 6 required"
+    }
+
+    document.getElementById("atomic_spice_num").innerHTML = format_inum(
+        game.atomic_spice,
+        game.notation
+    )
+    document.getElementById("atomic_spice_num2").innerHTML = format_inum(
+        game.atomic_spice,
+        game.notation
+    )
+    document.getElementById("collider_info").innerHTML =
+        "Atomic spice efficiency: " +
+        format_num(Math.round(game.atomic_efficiency * 100), 0) +
+        "%<br>Expected yield: <span class='unstable_spice'>+" +
+        format_inum(
+            game.atomic_spice.pow(game.atomic_efficiency).floor(),
+            game.notation
+        ) +
+        " unstable spice</span>"
+
+    document.getElementById("unstable_spice_num").innerHTML = format_inum(
+        game.unstable_spice.round(),
+        game.notation
+    )
+    document.getElementById("unstable_boost").innerHTML =
+        "Your unstable spice is decaying away with a half-life of " +
+        format_time_long(game.halflife) +
+        ",<br>the resulting energy is boosting all normal spice production " +
+        format_idec(game.unstable_boost, game.notation) +
+        "x"
+    if (game.research_complete[9] >= 1)
+        document.getElementById("unstable_boost").innerHTML =
+            "Your unstable spice is decaying away with a half-life of " +
+            format_time_long(game.halflife) +
+            ",<br>the resulting energy is boosting all normal spice production " +
+            format_idec(game.unstable_boost, game.notation) +
+            "x,<br>and boosting crystallized spice production " +
+            format_idec(game.unstable_boost.pow(0.009), game.notation) +
+            "x,<br>and boosting arcane spice production " +
+            format_idec(game.unstable_boost.pow(0.000012), game.notation) +
+            "x"
+    else if (game.research_complete[2] >= 1)
+        document.getElementById("unstable_boost").innerHTML =
+            "Your unstable spice is decaying away with a half-life of " +
+            format_time_long(game.halflife) +
+            ",<br>the resulting energy is boosting all normal spice production " +
+            format_idec(game.unstable_boost, game.notation) +
+            "x,<br>and boosting crystallized spice production " +
+            format_idec(game.unstable_boost.pow(0.009), game.notation) +
+            "x"
+    document.getElementById("decayed_spice_num").innerHTML = format_inum(
+        game.decayed_spice,
+        game.notation
+    )
+
+    if (game.research_complete[15] >= 1) {
+        document.getElementById("collapse_info2").style.display = "none"
+        document.getElementById("collapse_auto_block").style.display = "block"
+
+        document.getElementById("collider_title").className =
+            "collapse_title atomic_spice co_auto_margin"
+
+        if (game.autoco_mode === 0) {
+            document.getElementById("collapse_spice").style.display = "flex"
+            document.getElementById("collapse_spice2").style.display = "flex"
+            document.getElementById("collapse_time").style.display = "none"
+            document.getElementById("collapse_time2").style.display = "none"
+        } else if (game.autoco_mode === 1) {
+            document.getElementById("collapse_spice").style.display = "none"
+            document.getElementById("collapse_spice2").style.display = "none"
+            document.getElementById("collapse_time").style.display = "flex"
+            document.getElementById("collapse_time2").style.display = "flex"
+        }
+
+        document.getElementById("collapse_tabs").style.display = "flex"
+    } else {
+        document.getElementById("collapse_info2").style.display = "block"
+        document.getElementById("collapse_auto_block").style.display = "none"
+
+        document.getElementById("collider_title").className =
+            "collapse_title atomic_spice"
+
+        if (game.collapse >= 5) {
+            document.getElementById("collapse_tabs").style.display = "flex"
+            document.getElementById("research_unlock").style.display = "none"
+        } else {
+            document.getElementById("collapse_tabs").style.display = "none"
+            document.getElementById("research_unlock").style.display = "inline"
+        }
+    }
+}
+
+//graphics updates for research
+function research_update() {
+    for (const r of research.researches) {
+        let button = research_map.get(r)
+        let button2 = research_map2.get(r)
+
+        if (game.research_complete[r.id] >= 1) {
+            if (!r.repeat) {
+                button.style.display = "none"
+                button2.style.display = "block"
+
+                if (game.research_view === r.id + 1) {
+                    if (r.special) {
+                        button2.className = "research_button r_special r_view"
+                    } else {
+                        button2.className = "research_button r_view"
+                    }
+                } else {
+                    if (r.special) {
+                        button2.className = "research_button r_special"
+                    } else {
+                        button2.className = "research_button"
+                    }
+                }
+            } else {
+                button.style.display = "block"
+                button2.style.display = "none"
+
+                if (
+                    game.research_view === r.id + 1 &&
+                    game.research_select === r.id + 1
+                ) {
+                    button.className = "research_button r_repeat r_active"
+                } else if (game.research_view === r.id + 1) {
+                    button.className = "research_button r_repeat r_view"
+                } else if (game.research_select === r.id + 1) {
+                    button.className = "research_button r_repeat r_select"
+                } else {
+                    button.className = "research_button r_repeat"
+                }
+            }
+        } else {
+            if (r.req === undefined) button.style.display = "block"
+            else {
+                if (game.research_complete[r.req]) {
+                    button.style.display = "block"
+                } else {
+                    button.style.display = "none"
+                }
+            }
+            button2.style.display = "none"
+
+            if (
+                game.research_view === r.id + 1 &&
+                game.research_select === r.id + 1
+            ) {
+                button.className = "research_button r_active"
+            } else if (game.research_view === r.id + 1) {
+                button.className = "research_button r_view"
+            } else if (game.research_select === r.id + 1) {
+                button.className = "research_button r_select"
+            } else {
+                button.className = "research_button"
+            }
+        }
+
+        switch (r.id) {
+            case 0:
+                r.desc =
+                    "The half-life of unstable spice becomes 33% shorter<br>Current unstable spice half-life: " +
+                    format_time_long(game.halflife)
+                break
+            case 3:
+                if (game.research_complete[3] === 0)
+                    r.desc =
+                        "Rune power is produced " +
+                        format_small(5) +
+                        "x faster<br>Current rune power production boost: " +
+                        format_small(1) +
+                        "x"
+                else if (game.research_complete[3] === 1)
+                    r.desc =
+                        "Rune power is produced " +
+                        format_small(3) +
+                        "x faster<br>Current rune power production boost: " +
+                        format_small(5) +
+                        "x"
+                else
+                    r.desc =
+                        "Rune power is produced " +
+                        format_small(3) +
+                        "x faster<br>Current rune power production boost: " +
+                        format_num(
+                            5 * 3 ** (game.research_complete[3] - 1),
+                            game.notation
+                        ) +
+                        "x"
+                break
+            case 5:
+                r.desc =
+                    "Atomic spice gains are additionally boosted by total rune power produced<br>Current boost: " +
+                    format_idec(
+                        Decimal.pow(
+                            1.2,
+                            (game.total_rune_power / 10 ** 28) ** 0.2
+                        ).mul(
+                            game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1
+                        ),
+                        game.notation
+                    ) +
+                    "x"
+                break
+            case 7:
+                r.desc =
+                    "Atomic spice conversion is 10% more efficient<br>Current atomic spice efficiency: " +
+                    format_small(Math.round(game.atomic_efficiency * 100)) +
+                    "%"
+                break
+            case 10:
+                r.desc =
+                    "Ansuz rune gains from Ascension are boosted by Times Collapsed stat<br>Current boost: " +
+                    format_dec(
+                        Math.log2((game.collapse + 25) / 25) * 6.27 + 1,
+                        game.notation
+                    ) +
+                    "x"
+                break
+        }
+    }
+
+    if (game.research_complete[1] >= 1) {
+        document.getElementById("research_completed_block").style.display =
+            "block"
+    } else {
+        document.getElementById("research_completed_block").style.display =
+            "none"
+    }
+
+    if (game.research_view === 0) {
+        document.getElementById("research_main_block").style.display = "none"
+    } else {
+        document.getElementById("research_main_block").style.display = "block"
+
+        let r = game.research_view - 1
+
+        let rate = 1
+        if (game.data_boosts >= 1) rate = 2 * 1.5 ** (game.data_boosts - 1)
+        let goal = 0
+        if (!research.researches[r].repeat) {
+            goal = research.researches[r].data
+        }
+        if (research.researches[r].repeat) {
+            if (game.research_complete[r] === 0) {
+                goal = research.researches[r].data
+            } else if (game.research_complete[r] < 4) {
+                goal =
+                    Math.ceil(
+                        (research.researches[r].data *
+                            research.researches[r].factor **
+                                game.research_complete[r]) /
+                            research.researches[r].unit
+                    ) * research.researches[r].unit
+            } else {
+                goal =
+                    Math.ceil(
+                        (research.researches[r].data *
+                            research.researches[r].factor ** 3 *
+                            research.researches[r].factor2 **
+                                (game.research_complete[r] - 3)) /
+                            research.researches[r].unit
+                    ) * research.researches[r].unit
+            }
+        }
+
+        document.getElementById("research_number").innerHTML =
+            "Research #" + game.research_view
+
+        let times_researched = ""
+        if (
+            research.researches[game.research_view - 1].repeat > 0 &&
+            game.research_complete[game.research_view - 1] >= 1
+        )
+            times_researched =
+                "<br><br>This research has been researched " +
+                format_small(game.research_complete[game.research_view - 1]) +
+                " times"
+        if (game.research_select === game.research_view) {
+            document.getElementById("research_info").innerHTML =
+                research.researches[r].desc +
+                "<br><br>Data on this research: " +
+                format_num(Math.floor(game.data[r]), game.notation) +
+                " / " +
+                format_num(goal, game.notation) +
+                "<br>Estimated time to completion: " +
+                format_time_long((goal - game.data[r]) / rate) +
+                times_researched
+        } else {
+            document.getElementById("research_info").innerHTML =
+                research.researches[r].desc +
+                "<br><br>Data on this research: " +
+                format_num(Math.floor(game.data[r]), game.notation) +
+                " / " +
+                format_num(goal, game.notation) +
+                times_researched
+
+            document.getElementById("research_progress").className = "r_off"
+        }
+
+        document.getElementById("research_progress").style.width =
+            (game.data[r] * 100) / goal + "%"
+
+        if (game.research_pause) {
+            document.getElementById("research_toggle").style.display = "block"
+            document.getElementById("research_toggle").className =
+                "research_toggle r_begin"
+
+            document.getElementById("research_progress").style.display = "block"
+            document.getElementById("research_back").style.display = "block"
+            document.getElementById("research_toggle").style.width = "auto"
+
+            if (game.data[r] > 0) {
+                document.getElementById("research_toggle").innerHTML =
+                    "Resume&nbsp;Research"
+
+                document.getElementById("research_progress").className = "r_off"
+
+                if (
+                    game.research_complete[r] === 1 &&
+                    !research.researches[r].repeat
+                ) {
+                    document.getElementById("research_toggle").className =
+                        "research_toggle r_done"
+                    document.getElementById("research_toggle").innerHTML =
+                        "Research&nbsp;Completed"
+
+                    document.getElementById("research_progress").style.display =
+                        "none"
+                    document.getElementById("research_back").style.display =
+                        "none"
+                    document.getElementById("research_toggle").style.width =
+                        "100%"
+                }
+            } else {
+                if (
+                    research.researches[r].repeat &&
+                    game.research_complete[r] > 0
+                ) {
+                    document.getElementById("research_toggle").innerHTML =
+                        "Continue&nbsp;Research"
+
+                    document.getElementById("research_progress").className =
+                        "r_off"
+                } else {
+                    if (game.research_complete[r] === 1) {
+                        document.getElementById("research_toggle").className =
+                            "research_toggle r_done"
+                        document.getElementById("research_toggle").innerHTML =
+                            "Research&nbsp;Completed"
+
+                        document.getElementById(
+                            "research_progress"
+                        ).style.display = "none"
+                        document.getElementById("research_back").style.display =
+                            "none"
+                        document.getElementById("research_toggle").style.width =
+                            "100%"
+                    } else {
+                        document.getElementById("research_toggle").innerHTML =
+                            "Begin&nbsp;Research"
+                    }
+                }
+            }
+        } else {
+            document.getElementById("research_progress").style.display = "block"
+            document.getElementById("research_back").style.display = "block"
+            document.getElementById("research_toggle").style.width = "auto"
+
+            if (game.research_select === game.research_view) {
+                document.getElementById("research_toggle").style.display =
+                    "block"
+                document.getElementById("research_toggle").className =
+                    "research_toggle r_pause"
+                document.getElementById("research_toggle").innerHTML =
+                    "Pause&nbsp;Research"
+
+                document.getElementById("research_progress").className = "r_on"
+            } else {
+                document.getElementById("research_toggle").style.display =
+                    "none"
+
+                document.getElementById("research_progress").className = "r_off"
+
+                if (
+                    game.research_complete[r] === 1 &&
+                    !research.researches[r].repeat
+                ) {
+                    document.getElementById("research_toggle").style.display =
+                        "block"
+                    document.getElementById("research_toggle").className =
+                        "research_toggle r_done"
+                    document.getElementById("research_toggle").innerHTML =
+                        "Research&nbsp;Completed"
+
+                    document.getElementById("research_progress").style.display =
+                        "none"
+                    document.getElementById("research_back").style.display =
+                        "none"
+                    document.getElementById("research_toggle").style.width =
+                        "100%"
+                }
+            }
+        }
+
+        document.getElementById("research_boost").innerHTML =
+            "When researching, you gain " +
+            format_dec(rate, game.notation) +
+            " data/sec"
+
+        document.getElementById("research_cost").innerHTML =
+            "-" +
+            format_inum(
+                Decimal.pow(
+                    game.data_boosts + Math.PI / 2,
+                    game.data_boosts ** ((game.data_boosts + 1) ** 0.09)
+                )
+                    .mul(16384)
+                    .round(),
+                game.notation
+            ) +
+            " atomic spice"
+        if (
+            game.atomic_spice.cmp(
+                Decimal.pow(
+                    game.data_boosts + Math.PI / 2,
+                    game.data_boosts ** ((game.data_boosts + 1) ** 0.09)
+                )
+                    .mul(16384)
+                    .round()
+            ) >= 0
+        )
+            document.getElementById("research_cost").className = "atomic_cost"
+        else document.getElementById("research_cost").className = "empty_cost"
+    }
 }
 
 //graphics updates for statistics page
@@ -3613,7 +4169,12 @@ function stats_update() {
         format_idec(game.total_spice, game.notation) +
         " g spice."
 
-    if (game.color_boosts >= 4)
+    if (game.color_boosts >= 2000000)
+        stats_str +=
+            "<br>You have done " +
+            format_small(game.color_boosts) +
+            " color augments."
+    else if (game.color_boosts >= 4)
         stats_str +=
             "<br>You have done " +
             format_small(game.color_boosts) +
@@ -3624,7 +4185,7 @@ function stats_update() {
             format_small(game.color_boosts) +
             " color shifts."
 
-    if (game.prestige >= 1 || game.ascend >= 1) {
+    if (game.prestige >= 1 || game.ascend >= 1 || game.collapse >= 1) {
         if (game.prestige === 1)
             stats_str +=
                 "<br><br><br>You have Prestiged " + format_small(1) + " time."
@@ -3651,7 +4212,7 @@ function stats_update() {
             " in this Prestige."
     }
 
-    if (game.ascend >= 1) {
+    if (game.ascend >= 1 || game.collapse >= 1) {
         if (game.ascend === 1)
             stats_str +=
                 "<br><br><br>You have Ascended " + format_small(1) + " time."
@@ -3673,12 +4234,42 @@ function stats_update() {
             stats_str +=
                 "<br>You have " +
                 format_idec(game.arcane_spice, game.notation) +
-                " g arcane spice."
+                " mg arcane spice."
 
         stats_str +=
             "<br>You have spent " +
             format_time_long(game.ascend_time_played, game.notation) +
             " in this Ascension."
+    }
+
+    if (game.collapse >= 1) {
+        if (game.collapse === 1)
+            stats_str +=
+                "<br><br><br>You have Collapsed " + format_small(1) + " time."
+        else
+            stats_str +=
+                "<br><br><br>You have Collapsed " +
+                format_small(game.collapse) +
+                " times."
+
+        stats_str +=
+            "<br>You have " +
+            format_inum(game.atomic_spice, game.notation) +
+            " atomic spice."
+        stats_str +=
+            "<br>You have created a total of " +
+            format_inum(game.total_unstable_spice, game.notation) +
+            " unstable spice."
+
+        stats_str +=
+            "<br>You have accumulated a total of " +
+            format_idec(game.collapse_spice, game.notation) +
+            " g spice in this Collapse."
+
+        stats_str +=
+            "<br>You have spent " +
+            format_time_long(game.collapse_time_played, game.notation) +
+            " in this Collapse."
     }
 
     stats_str +=
@@ -3688,7 +4279,7 @@ function stats_update() {
 
     document.getElementById("statistics_text").innerHTML = stats_str
 
-    if (game.prestige >= 1 || game.ascend >= 1)
+    if (game.prestige >= 1 || game.ascend >= 1 || game.collapse >= 1)
         document.getElementById("statistics_tabs").style.display = "flex"
     else document.getElementById("statistics_tabs").style.display = "none"
 
@@ -3774,7 +4365,7 @@ function stats_update() {
         getComputedStyle(document.body).getPropertyValue("--mobile")
     )
 
-    if (game.ascend >= 1) {
+    if (game.ascend >= 1 || game.collapse >= 1) {
         document.getElementById("past_ascensions").innerHTML =
             "PAST&nbsp;ASCENSIONS"
         if (mobile)
@@ -3855,4 +4446,97 @@ function stats_update() {
     }
 
     document.getElementById("ascension_statistics_text").innerHTML = stats_str
+
+    if (game.collapse >= 1) {
+        document.getElementById("past_collapses").innerHTML =
+            "PAST&nbsp;COLLAPSES"
+        if (mobile)
+            document.getElementById("past_collapses").innerHTML = "COLLAPSES"
+        if (game.subtab[2] === 3)
+            document.getElementById("past_collapses").className =
+                "subtab selected"
+        else
+            document.getElementById("past_collapses").className =
+                "subtab unlocked"
+    } else {
+        document.getElementById("past_collapses").innerHTML = "LOCKED"
+        document.getElementById("past_collapses").className = "subtab locked"
+    }
+
+    stats_str = "Last 10 Collapses:"
+    entries = 0
+    average = new Decimal(0)
+
+    for (let i = 0; i < 10; i++) {
+        if (game.collapse_time_history[i] === -1) {
+            stats_str += "<br>#" + (i + 1) + " (no data)"
+        } else {
+            entries++
+            average = average.add(
+                game.collapse_amount_history[i].div(
+                    game.collapse_time_history[i]
+                )
+            )
+            if (
+                game.collapse_amount_history[i]
+                    .mul(60 / game.collapse_time_history[i])
+                    .cmp(1) >= 0
+            )
+                stats_str +=
+                    "<br>#" +
+                    (i + 1) +
+                    " took " +
+                    format_time(game.collapse_time_history[i]) +
+                    " and gave " +
+                    format_inum(
+                        game.collapse_amount_history[i],
+                        game.notation
+                    ) +
+                    " atomic spice. +" +
+                    format_idec(
+                        game.collapse_amount_history[i].mul(
+                            60 / game.collapse_time_history[i]
+                        ),
+                        game.notation
+                    ) +
+                    " atomic spice/min"
+            else
+                stats_str +=
+                    "<br>#" +
+                    (i + 1) +
+                    " took " +
+                    format_time(game.collapse_time_history[i]) +
+                    " and gave " +
+                    format_inum(
+                        game.collapse_amount_history[i],
+                        game.notation
+                    ) +
+                    " atomic spice. +" +
+                    format_idec(
+                        game.collapse_amount_history[i].mul(
+                            3600 / game.collapse_time_history[i]
+                        ),
+                        game.notation
+                    ) +
+                    " atomic spice/hour"
+        }
+    }
+
+    if (entries > 0) {
+        average = average.div(entries)
+        if (average.mul(60).cmp(1) >= 0)
+            stats_str +=
+                "<br><br>Average atomic spice gain: +" +
+                format_idec(average.mul(60), game.notation) +
+                " atomic/min"
+        else
+            stats_str +=
+                "<br><br>Average atomic spice gain: +" +
+                format_idec(average.mul(3600), game.notation) +
+                " atomic/hour"
+    } else {
+        stats_str += "<br><br>Average atomic spice gain: undefined"
+    }
+
+    document.getElementById("collapse_statistics_text").innerHTML = stats_str
 }
