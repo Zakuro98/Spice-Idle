@@ -21,7 +21,7 @@
                 <button id="ascension" class="tab locked" onclick="goto_tab(2)">
                     LOCKED
                 </button>
-                <button id="collapse" class="tab locked">
+                <button id="collapse" class="tab locked" onclick="goto_tab(3)">
                     LOCKED
                 </button>
                 <button id="expansion" class="tab locked">
@@ -80,6 +80,15 @@
                 </button>
             </div>
 
+            <div id="collapse_tabs" class="submenu">
+                <button id="spice_collider" class="subtab selected" onclick="goto_subtab(0)">
+                    SPICE&nbsp;COLLIDER
+                </button>
+                <button id="research" class="subtab unlocked" onclick="goto_subtab(1)">
+                    RESEARCH
+                </button>
+            </div>
+
             <div id="statistics_tabs" class="submenu">
                 <button id="statistics_subtab" class="subtab selected" onclick="goto_subtab(0)">
                     STATISTICS
@@ -88,6 +97,9 @@
                     PAST&nbsp;PRESTIGES
                 </button>
                 <button id="past_ascensions" class="subtab locked" onclick="goto_subtab(2)">
+                    LOCKED
+                </button>
+                <button id="past_collapses" class="subtab locked" onclick="goto_subtab(3)">
                     LOCKED
                 </button>
             </div>
@@ -557,6 +569,89 @@
                     </div>
                 </div>
 
+                <div id="distributor" class="rune_panel">
+                    <p id="distributor_title" class="rune_header runes">
+                        The Distributor
+                    </p>
+                    <div class="distributor_block">
+                        <p class="distributor_text">
+                            Automated distribution:
+                        </p>
+                        <button id="distribute_auto_toggle" class="rune_button a_unlocked" onclick="auto_toggle('ascend_upgrade')">
+                            OFF
+                        </button>
+                    </div>
+                    <div id="distributor_block1" class="distributor_block">
+                        <p class="distributor_text">
+                            Ascension upgrade quota:
+                        </p>
+                        <input class="input distributor_input" id="au_portion_input" type="number" value="50" min="0" max="100">
+                        <p class="distributor_percent">
+                            %
+                        </p>
+                    </div>
+                    <div id="distributor_block2">
+                        <p class="distributor_header">
+                            When not all upgrades have been purchased:
+                        </p>
+                        <div class="distributor_block2">
+                            <p class="distributor_text">
+                                Ascension upgrade quota:
+                            </p>
+                            <input class="input distributor_input" id="au_portion_input2" type="number" value="50" min="0" max="100">
+                            <p class="distributor_percent">
+                                %
+                            </p>
+                        </div>
+                        <div class="distributor_block2">
+                            <p class="distributor_text">
+                                Rune distribution quota:
+                            </p>
+                            <input class="input distributor_input" id="ar_portion_input" type="number" value="0" min="0" max="100">
+                            <p class="distributor_percent">
+                                %
+                            </p>
+                        </div>
+                        <div class="distributor_block2">
+                            <p class="distributor_text">
+                                Arcane spice quota:
+                            </p>
+                            <input class="input distributor_input" id="aa_portion_input" type="number" value="0" min="0" max="100">
+                            <p class="distributor_percent">
+                                %
+                            </p>
+                        </div>
+                        <p id="distributor_error1" class="distributor_error">
+                            Quota must not add up to more than 100%
+                        </p>
+
+                        <p class="distributor_header">
+                            When all upgrades have been purchased:
+                        </p>
+                        <div class="distributor_block2">
+                            <p class="distributor_text">
+                                Rune distribution quota:
+                            </p>
+                            <input class="input distributor_input" id="ar_portion_input2" type="number" value="0" min="0" max="100">
+                            <p class="distributor_percent">
+                                %
+                            </p>
+                        </div>
+                        <div class="distributor_block2">
+                            <p class="distributor_text">
+                                Arcane spice quota:
+                            </p>
+                            <input class="input distributor_input" id="aa_portion_input2" type="number" value="0" min="0" max="100">
+                            <p class="distributor_percent">
+                                %
+                            </p>
+                        </div>
+                        <p id="distributor_error2" class="distributor_error">
+                            Quota must not add up to more than 100%
+                        </p>
+                    </div>
+                </div>
+
                 <p class="ascend_info">
                     Your Ansuz runes can be converted into any of the three rune types below
                     <br>Each one makes rune power of its own variety, boosting spice production of its respective type(s)
@@ -638,7 +733,6 @@
                 </div>
 
                 <div id="ascension_upgrade_panel">
-                    <div id="ascension_upgrade_lines"></div>
                     <div id="ascension_upgrade_panel2">
                         <div id="ascension_upgrade_panel3">
                             <div id="ascension_upgrade_screen"></div>
@@ -737,6 +831,164 @@
                 </div>
             </div>
 
+            <div id="collapse_page">
+                <div class="collapse_header">
+                    <div class="atomic_spice_panel">
+                        <p id="atomic_spice_num" class="spice_num atomic_spice">
+                            0
+                        </p>
+                        <p class="spice_text atomic_spice">
+                            atomic spice
+                        </p>
+                    </div>
+                    <div>
+                        <div class="collapse_panel">
+                            <div class="collapse_info">
+                                <p id="collapse_req" class="collapse_text">
+                                    Challenge 6 required
+                                </p>
+                                <p id="collapse_up" class="collapse_text atomic_spice">
+                                    +1 atomic spice
+                                </p>
+                            </div>
+                            <button id="collapse_button" class="collapse_button co_locked" onclick="collapse()">
+                                COLLAPSE!
+                            </button>
+                        </div>
+                        <p id="collapse_info2" class="collapse_info2">
+                            Atomic spice gains are based on total spice produced
+                            <span id="research_unlock"><br>Collapse 5 times to unlock Research</span>
+                        </p>
+                        <div id="collapse_auto_block">
+                            <div id="collapse_auto_buttons">
+                                <button id="collapse_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('collapse')">
+                                    Auto: OFF
+                                </button>
+                                <button id="collapse_auto_mode" class="spice_buy" onclick="auto_toggle('collapse_mode')">
+                                    Mode: SPICE
+                                </button>
+                            </div>
+                            <div id="collapse_spice">
+                                <p class="p_auto_text">
+                                    Stop Ascending After (Atomic Spice):
+                                </p>
+                                <input class="input" id="co_spice_input2" type="text" value="1e25">
+                            </div>
+                            <div id="collapse_spice2">
+                                <p class="p_auto_text">
+                                    Auto-Collapse Goal (Atomic Spice):
+                                </p>
+                                <input class="input" id="co_spice_input" type="text" value="1e50">
+                            </div>
+                            <div id="collapse_time">
+                                <p class="p_auto_text">
+                                    Stop Ascending After (Seconds):
+                                </p>
+                                <input class="input" id="co_time_input2" type="number" step="0.01" value="60" min="0.01">
+                            </div>
+                            <div id="collapse_time2">
+                                <p class="p_auto_text">
+                                    Auto-Collapse Goal (Seconds):
+                                </p>
+                                <input class="input" id="co_time_input" type="number" step="0.01" value="120" min="0.01">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p id="collider_title" class="collapse_title atomic_spice">
+                    The Spice Collider
+                </p>
+
+                <div class="collider_menu">
+                    <p class="collider_text">
+                        Activating the Spice Collider will consume all atomic spice and create unstable spice
+                    </p>
+                    <p id="collider_info" class="collider_text">
+                        Atomic spice efficiency: 60%
+                        <br>Expected yield: <span class="unstable_spice">+0 unstable spice</span>
+                    </p>
+                    <button id="activate_collider" class="atomic_button co_unlocked" onclick="activate_collider()">
+                        Activate Collider
+                    </button>
+                </div>
+                
+                <p id="unstable_spice_num" class="spice_num unstable_spice">
+                    0
+                </p>
+                <p class="spice_text unstable_spice">
+                    unstable spice
+                </p>
+                <p id="unstable_boost" class="unstable_text">
+                    Your unstable spice is decaying away with a half-life of 10 minutes,
+                    <br>the resulting energy is boosting all normal spice production 1.00x
+                </p>
+                
+                <p id="decayed_spice_num" class="spice_num decayed_spice">
+                    0
+                </p>
+                <p class="spice_text decayed_spice">
+                    decayed spice
+                </p>
+            </div>
+
+            <div id="research_page">
+                <div class="atomic_spice_panel">
+                    <p id="atomic_spice_num2" class="spice_num atomic_spice">
+                        0
+                    </p>
+                    <p class="spice_text atomic_spice">
+                        atomic spice
+                    </p>
+                </div>
+
+                <p id="research_title" class="collapse_title atomic_spice">
+                    Research
+                </p>
+
+                <p class="research_text">
+                    Select a research:
+                </p>
+                <div id="research_available" class="research_options"></div>
+
+                <div id="research_completed_block">
+                    <p class="research_text">
+                        Completed researches:
+                    </p>
+                    <div id="research_completed" class="research_options"></div>
+                </div>
+
+                <div id="research_main_block">
+                    <p id="research_number" class="research_number">
+                        Research #1
+                    </p>
+                    <div id="research_info_block">
+                        <p id="research_info" class="research_text">
+                            The half-life of unstable spice becomes 33% shorter
+                            <br>Current unstable spice half-life: 10 minutes
+                            <br><br>
+                            Data on this research: 0 / 2,000
+                            <br>Estimated time to completion: 33 minutes, 20 seconds
+                        </p>
+                        <div id="research_control">
+                            <button id="research_toggle" class="research_toggle r_begin" onclick="research_toggle()">
+                                Begin&nbsp;Research
+                            </button>
+                            <div id="research_back">
+                                <div id="research_progress" class="r_off"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p id="research_boost" class="research_text">
+                        When researching, you gain 1.00 data/sec
+                    </p>
+                    <button id="research_upgrade" class="spice_buy" onclick="research_upgrade()">
+                        Upgrade: <span id="research_cost" class="atomic_cost" onclick="research_upgrade()">-25,000 atomic spice</span>
+                    </button>
+                </div>
+            </div>
+
             <div id="statistics_page">
                 <p id="statistics_text" class="statistics_text">
                     You have 5.000 g red spice
@@ -782,6 +1034,24 @@
                 </p>
             </div>
 
+            <div id="collapse_statistics_page">
+                <p id="collapse_statistics_text" class="statistics_text">
+                    Last 10 Collapses:
+                    <br>#1 (no data)
+                    <br>#2 (no data)
+                    <br>#3 (no data)
+                    <br>#4 (no data)
+                    <br>#5 (no data)
+                    <br>#6 (no data)
+                    <br>#7 (no data)
+                    <br>#8 (no data)
+                    <br>#9 (no data)
+                    <br>#10 (no data)
+                    <br><br>
+                    Average atomic spice gain: undefined
+                </p>
+            </div>
+
             <div id="settings_page">
                 <div id="save_block" class="settings_block">
                     <button id="save" class="settings_button s_big" onclick="save()">
@@ -802,7 +1072,7 @@
                     </button>
                     <button id="hotkeys" class="settings_button" onclick="hotkeys()">
                         Hotkeys
-                        <br>DISABLED
+                        <br>ENABLED
                     </button>
                     <button id="condensed" class="settings_button" onclick="condensed()">
                         Condensed Generators
@@ -810,6 +1080,20 @@
                     </button>
                 </div>
                 <div id="settings_block2" class="settings_block">
+                    <button id="exponent_notation" class="settings_button" onclick="exponent_notation()">
+                        Exponent Notation
+                        <br>LONG
+                    </button>
+                    <button id="high_visibility" class="settings_button" onclick="high_visibility()">
+                        Text Visibility
+                        <br>DEFAULT
+                    </button>
+                    <button id="refresh_rate" class="settings_button" onclick="refresh_rate()">
+                        Refresh Rate
+                        <br>20 MS
+                    </button>
+                </div>
+                <div id="settings_block3" class="settings_block">
                     <button id="ascend_confirm" class="settings_button" onclick="confirmations('ascend')">
                         Ascension Confirmations
                         <br>ENABLED
@@ -818,19 +1102,9 @@
                         Challenge Confirmations
                         <br>ENABLED
                     </button>
-                    <button id="exponent_notation" class="settings_button" onclick="exponent_notation()">
-                        Exponent Notation
-                        <br>LONG
-                    </button>
-                </div>
-                <div id="settings_block3" class="settings_block">
-                    <button id="high_visibility" class="settings_button" onclick="high_visibility()">
-                        Rainbow Visibility
-                        <br>DEFAULT
-                    </button>
-                    <button id="refresh_rate" class="settings_button" onclick="refresh_rate()">
-                        Refresh Rate
-                        <br>20 MS
+                    <button id="collapse_confirm" class="settings_button" onclick="confirmations('collapse')">
+                        Collapse Confirmations
+                        <br>ENABLED
                     </button>
                 </div>
 
@@ -852,11 +1126,12 @@
                     <br>I: Buy crystal infusion
                     <br>A: Ascend
                     <br>N: Buy arcane enchantment
+                    <br>C: Collapse
                 </p>
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.3.2<br>Made by Zakuro
+                Spice Idle v1.4.0<br>Made by Zakuro
             </p>
             <a href="changelog.html" target="_blank" class="info link">Changelog</a>
             <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
