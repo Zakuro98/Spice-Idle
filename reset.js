@@ -452,7 +452,56 @@ function ascend(override) {
             let amount = Math.floor(
                 (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8
             )
+            if (game.research_complete[10] >= 1)
+                amount = Math.floor(
+                    (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8 *
+                        (Math.log2((game.collapse + 25) / 25) * 6.27 + 1)
+                )
+
             game.ansuz += amount
+
+            let error = false
+
+            if (game.research_complete[6] >= 1) {
+                if (
+                    game.autods_portion[0] +
+                        game.autods_portion[1] +
+                        game.autods_portion[2] >
+                    1
+                ) {
+                    error = true
+                }
+                if (game.autods_portion[3] + game.autods_portion[4] > 1) {
+                    error = true
+                }
+            }
+
+            if (game.research_complete[4] >= 1 && !error) {
+                if (game.research_complete[6] >= 1) {
+                    if (game.ascend_bought[34]) {
+                        game.autods_budget[1] += Math.floor(
+                            amount * game.autods_portion[3]
+                        )
+                        game.autods_budget[2] += Math.floor(
+                            amount * game.autods_portion[4]
+                        )
+                    } else {
+                        game.autods_budget[0] += Math.floor(
+                            amount * game.autods_portion[0]
+                        )
+                        game.autods_budget[1] += Math.floor(
+                            amount * game.autods_portion[1]
+                        )
+                        game.autods_budget[2] += Math.floor(
+                            amount * game.autods_portion[2]
+                        )
+                    }
+                } else {
+                    game.autods_budget[0] += Math.floor(
+                        amount * game.autods_portion[0]
+                    )
+                }
+            }
 
             for (let i = 8; i >= 0; i--) {
                 game.ascend_amount_history[i + 1] =
@@ -508,6 +557,10 @@ function ascend(override) {
             }
             game.arcane_enchantment = 0
             game.arcane_enchantment_price = new Decimal(25)
+
+            game.free_enchantment = 0
+            if (game.research_complete[13] >= 1)
+                game.free_enchantment = game.arcane_strengthener * 200
 
             prestige(true)
             if (!game.ascend_bought[23]) game.prestige = 0
@@ -587,6 +640,10 @@ function ascend(override) {
             game.arcane_enchantment = 0
             game.arcane_enchantment_price = new Decimal(25)
 
+            game.free_enchantment = 0
+            if (game.research_complete[13] >= 1)
+                game.free_enchantment = game.arcane_strengthener * 200
+
             prestige(true)
             game.prestige = 0
             game.rainbow_spice = new Decimal(0)
@@ -620,6 +677,117 @@ function ascend(override) {
             ]
             game.crystal_strengthener = 0
             game.crystal_strengthener_price = Decimal.pow(2, 76)
+        }
+    }
+}
+
+//code for collapsing
+function collapse() {
+    let amount = game.collapse_spice.pow(5 * 10 ** -10).floor()
+
+    if (game.research_complete[5] >= 1)
+        amount = amount
+            .mul(game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1)
+            .mul(Decimal.pow(1.2, (game.total_rune_power / 10 ** 28) ** 0.2))
+
+    if (amount.cmp(10 ** 80) >= 0)
+        amount = amount
+            .div(10 ** 80)
+            .pow(0.35)
+            .mul(10 ** 80)
+
+    if (game.ascend_complete[5] && amount.cmp(1) >= 0) {
+        let collapse_ready = false
+
+        if (!game.collapse_confirm) collapse_ready = true
+        else {
+            if (
+                confirm(
+                    "Are you sure you want to Collapse? This will reset EVERYTHING so far!"
+                )
+            ) {
+                collapse_ready = true
+            }
+        }
+
+        if (collapse_ready) {
+            game.collapse++
+            game.atomic_spice = game.atomic_spice.add(amount)
+
+            game.unstable_spice = game.total_unstable_spice
+
+            for (let i = 8; i >= 0; i--) {
+                game.collapse_amount_history[i + 1] =
+                    game.collapse_amount_history[i]
+                game.collapse_time_history[i + 1] =
+                    game.collapse_time_history[i]
+            }
+            game.collapse_amount_history[0] = amount
+            game.collapse_time_history[0] = game.collapse_time_played
+
+            game.collapse_time_played = 0
+            game.collapse_spice = new Decimal(5)
+
+            game.ascend_challenge = 0
+            game.ascend_complete = new Array(6).fill(false)
+
+            if (game.subtab[3] > 1) game.subtab[3] = 0
+
+            game.ascend_bought = new Array(35).fill(false)
+
+            if (game.research_complete[1] >= 1) {
+                game.ascend_bought[3] = true
+                game.ascend_bought[8] = true
+                game.ascend_bought[9] = true
+                game.ascend_bought[10] = true
+                game.ascend_bought[12] = true
+                game.ascend_bought[17] = true
+                game.ascend_bought[23] = true
+                game.ascend_bought[25] = true
+            }
+
+            ascend(true)
+            game.ascend = 0
+            game.ansuz = 0
+            game.rune = new Array(3).fill(0)
+            game.total_rune_power = 0
+
+            game.autods_budget = [0, 0, 0]
+
+            game.ascend_amount_history = new Array(10).fill(-1)
+            game.ascend_time_history = new Array(10).fill(-1)
+
+            game.arcane_spice_price = [
+                20000,
+                100000,
+                600000,
+                3.5 * 10 ** 7,
+                3 * 10 ** 9,
+                4 * 10 ** 11,
+            ]
+            game.arcane_spice_gen = [
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+            ]
+            game.arcane_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.arcane_spice_boost = [
+                new Decimal(1),
+                new Decimal(1),
+                new Decimal(1),
+                new Decimal(1),
+                new Decimal(1),
+                new Decimal(1),
+            ]
+            game.arcane_strengthener = 0
+            game.arcane_strengthener_price = 5000000
+
+            game.free_enchantment = 0
+
+            game.global_spice_boost = new Decimal(1)
         }
     }
 }
