@@ -2403,11 +2403,10 @@ function prestige_update() {
         }
 
         let button = prestige_map.get(u)
-        button.innerHTML =
-            u.desc +
-            '<br><span class="bold">-' +
-            format_idec(u.price, game.notation) +
-            " μg rainbow spice</span>"
+        document.getElementById("pr_desc" + u.id).innerHTML = u.desc
+        document.getElementById("pr_cost" + u.id).innerHTML =
+            "-" + format_idec(u.price, game.notation) + " μg rainbow spice"
+
         if (u.id === 25) {
             if (game.prestige_bought[u.id] >= u.max) {
                 button.className = "prestige_upgrade c_bought p_special"
@@ -3169,11 +3168,10 @@ function ascension_update() {
         }
 
         let button = ascension_map.get(u)
-        button.innerHTML =
-            u.desc +
-            '<br><span class="bold">-' +
-            format_num(u.price, game.notation) +
-            " ᚫ</span>"
+
+        document.getElementById("as_desc" + u.id).innerHTML = u.desc
+        document.getElementById("as_cost" + u.id).innerHTML =
+            "-" + format_num(u.price, game.notation) + " ᚫ"
 
         let visible = true
 
@@ -3287,8 +3285,24 @@ function ascension_update() {
 
             if (visible) {
                 button.style.display = "block"
+                if (u.req !== undefined) {
+                    let line = ascension_map2.get(u)
+                    line.style.display = "block"
+                }
+                if (u.req2 !== undefined) {
+                    let line = ascension_map3.get(u)
+                    line.style.display = "block"
+                }
             } else {
                 button.style.display = "none"
+                if (u.req !== undefined) {
+                    let line = ascension_map2.get(u)
+                    line.style.display = "none"
+                }
+                if (u.req2 !== undefined) {
+                    let line = ascension_map3.get(u)
+                    line.style.display = "none"
+                }
             }
         }
     }
