@@ -1344,6 +1344,33 @@ main {
     margin-bottom: 5em;
 }
 
+#collider_block {
+    margin-top: 1em;
+    margin-left: 1.65em;
+}
+
+#collider_view, #collider_view2 {
+    width: 60em;
+    height: 30em;
+    display: none;
+}
+
+@media (pointer: coarse) {
+    #collider_view, #collider_view2 {
+        width: 100%;
+        height: auto;
+        display: none;
+    }
+}
+
+#collider_view {
+    filter: hue-rotate(var(--collapse6)) brightness(var(--collapse7)) saturate(var(--collapse8)) drop-shadow(0 0 0.2em var(--collapse2)) drop-shadow(0 0 0.5em var(--collapse));
+}
+
+#collider_view2 {
+    filter: hue-rotate(var(--unstable_spice4)) brightness(var(--unstable_spice5)) saturate(var(--unstable_spice6)) drop-shadow(0 0 0.2em var(--unstable_spice2)) drop-shadow(0 0 0.5em var(--unstable_spice));
+}
+
 .collider_text {
     color: white;
     font-size: 1.25em;
