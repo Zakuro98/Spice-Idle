@@ -839,7 +839,7 @@ function exponent_notation(not) {
     }
 }
 
-//toggle rainbow color visibility
+//toggle text visibility
 function high_visibility() {
     if (game.high_visibility) {
         game.high_visibility = false
@@ -878,4 +878,17 @@ function refresh_rate(ms) {
 
     document.getElementById("refresh_rate").innerHTML =
         "Refresh Rate<br>" + game.refresh_rate + " MS"
+}
+
+//toggle spice collider animations
+function animations() {
+    if (game.collider_animation) {
+        game.collider_animation = false
+        document.getElementById("collidier_animation").innerHTML =
+            "Collider Animations<br>DISABLED"
+    } else {
+        game.collider_animation = true
+        document.getElementById("collidier_animation").innerHTML =
+            "Collider Animations<br>ENABLED"
+    }
 }
