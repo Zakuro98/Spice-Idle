@@ -82,6 +82,19 @@ function tick() {
     )
 
     document.documentElement.style.setProperty(
+        "--collapse6",
+        25 * Math.sin(game.total_time_played) - 25 + "deg"
+    )
+    document.documentElement.style.setProperty(
+        "--collapse7",
+        -10 * Math.sin(game.total_time_played) + 110 + "%"
+    )
+    document.documentElement.style.setProperty(
+        "--collapse8",
+        10 * Math.sin(game.total_time_played) + 90 + "%"
+    )
+
+    document.documentElement.style.setProperty(
         "--unstable_spice",
         "hsl(" + (18 * Math.sin(game.total_time_played * 3) + 16) + ",100%,40%)"
     )
@@ -92,6 +105,19 @@ function tick() {
     document.documentElement.style.setProperty(
         "--unstable_spice3",
         "hsl(" + (18 * Math.sin(game.total_time_played * 3) + 26) + ",100%,60%)"
+    )
+
+    document.documentElement.style.setProperty(
+        "--unstable_spice4",
+        16 * Math.sin(game.total_time_played * 3) + 16 + "deg"
+    )
+    document.documentElement.style.setProperty(
+        "--unstable_spice5",
+        50 * Math.sin(game.total_time_played * 3) + 150 + "%"
+    )
+    document.documentElement.style.setProperty(
+        "--unstable_spice6",
+        -10 * Math.sin(game.total_time_played * 3) + 90 + "%"
     )
 
     document.documentElement.style.setProperty(
@@ -1570,6 +1596,103 @@ function tick() {
     game.atomic_efficiency = 0.6 + 0.1 * game.research_complete[7]
 }
 
+//handling spice collider animations
+function collider_tick() {
+    collider.time++
+
+    let col = document.getElementById("collider_view")
+    let ctx = col.getContext("2d")
+    let col2 = document.getElementById("collider_view2")
+    let ctx2 = col2.getContext("2d")
+
+    if (collider.time <= 25) {
+        ctx.beginPath()
+        ctx2.beginPath()
+
+        for (let i = 0; i < 2; i++) {
+            let px = large_particle.particles[i].x
+            large_particle.particles[i].x +=
+                28 * large_particle.particles[i].dir
+            ctx.moveTo(720 + px, 360)
+            ctx.lineTo(720 + large_particle.particles[i].x, 360)
+            ctx2.moveTo(720 + px, 360)
+            ctx2.lineTo(720 + large_particle.particles[i].x, 360)
+        }
+
+        ctx.lineWidth = 12
+        ctx.lineCap = "round"
+        ctx.strokeStyle = "#33ff3a"
+        ctx.stroke()
+        ctx2.lineWidth = 12
+        ctx2.lineCap = "round"
+        ctx2.strokeStyle = "#ff4e33"
+        ctx2.stroke()
+    } else if (collider.time <= 100) {
+        ctx2.beginPath()
+
+        for (let i = 0; i < collider.particles; i++) {
+            if (
+                particle.particles[i].speed > 0 &&
+                Math.abs(particle.particles[i].y) < 354
+            ) {
+                let px = particle.particles[i].x
+                let py = particle.particles[i].y
+
+                particle.particles[i].x +=
+                    particle.particles[i].speed *
+                    Math.cos(particle.particles[i].dir)
+                particle.particles[i].y +=
+                    particle.particles[i].speed *
+                    Math.sin(particle.particles[i].dir)
+
+                if (particle.particles[i].type === 1) {
+                    particle.particles[i].dir +=
+                        (particle.particles[i].delta *
+                            particle.particles[i].speed) /
+                        particle.particles[i].speed_init
+                }
+                if (particle.particles[i].type === 2) {
+                    particle.particles[i].dir +=
+                        (particle.particles[i].delta *
+                            particle.particles[i].speed *
+                            (collider.time - 25) ** 0.2) /
+                        particle.particles[i].speed_init
+                }
+
+                particle.particles[i].speed--
+
+                if (Math.abs(particle.particles[i].y) < 354) {
+                    ctx2.moveTo(720 + px, 360 + py)
+                    ctx2.lineTo(
+                        720 + particle.particles[i].x,
+                        360 + particle.particles[i].y
+                    )
+                }
+            }
+
+            ctx2.lineWidth = 6
+            ctx2.lineCap = "round"
+            ctx2.strokeStyle = "#ff4e33"
+            ctx2.stroke()
+        }
+
+        if (collider.time === 26) {
+            game.total_unstable_spice = game.total_unstable_spice.add(
+                game.atomic_spice.pow(game.atomic_efficiency).floor()
+            )
+            game.unstable_spice = game.unstable_spice.add(
+                game.atomic_spice.pow(game.atomic_efficiency).floor()
+            )
+            game.atomic_spice = new Decimal(0)
+
+            document.getElementById("collider_view").style.display = "none"
+            document.getElementById("collider_view2").style.display = "block"
+        }
+    } else {
+        collider.enabled = false
+    }
+}
+
 //handling hotkeys
 document.body.addEventListener("keydown", function (event) {
     for (let i = 0; i < 6; i++) {
@@ -1765,7 +1888,7 @@ function hotkey_tick() {
 
 //saving the game
 function save() {
-    game.version = "1.4.0"
+    game.version = "1.4.2"
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
         game.prestige_price[u.id] = u.price
@@ -2061,12 +2184,19 @@ function load(savegame) {
         game.autods_budget = [0, 0, 0]
 
         game.autoco_toggle = false
-        game.autoco_mode = false
+        game.autoco_mode = 0
         game.autoco_goal = [new Decimal(10 ** 50), 120]
         game.autoco_stop = [new Decimal(10 ** 25), 60]
     }
+    if (major <= 4) {
+        if ((major === 4 && minor < 2) || major < 4) {
+            game.collider_animation = true
 
-    game.version = "1.4.0"
+            if (!game.autoco_mode) game.autoco_mode = 0
+        }
+    }
+
+    game.version = "1.4.2"
 
     game.red_spice = new Decimal(game.red_spice)
     game.red_strengthener_price = new Decimal(game.red_strengthener_price)
@@ -2217,6 +2347,8 @@ function load(savegame) {
     high_visibility()
     high_visibility()
     refresh_rate(game.refresh_rate)
+    animations()
+    animations()
 
     document.getElementById("p_boosts_input").value = game.autopr_goal[0]
     document.getElementById("p_boosts_input2").value = game.autopr_delta[0]
@@ -2271,6 +2403,7 @@ function tick_loop() {
         tick()
     }
     hotkey_tick()
+    if (collider.enabled) collider_tick()
 
     window.setTimeout(tick_loop, 1000 / game.tickspeed)
 }
