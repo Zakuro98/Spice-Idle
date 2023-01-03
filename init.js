@@ -1,6 +1,6 @@
 //initializing game variables
 let game = {
-    version: "1.4.0",
+    version: "1.4.2",
 
     tickspeed: 100,
 
@@ -13,6 +13,7 @@ let game = {
     high_visibility: false,
     refresh_rate: 20,
     collapse_confirm: true,
+    collider_animation: true,
 
     global_spice_boost: new Decimal(1),
 
@@ -426,6 +427,47 @@ function format_idec(num, not) {
     }
 }
 
+//setting up spice collider animations
+let collider = {
+    time: 0,
+    enabled: false,
+    particles: 5,
+}
+
+class particle {
+    static particles = []
+
+    constructor() {
+        this.x = 0
+        this.y = 0
+        this.type = 0
+        this.speed = 0
+        this.speed_init = 0
+        this.dir = 0
+        this.delta = 0
+        this.height
+
+        particle.particles.push(this)
+    }
+}
+
+class large_particle {
+    static particles = []
+
+    constructor() {
+        this.x = 0
+        this.dir = 0
+
+        large_particle.particles.push(this)
+    }
+}
+
+new large_particle()
+new large_particle()
+for (let i = 0; i < 30; i++) {
+    new particle()
+}
+
 //initialize map
 const spice_map = new Map()
 const prestige_map = new Map()
@@ -628,7 +670,14 @@ class prestige_upgrade {
 
         //prestige upgrade button
         let button = document.createElement("BUTTON")
-        button.innerHTML = this.desc + '<br><span class="bold">---</span>'
+        button.innerHTML =
+            '<span id="pr_desc' +
+            this.id +
+            '">' +
+            this.desc +
+            '</span><br><span id="pr_cost' +
+            this.id +
+            '" class="bold">---</span>'
         button.className = "prestige_upgrade p_locked"
         button.addEventListener("click", () => {
             buy_prestige_upgrade(this.id)
@@ -818,7 +867,14 @@ class ascension_upgrade {
 
         //ascension upgrade button
         let button = document.createElement("BUTTON")
-        button.innerHTML = this.desc + '<br><span class="bold">---</span>'
+        button.innerHTML =
+            '<span id="as_desc' +
+            this.id +
+            '">' +
+            this.desc +
+            '</span><br><span id="as_cost' +
+            this.id +
+            '" class="bold">---</span>'
         button.className = "ascension_upgrade a_locked"
         if (challenge !== 0) button.className = "ascension_upgrade ac_locked"
         button.style.left = "calc(50% - 8.5em + " + x + ")"
