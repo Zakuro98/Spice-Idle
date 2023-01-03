@@ -15,6 +15,8 @@ function buy_gen(color, id, budget) {
                     game.red_spice_boost[id] = new Decimal(
                         Math.floor(game.red_spice_bought[id] / 10) + 1
                     )
+
+                if (game.red_spice.cmp(0) < 0) game.red_spice = new Decimal(0)
             }
             break
         case "yellow":
@@ -34,6 +36,9 @@ function buy_gen(color, id, budget) {
                     game.yellow_spice_boost[id] = new Decimal(
                         Math.floor(game.yellow_spice_bought[id] / 10) + 1
                     )
+
+                if (game.yellow_spice.cmp(0) < 0)
+                    game.yellow_spice = new Decimal(0)
             }
             break
         case "green":
@@ -52,6 +57,9 @@ function buy_gen(color, id, budget) {
                     game.green_spice_boost[id] = new Decimal(
                         Math.floor(game.green_spice_bought[id] / 10) + 1
                     )
+
+                if (game.green_spice.cmp(0) < 0)
+                    game.green_spice = new Decimal(0)
             }
             break
         case "blue":
@@ -68,6 +76,8 @@ function buy_gen(color, id, budget) {
                     game.blue_spice_boost[id] = new Decimal(
                         Math.floor(game.blue_spice_bought[id] / 10) + 1
                     )
+
+                if (game.blue_spice.cmp(0) < 0) game.blue_spice = new Decimal(0)
             }
             break
         case "pink":
@@ -84,6 +94,8 @@ function buy_gen(color, id, budget) {
                     game.pink_spice_boost[id] = new Decimal(
                         Math.floor(game.pink_spice_bought[id] / 10) + 1
                     )
+
+                if (game.pink_spice.cmp(0) < 0) game.pink_spice = new Decimal(0)
             }
             break
         case "crystal":
@@ -162,6 +174,8 @@ function buy_until10(color, id, budget) {
                     game.red_spice_boost[id] = new Decimal(
                         Math.floor(game.red_spice_bought[id] / 10) + 1
                     )
+
+                if (game.red_spice.cmp(0) < 0) game.red_spice = new Decimal(0)
             }
             break
         case "yellow":
@@ -187,6 +201,9 @@ function buy_until10(color, id, budget) {
                     game.yellow_spice_boost[id] = new Decimal(
                         Math.floor(game.yellow_spice_bought[id] / 10) + 1
                     )
+
+                if (game.yellow_spice.cmp(0) < 0)
+                    game.yellow_spice = new Decimal(0)
             }
             break
         case "green":
@@ -212,6 +229,9 @@ function buy_until10(color, id, budget) {
                     game.green_spice_boost[id] = new Decimal(
                         Math.floor(game.green_spice_bought[id] / 10) + 1
                     )
+
+                if (game.green_spice.cmp(0) < 0)
+                    game.green_spice = new Decimal(0)
             }
             break
         case "blue":
@@ -237,6 +257,8 @@ function buy_until10(color, id, budget) {
                     game.blue_spice_boost[id] = new Decimal(
                         Math.floor(game.blue_spice_bought[id] / 10) + 1
                     )
+
+                if (game.blue_spice.cmp(0) < 0) game.blue_spice = new Decimal(0)
             }
             break
         case "pink":
@@ -262,6 +284,8 @@ function buy_until10(color, id, budget) {
                     game.pink_spice_boost[id] = new Decimal(
                         Math.floor(game.pink_spice_bought[id] / 10) + 1
                     )
+
+                if (game.pink_spice.cmp(0) < 0) game.pink_spice = new Decimal(0)
             }
             break
         case "crystal":
@@ -368,6 +392,8 @@ function buy_strengthener(color) {
                             Decimal.pow(a, game.red_strengthener - 24)
                         )
                 game.red_strengthener += 1
+
+                if (game.red_spice.cmp(0) < 0) game.red_spice = new Decimal(0)
             }
             break
         case "yellow":
@@ -383,6 +409,9 @@ function buy_strengthener(color) {
                             Decimal.pow(a, game.yellow_strengthener - 24)
                         )
                 game.yellow_strengthener += 1
+
+                if (game.yellow_spice.cmp(0) < 0)
+                    game.yellow_spice = new Decimal(0)
             }
             break
         case "green":
@@ -398,6 +427,9 @@ function buy_strengthener(color) {
                             Decimal.pow(a, game.green_strengthener - 24)
                         )
                 game.green_strengthener += 1
+
+                if (game.green_spice.cmp(0) < 0)
+                    game.green_spice = new Decimal(0)
             }
             break
         case "blue":
@@ -413,6 +445,8 @@ function buy_strengthener(color) {
                             Decimal.pow(a, game.blue_strengthener - 24)
                         )
                 game.blue_strengthener += 1
+
+                if (game.blue_spice.cmp(0) < 0) game.blue_spice = new Decimal(0)
             }
             break
         case "pink":
@@ -428,6 +462,8 @@ function buy_strengthener(color) {
                             Decimal.pow(a, game.pink_strengthener - 24)
                         )
                 game.pink_strengthener += 1
+
+                if (game.pink_spice.cmp(0) < 0) game.pink_spice = new Decimal(0)
             }
             break
         case "crystal":
@@ -628,6 +664,8 @@ function max_all(color) {
                         )
                 }
             }
+
+            if (game.red_spice.cmp(0) < 0) game.red_spice = new Decimal(0)
             break
         case "yellow":
             if (game.yellow_strengthener < 25) {
@@ -780,6 +818,8 @@ function max_all(color) {
                         )
                 }
             }
+
+            if (game.yellow_spice.cmp(0) < 0) game.yellow_spice = new Decimal(0)
             break
         case "green":
             if (game.green_strengthener < 25) {
@@ -930,6 +970,8 @@ function max_all(color) {
                         )
                 }
             }
+
+            if (game.green_spice.cmp(0) < 0) game.green_spice = new Decimal(0)
             break
         case "blue":
             if (game.blue_strengthener < 25) {
@@ -1076,6 +1118,8 @@ function max_all(color) {
                         )
                 }
             }
+
+            if (game.blue_spice.cmp(0) < 0) game.blue_spice = new Decimal(0)
             break
         case "pink":
             if (game.pink_strengthener < 25) {
@@ -1222,6 +1266,8 @@ function max_all(color) {
                         )
                 }
             }
+
+            if (game.pink_spice.cmp(0) < 0) game.pink_spice = new Decimal(0)
             break
         case "crystal":
             n = Math.floor(
@@ -1883,6 +1929,8 @@ function buy_infusion() {
             )
         }
         game.crystal_infusion += 1
+
+        if (game.crystal_spice.cmp(0) < 0) game.crystal_spice = new Decimal(0)
     }
 }
 
@@ -1999,6 +2047,8 @@ function max_infusion() {
             )
             game.crystal_infusion += n
         }
+
+        if (game.crystal_spice.cmp(0) < 0) game.crystal_spice = new Decimal(0)
     }
 }
 
@@ -2324,6 +2374,8 @@ function buy_enchantment() {
                     Math.floor(game.arcane_enchantment / 10) +
                     game.arcane_strengthener * 200
         }
+
+        if (game.arcane_spice.cmp(0) < 0) game.arcane_spice = new Decimal(0)
     }
 }
 
@@ -2454,19 +2506,96 @@ function max_enchantment() {
                     Math.floor(game.arcane_enchantment / 10) +
                     game.arcane_strengthener * 200
         }
+
+        if (game.arcane_spice.cmp(0) < 0) game.arcane_spice = new Decimal(0)
     }
 }
 
 //activating the spice collider
 function activate_collider() {
     if (game.atomic_spice.cmp(1) >= 0) {
-        game.total_unstable_spice = game.total_unstable_spice.add(
-            game.atomic_spice.pow(game.atomic_efficiency).floor()
-        )
-        game.unstable_spice = game.unstable_spice.add(
-            game.atomic_spice.pow(game.atomic_efficiency).floor()
-        )
-        game.atomic_spice = new Decimal(0)
+        if (game.collider_animation) {
+            let p = 12
+            p += Math.floor(
+                game.atomic_spice.pow(game.atomic_efficiency).log(10000)
+            )
+            if (p > 30) p = 30
+
+            collider.enabled = true
+            collider.time = 0
+            collider.particles = p
+
+            document.getElementById("collider_view").style.display = "block"
+            document.getElementById("collider_view2").style.display = "none"
+
+            large_particle.particles[0].x = -700
+            large_particle.particles[0].dir = 1
+            large_particle.particles[1].x = 700
+            large_particle.particles[1].dir = -1
+
+            for (let i = 0; i < p; i++) {
+                particle.particles[i].x = 0
+                particle.particles[i].y = 0
+                particle.particles[i].type = Math.floor(Math.random() * 2)
+                if (Math.random() < 0.025 && p >= 20)
+                    particle.particles[i].type = 2
+
+                particle.particles[i].speed = Math.round(
+                    15 + Math.random() * 15
+                )
+                particle.particles[i].dir =
+                    (2 * (i + (Math.random() * 0.5 - 0.25)) * Math.PI) / p
+
+                switch (particle.particles[i].type) {
+                    case 0:
+                        particle.particles[i].delta = 0
+                        break
+                    case 1:
+                        particle.particles[i].delta =
+                            Math.random() * Math.PI * 0.2 - Math.PI * 0.1
+                        if (p < 16)
+                            particle.particles[i].delta =
+                                Math.random() * Math.PI * 0.1 - Math.PI * 0.05
+                        particle.particles[i].speed = Math.round(
+                            20 + Math.random() * 10
+                        )
+                        if (Math.abs(particle.particles[i].delta > 0.1))
+                            particle.particles[i].speed = Math.round(
+                                30 + Math.random() * 5
+                            )
+                        break
+                    case 2:
+                        if (Math.random() > 0.5) {
+                            particle.particles[i].delta =
+                                Math.random() * Math.PI * 0.05 + Math.PI * 0.05
+                        } else {
+                            particle.particles[i].delta =
+                                -Math.random() * Math.PI * 0.05 - Math.PI * 0.05
+                        }
+                        particle.particles[i].speed = Math.round(
+                            40 + Math.random() * 10
+                        )
+                        break
+                }
+
+                particle.particles[i].speed_init = particle.particles[i].speed
+            }
+
+            let col = document.getElementById("collider_view")
+            let ctx = col.getContext("2d")
+            ctx.clearRect(0, 0, col.width, col.height)
+            col = document.getElementById("collider_view2")
+            ctx = col.getContext("2d")
+            ctx.clearRect(0, 0, col.width, col.height)
+        } else {
+            game.total_unstable_spice = game.total_unstable_spice.add(
+                game.atomic_spice.pow(game.atomic_efficiency).floor()
+            )
+            game.unstable_spice = game.unstable_spice.add(
+                game.atomic_spice.pow(game.atomic_efficiency).floor()
+            )
+            game.atomic_spice = new Decimal(0)
+        }
     }
 }
 
