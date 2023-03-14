@@ -298,14 +298,18 @@ function tick() {
         game.unstable_spice.round()
     )
 
-    game.unstable_boost = game.decayed_spice
-        .add(1)
-        .pow(
-            Decimal.pow(
-                16777216,
-                game.decayed_spice.div(game.total_unstable_spice)
+    if (game.decayed_spice.cmp(1) >= 0) {
+        game.unstable_boost = decayed_amount
+            .add(1)
+            .pow(
+                Decimal.pow(
+                    16777216,
+                    game.decayed_spice.div(game.total_unstable_spice)
+                )
             )
-        )
+    } else {
+        game.unstable_boost = new Decimal(1)
+    }
 
     if (game.research_complete[14] >= 1) {
         if (game.unstable_spice.round().cmp(1) === -1) {
