@@ -299,7 +299,7 @@ function tick() {
     )
 
     if (game.decayed_spice.cmp(1) >= 0) {
-        game.unstable_boost = decayed_amount
+        game.unstable_boost = game.decayed_spice
             .add(1)
             .pow(
                 Decimal.pow(
