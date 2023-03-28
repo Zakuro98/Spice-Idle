@@ -17,6 +17,8 @@ function goto_tab(id) {
             document.getElementById("ascension_tabs").style.display = "none"
             document.getElementById("collapse_page").style.display = "none"
             document.getElementById("research_page").style.display = "none"
+            document.getElementById("challenges_page2").style.display = "none"
+            document.getElementById("antispice_page").style.display = "none"
             document.getElementById("collapse_tabs").style.display = "none"
             document.getElementById("statistics_page").style.display = "none"
             document.getElementById("prestige_statistics_page").style.display =
@@ -67,6 +69,9 @@ function goto_tab(id) {
                 document.getElementById("ascension_tabs").style.display = "none"
                 document.getElementById("collapse_page").style.display = "none"
                 document.getElementById("research_page").style.display = "none"
+                document.getElementById("challenges_page2").style.display =
+                    "none"
+                document.getElementById("antispice_page").style.display = "none"
                 document.getElementById("collapse_tabs").style.display = "none"
                 document.getElementById("statistics_page").style.display =
                     "none"
@@ -114,6 +119,9 @@ function goto_tab(id) {
                 document.getElementById("prestige_tabs").style.display = "none"
                 document.getElementById("collapse_page").style.display = "none"
                 document.getElementById("research_page").style.display = "none"
+                document.getElementById("challenges_page2").style.display =
+                    "none"
+                document.getElementById("antispice_page").style.display = "none"
                 document.getElementById("collapse_tabs").style.display = "none"
                 document.getElementById("statistics_page").style.display =
                     "none"
@@ -223,6 +231,8 @@ function goto_tab(id) {
             document.getElementById("ascension_tabs").style.display = "none"
             document.getElementById("collapse_page").style.display = "none"
             document.getElementById("research_page").style.display = "none"
+            document.getElementById("challenges_page2").style.display = "none"
+            document.getElementById("antispice_page").style.display = "none"
             document.getElementById("collapse_tabs").style.display = "none"
             document.getElementById("settings_page").style.display = "none"
 
@@ -261,6 +271,8 @@ function goto_tab(id) {
             document.getElementById("ascension_tabs").style.display = "none"
             document.getElementById("collapse_page").style.display = "none"
             document.getElementById("research_page").style.display = "none"
+            document.getElementById("challenges_page2").style.display = "none"
+            document.getElementById("antispice_page").style.display = "none"
             document.getElementById("collapse_tabs").style.display = "none"
             document.getElementById("statistics_page").style.display = "none"
             document.getElementById("prestige_statistics_page").style.display =
@@ -574,25 +586,106 @@ function goto_subtab(id) {
     } else if (game.tab === 3) {
         game.subtab[4] = id
 
-        document.getElementById("collapse_page").style.display = "none"
-        document.getElementById("research_page").style.display = "none"
-
         switch (id) {
             case 0:
                 document.getElementById("collapse_page").style.display = "block"
+                document.getElementById("research_page").style.display = "none"
+                document.getElementById("challenges_page2").style.display =
+                    "none"
+                document.getElementById("antispice_page").style.display = "none"
 
                 document.getElementById("spice_collider").className =
                     "subtab selected"
                 document.getElementById("research").className =
                     "subtab unlocked"
+                if (game.research_complete[18] >= 1)
+                    document.getElementById("collapse_challenges").className =
+                        "subtab unlocked"
+                else
+                    document.getElementById("collapse_challenges").className =
+                        "subtab locked"
+                if (game.research_complete[19] >= 1)
+                    document.getElementById("antispice").className =
+                        "subtab unlocked"
+                else
+                    document.getElementById("antispice").className =
+                        "subtab locked"
                 break
             case 1:
                 document.getElementById("research_page").style.display = "block"
+                document.getElementById("collapse_page").style.display = "none"
+                document.getElementById("challenges_page2").style.display =
+                    "none"
+                document.getElementById("antispice_page").style.display = "none"
 
                 document.getElementById("research").className =
                     "subtab selected"
                 document.getElementById("spice_collider").className =
                     "subtab unlocked"
+                if (game.research_complete[18] >= 1)
+                    document.getElementById("collapse_challenges").className =
+                        "subtab unlocked"
+                else
+                    document.getElementById("collapse_challenges").className =
+                        "subtab locked"
+                if (game.research_complete[19] >= 1)
+                    document.getElementById("antispice").className =
+                        "subtab unlocked"
+                else
+                    document.getElementById("antispice").className =
+                        "subtab locked"
+                break
+            case 2:
+                if (game.research_complete[18] >= 1) {
+                    document.getElementById("challenges_page2").style.display =
+                        "block"
+                    document.getElementById("collapse_page").style.display =
+                        "none"
+                    document.getElementById("research_page").style.display =
+                        "none"
+                    document.getElementById("antispice_page").style.display =
+                        "none"
+
+                    document.getElementById("collapse_challenges").className =
+                        "subtab selected"
+                    document.getElementById("spice_collider").className =
+                        "subtab unlocked"
+                    document.getElementById("research").className =
+                        "subtab unlocked"
+                    if (game.research_complete[19] >= 1)
+                        document.getElementById("antispice").className =
+                            "subtab unlocked"
+                    else
+                        document.getElementById("antispice").className =
+                            "subtab locked"
+                }
+                break
+            case 3:
+                if (game.research_complete[19] >= 1) {
+                    document.getElementById("antispice_page").style.display =
+                        "block"
+                    document.getElementById("collapse_page").style.display =
+                        "none"
+                    document.getElementById("research_page").style.display =
+                        "none"
+                    document.getElementById("challenges_page2").style.display =
+                        "none"
+
+                    document.getElementById("antispice").className =
+                        "subtab selected"
+                    document.getElementById("spice_collider").className =
+                        "subtab unlocked"
+                    document.getElementById("research").className =
+                        "subtab unlocked"
+                    if (game.research_complete[18] >= 1)
+                        document.getElementById(
+                            "collapse_challenges"
+                        ).className = "subtab unlocked"
+                    else
+                        document.getElementById(
+                            "collapse_challenges"
+                        ).className = "subtab locked"
+                }
                 break
         }
     } else if (game.tab === 5) {
