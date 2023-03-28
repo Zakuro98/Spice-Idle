@@ -2,7 +2,8 @@
 function color_boost(override) {
     let can_boost = false
     let scaling = 1
-    if (game.ascend_challenge === 3) scaling = 10
+    if (game.ascend_challenge === 3 || game.collapse_challenge === 7)
+        scaling = 10
     switch (game.color_boosts) {
         case 0:
             if (game.red_spice_gen[5].cmp(50 * scaling) >= 0) can_boost = true
@@ -18,76 +19,89 @@ function color_boost(override) {
             if (game.blue_spice_gen[5].cmp(50 * scaling) >= 0) can_boost = true
             break
         default:
-            if (game.color_boosts <= 8) {
+            if (game.collapse_challenge === 10) {
                 if (
                     game.pink_spice_bought[5] >=
-                    (game.color_boosts * 25 - 50) * scaling
-                )
-                    can_boost = true
-            } else if (game.color_boosts <= 29) {
-                if (
-                    game.pink_spice_bought[5] >=
-                    (game.color_boosts * 50 - 250) * scaling
-                )
-                    can_boost = true
-            } else if (game.color_boosts <= 133) {
-                if (
-                    game.pink_spice_bought[5] >=
-                    (game.color_boosts * 75 - 975) * scaling
-                )
-                    can_boost = true
-            } else if (game.color_boosts <= 223) {
-                if (
-                    game.pink_spice_bought[5] >=
-                    (game.color_boosts * 100 - 4300) * scaling
-                )
-                    can_boost = true
-            } else if (game.color_boosts <= 523) {
-                if (
-                    game.pink_spice_bought[5] >=
-                    (game.color_boosts * 150 - 15450) * scaling
-                )
-                    can_boost = true
-            } else if (game.color_boosts <= 1201) {
-                if (
-                    game.pink_spice_bought[5] >=
-                    (game.color_boosts * 200 - 41600) * scaling
-                )
-                    can_boost = true
-            } else if (game.color_boosts <= 4104) {
-                if (
-                    game.pink_spice_bought[5] >=
-                    (game.color_boosts * 300 - 161700) * scaling
-                )
-                    can_boost = true
-            } else if (game.color_boosts <= 7501) {
-                if (
-                    game.pink_spice_bought[5] >=
-                    (game.color_boosts * 500 - 982500) * scaling
-                )
-                    can_boost = true
-            } else if (game.color_boosts <= 50003) {
-                if (
-                    game.pink_spice_bought[5] >=
-                    (game.color_boosts * 1000 - 4733000) * scaling
-                )
-                    can_boost = true
-            } else if (game.color_boosts <= 2000000) {
-                if (
-                    game.pink_spice_bought[5] >=
-                    (game.color_boosts * 2500 - 79737500) * scaling
+                    Math.ceil(
+                        (game.color_boosts + (33 ** 0.5 - 9) / 2) ** 3 -
+                            (9 * 33 ** 0.5 - 125) / 2
+                    )
                 )
                     can_boost = true
             } else {
-                if (
-                    game.pink_spice_bought[5] >=
-                    (((game.color_boosts - 1997500) *
-                        (game.color_boosts - 1997499)) /
-                        2 +
-                        4917136250) *
-                        scaling
-                )
-                    can_boost = true
+                if (game.color_boosts <= 8) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 25 - 50) * scaling
+                    )
+                        can_boost = true
+                } else if (game.color_boosts <= 29) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 50 - 250) * scaling
+                    )
+                        can_boost = true
+                } else if (game.color_boosts <= 133) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 75 - 975) * scaling
+                    )
+                        can_boost = true
+                } else if (game.color_boosts <= 223) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 100 - 4300) * scaling
+                    )
+                        can_boost = true
+                } else if (game.color_boosts <= 523) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 150 - 15450) * scaling
+                    )
+                        can_boost = true
+                } else if (game.color_boosts <= 1201) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 200 - 41600) * scaling
+                    )
+                        can_boost = true
+                } else if (game.color_boosts <= 4104) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 300 - 161700) * scaling
+                    )
+                        can_boost = true
+                } else if (game.color_boosts <= 7501) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 500 - 982500) * scaling
+                    )
+                        can_boost = true
+                } else if (game.color_boosts <= 50003) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 1000 - 4733000) * scaling
+                    )
+                        can_boost = true
+                } else if (game.color_boosts <= game.augment_start) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 2500 - 79737500) * scaling
+                    )
+                        can_boost = true
+                } else {
+                    let amount = game.augment_start * 2500 - 79737500
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (((game.color_boosts - game.augment_start + 2500) *
+                            (game.color_boosts - game.augment_start + 2501)) /
+                            2 +
+                            amount -
+                            3126250) *
+                            scaling
+                    )
+                        can_boost = true
+                }
             }
             break
     }
@@ -287,72 +301,97 @@ function color_boost(override) {
             game.color_boosts++
         } else {
             if (game.color_boosts >= 4) {
-                if (game.pink_spice_bought[5] <= 150) {
+                if (game.collapse_challenge === 10) {
                     game.color_boosts =
                         Math.floor(
-                            (game.pink_spice_bought[5] + 50) / (25 * scaling)
-                        ) + 1
-                } else if (game.pink_spice_bought[5] <= 1200) {
-                    game.color_boosts =
-                        Math.floor(
-                            (game.pink_spice_bought[5] + 250) / (50 * scaling)
-                        ) + 1
-                } else if (game.pink_spice_bought[5] <= 9000) {
-                    game.color_boosts =
-                        Math.floor(
-                            (game.pink_spice_bought[5] + 975) / (75 * scaling)
-                        ) + 1
-                } else if (game.pink_spice_bought[5] <= 18000) {
-                    game.color_boosts =
-                        Math.floor(
-                            (game.pink_spice_bought[5] + 4300) / (100 * scaling)
-                        ) + 1
-                } else if (game.pink_spice_bought[5] <= 63000) {
-                    game.color_boosts =
-                        Math.floor(
-                            (game.pink_spice_bought[5] + 15450) /
-                                (150 * scaling)
-                        ) + 1
-                } else if (game.pink_spice_bought[5] <= 198600) {
-                    game.color_boosts =
-                        Math.floor(
-                            (game.pink_spice_bought[5] + 41600) /
-                                (200 * scaling)
-                        ) + 1
-                } else if (game.pink_spice_bought[5] <= 1069500) {
-                    game.color_boosts =
-                        Math.floor(
-                            (game.pink_spice_bought[5] + 161700) /
-                                (300 * scaling)
-                        ) + 1
-                } else if (game.pink_spice_bought[5] <= 2768000) {
-                    game.color_boosts =
-                        Math.floor(
-                            (game.pink_spice_bought[5] + 982500) /
-                                (500 * scaling)
-                        ) + 1
-                } else if (game.pink_spice_bought[5] <= 45270000) {
-                    game.color_boosts =
-                        Math.floor(
-                            (game.pink_spice_bought[5] + 4733000) /
-                                (1000 * scaling)
-                        ) + 1
-                } else if (game.pink_spice_bought[5] <= 4920262500) {
-                    game.color_boosts =
-                        Math.floor(
-                            (game.pink_spice_bought[5] + 79737500) /
-                                (2500 * scaling)
+                            0.5 *
+                                (9 -
+                                    33 ** 0.5 -
+                                    Math.cbrt(
+                                        -8 * game.pink_spice_bought[5] -
+                                            36 * 33 ** 0.5 +
+                                            500
+                                    ))
                         ) + 1
                 } else {
-                    game.color_boosts =
-                        Math.floor(
-                            (0.5 *
-                                (3994999 +
-                                    (8 * game.pink_spice_bought[5] -
-                                        39337089999) **
-                                        0.5)) /
-                                scaling
-                        ) + 1
+                    if (game.pink_spice_bought[5] <= 150 * scaling) {
+                        game.color_boosts =
+                            Math.floor(
+                                (game.pink_spice_bought[5] / scaling + 50) / 25
+                            ) + 1
+                    } else if (game.pink_spice_bought[5] <= 1200 * scaling) {
+                        game.color_boosts =
+                            Math.floor(
+                                (game.pink_spice_bought[5] / scaling + 250) / 50
+                            ) + 1
+                    } else if (game.pink_spice_bought[5] <= 9000 * scaling) {
+                        game.color_boosts =
+                            Math.floor(
+                                (game.pink_spice_bought[5] / scaling + 975) / 75
+                            ) + 1
+                    } else if (game.pink_spice_bought[5] <= 18000 * scaling) {
+                        game.color_boosts =
+                            Math.floor(
+                                (game.pink_spice_bought[5] / scaling + 4300) /
+                                    100
+                            ) + 1
+                    } else if (game.pink_spice_bought[5] <= 63000 * scaling) {
+                        game.color_boosts =
+                            Math.floor(
+                                (game.pink_spice_bought[5] / scaling + 15450) /
+                                    150
+                            ) + 1
+                    } else if (game.pink_spice_bought[5] <= 198600 * scaling) {
+                        game.color_boosts =
+                            Math.floor(
+                                (game.pink_spice_bought[5] / scaling + 41600) /
+                                    200
+                            ) + 1
+                    } else if (game.pink_spice_bought[5] <= 1069500 * scaling) {
+                        game.color_boosts =
+                            Math.floor(
+                                (game.pink_spice_bought[5] / scaling + 161700) /
+                                    300
+                            ) + 1
+                    } else if (game.pink_spice_bought[5] <= 2768000 * scaling) {
+                        game.color_boosts =
+                            Math.floor(
+                                (game.pink_spice_bought[5] / scaling + 982500) /
+                                    500
+                            ) + 1
+                    } else if (
+                        game.pink_spice_bought[5] <=
+                        45270000 * scaling
+                    ) {
+                        game.color_boosts =
+                            Math.floor(
+                                (game.pink_spice_bought[5] / scaling +
+                                    4733000) /
+                                    1000
+                            ) + 1
+                    } else if (
+                        game.pink_spice_bought[5] <=
+                        (2500 * game.augment_start - 79737500) * scaling
+                    ) {
+                        game.color_boosts =
+                            Math.floor(
+                                (game.pink_spice_bought[5] / scaling +
+                                    79737500) /
+                                    2500
+                            ) + 1
+                    } else {
+                        let amount = 2500 * game.augment_start - 79737500
+                        game.color_boosts =
+                            Math.floor(
+                                (2 * game.augment_start -
+                                    5001 +
+                                    ((8 * game.pink_spice_bought[5]) / scaling -
+                                        8 * amount +
+                                        25010001) **
+                                        0.5) /
+                                    2
+                            ) + 1
+                    }
                 }
             } else {
                 game.color_boosts++
@@ -376,13 +415,14 @@ function prestige(override) {
         if (
             game.ascend_bought[15] &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
-            if (game.ascend < 20480)
+            if (game.ascend < 10240)
                 amount = amount.mul(Decimal.pow(2, game.ascend / 20))
             else
                 amount = amount.mul(
-                    Decimal.pow(2, 10 * (game.ascend - 10480) ** 0.5 + 24)
+                    Decimal.pow(2, 5 * (game.ascend - 7740) ** 0.5 + 262)
                 )
         }
 
@@ -396,6 +436,7 @@ function prestige(override) {
         game.prestige_time_history[0] = game.prestige_time_played
 
         game.prestige_time_played = 0
+        game.real_time_played[1] = 0
 
         if (game.ascend_bought[9] && !override) {
             if (game.autopr_mode === 0) {
@@ -448,14 +489,14 @@ function ascend(override) {
         }
 
         if (ascend_ready) {
-            game.ascend++
+            if (!override) game.ascend++
             let amount = Math.floor(
                 (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8
             )
             if (game.research_complete[10] >= 1)
                 amount = Math.floor(
                     (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8 *
-                        (Math.log2((game.collapse + 25) / 25) * 6.27 + 1)
+                        (Math.log2((game.collapse + 25) / 25) ** 2 * 6.27 + 1)
                 )
 
             game.ansuz += amount
@@ -512,6 +553,7 @@ function ascend(override) {
             game.ascend_time_history[0] = game.ascend_time_played
 
             game.ascend_time_played = 0
+            game.real_time_played[2] = 0
 
             if (game.ascend_challenge !== 0) {
                 game.ascend_complete[game.ascend_challenge - 1] = true
@@ -561,9 +603,17 @@ function ascend(override) {
             game.free_enchantment = 0
             if (game.research_complete[13] >= 1)
                 game.free_enchantment = game.arcane_strengthener * 200
+            if (game.research_complete[25] >= 1) {
+                let collapse_free = game.collapse * 25
+                if (collapse_free > game.arcane_enchantment / 4)
+                    collapse_free = Math.floor(game.arcane_enchantment / 4)
+
+                game.free_enchantment += collapse_free
+            }
 
             prestige(true)
-            if (!game.ascend_bought[23]) game.prestige = 0
+            if (!game.ascend_bought[23] && game.research_complete[16] === 0)
+                game.prestige = 0
             game.rainbow_spice = new Decimal(0)
             game.prestige_amount_history = new Array(10).fill(-1)
             game.prestige_time_history = new Array(10).fill(-1)
@@ -599,6 +649,7 @@ function ascend(override) {
     } else {
         if (override) {
             game.ascend_time_played = 0
+            game.real_time_played[2] = 0
 
             game.autopr_goal2[0] = 0
             game.autopr_goal2[1] = new Decimal(1)
@@ -643,9 +694,17 @@ function ascend(override) {
             game.free_enchantment = 0
             if (game.research_complete[13] >= 1)
                 game.free_enchantment = game.arcane_strengthener * 200
+            if (game.research_complete[25] >= 1) {
+                let collapse_free = game.collapse * 25
+                if (collapse_free > game.arcane_enchantment / 4)
+                    collapse_free = Math.floor(game.arcane_enchantment / 4)
+
+                game.free_enchantment += collapse_free
+            }
 
             prestige(true)
-            game.prestige = 0
+            if (!game.ascend_bought[23] && game.research_complete[16] === 0)
+                game.prestige = 0
             game.rainbow_spice = new Decimal(0)
             game.prestige_amount_history = new Array(10).fill(-1)
             game.prestige_time_history = new Array(10).fill(-1)
@@ -682,24 +741,95 @@ function ascend(override) {
 }
 
 //code for collapsing
-function collapse() {
+function collapse(override) {
     let amount = game.collapse_spice.pow(5 * 10 ** -10).floor()
 
-    if (game.research_complete[5] >= 1)
+    if (amount.cmp(Decimal.pow(10, 1800)) >= 0) {
         amount = amount
-            .mul(game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1)
-            .mul(Decimal.pow(1.2, (game.total_rune_power / 10 ** 28) ** 0.2))
-
-    if (amount.cmp(10 ** 80) >= 0)
+            .div(Decimal.pow(10, 200))
+            .pow(10 / ((amount.log(10) * 0.3 - 56) ** 0.5 - 2))
+            .mul(Decimal.pow(10, 200))
+    } else if (amount.cmp(Decimal.pow(10, 200)) >= 0) {
         amount = amount
-            .div(10 ** 80)
-            .pow(0.35)
-            .mul(10 ** 80)
+            .div(Decimal.pow(10, 200))
+            .pow(0.5)
+            .mul(Decimal.pow(10, 200))
+    }
 
-    if (game.ascend_complete[5] && amount.cmp(1) >= 0) {
+    if (game.research_complete[5] >= 1 && game.collapse_challenge === 0) {
+        let rune_amount = Decimal.pow(
+            1.2,
+            (game.total_rune_power / 10 ** 28) ** 0.2
+        ).mul(game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1)
+        if (rune_amount.cmp(Decimal.pow(10, 50)) >= 0)
+            rune_amount = Decimal.pow(
+                10,
+                rune_amount.div(Decimal.pow(10, 50)).log(10) ** 0.5 + 50
+            )
+        if (rune_amount.cmp(Decimal.pow(10, 100)) >= 0)
+            rune_amount = Decimal.pow(10, 100)
+
+        amount = amount.mul(rune_amount)
+    }
+
+    let total_completions = 0
+    for (let i = 0; i < 6; i++) {
+        total_completions += game.collapse_complete[i]
+    }
+    if (game.research_complete[22] >= 1 && game.collapse_challenge === 0)
+        amount = amount.mul(Decimal.pow(888, total_completions))
+
+    let goal = new Decimal(1)
+    if (game.collapse_challenge !== 0) {
+        let c = collapse_challenge.challenges[game.collapse_challenge - 7]
+        let completions = game.collapse_complete[game.collapse_challenge - 7]
+        let exponent = completions
+
+        if (c.scaling1 !== undefined && completions >= c.scaling1) {
+            if (completions >= c.scaling1) {
+                exponent = c.scaling1 + (completions - c.scaling1) * 1.5
+            }
+
+            if (c.scaling2 !== undefined) {
+                if (completions >= c.scaling2) {
+                    exponent =
+                        (completions - c.scaling2) * 2 +
+                        (c.scaling2 - c.scaling1) * 1.5 +
+                        c.scaling1
+                }
+
+                if (c.scaling3 !== undefined) {
+                    if (completions >= c.scaling3) {
+                        exponent =
+                            (completions - c.scaling3) * 3 +
+                            (c.scaling3 - c.scaling2) * 2 +
+                            (c.scaling2 - c.scaling1) * 1.5 +
+                            c.scaling1
+                    }
+
+                    if (c.scaling4 !== undefined) {
+                        if (completions >= c.scaling4) {
+                            exponent =
+                                (completions - c.scaling4) * 5 +
+                                (c.scaling4 - c.scaling3) * 3 +
+                                (c.scaling3 - c.scaling2) * 2 +
+                                (c.scaling2 - c.scaling1) * 1.5 +
+                                c.scaling1
+                        }
+                    }
+                }
+            }
+        }
+
+        goal = c.goal.mul(
+            Decimal.pow(10, Math.round(Decimal.pow(c.delta, exponent).log(10)))
+        )
+    }
+
+    if (game.ascend_complete[5] && amount.cmp(goal) >= 0) {
         let collapse_ready = false
 
-        if (!game.collapse_confirm) collapse_ready = true
+        if (override || !game.collapse_confirm) collapse_ready = true
         else {
             if (
                 confirm(
@@ -711,7 +841,7 @@ function collapse() {
         }
 
         if (collapse_ready) {
-            game.collapse++
+            if (!override) game.collapse++
             game.atomic_spice = game.atomic_spice.add(amount)
 
             game.unstable_spice = game.total_unstable_spice
@@ -726,7 +856,18 @@ function collapse() {
             game.collapse_time_history[0] = game.collapse_time_played
 
             game.collapse_time_played = 0
+            game.real_time_played[3] = 0
             game.collapse_spice = new Decimal(5)
+
+            if (game.collapse_challenge !== 0) {
+                if (game.research_complete[28] >= 1) {
+                    game.collapse_complete[game.collapse_challenge - 7] +=
+                        game.pending_completions
+
+                    game.pending_completions = 0
+                } else game.collapse_complete[game.collapse_challenge - 7]++
+                game.collapse_challenge = 0
+            }
 
             game.ascend_challenge = 0
             game.ascend_complete = new Array(6).fill(false)
@@ -747,7 +888,10 @@ function collapse() {
             }
 
             ascend(true)
-            game.ascend = 0
+            if (game.research_complete[16] === 0) {
+                game.ascend = 0
+                game.prestige = 0
+            }
             game.ansuz = 0
             game.rune = new Array(3).fill(0)
             game.total_rune_power = 0
@@ -786,6 +930,92 @@ function collapse() {
             game.arcane_strengthener_price = 5000000
 
             game.free_enchantment = 0
+            if (game.research_complete[25] >= 1) {
+                let collapse_free = game.collapse * 25
+                if (collapse_free > game.arcane_enchantment / 4)
+                    collapse_free = Math.floor(game.arcane_enchantment / 4)
+
+                game.free_enchantment = collapse_free
+            }
+
+            game.global_spice_boost = new Decimal(1)
+        }
+    } else {
+        if (override) {
+            game.unstable_spice = game.total_unstable_spice
+
+            game.collapse_time_played = 0
+            game.real_time_played[3] = 0
+            game.collapse_spice = new Decimal(5)
+
+            game.ascend_challenge = 0
+            game.ascend_complete = new Array(6).fill(false)
+
+            if (game.subtab[3] > 1) game.subtab[3] = 0
+
+            game.ascend_bought = new Array(35).fill(false)
+
+            if (game.research_complete[1] >= 1) {
+                game.ascend_bought[3] = true
+                game.ascend_bought[8] = true
+                game.ascend_bought[9] = true
+                game.ascend_bought[10] = true
+                game.ascend_bought[12] = true
+                game.ascend_bought[17] = true
+                game.ascend_bought[23] = true
+                game.ascend_bought[25] = true
+            }
+
+            ascend(true)
+            if (game.research_complete[16] === 0) {
+                game.ascend = 0
+                game.prestige = 0
+            }
+            game.ansuz = 0
+            game.rune = new Array(3).fill(0)
+            game.total_rune_power = 0
+
+            game.autods_budget = [0, 0, 0]
+
+            game.ascend_amount_history = new Array(10).fill(-1)
+            game.ascend_time_history = new Array(10).fill(-1)
+
+            game.arcane_spice_price = [
+                20000,
+                100000,
+                600000,
+                3.5 * 10 ** 7,
+                3 * 10 ** 9,
+                4 * 10 ** 11,
+            ]
+            game.arcane_spice_gen = [
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+            ]
+            game.arcane_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.arcane_spice_boost = [
+                new Decimal(1),
+                new Decimal(1),
+                new Decimal(1),
+                new Decimal(1),
+                new Decimal(1),
+                new Decimal(1),
+            ]
+            game.arcane_strengthener = 0
+            game.arcane_strengthener_price = 5000000
+
+            game.free_enchantment = 0
+            if (game.research_complete[25] >= 1) {
+                let collapse_free = game.collapse * 25
+                if (collapse_free > game.arcane_enchantment / 4)
+                    collapse_free = Math.floor(game.arcane_enchantment / 4)
+
+                game.free_enchantment = collapse_free
+            }
 
             game.global_spice_boost = new Decimal(1)
         }
