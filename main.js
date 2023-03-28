@@ -3,166 +3,223 @@ let delta_time = undefined
 
 //game operations run every tick
 function tick() {
+    if (game.collapse_challenge === 9) {
+        game.gamespeed = 1 / 99999
+    } else {
+        game.gamespeed = 2 ** game.collapse_complete[2]
+    }
+
     game.total_time_played += 1 / delta_time
     game.prestige_time_played += 1 / delta_time
     game.ascend_time_played += 1 / delta_time
-    game.ascend_challenge_timer += 1 / delta_time
     game.collapse_time_played += 1 / delta_time
+
+    game.ascend_challenge_timer += 1 / (delta_time * game.gamespeed)
+
+    for (let i = 0; i < 4; i++) {
+        game.real_time_played[i] += 1 / (delta_time * game.gamespeed)
+    }
+
+    if (
+        game.collapse_time_played > 999 / 1000000 &&
+        game.collapse_challenge === 9
+    ) {
+        alert(
+            "You have been in Challenge 9 for longer than 999 microseconds, so you will now exit."
+        )
+        exit_collapse_challenge()
+    }
 
     document.documentElement.style.setProperty(
         "--rainbow_spice",
-        "hsl(" + ((game.total_time_played * 36) % 360) + ",100%,50%)"
+        "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,50%)"
     )
     document.documentElement.style.setProperty(
         "--rainbow_spice2",
-        "hsl(" + ((game.total_time_played * 36) % 360) + ",100%,65%)"
+        "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,65%)"
     )
 
     document.documentElement.style.setProperty(
         "--ascension",
         "hsl(" +
-            (15 * Math.sin(game.total_time_played / 2) + 204) +
+            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
             ",100%,50%)"
     )
     document.documentElement.style.setProperty(
         "--ascension2",
         "hsl(" +
-            (15 * Math.sin(game.total_time_played / 2) + 204) +
+            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
             ",100%,60%)"
     )
     document.documentElement.style.setProperty(
         "--ascension3",
-        "hsl(" + (15 * Math.sin(game.total_time_played / 2) + 204) + ",80%,10%)"
+        "hsl(" +
+            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
+            ",80%,10%)"
     )
     document.documentElement.style.setProperty(
         "--ascension4",
-        "hsl(" + (15 * Math.sin(game.total_time_played / 2) + 204) + ",80%,20%)"
+        "hsl(" +
+            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
+            ",80%,20%)"
     )
     document.documentElement.style.setProperty(
         "--ascension5",
-        "hsl(" + (15 * Math.sin(game.total_time_played / 2) + 204) + ",90%,30%)"
+        "hsl(" +
+            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
+            ",90%,30%)"
     )
 
     document.documentElement.style.setProperty(
         "--arcane_spice",
-        "hsl(268," +
-            (23 * Math.sin(game.total_time_played) + 77) +
+        "hsl(" +
+            (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
+            "," +
+            (15 * Math.sin(game.real_time_played[0]) + 85) +
             "%," +
-            (8 * Math.sin(game.total_time_played) + 57) +
+            (5 * Math.sin(game.real_time_played[0]) + 55) +
             "%)"
     )
     document.documentElement.style.setProperty(
         "--arcane_spice2",
-        "hsl(268," +
-            (9 * Math.sin(game.total_time_played) + 91) +
+        "hsl(" +
+            (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
+            "," +
+            (9 * Math.sin(game.real_time_played[0]) + 91) +
             "%," +
-            (7 * Math.sin(game.total_time_played) + 48) +
+            (7 * Math.sin(game.real_time_played[0]) + 48) +
             "%)"
     )
 
     document.documentElement.style.setProperty(
         "--collapse",
-        "hsl(" + (30 * Math.sin(game.total_time_played) + 102) + ",100%,40%)"
+        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",100%,40%)"
     )
     document.documentElement.style.setProperty(
         "--collapse2",
-        "hsl(" + (30 * Math.sin(game.total_time_played) + 102) + ",100%,50%)"
+        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",100%,50%)"
     )
     document.documentElement.style.setProperty(
         "--collapse3",
-        "hsl(" + (30 * Math.sin(game.total_time_played) + 92) + ",100%,60%)"
+        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 92) + ",100%,60%)"
     )
     document.documentElement.style.setProperty(
         "--collapse4",
-        "hsl(" + (30 * Math.sin(game.total_time_played) + 102) + ",80%,10%)"
+        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",80%,10%)"
     )
     document.documentElement.style.setProperty(
         "--collapse5",
-        "hsl(" + (30 * Math.sin(game.total_time_played) + 92) + ",80%,20%)"
+        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 92) + ",80%,20%)"
     )
 
     document.documentElement.style.setProperty(
         "--collapse6",
-        25 * Math.sin(game.total_time_played) - 25 + "deg"
+        25 * Math.sin(game.real_time_played[0]) - 25 + "deg"
     )
     document.documentElement.style.setProperty(
         "--collapse7",
-        -10 * Math.sin(game.total_time_played) + 110 + "%"
+        -10 * Math.sin(game.real_time_played[0]) + 110 + "%"
     )
     document.documentElement.style.setProperty(
         "--collapse8",
-        10 * Math.sin(game.total_time_played) + 90 + "%"
+        10 * Math.sin(game.real_time_played[0]) + 90 + "%"
     )
 
     document.documentElement.style.setProperty(
         "--unstable_spice",
-        "hsl(" + (18 * Math.sin(game.total_time_played * 3) + 16) + ",100%,40%)"
+        "hsl(" +
+            (18 * Math.sin(game.real_time_played[0] * 3) + 16) +
+            ",100%,40%)"
     )
     document.documentElement.style.setProperty(
         "--unstable_spice2",
-        "hsl(" + (18 * Math.sin(game.total_time_played * 3) + 16) + ",100%,50%)"
+        "hsl(" +
+            (18 * Math.sin(game.real_time_played[0] * 3) + 16) +
+            ",100%,50%)"
     )
     document.documentElement.style.setProperty(
         "--unstable_spice3",
-        "hsl(" + (18 * Math.sin(game.total_time_played * 3) + 26) + ",100%,60%)"
+        "hsl(" +
+            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
+            ",100%,60%)"
+    )
+    document.documentElement.style.setProperty(
+        "--unstable_spice7",
+        "hsl(" +
+            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
+            ",100%,16%)"
+    )
+    document.documentElement.style.setProperty(
+        "--unstable_spice8",
+        "hsl(" +
+            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
+            ",100%,10%)"
     )
 
     document.documentElement.style.setProperty(
         "--unstable_spice4",
-        16 * Math.sin(game.total_time_played * 3) + 16 + "deg"
+        16 * Math.sin(game.real_time_played[0] * 3) + 16 + "deg"
     )
     document.documentElement.style.setProperty(
         "--unstable_spice5",
-        50 * Math.sin(game.total_time_played * 3) + 150 + "%"
+        50 * Math.sin(game.real_time_played[0] * 3) + 150 + "%"
     )
     document.documentElement.style.setProperty(
         "--unstable_spice6",
-        -10 * Math.sin(game.total_time_played * 3) + 90 + "%"
+        -10 * Math.sin(game.real_time_played[0] * 3) + 90 + "%"
     )
 
     document.documentElement.style.setProperty(
         "--decayed_spice",
-        "hsl(300," + (6 * Math.sin(game.total_time_played) + 16) + "%,50%)"
+        "hsl(300," + (6 * Math.sin(game.real_time_played[0]) + 16) + "%,50%)"
     )
     document.documentElement.style.setProperty(
         "--decayed_spice2",
-        "hsl(300," + (6 * Math.sin(game.total_time_played) + 16) + "%,40%)"
+        "hsl(300," + (6 * Math.sin(game.real_time_played[0]) + 16) + "%,40%)"
     )
 
     if (game.high_visibility) {
         document.documentElement.style.setProperty(
             "--rainbow_spice2",
-            "hsl(" + ((game.total_time_played * 36) % 360) + ",100%,75%)"
+            "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,75%)"
         )
         document.documentElement.style.setProperty(
             "--ascension",
             "hsl(" +
-                (15 * Math.sin(game.total_time_played / 2) + 204) +
+                (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
                 ",100%,65%)"
         )
         document.documentElement.style.setProperty(
             "--ascension2",
             "hsl(" +
-                (15 * Math.sin(game.total_time_played / 2) + 204) +
+                (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
                 ",100%,75%)"
         )
         document.documentElement.style.setProperty(
             "--arcane_spice",
-            "hsl(268," + (23 * Math.sin(game.total_time_played) + 77) + "%,75%)"
+            "hsl(" +
+                (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
+                "," +
+                (15 * Math.sin(game.real_time_played[0]) + 85) +
+                "%,75%)"
         )
         document.documentElement.style.setProperty(
             "--collapse3",
-            "hsl(" + (30 * Math.sin(game.total_time_played) + 92) + ",100%,75%)"
+            "hsl(" +
+                (30 * Math.sin(game.real_time_played[0]) + 92) +
+                ",100%,75%)"
         )
         document.documentElement.style.setProperty(
             "--unstable_spice3",
             "hsl(" +
-                (18 * Math.sin(game.total_time_played * 3) + 26) +
+                (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
                 ",100%,75%)"
         )
         document.documentElement.style.setProperty(
             "--decayed_spice",
-            "hsl(300," + (8 * Math.sin(game.total_time_played) + 32) + "%,75%)"
+            "hsl(300," +
+                (8 * Math.sin(game.real_time_played[0]) + 32) +
+                "%,75%)"
         )
     }
 
@@ -176,44 +233,70 @@ function tick() {
     if (game.autosp_toggle[3] && game.prestige_bought[0] >= 4) max_all("blue")
     if (game.autosp_toggle[4] && game.prestige_bought[0] >= 5) max_all("pink")
 
+    let antispice_boosts = 1
+    if (game.antispice[2].cmp(1) >= 0) {
+        let antispice_amount = Decimal.pow(
+            10,
+            game.antispice[2].log(10) ** 0.75
+        )
+        antispice_boosts = 1 + antispice_amount.log(10) ** (2 / 3) * 100
+        if (game.collapse_challenge !== 0)
+            antispice_boosts = 1 + antispice_amount.log(10) ** (2 / 3) * 50
+    }
+
     if (game.color_boosts <= 4) {
         game.global_spice_boost = new Decimal(
             2 +
                 0.2 * game.prestige_bought[2] +
                 2 * (game.ascend_bought[2] + game.ascend_bought[14])
-        ).pow(game.color_boosts)
+        ).pow(game.color_boosts * antispice_boosts)
 
         if (game.prestige_bought[18] >= 1) {
             game.global_spice_boost = new Decimal(
                 6 + 2 * (game.ascend_bought[2] + game.ascend_bought[14])
-            ).pow(game.color_boosts)
+            ).pow(game.color_boosts * antispice_boosts)
         }
 
-        if (game.ascend_challenge === 1 || game.ascend_challenge === 6) {
-            game.global_spice_boost = Decimal.pow(2, game.color_boosts)
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7
+        ) {
+            game.global_spice_boost = Decimal.pow(
+                2,
+                game.color_boosts * antispice_boosts
+            )
         }
     } else {
         game.global_spice_boost = new Decimal(
             2 +
                 0.2 * game.prestige_bought[2] +
                 2 * (game.ascend_bought[2] + game.ascend_bought[14])
-        ).pow(game.color_boosts * 2 - 4)
+        ).pow((game.color_boosts * 2 - 4) * antispice_boosts)
 
         if (game.prestige_bought[18] >= 1) {
             game.global_spice_boost = new Decimal(
                 6 + 2 * (game.ascend_bought[2] + game.ascend_bought[14])
-            ).pow(game.color_boosts * 2 - 4)
+            ).pow((game.color_boosts * 2 - 4) * antispice_boosts)
         }
 
-        if (game.ascend_challenge === 1 || game.ascend_challenge === 6) {
-            game.global_spice_boost = Decimal.pow(2, game.color_boosts * 2 - 4)
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7
+        ) {
+            game.global_spice_boost = Decimal.pow(
+                2,
+                (game.color_boosts * 2 - 4) * antispice_boosts
+            )
         }
     }
 
     if (
         game.prestige_bought[1] >= 1 &&
         game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6
+        game.ascend_challenge !== 6 &&
+        game.collapse_challenge !== 7
     ) {
         if (game.ascend_bought[1]) {
             if (game.prestige >= 1000000) {
@@ -241,17 +324,32 @@ function tick() {
     if (
         game.prestige_bought[6] &&
         game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6
+        game.ascend_challenge !== 6 &&
+        game.collapse_challenge !== 7
     )
         game.global_spice_boost = game.global_spice_boost.mul(
             game.rainbow_spice.div(256).pow(5).add(1)
         )
 
+    let antispice_infusions = 1
+    if (game.antispice[3].cmp(1) >= 0) {
+        let antispice_amount = Decimal.pow(
+            10,
+            game.antispice[3].log(10) ** 0.75
+        )
+
+        antispice_infusions = 1 + antispice_amount.log(10) ** (2 / 3) * 0.15
+        if (game.collapse_challenge !== 0)
+            antispice_infusions =
+                1 + antispice_amount.log(10) ** (2 / 3) * 0.075
+    }
+
     if (
         game.ascend_complete[2] &&
         game.ascend_bought[24] &&
         game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6
+        game.ascend_challenge !== 6 &&
+        game.collapse_challenge !== 7
     ) {
         game.global_spice_boost = game.global_spice_boost.mul(
             Decimal.pow(
@@ -260,13 +358,15 @@ function tick() {
                     game.prestige_bought[20] *
                         12 *
                         (1 + game.ascend_bought[5])) *
-                    32
+                    32 *
+                    antispice_infusions
             )
         )
     } else if (
         game.ascend_bought[7] &&
         game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6
+        game.ascend_challenge !== 6 &&
+        game.collapse_challenge !== 7
     ) {
         game.global_spice_boost = game.global_spice_boost.mul(
             Decimal.pow(
@@ -275,7 +375,8 @@ function tick() {
                     game.prestige_bought[20] *
                         12 *
                         (1 + game.ascend_bought[5])) *
-                    17.6
+                    17.6 *
+                    antispice_infusions
             )
         )
     } else {
@@ -286,7 +387,8 @@ function tick() {
                     game.prestige_bought[20] *
                         12 *
                         (1 + game.ascend_bought[5])) *
-                    16
+                    16 *
+                    antispice_infusions
             )
         )
     }
@@ -298,8 +400,23 @@ function tick() {
         game.unstable_spice.round()
     )
 
+    let decayed_amount = game.decayed_spice
+    if (decayed_amount.cmp(Decimal.pow(10, 400)) >= 0) {
+        decayed_amount = decayed_amount
+            .div(Decimal.pow(10, 400))
+            .pow(1 / 3)
+            .mul(Decimal.pow(10, 400))
+
+        if (decayed_amount.cmp(Decimal.pow(10, 3800 / 3)) >= 0) {
+            decayed_amount = decayed_amount
+                .div(Decimal.pow(10, 3800 / 3))
+                .pow(1 / 3)
+                .mul(Decimal.pow(10, 3800 / 3))
+        }
+    }
+
     if (game.decayed_spice.cmp(1) >= 0) {
-        game.unstable_boost = game.decayed_spice
+        game.unstable_boost = decayed_amount
             .add(1)
             .pow(
                 Decimal.pow(
@@ -317,14 +434,49 @@ function tick() {
         }
     }
 
+    if (game.research_complete[17] >= 1) {
+        if (game.atomic_spice.cmp(1) >= 0) {
+            let amount = game.atomic_spice.log(10) * 0.0006666
+
+            if (amount > 4) {
+                game.unstable_boost = game.unstable_boost.pow(3)
+            } else if (amount > 1) {
+                game.unstable_boost = game.unstable_boost.pow(
+                    (amount - 1) / 3 + 2
+                )
+            } else {
+                game.unstable_boost = game.unstable_boost.pow(amount + 1)
+            }
+        }
+    }
+
     if (game.ascend_challenge === 6) {
         game.unstable_boost = new Decimal(1)
+    }
+
+    if (game.collapse_challenge === 8) {
+        game.unstable_boost = new Decimal(1)
+        game.free_deity = game.decayed_spice
+            .pow(game.decayed_spice.div(game.total_unstable_spice).div(10))
+            .pow(game.atomic_spice.log(10) * 0.0003333 + 1)
+            .floor()
+    } else if (game.collapse_complete[1] >= 1) {
+        game.free_deity = game.unstable_boost
+            .pow((1 + game.collapse_complete[1]) / 60000)
+            .floor()
+            .sub(1)
+    } else {
+        game.free_deity = new Decimal(0)
     }
 
     game.global_spice_boost = game.global_spice_boost.mul(game.unstable_boost)
 
     for (let i = 0; i < 6; i++) {
-        if (game.ascend_challenge === 1 || game.ascend_challenge === 6) {
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7
+        ) {
             game.total_red_spice_boost[i] = game.red_spice_boost[i].mul(
                 Decimal.pow(
                     2,
@@ -333,7 +485,7 @@ function tick() {
                         game.green_strengthener +
                         game.blue_strengthener +
                         game.pink_strengthener
-                )
+                ).pow(antispice_boosts)
             )
             game.total_yellow_spice_boost[i] = game.yellow_spice_boost[i].mul(
                 Decimal.pow(
@@ -342,7 +494,7 @@ function tick() {
                         game.green_strengthener +
                         game.blue_strengthener +
                         game.pink_strengthener
-                )
+                ).pow(antispice_boosts)
             )
             game.total_green_spice_boost[i] = game.green_spice_boost[i].mul(
                 Decimal.pow(
@@ -350,13 +502,16 @@ function tick() {
                     game.green_strengthener +
                         game.blue_strengthener +
                         game.pink_strengthener
-                )
+                ).pow(antispice_boosts)
             )
             game.total_blue_spice_boost[i] = game.blue_spice_boost[i].mul(
-                Decimal.pow(2, game.blue_strengthener + game.pink_strengthener)
+                Decimal.pow(
+                    2,
+                    game.blue_strengthener + game.pink_strengthener
+                ).pow(antispice_boosts)
             )
             game.total_pink_spice_boost[i] = game.pink_spice_boost[i].mul(
-                Decimal.pow(2, game.pink_strengthener)
+                Decimal.pow(2, game.pink_strengthener).pow(antispice_boosts)
             )
         } else {
             game.total_red_spice_boost[i] = game.red_spice_boost[i].mul(
@@ -374,7 +529,7 @@ function tick() {
                             2 *
                                 game.ascend_complete[2] *
                                 game.ascend_bought[24])
-                )
+                ).pow(antispice_boosts)
             )
             game.total_yellow_spice_boost[i] = game.yellow_spice_boost[i].mul(
                 Decimal.pow(
@@ -390,7 +545,7 @@ function tick() {
                             2 *
                                 game.ascend_complete[2] *
                                 game.ascend_bought[24])
-                )
+                ).pow(antispice_boosts)
             )
             game.total_green_spice_boost[i] = game.green_spice_boost[i].mul(
                 Decimal.pow(
@@ -405,7 +560,7 @@ function tick() {
                             2 *
                                 game.ascend_complete[2] *
                                 game.ascend_bought[24])
-                )
+                ).pow(antispice_boosts)
             )
             game.total_blue_spice_boost[i] = game.blue_spice_boost[i].mul(
                 Decimal.pow(
@@ -418,7 +573,7 @@ function tick() {
                             2 *
                                 game.ascend_complete[2] *
                                 game.ascend_bought[24])
-                )
+                ).pow(antispice_boosts)
             )
             game.total_pink_spice_boost[i] = game.pink_spice_boost[i].mul(
                 Decimal.pow(
@@ -431,7 +586,7 @@ function tick() {
                             2 *
                                 game.ascend_complete[2] *
                                 game.ascend_bought[24])
-                )
+                ).pow(antispice_boosts)
             )
 
             if (game.prestige_bought[18] >= 1) {
@@ -451,7 +606,7 @@ function tick() {
                                 2 *
                                     game.ascend_complete[2] *
                                     game.ascend_bought[24])
-                    )
+                    ).pow(antispice_boosts)
                 )
                 game.total_yellow_spice_boost[i] = game.yellow_spice_boost[
                     i
@@ -470,7 +625,7 @@ function tick() {
                                 2 *
                                     game.ascend_complete[2] *
                                     game.ascend_bought[24])
-                    )
+                    ).pow(antispice_boosts)
                 )
                 game.total_green_spice_boost[i] = game.green_spice_boost[i].mul(
                     Decimal.pow(
@@ -486,7 +641,7 @@ function tick() {
                                 2 *
                                     game.ascend_complete[2] *
                                     game.ascend_bought[24])
-                    )
+                    ).pow(antispice_boosts)
                 )
                 game.total_blue_spice_boost[i] = game.blue_spice_boost[i].mul(
                     Decimal.pow(
@@ -500,7 +655,7 @@ function tick() {
                                 2 *
                                     game.ascend_complete[2] *
                                     game.ascend_bought[24])
-                    )
+                    ).pow(antispice_boosts)
                 )
                 game.total_pink_spice_boost[i] = game.pink_spice_boost[i].mul(
                     Decimal.pow(
@@ -514,7 +669,7 @@ function tick() {
                                 2 *
                                     game.ascend_complete[2] *
                                     game.ascend_bought[24])
-                    )
+                    ).pow(antispice_boosts)
                 )
             }
         }
@@ -526,7 +681,8 @@ function tick() {
         if (
             game.prestige_bought[5] >= 1 &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
             game.total_yellow_spice_boost[i] = game.total_yellow_spice_boost[
                 i
@@ -584,97 +740,223 @@ function tick() {
         }
 
         game.total_crystal_spice_boost[i] = game.crystal_spice_boost[i].mul(
-            Decimal.pow(4, game.crystal_strengthener)
+            Decimal.pow(4, game.crystal_strengthener).pow(antispice_boosts)
         )
 
         if (
             game.prestige_bought[8] >= 1 &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
-            game.total_red_spice_boost[i] = game.total_red_spice_boost[i].mul(
-                game.yellow_spice.pow(0.075).add(1)
-            )
-            game.total_yellow_spice_boost[i] = game.total_yellow_spice_boost[
-                i
-            ].mul(game.green_spice.pow(0.075).add(1))
-            game.total_green_spice_boost[i] = game.total_green_spice_boost[
-                i
-            ].mul(game.blue_spice.pow(0.075).add(1))
-            game.total_blue_spice_boost[i] = game.total_blue_spice_boost[i].mul(
-                game.pink_spice.pow(0.075).add(1)
-            )
+            if (game.antispice[1].cmp(1) >= 0) {
+                let antispice_amount = Decimal.pow(
+                    10,
+                    game.antispice[1].log(10) ** 0.75
+                )
+                let antispice_power =
+                    1 + antispice_amount.log(10) ** (2 / 3) * 0.013
+                if (game.collapse_challenge !== 0)
+                    antispice_power =
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.0065
+
+                game.total_red_spice_boost[i] = game.total_red_spice_boost[
+                    i
+                ].mul(game.yellow_spice.pow(0.075).add(1).pow(antispice_power))
+                game.total_yellow_spice_boost[i] =
+                    game.total_yellow_spice_boost[i].mul(
+                        game.green_spice.pow(0.075).add(1).pow(antispice_power)
+                    )
+                game.total_green_spice_boost[i] = game.total_green_spice_boost[
+                    i
+                ].mul(game.blue_spice.pow(0.075).add(1).pow(antispice_power))
+                game.total_blue_spice_boost[i] = game.total_blue_spice_boost[
+                    i
+                ].mul(game.pink_spice.pow(0.075).add(1).pow(antispice_power))
+            } else {
+                game.total_red_spice_boost[i] = game.total_red_spice_boost[
+                    i
+                ].mul(game.yellow_spice.pow(0.075).add(1))
+                game.total_yellow_spice_boost[i] =
+                    game.total_yellow_spice_boost[i].mul(
+                        game.green_spice.pow(0.075).add(1)
+                    )
+                game.total_green_spice_boost[i] = game.total_green_spice_boost[
+                    i
+                ].mul(game.blue_spice.pow(0.075).add(1))
+                game.total_blue_spice_boost[i] = game.total_blue_spice_boost[
+                    i
+                ].mul(game.pink_spice.pow(0.075).add(1))
+            }
         }
 
         if (
             game.prestige_bought[11] >= 1 &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
+            let effective_red_spice = game.red_spice
+            if (game.red_spice.cmp(Decimal.pow(10, 10 ** 12)) >= 0)
+                effective_red_spice = game.red_spice
+                    .div(Decimal.pow(10, 10 ** 12))
+                    .pow(1 / 3)
+                    .mul(Decimal.pow(10, 10 ** 12))
+
             if (game.ascend_bought[0]) {
-                game.total_yellow_spice_boost[i] =
-                    game.total_yellow_spice_boost[i].mul(
-                        game.red_spice.pow(0.0075).add(1)
+                if (game.antispice[1].cmp(1) >= 0) {
+                    let antispice_amount = Decimal.pow(
+                        10,
+                        game.antispice[1].log(10) ** 0.75
                     )
-                game.total_green_spice_boost[i] = game.total_green_spice_boost[
-                    i
-                ].mul(game.red_spice.pow(0.0075).add(1))
-                game.total_blue_spice_boost[i] = game.total_blue_spice_boost[
-                    i
-                ].mul(game.red_spice.pow(0.0075).add(1))
-                game.total_pink_spice_boost[i] = game.total_pink_spice_boost[
-                    i
-                ].mul(game.red_spice.pow(0.0075).add(1))
+                    let antispice_power =
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.013
+                    if (game.collapse_challenge !== 0)
+                        antispice_power =
+                            1 + antispice_amount.log(10) ** (2 / 3) * 0.0065
+
+                    game.total_yellow_spice_boost[i] =
+                        game.total_yellow_spice_boost[i].mul(
+                            effective_red_spice
+                                .pow(0.0075)
+                                .add(1)
+                                .pow(antispice_power)
+                        )
+                    game.total_green_spice_boost[i] =
+                        game.total_green_spice_boost[i].mul(
+                            effective_red_spice
+                                .pow(0.0075)
+                                .add(1)
+                                .pow(antispice_power)
+                        )
+                    game.total_blue_spice_boost[i] =
+                        game.total_blue_spice_boost[i].mul(
+                            effective_red_spice
+                                .pow(0.0075)
+                                .add(1)
+                                .pow(antispice_power)
+                        )
+                    game.total_pink_spice_boost[i] =
+                        game.total_pink_spice_boost[i].mul(
+                            effective_red_spice
+                                .pow(0.0075)
+                                .add(1)
+                                .pow(antispice_power)
+                        )
+                } else {
+                    game.total_yellow_spice_boost[i] =
+                        game.total_yellow_spice_boost[i].mul(
+                            effective_red_spice.pow(0.0075).add(1)
+                        )
+                    game.total_green_spice_boost[i] =
+                        game.total_green_spice_boost[i].mul(
+                            effective_red_spice.pow(0.0075).add(1)
+                        )
+                    game.total_blue_spice_boost[i] =
+                        game.total_blue_spice_boost[i].mul(
+                            effective_red_spice.pow(0.0075).add(1)
+                        )
+                    game.total_pink_spice_boost[i] =
+                        game.total_pink_spice_boost[i].mul(
+                            effective_red_spice.pow(0.0075).add(1)
+                        )
+                }
             } else {
                 game.total_yellow_spice_boost[i] =
                     game.total_yellow_spice_boost[i].mul(
-                        game.red_spice.pow(0.005).add(1)
+                        effective_red_spice.pow(0.005).add(1)
                     )
                 game.total_green_spice_boost[i] = game.total_green_spice_boost[
                     i
-                ].mul(game.red_spice.pow(0.005).add(1))
+                ].mul(effective_red_spice.pow(0.005).add(1))
                 game.total_blue_spice_boost[i] = game.total_blue_spice_boost[
                     i
-                ].mul(game.red_spice.pow(0.005).add(1))
+                ].mul(effective_red_spice.pow(0.005).add(1))
                 game.total_pink_spice_boost[i] = game.total_pink_spice_boost[
                     i
-                ].mul(game.red_spice.pow(0.005).add(1))
+                ].mul(effective_red_spice.pow(0.005).add(1))
             }
         }
 
         if (
             game.prestige_bought[14] >= 1 &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
-            game.total_pink_spice_boost[i] = game.total_pink_spice_boost[i].mul(
-                game.crystal_spice.pow(3).add(1)
-            )
+            if (game.antispice[1].cmp(1) >= 0) {
+                let antispice_amount = Decimal.pow(
+                    10,
+                    game.antispice[1].log(10) ** 0.75
+                )
+                let antispice_power =
+                    1 + antispice_amount.log(10) ** (2 / 3) * 0.013
+                if (game.collapse_challenge !== 0)
+                    antispice_power =
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.0065
+
+                game.total_pink_spice_boost[i] = game.total_pink_spice_boost[
+                    i
+                ].mul(game.crystal_spice.pow(3).add(1).pow(antispice_power))
+            } else {
+                game.total_pink_spice_boost[i] = game.total_pink_spice_boost[
+                    i
+                ].mul(game.crystal_spice.pow(3).add(1))
+            }
         }
 
         if (
             game.prestige_bought[16] >= 1 &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
-            game.total_red_spice_boost[i] = game.total_red_spice_boost[i].mul(
-                game.crystal_spice.pow(12).add(1)
-            )
-            game.total_yellow_spice_boost[i] = game.total_yellow_spice_boost[
-                i
-            ].mul(game.crystal_spice.pow(12).add(1))
-            game.total_green_spice_boost[i] = game.total_green_spice_boost[
-                i
-            ].mul(game.crystal_spice.pow(12).add(1))
-            game.total_blue_spice_boost[i] = game.total_blue_spice_boost[i].mul(
-                game.crystal_spice.pow(12).add(1)
-            )
+            if (game.antispice[1].cmp(1) >= 0) {
+                let antispice_amount = Decimal.pow(
+                    10,
+                    game.antispice[1].log(10) ** 0.75
+                )
+                let antispice_power =
+                    1 + antispice_amount.log(10) ** (2 / 3) * 0.013
+                if (game.collapse_challenge !== 0)
+                    antispice_power =
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.0065
+
+                game.total_red_spice_boost[i] = game.total_red_spice_boost[
+                    i
+                ].mul(game.crystal_spice.pow(12).add(1).pow(antispice_power))
+                game.total_yellow_spice_boost[i] =
+                    game.total_yellow_spice_boost[i].mul(
+                        game.crystal_spice.pow(12).add(1).pow(antispice_power)
+                    )
+                game.total_green_spice_boost[i] = game.total_green_spice_boost[
+                    i
+                ].mul(game.crystal_spice.pow(12).add(1).pow(antispice_power))
+                game.total_blue_spice_boost[i] = game.total_blue_spice_boost[
+                    i
+                ].mul(game.crystal_spice.pow(12).add(1).pow(antispice_power))
+            } else {
+                game.total_red_spice_boost[i] = game.total_red_spice_boost[
+                    i
+                ].mul(game.crystal_spice.pow(12).add(1))
+                game.total_yellow_spice_boost[i] =
+                    game.total_yellow_spice_boost[i].mul(
+                        game.crystal_spice.pow(12).add(1)
+                    )
+                game.total_green_spice_boost[i] = game.total_green_spice_boost[
+                    i
+                ].mul(game.crystal_spice.pow(12).add(1))
+                game.total_blue_spice_boost[i] = game.total_blue_spice_boost[
+                    i
+                ].mul(game.crystal_spice.pow(12).add(1))
+            }
         }
 
         if (
             game.prestige_bought[17] >= 1 &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
             game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
                 i
@@ -684,7 +966,8 @@ function tick() {
         if (
             game.prestige_bought[19] >= 1 &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
             game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
                 i
@@ -694,7 +977,8 @@ function tick() {
                     game.crystal_infusion +
                         game.prestige_bought[20] *
                             12 *
-                            (1 + game.ascend_bought[5])
+                            (1 + game.ascend_bought[5]) *
+                            antispice_infusions
                 )
             )
         }
@@ -702,7 +986,8 @@ function tick() {
         if (
             game.prestige_bought[21] >= 1 &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
             game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
                 i
@@ -733,31 +1018,81 @@ function tick() {
         if (
             game.ascend_bought[13] &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
-            game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
-                i
-            ].mul(game.pink_spice.pow(0.00008).add(1))
+            if (game.antispice[1].cmp(1) >= 0) {
+                let antispice_amount = Decimal.pow(
+                    10,
+                    game.antispice[1].log(10) ** 0.75
+                )
+                let antispice_power =
+                    1 + antispice_amount.log(10) ** (2 / 3) * 0.013
+                if (game.collapse_challenge !== 0)
+                    antispice_power =
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.0065
+
+                game.total_crystal_spice_boost[i] =
+                    game.total_crystal_spice_boost[i].mul(
+                        game.pink_spice.pow(0.00008).add(1).pow(antispice_power)
+                    )
+            } else {
+                game.total_crystal_spice_boost[i] =
+                    game.total_crystal_spice_boost[i].mul(
+                        game.pink_spice.pow(0.00008).add(1)
+                    )
+            }
         }
 
-        if (game.ascend_challenge !== 5)
+        if (game.ascend_challenge !== 5 && game.collapse_challenge !== 7)
             game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
                 i
             ].mul(
                 Decimal.pow(
                     4,
-                    (game.arcane_enchantment + game.free_enchantment) * 100
+                    (game.arcane_enchantment + game.free_enchantment) *
+                        100 *
+                        antispice_infusions
                 )
             )
 
         if (
             game.ascend_bought[18] &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
-            game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
-                i
-            ].mul(game.red_spice.pow(0.00004).add(1))
+            let effective_red_spice = game.red_spice
+            if (game.red_spice.cmp(Decimal.pow(10, 10 ** 12)) >= 0)
+                effective_red_spice = game.red_spice
+                    .div(Decimal.pow(10, 10 ** 12))
+                    .pow(1 / 3)
+                    .mul(Decimal.pow(10, 10 ** 12))
+
+            if (game.antispice[1].cmp(1) >= 0) {
+                let antispice_amount = Decimal.pow(
+                    10,
+                    game.antispice[1].log(10) ** 0.75
+                )
+                let antispice_power =
+                    1 + antispice_amount.log(10) ** (2 / 3) * 0.013
+                if (game.collapse_challenge !== 0)
+                    antispice_power =
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.0065
+
+                game.total_crystal_spice_boost[i] =
+                    game.total_crystal_spice_boost[i].mul(
+                        effective_red_spice
+                            .pow(0.00004)
+                            .add(1)
+                            .pow(antispice_power)
+                    )
+            } else {
+                game.total_crystal_spice_boost[i] =
+                    game.total_crystal_spice_boost[i].mul(
+                        effective_red_spice.pow(0.00004).add(1)
+                    )
+            }
         }
 
         if (game.arcane_strengthener >= 1)
@@ -768,11 +1103,15 @@ function tick() {
                         (game.arcane_strengthener + 1)) /
                         2 +
                         1
-                )
+                ).pow(antispice_boosts)
             )
         else game.total_arcane_spice_boost[i] = game.arcane_spice_boost[i]
 
-        if (game.ascend_bought[19] && game.ascend_challenge !== 6) {
+        if (
+            game.ascend_bought[19] &&
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
+        ) {
             if (game.ansuz >= 2.5 * 10 ** 11) {
                 game.total_arcane_spice_boost[i] =
                     game.total_arcane_spice_boost[i].mul(
@@ -796,11 +1135,30 @@ function tick() {
         if (
             game.ascend_bought[22] &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
-            game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
-                i
-            ].mul(game.arcane_spice.pow(10).add(1))
+            if (game.antispice[1].cmp(1) >= 0) {
+                let antispice_amount = Decimal.pow(
+                    10,
+                    game.antispice[1].log(10) ** 0.75
+                )
+                let antispice_power =
+                    1 + antispice_amount.log(10) ** (2 / 3) * 0.013
+                if (game.collapse_challenge !== 0)
+                    antispice_power =
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.0065
+
+                game.total_crystal_spice_boost[i] =
+                    game.total_crystal_spice_boost[i].mul(
+                        game.arcane_spice.pow(10).add(1).pow(antispice_power)
+                    )
+            } else {
+                game.total_crystal_spice_boost[i] =
+                    game.total_crystal_spice_boost[i].mul(
+                        game.arcane_spice.pow(10).add(1)
+                    )
+            }
         }
 
         if (game.ascend_challenge === 2) {
@@ -811,28 +1169,87 @@ function tick() {
         if (
             game.ascend_bought[29] &&
             game.ascend_challenge !== 5 &&
-            game.ascend_challenge !== 6
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
         ) {
             game.total_arcane_spice_boost[i] = game.total_arcane_spice_boost[
                 i
             ].mul(
                 Decimal.pow(
                     4 / 3,
-                    game.arcane_enchantment + game.free_enchantment
+                    (game.arcane_enchantment + game.free_enchantment) *
+                        antispice_infusions
                 )
             )
         }
 
-        if (game.ascend_bought[30] && game.ascend_challenge !== 6) {
-            game.total_arcane_spice_boost[i] = game.total_arcane_spice_boost[
-                i
-            ].mul(game.red_spice.pow(0.00000025).add(1))
+        if (
+            game.ascend_bought[30] &&
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
+        ) {
+            let effective_red_spice = game.red_spice
+            if (game.red_spice.cmp(Decimal.pow(10, 10 ** 12)) >= 0)
+                effective_red_spice = game.red_spice
+                    .div(Decimal.pow(10, 10 ** 12))
+                    .pow(1 / 3)
+                    .mul(Decimal.pow(10, 10 ** 12))
+
+            if (game.antispice[1].cmp(1) >= 0) {
+                let antispice_amount = Decimal.pow(
+                    10,
+                    game.antispice[1].log(10) ** 0.75
+                )
+                let antispice_power =
+                    1 + antispice_amount.log(10) ** (2 / 3) * 0.013
+                if (game.collapse_challenge !== 0)
+                    antispice_power =
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.0065
+
+                game.total_arcane_spice_boost[i] =
+                    game.total_arcane_spice_boost[i].mul(
+                        effective_red_spice
+                            .pow(0.00000025)
+                            .add(1)
+                            .pow(antispice_power)
+                    )
+            } else {
+                game.total_arcane_spice_boost[i] =
+                    game.total_arcane_spice_boost[i].mul(
+                        effective_red_spice.pow(0.00000025).add(1)
+                    )
+            }
         }
 
-        if (game.ascend_bought[31] && game.ascend_challenge !== 6) {
-            game.total_arcane_spice_boost[i] = game.total_arcane_spice_boost[
-                i
-            ].mul(game.arcane_spice.pow(0.0175).add(1))
+        if (
+            game.ascend_bought[31] &&
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
+        ) {
+            if (game.antispice[1].cmp(1) >= 0) {
+                let antispice_amount = Decimal.pow(
+                    10,
+                    game.antispice[1].log(10) ** 0.75
+                )
+                let antispice_power =
+                    1 + antispice_amount.log(10) ** (2 / 3) * 0.013
+                if (game.collapse_challenge !== 0)
+                    antispice_power =
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.0065
+
+                game.total_arcane_spice_boost[i] =
+                    game.total_arcane_spice_boost[i].mul(
+                        game.arcane_spice
+                            .pow(0.0175)
+                            .add(1)
+                            .pow(antispice_power)
+                    )
+            } else {
+                game.total_arcane_spice_boost[i] =
+                    game.total_arcane_spice_boost[i].mul(
+                        game.arcane_spice.pow(0.0175).add(1)
+                    )
+            }
         }
 
         if (game.research_complete[2] >= 1) {
@@ -847,7 +1264,93 @@ function tick() {
             ].mul(game.unstable_boost.pow(0.000012))
         }
 
-        if (game.ascend_challenge === 5) {
+        if (game.antispice[0].cmp(1) >= 0) {
+            let antispice_amount = Decimal.pow(
+                10,
+                game.antispice[0].log(10) ** 0.75
+            )
+            if (game.collapse_challenge !== 0) {
+                game.total_arcane_spice_boost[i] =
+                    game.total_arcane_spice_boost[i].mul(
+                        Decimal.pow(antispice_amount, 35000).add(1)
+                    )
+            } else {
+                game.total_arcane_spice_boost[i] =
+                    game.total_arcane_spice_boost[i].mul(
+                        Decimal.pow(antispice_amount, 70000).add(1)
+                    )
+            }
+        }
+
+        if (game.antispice[1].cmp(1) >= 0) {
+            let antispice_amount = Decimal.pow(
+                10,
+                game.antispice[1].log(10) ** 0.75
+            )
+            if (game.collapse_challenge !== 0) {
+                game.total_red_spice_boost[i] = game.total_red_spice_boost[
+                    i
+                ].mul(Decimal.pow(antispice_amount, 3.5 * 10 ** 9).add(1))
+            } else {
+                game.total_red_spice_boost[i] = game.total_red_spice_boost[
+                    i
+                ].mul(Decimal.pow(antispice_amount, 7 * 10 ** 9).add(1))
+            }
+        }
+
+        if (game.antispice[2].cmp(1) >= 0) {
+            let antispice_amount = Decimal.pow(
+                10,
+                game.antispice[2].log(10) ** 0.75
+            )
+            if (game.collapse_challenge !== 0) {
+                game.total_yellow_spice_boost[i] =
+                    game.total_yellow_spice_boost[i].mul(
+                        Decimal.pow(antispice_amount, 3.25 * 10 ** 9).add(1)
+                    )
+            } else {
+                game.total_yellow_spice_boost[i] =
+                    game.total_yellow_spice_boost[i].mul(
+                        Decimal.pow(antispice_amount, 6.5 * 10 ** 9).add(1)
+                    )
+            }
+        }
+
+        if (game.antispice[3].cmp(1) >= 0) {
+            let antispice_amount = Decimal.pow(
+                10,
+                game.antispice[3].log(10) ** 0.75
+            )
+            if (game.collapse_challenge !== 0) {
+                game.total_green_spice_boost[i] = game.total_green_spice_boost[
+                    i
+                ].mul(Decimal.pow(antispice_amount, 3 * 10 ** 9).add(1))
+            } else {
+                game.total_green_spice_boost[i] = game.total_green_spice_boost[
+                    i
+                ].mul(Decimal.pow(antispice_amount, 6 * 10 ** 9).add(1))
+            }
+        }
+
+        if (game.collapse_complete[0] >= 1 && game.collapse_challenge !== 7) {
+            game.total_red_spice_boost[i] = game.total_red_spice_boost[i].pow(
+                1 + game.collapse_complete[0] * 0.025
+            )
+            game.total_yellow_spice_boost[i] = game.total_yellow_spice_boost[
+                i
+            ].pow(1 + game.collapse_complete[0] * 0.025)
+            game.total_green_spice_boost[i] = game.total_green_spice_boost[
+                i
+            ].pow(1 + game.collapse_complete[0] * 0.025)
+            game.total_blue_spice_boost[i] = game.total_blue_spice_boost[i].pow(
+                1 + game.collapse_complete[0] * 0.025
+            )
+            game.total_pink_spice_boost[i] = game.total_pink_spice_boost[i].pow(
+                1 + game.collapse_complete[0] * 0.025
+            )
+        }
+
+        if (game.ascend_challenge === 5 || game.collapse_challenge === 7) {
             if (game.ascend_challenge_timer >= 1) {
                 game.total_red_spice_boost[i] = new Decimal(0)
                 game.total_yellow_spice_boost[i] = new Decimal(0)
@@ -877,7 +1380,8 @@ function tick() {
     if (
         game.prestige_bought[23] >= 1 &&
         game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6
+        game.ascend_challenge !== 6 &&
+        game.collapse_challenge !== 7
     ) {
         if (game.ascend_complete[1] && game.ascend_bought[20]) {
             game.total_crystal_spice_boost[0] =
@@ -902,6 +1406,103 @@ function tick() {
                     game.total_crystal_spice_boost[3].pow(1.1)
                 game.total_crystal_spice_boost[4] =
                     game.total_crystal_spice_boost[4].pow(1.05)
+            }
+        }
+    }
+
+    for (let i = 0; i < 6; i++) {
+        let antispice_amount = Decimal.pow(
+            10,
+            game.antispice[i].log(10) ** 0.75
+        )
+        switch (i) {
+            case 0:
+                if (game.antispice[i].cmp(10 ** 15) >= 0) {
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (0.75 * game.antispice[i].log(10) + 3.75) / 15 ** 0.25
+                    )
+                }
+                break
+            case 1:
+                if (game.antispice[i].cmp(10 ** 10) >= 0) {
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (0.75 * game.antispice[i].log(10) + 2.5) / 10 ** 0.25
+                    )
+                }
+                break
+            case 2:
+                if (game.antispice[i].cmp(100000) >= 0) {
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (0.75 * game.antispice[i].log(10) + 1.25) / 5 ** 0.25
+                    )
+                }
+                break
+            case 3:
+                if (game.antispice[i].cmp(10 ** 7) >= 0) {
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (0.75 * game.antispice[i].log(10) + 1.75) / 7 ** 0.25
+                    )
+                }
+                break
+        }
+
+        if (game.collapse_challenge !== 0) {
+            if (game.antispice[i].cmp(1) >= 0) {
+                game.total_red_spice_boost[i] = game.total_red_spice_boost[
+                    i
+                ].pow(1 + antispice_amount.log(10) ** (2 / 3) * 0.03)
+                game.total_yellow_spice_boost[i] =
+                    game.total_yellow_spice_boost[i].pow(
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.03
+                    )
+                game.total_green_spice_boost[i] = game.total_green_spice_boost[
+                    i
+                ].pow(1 + antispice_amount.log(10) ** (2 / 3) * 0.03)
+                game.total_blue_spice_boost[i] = game.total_blue_spice_boost[
+                    i
+                ].pow(1 + antispice_amount.log(10) ** (2 / 3) * 0.03)
+                game.total_pink_spice_boost[i] = game.total_pink_spice_boost[
+                    i
+                ].pow(1 + antispice_amount.log(10) ** (2 / 3) * 0.03)
+                game.total_crystal_spice_boost[i] =
+                    game.total_crystal_spice_boost[i].pow(
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.03
+                    )
+                game.total_arcane_spice_boost[i] =
+                    game.total_arcane_spice_boost[i].pow(
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.03
+                    )
+            }
+        } else {
+            if (game.antispice[i].cmp(1) >= 0) {
+                game.total_red_spice_boost[i] = game.total_red_spice_boost[
+                    i
+                ].pow(1 + antispice_amount.log(10) ** (2 / 3) * 0.06)
+                game.total_yellow_spice_boost[i] =
+                    game.total_yellow_spice_boost[i].pow(
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.06
+                    )
+                game.total_green_spice_boost[i] = game.total_green_spice_boost[
+                    i
+                ].pow(1 + antispice_amount.log(10) ** (2 / 3) * 0.06)
+                game.total_blue_spice_boost[i] = game.total_blue_spice_boost[
+                    i
+                ].pow(1 + antispice_amount.log(10) ** (2 / 3) * 0.06)
+                game.total_pink_spice_boost[i] = game.total_pink_spice_boost[
+                    i
+                ].pow(1 + antispice_amount.log(10) ** (2 / 3) * 0.06)
+                game.total_crystal_spice_boost[i] =
+                    game.total_crystal_spice_boost[i].pow(
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.06
+                    )
+                game.total_arcane_spice_boost[i] =
+                    game.total_arcane_spice_boost[i].pow(
+                        1 + antispice_amount.log(10) ** (2 / 3) * 0.06
+                    )
             }
         }
     }
@@ -949,6 +1550,37 @@ function tick() {
             game.crystal_spice_gen[0].floor().pow(2).div(delta_time)
         )
     }
+
+    game.antitotal_spice[1] = game.antitotal_spice[1].add(
+        game.red_spice_gen[0]
+            .floor()
+            .mul(game.total_red_spice_boost[0])
+            .div(delta_time)
+    )
+    game.antitotal_spice[2] = game.antitotal_spice[2].add(
+        game.yellow_spice_gen[0]
+            .floor()
+            .mul(game.total_yellow_spice_boost[0])
+            .div(delta_time)
+    )
+    game.antitotal_spice[3] = game.antitotal_spice[3].add(
+        game.green_spice_gen[0]
+            .floor()
+            .mul(game.total_green_spice_boost[0])
+            .div(delta_time)
+    )
+    game.antitotal_spice[4] = game.antitotal_spice[4].add(
+        game.blue_spice_gen[0]
+            .floor()
+            .mul(game.total_blue_spice_boost[0])
+            .div(delta_time)
+    )
+    game.antitotal_spice[5] = game.antitotal_spice[5].add(
+        game.pink_spice_gen[0]
+            .floor()
+            .mul(game.total_pink_spice_boost[0])
+            .div(delta_time)
+    )
 
     if (game.ascend_complete[0] && game.ascend_bought[16]) {
         game.arcane_spice = game.arcane_spice.add(
@@ -1109,7 +1741,7 @@ function tick() {
         )
     }
 
-    if (game.ascend_challenge === 4) {
+    if (game.ascend_challenge === 4 || game.collapse_challenge === 7) {
         for (let i = 3; i < 6; i++) {
             game.total_red_spice_boost[i] = new Decimal(0)
             game.total_yellow_spice_boost[i] = new Decimal(0)
@@ -1124,7 +1756,8 @@ function tick() {
     if (
         game.ascend_complete[3] &&
         game.ascend_bought[27] &&
-        game.ascend_challenge !== 6
+        game.ascend_challenge !== 6 &&
+        game.collapse_challenge !== 7
     ) {
         for (let i = 0; i < 3; i++) {
             game.total_red_spice_boost[i + 3] = game.total_red_spice_boost[
@@ -1149,50 +1782,109 @@ function tick() {
     }
 
     for (let i = 0; i < 5; i++) {
-        game.red_spice_gen[i] = game.red_spice_gen[i].add(
-            game.red_spice_gen[i + 1]
-                .floor()
-                .mul(game.total_red_spice_boost[i + 1])
-                .div(delta_time * (i + 2))
-        )
-        game.yellow_spice_gen[i] = game.yellow_spice_gen[i].add(
-            game.yellow_spice_gen[i + 1]
-                .floor()
-                .mul(game.total_yellow_spice_boost[i + 1])
-                .div(delta_time * (i + 2))
-        )
-        game.green_spice_gen[i] = game.green_spice_gen[i].add(
-            game.green_spice_gen[i + 1]
-                .floor()
-                .mul(game.total_green_spice_boost[i + 1])
-                .div(delta_time * (i + 2))
-        )
-        game.blue_spice_gen[i] = game.blue_spice_gen[i].add(
-            game.blue_spice_gen[i + 1]
-                .floor()
-                .mul(game.total_blue_spice_boost[i + 1])
-                .div(delta_time * (i + 2))
-        )
-        game.pink_spice_gen[i] = game.pink_spice_gen[i].add(
-            game.pink_spice_gen[i + 1]
-                .floor()
-                .mul(game.total_pink_spice_boost[i + 1])
-                .div(delta_time * (i + 2))
-        )
-        game.crystal_spice_gen[i] = game.crystal_spice_gen[i].add(
-            game.crystal_spice_gen[i + 1]
-                .floor()
-                .mul(game.total_crystal_spice_boost[i + 1])
-                .mul(3)
-                .div(delta_time)
-        )
-        game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(
-            game.arcane_spice_gen[i + 1]
-                .floor()
-                .mul(game.total_arcane_spice_boost[i + 1])
-                .mul(5)
-                .div(delta_time)
-        )
+        if (i === 4 && game.collapse_challenge === 8) {
+            game.red_spice_gen[i] = game.red_spice_gen[i].add(
+                game.red_spice_gen[i + 1]
+                    .add(game.free_deity)
+                    .floor()
+                    .mul(game.total_red_spice_boost[i + 1])
+                    .div(delta_time * (i + 2))
+            )
+            game.yellow_spice_gen[i] = game.yellow_spice_gen[i].add(
+                game.yellow_spice_gen[i + 1]
+                    .add(game.free_deity)
+                    .floor()
+                    .mul(game.total_yellow_spice_boost[i + 1])
+                    .div(delta_time * (i + 2))
+            )
+            game.green_spice_gen[i] = game.green_spice_gen[i].add(
+                game.green_spice_gen[i + 1]
+                    .add(game.free_deity)
+                    .floor()
+                    .mul(game.total_green_spice_boost[i + 1])
+                    .div(delta_time * (i + 2))
+            )
+            game.blue_spice_gen[i] = game.blue_spice_gen[i].add(
+                game.blue_spice_gen[i + 1]
+                    .add(game.free_deity)
+                    .floor()
+                    .mul(game.total_blue_spice_boost[i + 1])
+                    .div(delta_time * (i + 2))
+            )
+            game.pink_spice_gen[i] = game.pink_spice_gen[i].add(
+                game.pink_spice_gen[i + 1]
+                    .add(game.free_deity)
+                    .floor()
+                    .mul(game.total_pink_spice_boost[i + 1])
+                    .div(delta_time * (i + 2))
+            )
+            game.crystal_spice_gen[i] = game.crystal_spice_gen[i].add(
+                game.crystal_spice_gen[i + 1]
+                    .add(game.free_deity)
+                    .floor()
+                    .mul(game.total_crystal_spice_boost[i + 1])
+                    .mul(3)
+                    .div(delta_time)
+            )
+        } else {
+            game.red_spice_gen[i] = game.red_spice_gen[i].add(
+                game.red_spice_gen[i + 1]
+                    .floor()
+                    .mul(game.total_red_spice_boost[i + 1])
+                    .div(delta_time * (i + 2))
+            )
+            game.yellow_spice_gen[i] = game.yellow_spice_gen[i].add(
+                game.yellow_spice_gen[i + 1]
+                    .floor()
+                    .mul(game.total_yellow_spice_boost[i + 1])
+                    .div(delta_time * (i + 2))
+            )
+            game.green_spice_gen[i] = game.green_spice_gen[i].add(
+                game.green_spice_gen[i + 1]
+                    .floor()
+                    .mul(game.total_green_spice_boost[i + 1])
+                    .div(delta_time * (i + 2))
+            )
+            game.blue_spice_gen[i] = game.blue_spice_gen[i].add(
+                game.blue_spice_gen[i + 1]
+                    .floor()
+                    .mul(game.total_blue_spice_boost[i + 1])
+                    .div(delta_time * (i + 2))
+            )
+            game.pink_spice_gen[i] = game.pink_spice_gen[i].add(
+                game.pink_spice_gen[i + 1]
+                    .floor()
+                    .mul(game.total_pink_spice_boost[i + 1])
+                    .div(delta_time * (i + 2))
+            )
+            game.crystal_spice_gen[i] = game.crystal_spice_gen[i].add(
+                game.crystal_spice_gen[i + 1]
+                    .floor()
+                    .mul(game.total_crystal_spice_boost[i + 1])
+                    .mul(3)
+                    .div(delta_time)
+            )
+        }
+        if (game.ascend_complete[0] && game.ascend_bought[16]) {
+            if (i === 4) {
+                game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(
+                    game.arcane_spice_gen[i + 1]
+                        .floor()
+                        .add(game.free_deity)
+                        .mul(game.total_arcane_spice_boost[i + 1])
+                        .mul(5)
+                        .div(delta_time)
+                )
+            } else {
+                game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(
+                    game.arcane_spice_gen[i + 1]
+                        .floor()
+                        .mul(game.total_arcane_spice_boost[i + 1])
+                        .mul(5)
+                        .div(delta_time)
+                )
+            }
+        }
     }
 
     if (game.prestige_bought[10] >= 1) {
@@ -1267,7 +1959,7 @@ function tick() {
                 }
                 break
             case 2:
-                if (game.prestige_time_played >= game.autopr_goal[2]) prestige()
+                if (game.real_time_played[1] >= game.autopr_goal[2]) prestige()
                 break
         }
     }
@@ -1289,8 +1981,12 @@ function tick() {
 
     let rune_speed = 1
     if (game.research_complete[3] >= 1) {
-        if (game.research_complete[3] >= 2)
-            rune_speed = 5 * 3 ** (game.research_complete[3] - 1)
+        if (game.research_complete[3] >= 12)
+            rune_speed = 2099520 * 2 ** (game.research_complete[3] - 12)
+        else if (game.research_complete[3] >= 4)
+            rune_speed = 320 * 3 ** (game.research_complete[3] - 4)
+        else if (game.research_complete[3] >= 1)
+            rune_speed = 5 * 4 ** (game.research_complete[3] - 1)
         else rune_speed = 5
     }
     if (game.ascend_challenge === 6) rune_speed = 0
@@ -1325,6 +2021,13 @@ function tick() {
                     (Math.floor(game.rune_power[i]) - 9.06304 * 10 ** 23) **
                         0.125 +
                 29003079
+        }
+        if (game.rune_power[i] >= 2 ** 133) {
+            exponent =
+                2097152 *
+                    (Math.floor(game.rune_power[i]) - 8.91911 * 10 ** 39) **
+                        0.0625 +
+                1.08579 * 10 ** 9
         }
 
         game.rune_boost[i] = Decimal.pow(base, exponent)
@@ -1379,30 +2082,64 @@ function tick() {
         game.ascend_challenge === 0
     ) {
         let stop = false
-        if (game.autoco_toggle && game.research_complete[15] >= 1) {
+        if (
+            game.autoco_toggle &&
+            game.research_complete[15] >= 1 &&
+            game.collapse_challenge === 0
+        ) {
             if (game.autoco_mode === 0) {
                 let amount = game.collapse_spice.pow(5 * 10 ** -10).floor()
 
-                if (game.research_complete[5] >= 1)
+                if (amount.cmp(Decimal.pow(10, 1800)) >= 0) {
                     amount = amount
-                        .mul(game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1)
-                        .mul(
-                            Decimal.pow(
-                                1.2,
-                                (game.total_rune_power / 10 ** 28) ** 0.2
-                            )
+                        .div(Decimal.pow(10, 200))
+                        .pow(10 / ((amount.log(10) * 0.3 - 56) ** 0.5 - 2))
+                        .mul(Decimal.pow(10, 200))
+                } else if (amount.cmp(Decimal.pow(10, 200)) >= 0) {
+                    amount = amount
+                        .div(Decimal.pow(10, 200))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 200))
+                }
+
+                if (
+                    game.research_complete[5] >= 1 &&
+                    game.collapse_challenge === 0
+                ) {
+                    let rune_amount = Decimal.pow(
+                        1.2,
+                        (game.total_rune_power / 10 ** 28) ** 0.2
+                    ).mul(game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1)
+                    if (rune_amount.cmp(Decimal.pow(10, 50)) >= 0)
+                        rune_amount = Decimal.pow(
+                            10,
+                            rune_amount.div(Decimal.pow(10, 50)).log(10) **
+                                0.5 +
+                                50
                         )
+                    if (rune_amount.cmp(Decimal.pow(10, 100)) >= 0)
+                        rune_amount = Decimal.pow(10, 100)
 
-                if (amount.cmp(10 ** 80) >= 0)
-                    amount = amount
-                        .div(10 ** 80)
-                        .pow(0.35)
-                        .mul(10 ** 80)
+                    amount = amount.mul(rune_amount)
+                }
 
-                if (amount.cmp(game.autoco_stop[0]) >= 0) stop = true
-            } else if (game.autoco_mode === 1) {
-                if (game.collapse_time_played >= game.autoco_stop[1])
+                let total_completions = 0
+                for (let i = 0; i < 6; i++) {
+                    total_completions += game.collapse_complete[i]
+                }
+                if (
+                    game.research_complete[22] >= 1 &&
+                    game.collapse_challenge === 0
+                )
+                    amount = amount.mul(Decimal.pow(888, total_completions))
+
+                if (
+                    amount.cmp(game.autoco_stop[0]) >= 0 &&
+                    game.ascend_complete[5]
+                )
                     stop = true
+            } else if (game.autoco_mode === 1) {
+                if (game.real_time_played[3] >= game.autoco_stop[1]) stop = true
             }
         }
 
@@ -1415,7 +2152,7 @@ function tick() {
                 if (amount >= game.autoas_goal[0] && !stop) ascend()
             }
         } else if (game.autoas_mode === 1) {
-            if (game.ascend_time_played >= game.autoas_goal[1] && !stop)
+            if (game.real_time_played[2] >= game.autoas_goal[1] && !stop)
                 ascend()
         }
     }
@@ -1428,9 +2165,17 @@ function tick() {
         if (
             game.ascend_bought[15] &&
             game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6
-        )
-            amount = amount.mul(Decimal.pow(2, game.ascend / 20))
+            game.ascend_challenge !== 6 &&
+            game.collapse_challenge !== 7
+        ) {
+            if (game.ascend >= 10240) {
+                amount = amount.mul(
+                    Decimal.pow(2, 5 * (game.ascend - 7740) ** 0.5 + 262)
+                )
+            } else {
+                amount = amount.mul(Decimal.pow(2, game.ascend / 20))
+            }
+        }
 
         game.rainbow_spice = game.rainbow_spice.add(amount.div(10 * delta_time))
     }
@@ -1521,29 +2266,58 @@ function tick() {
     if (game.autoco_stop[1] === NaN) game.autoco_stop[1] = 60
     if (game.autoco_stop[1] < 0.01) game.autoco_stop[1] = 0.01
 
-    if (game.research_complete[15] >= 1 && game.autoco_toggle) {
+    if (
+        game.research_complete[15] >= 1 &&
+        game.autoco_toggle &&
+        game.collapse_challenge === 0
+    ) {
         if (game.autoco_mode === 0) {
             let amount = game.collapse_spice.pow(5 * 10 ** -10).floor()
 
-            if (game.research_complete[5] >= 1)
+            if (amount.cmp(Decimal.pow(10, 1800)) >= 0) {
                 amount = amount
-                    .mul(game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1)
-                    .mul(
-                        Decimal.pow(
-                            1.2,
-                            (game.total_rune_power / 10 ** 28) ** 0.2
-                        )
-                    )
+                    .div(Decimal.pow(10, 200))
+                    .pow(10 / ((amount.log(10) * 0.3 - 56) ** 0.5 - 2))
+                    .mul(Decimal.pow(10, 200))
+            } else if (amount.cmp(Decimal.pow(10, 200)) >= 0) {
+                amount = amount
+                    .div(Decimal.pow(10, 200))
+                    .pow(0.5)
+                    .mul(Decimal.pow(10, 200))
+            }
 
-            if (amount.cmp(10 ** 80) >= 0)
-                amount = amount
-                    .div(10 ** 80)
-                    .pow(0.35)
-                    .mul(10 ** 80)
+            if (
+                game.research_complete[5] >= 1 &&
+                game.collapse_challenge === 0
+            ) {
+                let rune_amount = Decimal.pow(
+                    1.2,
+                    (game.total_rune_power / 10 ** 28) ** 0.2
+                ).mul(game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1)
+                if (rune_amount.cmp(Decimal.pow(10, 50)) >= 0)
+                    rune_amount = Decimal.pow(
+                        10,
+                        rune_amount.div(Decimal.pow(10, 50)).log(10) ** 0.5 + 50
+                    )
+                if (rune_amount.cmp(Decimal.pow(10, 100)) >= 0)
+                    rune_amount = Decimal.pow(10, 100)
+
+                amount = amount.mul(rune_amount)
+            }
+
+            let total_completions = 0
+            for (let i = 0; i < 6; i++) {
+                total_completions += game.collapse_complete[i]
+            }
+            if (
+                game.research_complete[22] >= 1 &&
+                game.collapse_challenge === 0
+            )
+                amount = amount.mul(Decimal.pow(888, total_completions))
 
             if (amount.cmp(game.autoco_goal[0]) >= 0) collapse()
         } else if (game.autoco_mode === 1) {
-            if (game.collapse_time_played >= game.autoco_goal[1]) collapse()
+            if (game.real_time_played[3] >= game.autoco_goal[1]) collapse()
         }
     }
 
@@ -1551,9 +2325,11 @@ function tick() {
         let r = game.research_select - 1
 
         if (game.data_boosts === 0) {
-            game.data[r] += 1 / delta_time
+            game.data[r] += 1 / (delta_time * game.gamespeed)
         } else {
-            game.data[r] += (2 * 1.5 ** (game.data_boosts - 1)) / delta_time
+            game.data[r] +=
+                (2 * 1.5 ** (game.data_boosts - 1)) /
+                (delta_time * game.gamespeed)
         }
 
         if (!research.researches[r].repeat) {
@@ -1584,20 +2360,144 @@ function tick() {
                                 (game.research_complete[r] - 3)) /
                             research.researches[r].unit
                     ) * research.researches[r].unit
+
+                if (r === 7 && game.research_complete[r] >= 8) {
+                    goal =
+                        Math.ceil(
+                            (research.researches[r].data *
+                                research.researches[r].factor ** 3 *
+                                research.researches[r].factor2 **
+                                    (4 +
+                                        ((game.research_complete[r] - 7) *
+                                            (game.research_complete[r] - 6)) /
+                                            2)) /
+                                research.researches[r].unit
+                        ) * research.researches[r].unit
+                }
+
+                if (r === 0 && game.research_complete[r] >= 27) {
+                    goal =
+                        Math.ceil(
+                            (research.researches[r].data *
+                                research.researches[r].factor ** 3 *
+                                research.researches[r].factor2 **
+                                    (game.research_complete[r] * 3 - 53)) /
+                                research.researches[r].unit
+                        ) * research.researches[r].unit
+                }
+                if (r === 0 && game.research_complete[r] === 40) {
+                    goal =
+                        Math.ceil(
+                            (research.researches[r].data *
+                                research.researches[r].factor ** 3 *
+                                research.researches[r].factor2 ** 64) /
+                                research.researches[r].unit
+                        ) * research.researches[r].unit
+                }
+                if (r === 3 && game.research_complete[r] >= 19) {
+                    goal =
+                        Math.ceil(
+                            (research.researches[r].data *
+                                research.researches[r].factor ** 3 *
+                                research.researches[r].factor2 **
+                                    (game.research_complete[r] * 3 - 37)) /
+                                research.researches[r].unit
+                        ) * research.researches[r].unit
+                }
             }
 
             if (game.data[r] >= goal) {
-                game.data[r] = 0
                 game.research_complete[r]++
                 game.research_pause = true
                 game.research_select = 0
+                if (r === 0) {
+                    if (game.research_complete[0] < 40) {
+                        game.data[r] = 0
+                    }
+                } else {
+                    game.data[r] = 0
+                }
             }
         }
     }
 
     game.halflife = 600 * 0.67 ** game.research_complete[0]
 
-    game.atomic_efficiency = 0.6 + 0.1 * game.research_complete[7]
+    if (game.research_complete[7] < 4)
+        game.atomic_efficiency = 0.6 + 0.1 * game.research_complete[7]
+    else game.atomic_efficiency = 0.8 + 0.05 * game.research_complete[7]
+
+    game.atomic_portion =
+        Number(document.getElementById("collider_input").value) / 100
+    if (game.atomic_portion === NaN) atomic_portion = 1
+    if (game.atomic_portion < 0.01) atomic_portion = 0.01
+    if (game.atomic_portion > 1) atomic_portion = 1
+
+    game.augment_start = 2000000 + 2000000 * game.collapse_complete[3]
+
+    if (game.research_complete[28] >= 1 && game.collapse_challenge !== 0) {
+        let c = collapse_challenge.challenges[game.collapse_challenge - 7]
+        let completions = game.collapse_complete[game.collapse_challenge - 7]
+        let exponent = completions + game.pending_completions
+
+        if (c.scaling1 !== undefined && completions >= c.scaling1) {
+            if (completions >= c.scaling1) {
+                exponent = c.scaling1 + (completions - c.scaling1) * 1.5
+            }
+
+            if (c.scaling2 !== undefined) {
+                if (completions >= c.scaling2) {
+                    exponent =
+                        (completions - c.scaling2) * 2 +
+                        (c.scaling2 - c.scaling1) * 1.5 +
+                        c.scaling1
+                }
+
+                if (c.scaling3 !== undefined) {
+                    if (completions >= c.scaling3) {
+                        exponent =
+                            (completions - c.scaling3) * 3 +
+                            (c.scaling3 - c.scaling2) * 2 +
+                            (c.scaling2 - c.scaling1) * 1.5 +
+                            c.scaling1
+                    }
+
+                    if (c.scaling4 !== undefined) {
+                        if (completions >= c.scaling4) {
+                            exponent =
+                                (completions - c.scaling4) * 5 +
+                                (c.scaling4 - c.scaling3) * 3 +
+                                (c.scaling3 - c.scaling2) * 2 +
+                                (c.scaling2 - c.scaling1) * 1.5 +
+                                c.scaling1
+                        }
+                    }
+                }
+            }
+        }
+
+        game.pending_goal = c.goal.mul(
+            Decimal.pow(10, Math.round(Decimal.pow(c.delta, exponent).log(10)))
+        )
+
+        let amount = game.collapse_spice.pow(5 * 10 ** -10).floor()
+
+        if (amount.cmp(Decimal.pow(10, 1800)) >= 0) {
+            amount = amount
+                .div(Decimal.pow(10, 200))
+                .pow(10 / ((amount.log(10) * 0.3 - 56) ** 0.5 - 2))
+                .mul(Decimal.pow(10, 200))
+        } else if (amount.cmp(Decimal.pow(10, 200)) >= 0) {
+            amount = amount
+                .div(Decimal.pow(10, 200))
+                .pow(0.5)
+                .mul(Decimal.pow(10, 200))
+        }
+
+        if (amount.cmp(game.pending_goal) >= 0) {
+            game.pending_completions++
+        }
+    }
 }
 
 //handling spice collider animations
@@ -1608,6 +2508,25 @@ function collider_tick() {
     let ctx = col.getContext("2d")
     let col2 = document.getElementById("collider_view2")
     let ctx2 = col2.getContext("2d")
+    if (collider.type >= 1) {
+        col2 = document.getElementById("collider_view3")
+        ctx2 = col2.getContext("2d")
+
+        switch (collider.type) {
+            case 1:
+                col2.className = "pure_collider"
+                break
+            case 2:
+                col2.className = "red_collider"
+                break
+            case 3:
+                col2.className = "yellow_collider"
+                break
+            case 4:
+                col2.className = "green_collider"
+                break
+        }
+    }
 
     if (collider.time <= 25) {
         ctx.beginPath()
@@ -1629,7 +2548,23 @@ function collider_tick() {
         ctx.stroke()
         ctx2.lineWidth = 12
         ctx2.lineCap = "round"
-        ctx2.strokeStyle = "#ff4e33"
+        switch (collider.type) {
+            case 0:
+                ctx2.strokeStyle = "#ff4e33"
+                break
+            case 1:
+                ctx2.strokeStyle = "#ffffff"
+                break
+            case 2:
+                ctx2.strokeStyle = "#14ebff"
+                break
+            case 3:
+                ctx2.strokeStyle = "#1f48ff"
+                break
+            case 4:
+                ctx2.strokeStyle = "#ea1a78"
+                break
+        }
         ctx2.stroke()
     } else if (collider.time <= 100) {
         ctx2.beginPath()
@@ -1676,21 +2611,126 @@ function collider_tick() {
 
             ctx2.lineWidth = 6
             ctx2.lineCap = "round"
-            ctx2.strokeStyle = "#ff4e33"
+            switch (collider.type) {
+                case 0:
+                    ctx2.strokeStyle = "#ff4e33"
+                    break
+                case 1:
+                    ctx2.strokeStyle = "#ffffff"
+                    break
+                case 2:
+                    ctx2.strokeStyle = "#14ebff"
+                    break
+                case 3:
+                    ctx2.strokeStyle = "#1f48ff"
+                    break
+                case 4:
+                    ctx2.strokeStyle = "#ea1a78"
+                    break
+            }
             ctx2.stroke()
         }
 
         if (collider.time === 26) {
-            game.total_unstable_spice = game.total_unstable_spice.add(
-                game.atomic_spice.pow(game.atomic_efficiency).floor()
-            )
-            game.unstable_spice = game.unstable_spice.add(
-                game.atomic_spice.pow(game.atomic_efficiency).floor()
-            )
-            game.atomic_spice = new Decimal(0)
+            if (game.collider_tab === 0) {
+                game.total_unstable_spice = game.total_unstable_spice.add(
+                    game.atomic_spice
+                        .mul(game.atomic_portion)
+                        .pow(game.atomic_efficiency)
+                        .floor()
+                )
+                game.unstable_spice = game.unstable_spice.add(
+                    game.atomic_spice
+                        .mul(game.atomic_portion)
+                        .pow(game.atomic_efficiency)
+                        .floor()
+                )
+                game.atomic_spice = game.atomic_spice.mul(
+                    1 - game.atomic_portion
+                )
+            } else if (game.collider_tab === 1) {
+                game.spent_atomic_spice[0] = game.spent_atomic_spice[0].add(
+                    game.atomic_spice.mul(game.atomic_portion)
+                )
+                game.antispice[0] = game.spent_atomic_spice[0]
+                    .pow(game.atomic_efficiency / 132)
+                    .floor()
+
+                if (game.antispice[0].cmp(Decimal.pow(10, 52)) >= 0)
+                    game.antispice[0] = Decimal.pow(10, 52)
+
+                game.atomic_spice = game.atomic_spice.mul(
+                    1 - game.atomic_portion
+                )
+            } else if (game.collider_tab === 2) {
+                let red_amount = Decimal.pow(
+                    10,
+                    (game.antitotal_spice[1].log(10) / (4.4 * 10 ** 11)) ** 0.5
+                )
+
+                game.spent_atomic_spice[1] = game.spent_atomic_spice[1].add(
+                    game.atomic_spice.mul(game.atomic_portion)
+                )
+                game.antispice[1] = game.spent_atomic_spice[1]
+                    .pow(game.atomic_efficiency / 320)
+                    .mul(red_amount)
+                    .floor()
+
+                if (game.antispice[1].cmp(Decimal.pow(10, 36)) >= 0)
+                    game.antispice[1] = Decimal.pow(10, 36)
+
+                game.atomic_spice = game.atomic_spice.mul(
+                    1 - game.atomic_portion
+                )
+            } else if (game.collider_tab === 3) {
+                let yellow_amount = Decimal.pow(
+                    10,
+                    (game.antitotal_spice[2].log(10) / (1.2 * 10 ** 12)) ** 0.5
+                )
+
+                game.spent_atomic_spice[2] = game.spent_atomic_spice[2].add(
+                    game.atomic_spice.mul(game.atomic_portion)
+                )
+                game.antispice[2] = game.spent_atomic_spice[2]
+                    .pow(game.atomic_efficiency / 888)
+                    .mul(yellow_amount)
+                    .floor()
+
+                if (game.antispice[2].cmp(Decimal.pow(10, 16)) >= 0)
+                    game.antispice[2] = Decimal.pow(10, 16)
+
+                game.atomic_spice = game.atomic_spice.mul(
+                    1 - game.atomic_portion
+                )
+            } else if (game.collider_tab === 4) {
+                let green_amount = Decimal.pow(
+                    10,
+                    (game.antitotal_spice[3].log(10) / (3.75 * 10 ** 12)) ** 0.5
+                )
+
+                game.spent_atomic_spice[3] = game.spent_atomic_spice[3].add(
+                    game.atomic_spice.mul(game.atomic_portion)
+                )
+                game.antispice[3] = game.spent_atomic_spice[3]
+                    .pow(game.atomic_efficiency / 2111)
+                    .mul(green_amount)
+                    .floor()
+
+                if (game.antispice[3].cmp(Decimal.pow(10, 7)) >= 0)
+                    game.antispice[3] = Decimal.pow(10, 7)
+
+                game.atomic_spice = game.atomic_spice.mul(
+                    1 - game.atomic_portion
+                )
+            }
 
             document.getElementById("collider_view").style.display = "none"
-            document.getElementById("collider_view2").style.display = "block"
+            if (collider.type === 0)
+                document.getElementById("collider_view2").style.display =
+                    "block"
+            else
+                document.getElementById("collider_view3").style.display =
+                    "block"
         }
     } else {
         collider.enabled = false
@@ -1714,6 +2754,7 @@ document.body.addEventListener("keydown", function (event) {
     if (event.code === "KeyA") key.a = true
     if (event.code === "KeyN") key.n = true
     if (event.code === "KeyC") key.c = true
+    if (event.code === "KeyX") key.x = true
 })
 
 document.body.addEventListener("keyup", function (event) {
@@ -1729,6 +2770,7 @@ document.body.addEventListener("keyup", function (event) {
     if (event.code === "KeyA") key.a = false
     if (event.code === "KeyN") key.n = false
     if (event.code === "KeyC") key.c = false
+    if (event.code === "KeyX") key.x = false
 })
 
 function hotkey_tick() {
@@ -1739,6 +2781,10 @@ function hotkey_tick() {
         if (key.a) ascend()
         if (key.n) buy_enchantment()
         if (key.c) collapse()
+        if (key.x) {
+            exit_ascension_challenge()
+            exit_collapse_challenge()
+        }
 
         if (game.tab === 0) {
             switch (game.subtab[0]) {
@@ -1892,7 +2938,7 @@ function hotkey_tick() {
 
 //saving the game
 function save() {
-    game.version = "1.4.2"
+    game.version = "1.5.0"
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
         game.prestige_price[u.id] = u.price
@@ -1929,12 +2975,15 @@ function delete_save() {
             "Are you sure you want to delete your save?\nThis will reset EVERYTHING!"
         )
     ) {
+        game.gamespeed = 1
+
         color_boost(true)
         game.color_boosts = 0
 
         game.total_spice = new Decimal(5)
         game.collapse_spice = new Decimal(5)
         game.total_time_played = 0
+        game.real_time_played = [0, 0, 0, 0]
 
         game.autosp_toggle = new Array(5).fill(false)
         game.autocb_toggle = false
@@ -2029,16 +3078,52 @@ function delete_save() {
         game.research_view = 0
         game.research_select = 0
         game.research_pause = true
-        game.research_complete = new Array(16).fill(0)
-        game.data = new Array(16).fill(0)
+        game.research_complete = new Array(29).fill(0)
+        game.data = new Array(29).fill(0)
         game.data_boosts = 0
 
         game.collapse_time_played = 0
         game.collapse_amount_history = new Array(10).fill(-1)
         game.collapse_time_history = new Array(10).fill(-1)
 
+        game.collapse_challenge = 0
+        game.collapse_complete = new Array(6).fill(0)
+        game.pending_completions = 0
+        game.pending_goal = new Decimal(1)
+
         game.halflife = 600
         game.atomic_efficiency = 0.6
+        game.free_deity = new Decimal(0)
+        game.augment_start = 2000000
+
+        game.collider_tab = 0
+        game.antispice = [
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            0,
+        ]
+        game.spent_atomic_spice = [
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+        ]
+        game.antitotal_spice = [
+            undefined,
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+        ]
 
         game.subtab[0] = 0
         game.subtab[1] = 0
@@ -2198,9 +3283,64 @@ function load(savegame) {
 
             if (!game.autoco_mode) game.autoco_mode = 0
         }
+
+        let old_complete = game.research_complete
+        game.research_complete = new Array(29).fill(0)
+        let old_data = game.data
+        game.data = new Array(29).fill(0)
+        for (let i = 0; i < 16; i++) {
+            game.research_complete[i] = old_complete[i]
+            game.data[i] = old_data[i]
+        }
+
+        game.atomic_portion = 1
+        game.collapse_challenge = 0
+        game.collapse_complete = new Array(6).fill(0)
+        game.pending_completions = 0
+        game.pending_goal = new Decimal(1)
+        game.free_deity = new Decimal(0)
+        game.augment_start = 2000000
+        game.gamespeed = 1
+
+        game.collider_tab = 0
+        game.antispice = [
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            0,
+        ]
+        game.spent_atomic_spice = [
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+        ]
+        game.antitotal_spice = [
+            undefined,
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+        ]
+
+        game.gamespeed = 1
+        game.real_time_played = [
+            game.total_time_played,
+            game.prestige_time_played,
+            game.ascend_time_played,
+            game.collapse_time_played,
+        ]
     }
 
-    game.version = "1.4.2"
+    game.version = "1.5.0"
 
     game.red_spice = new Decimal(game.red_spice)
     game.red_strengthener_price = new Decimal(game.red_strengthener_price)
@@ -2270,12 +3410,15 @@ function load(savegame) {
     game.decayed_spice = new Decimal(game.decayed_spice)
     game.unstable_boost = new Decimal(game.unstable_boost)
     game.collapse_spice = new Decimal(game.collapse_spice)
+    game.free_deity = new Decimal(game.free_deity)
 
     if (game.prestige_price !== undefined) {
         for (const u of prestige_upgrade.upgrades) {
             u.price = new Decimal(game.prestige_price[u.id])
         }
     }
+
+    game.pending_goal = new Decimal(game.pending_goal)
 
     game.autopr_goal[1] = new Decimal(game.autopr_goal[1])
     game.autopr_delta[1] = new Decimal(game.autopr_delta[1])
@@ -2296,9 +3439,22 @@ function load(savegame) {
         }
     }
 
+    for (let i = 0; i < 6; i++) {
+        game.antispice[i] = new Decimal(game.antispice[i])
+    }
+    for (let i = 0; i < 7; i++) {
+        game.spent_atomic_spice[i] = new Decimal(game.spent_atomic_spice[i])
+    }
+    for (let i = 1; i < 7; i++) {
+        game.antitotal_spice[i] = new Decimal(game.antitotal_spice[i])
+    }
+
     goto_tab(game.tab)
     if (game.tab === 0) goto_subtab(game.subtab[0])
     if (game.tab === 1) goto_subtab(game.subtab[1])
+    if (game.tab === 2) goto_subtab(game.subtab[3])
+    if (game.tab === 3) goto_subtab(game.subtab[4])
+    if (game.tab === 5) goto_subtab(game.subtab[2])
 
     auto_toggle("red")
     auto_toggle("red")
@@ -2377,6 +3533,7 @@ function load(savegame) {
     document.getElementById("co_spice_input2").value = game.autoco_stop[0]
     document.getElementById("co_time_input").value = game.autoco_goal[1]
     document.getElementById("co_time_input2").value = game.autoco_stop[1]
+    document.getElementById("collider_input").value = game.atomic_portion * 100
 }
 
 //load the game when opened
@@ -2387,10 +3544,10 @@ function tick_loop() {
     let delta_ms = undefined
     let delta_ticks = 1
     if (delta_time === undefined) {
-        delta_time = game.tickspeed
+        delta_time = game.tickspeed / game.gamespeed
     } else {
         delta_ms = Date.now() - tick_time
-        delta_time = 1000 / delta_ms
+        delta_time = 1000 / (delta_ms * game.gamespeed)
         delta_ticks = Math.floor((delta_ms * game.tickspeed) / 1000)
     }
 
