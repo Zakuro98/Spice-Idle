@@ -749,6 +749,7 @@ function format_inf(num, not, enot) {
                 let thousand_str = ""
                 let million_str = ""
                 let billion_str = ""
+                let trillion_str = ""
 
                 if (order >= 1000) {
                     let orderk = Math.floor(order / 1000) % 1000
@@ -941,6 +942,70 @@ function format_inf(num, not, enot) {
                     }
                 }
 
+                if (order >= 10 ** 12) {
+                    let ordert = Math.floor(order / 10 ** 12)
+                    one_str = ""
+                    one_mod = ""
+                    ten_str = ""
+                    hundred_str = ""
+                    if (ordert > 1) {
+                        one_str = one_array[ordert % 10]
+                        ten_str = ten_array[Math.floor(ordert / 10) % 10]
+                        hundred_str =
+                            hundred_array[Math.floor(ordert / 100) % 10]
+
+                        const r_ordert = Math.floor(ordert / 10)
+                        if (
+                            (ordert % 10 === 7 || ordert % 10 === 9) &&
+                            r_ordert % 10 !== 9 &&
+                            r_ordert !== 90
+                        )
+                            if (
+                                r_ordert % 10 === 2 ||
+                                r_ordert % 10 === 8 ||
+                                r_ordert === 80
+                            )
+                                one_mod = "m"
+                            else one_mod = "n"
+                        if (
+                            (ordert % 10 === 3 || ordert % 10 === 6) &&
+                            ((r_ordert >= 2 && r_ordert <= 5) ||
+                                r_ordert % 10 === 8 ||
+                                r_ordert === 10 ||
+                                r_ordert === 30 ||
+                                r_ordert === 40 ||
+                                r_ordert === 50 ||
+                                r_ordert === 80)
+                        )
+                            one_mod = "s"
+                        if (
+                            ordert % 10 === 6 &&
+                            (r_ordert % 10 === 8 ||
+                                r_ordert === 10 ||
+                                r_ordert === 80)
+                        )
+                            one_mod = "x"
+
+                        if (
+                            Math.floor(ordert / 100) % 10 !== 0 &&
+                            Math.floor(ordert / 10) % 10 >= 1
+                        ) {
+                            if (Math.floor(ordert / 10) % 10 <= 2) {
+                                ten_str += "i"
+                            } else {
+                                ten_str += "a"
+                            }
+                        }
+                    }
+
+                    if (ordert !== 0) {
+                        trillion_str =
+                            one_str + one_mod + ten_str + hundred_str + "pici"
+                        if (unit_str === "" && thousand_str === "")
+                            billion_str += "n"
+                    }
+                }
+
                 let lead = num
                     .div(new Decimal(10).pow(3 * order + 3))
                     .toNumber()
@@ -956,6 +1021,7 @@ function format_inf(num, not, enot) {
                 output =
                     lead_str +
                     " " +
+                    trillion_str +
                     billion_str +
                     million_str +
                     thousand_str +
@@ -1056,6 +1122,7 @@ function format_inf(num, not, enot) {
                 let thousand_str2 = ""
                 let million_str2 = ""
                 let billion_str2 = ""
+                let trillion_str2 = ""
 
                 if (order2 >= 1000) {
                     let order2k = Math.floor(order2 / 1000) % 1000
@@ -1114,6 +1181,28 @@ function format_inf(num, not, enot) {
                         billion_str2 += "-"
                 }
 
+                if (order2 >= 10 ** 12) {
+                    let order2t = Math.floor(order2 / 10 ** 12)
+                    one_str2 = ""
+                    ten_str2 = ""
+                    hundred_str2 = ""
+
+                    if (order2t > 1) {
+                        one_str2 = one_array_cond[order2t % 10]
+                        ten_str2 = ten_array_cond[Math.floor(order2t / 10) % 10]
+                        hundred_str2 =
+                            hundred_array_cond[Math.floor(order2t / 100) % 10]
+                    }
+                    trillion_str2 = one_str2 + ten_str2 + hundred_str2 + "PC"
+                    if (
+                        unit_str2 !== "" ||
+                        thousand_str2 !== "" ||
+                        million_str2 !== "" ||
+                        billion_str2 !== ""
+                    )
+                        trillion_str2 += "-"
+                }
+
                 let lead2 = num
                     .div(new Decimal(10).pow(3 * order2 + 3))
                     .toNumber()
@@ -1129,6 +1218,7 @@ function format_inf(num, not, enot) {
                 output =
                     lead_str2 +
                     " " +
+                    trillion_str2 +
                     billion_str2 +
                     million_str2 +
                     thousand_str2 +
@@ -1596,16 +1686,26 @@ function format_inf(num, not, enot) {
         if (not === 12) {
             let exponent = Math.floor(num.exponent)
             let mantissa = num.mantissa
-            output = mantissa.toFixed(3) + "e" + format_num(exponent)
+            output =
+                mantissa.toFixed(3) + "e" + format_num(exponent, enot, true)
         } else if (not === 13) {
             let exponent2 = Math.floor(num.exponent / 3) * 3
             let mantissa2 = num.div(new Decimal(10).pow(exponent2)).toNumber()
             if (mantissa2 < 10) {
-                output = mantissa2.toFixed(3) + "e" + format_num(exponent2)
+                output =
+                    mantissa2.toFixed(3) +
+                    "e" +
+                    format_num(exponent2, enot, true)
             } else if (mantissa2 < 100) {
-                output = mantissa2.toFixed(2) + "e" + format_num(exponent2)
+                output =
+                    mantissa2.toFixed(2) +
+                    "e" +
+                    format_num(exponent2, enot, true)
             } else {
-                output = mantissa2.toFixed(1) + "e" + format_num(exponent2)
+                output =
+                    mantissa2.toFixed(1) +
+                    "e" +
+                    format_num(exponent2, enot, true)
             }
         }
     }
@@ -1765,7 +1865,7 @@ function format_infdec(num, not, enot) {
     }
 }
 
-function format_time(input, not) {
+function format_time(input, not, precise) {
     if (not === undefined) not = 0
 
     var time = input
@@ -1773,7 +1873,17 @@ function format_time(input, not) {
     if (time >= 10 ** 20) {
         output = "a very long time"
     } else if (time < 1) {
-        output = time.toFixed(3) + "s"
+        if (precise) {
+            if (time < 10 ** -6) {
+                output = format_dec(time * 10 ** 9, 0) + "ns"
+            } else if (time < 0.001) {
+                output = format_dec(time * 1000000, 0) + "μs"
+            } else {
+                output = format_dec(time * 1000, 0) + "ms"
+            }
+        } else {
+            output = time.toFixed(3) + "s"
+        }
     } else if (time < 10) {
         output = time.toFixed(2) + "s"
     } else if (time < 60) {
@@ -1782,7 +1892,7 @@ function format_time(input, not) {
         let colon = ":"
         if (time % 60 < 10) colon = ":0"
         output = Math.floor(time / 60) + colon + (Math.floor(time) % 60)
-    } else {
+    } else if (time < 360000) {
         let colon1 = ":"
         let colon2 = ":"
         if (Math.floor(time / 60) % 60 < 10) colon1 = ":0"
@@ -1793,13 +1903,15 @@ function format_time(input, not) {
             (Math.floor(time / 60) % 60) +
             colon2 +
             (Math.floor(time) % 60)
+    } else {
+        output = (time / 86400).toFixed(2) + "d"
     }
 
     if (not === 8) output = "???"
     return output
 }
 
-function format_time_long(input, not) {
+function format_time_long(input, not, precise) {
     if (not === undefined) not = 0
 
     var time = input
@@ -1807,7 +1919,17 @@ function format_time_long(input, not) {
     if (time >= 10 ** 20) {
         output = "a very long time"
     } else if (time < 1) {
-        output = time.toFixed(3) + " seconds"
+        if (precise) {
+            if (time < 10 ** -6) {
+                output = format_dec(time * 10 ** 9, 0) + " nanoseconds"
+            } else if (time < 0.001) {
+                output = format_dec(time * 1000000, 0) + " microseconds"
+            } else {
+                output = format_dec(time * 1000, 0) + " milliseconds"
+            }
+        } else {
+            output = time.toFixed(3) + " seconds"
+        }
     } else if (time < 10) {
         output = time.toFixed(2) + " seconds"
     } else if (time < 60) {
@@ -1826,7 +1948,7 @@ function format_time_long(input, not) {
             output += ", " + (Math.floor(time / 60) % 60) + " minutes"
         if (Math.floor(time) % 60 !== 0)
             output += ", " + (Math.floor(time) % 60) + " seconds"
-    } else {
+    } else if (time < 31536000) {
         output = Math.floor(time / 86400) + " days"
         if (Math.floor(time / 3600) % 24 !== 0)
             output += ", " + (Math.floor(time / 3600) % 24) + " hours"
@@ -1834,6 +1956,14 @@ function format_time_long(input, not) {
             output += ", " + (Math.floor(time / 60) % 60) + " minutes"
         if (Math.floor(time) % 60 !== 0)
             output += ", " + (Math.floor(time) % 60) + " seconds"
+    } else {
+        output = Math.floor(time / 31536000) + " years"
+        if (Math.floor(time / 86400) % 365 !== 0)
+            output += ", " + (Math.floor(time / 86400) % 365) + " days"
+        if (Math.floor(time / 3600) % 24 !== 0)
+            output += ", " + (Math.floor(time / 3600) % 24) + " hours"
+        if (Math.floor(time / 60) % 60 !== 0)
+            output += ", " + (Math.floor(time / 60) % 60) + " minutes"
     }
 
     if (not === 8) output = "???"
