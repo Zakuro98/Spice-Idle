@@ -1,8 +1,9 @@
 //initializing game variables
 let game = {
-    version: "1.4.2",
+    version: "1.5.0",
 
     tickspeed: 100,
+    gamespeed: 1,
 
     notation: 2,
     hotkeys: true,
@@ -354,6 +355,7 @@ let game = {
 
     halflife: 300,
     atomic_efficiency: 0.6,
+    atomic_portion: 1,
 
     collapse_amount_history: new Array(10).fill(-1),
     collapse_time_history: new Array(10).fill(-1),
@@ -363,8 +365,8 @@ let game = {
     research_view: 0,
     research_select: 0,
     research_pause: true,
-    research_complete: new Array(16).fill(0),
-    data: new Array(16).fill(0),
+    research_complete: new Array(30).fill(0),
+    data: new Array(29).fill(0),
     data_boosts: 0,
 
     autods_toggle: false,
@@ -375,6 +377,45 @@ let game = {
     autoco_mode: 0,
     autoco_goal: [new Decimal(10 ** 50), 120],
     autoco_stop: [new Decimal(10 ** 25), 60],
+
+    collapse_challenge: 0,
+    collapse_complete: new Array(6).fill(0),
+    pending_completions: 0,
+    pending_goal: new Decimal(1),
+
+    free_deity: new Decimal(0),
+    augment_start: 2000000,
+
+    collider_tab: 0,
+    antispice: [
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        0,
+    ],
+    spent_atomic_spice: [
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+    ],
+    antitotal_spice: [
+        undefined,
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+    ],
+
+    real_time_played: [0, 0, 0, 0],
 }
 
 let key = {
@@ -389,6 +430,7 @@ let key = {
     a: false,
     n: false,
     c: false,
+    x: false,
 }
 
 function format_small(num) {
@@ -432,6 +474,7 @@ let collider = {
     time: 0,
     enabled: false,
     particles: 5,
+    type: 0,
 }
 
 class particle {
@@ -1336,7 +1379,7 @@ class ascension_challenge {
         info.innerHTML =
             this.desc +
             "<br>Goal: <span class='rainbow_spice'>" +
-            format_infdec(this.goal, game.notation) +
+            format_idec(this.goal, game.notation) +
             " μg rainbow spice</span>"
         info.className = "a_challenge_text"
 
@@ -1395,7 +1438,7 @@ new ascension_challenge(
 )
 //challenge 6
 new ascension_challenge(
-    "Same as Challenge 1, but rune power production is disabled<br>Reward: Unlocks Collapse",
+    "Same as Challenge 1, but rune power production is disabled<br>Reward: Unlock Collapse",
     Decimal.pow(10, 1440),
     34
 )
@@ -1546,7 +1589,7 @@ new research(
 )
 //research 10
 new research(
-    "Ansuz rune gains from Ascension are boosted by Times Collapsed stat<br>Current boost: 1.00x",
+    "Ansuz rune gains from Ascension are boosted by Times Collapsed statistic<br>Current boost: 1.00x",
     8,
     false,
     true,
@@ -1586,4 +1629,184 @@ new research(
 )
 //research 15
 new research("Unlocks automation for Collapse", 14, false, false, 15000000)
+//research 16
+new research(
+    "Times Prestiged and Times Ascended statistics are no longer reset by Collapse",
+    15,
+    false,
+    false,
+    2.5 * 10 ** 8
+)
+//research 17
+new research(
+    "Unspent atomic spice makes the unstable spice decay boost stronger<br>The boost is currently 0.00% stronger",
+    16,
+    false,
+    true,
+    4 * 10 ** 9
+)
+//research 18
+new research("Unlocks Challenge 7", 17, false, false, 10 ** 11)
+//research 19
+new research("Unlocks antispice", -701, false, false, 2.5 * 10 ** 11)
+//research 20
+new research("Unlocks Challenge 8", -701, false, false, 6.25 * 10 ** 11)
+//research 21
+new research("Unlocks red antispice", -801, false, false, 10 ** 12)
+//research 22
+new research(
+    "You gain 888x more atomic spice for every Collapse challenge completion<br>Current boost: 1.00x",
+    -703,
+    false,
+    true,
+    1.75 * 10 ** 13
+)
+//research 23
+new research("Unlocks Challenge 9", -803, false, false, 2 * 10 ** 15)
+//research 24
+new research("Unlocks yellow antispice", -901, false, false, 6.9 * 10 ** 15)
+//research 25
+new research(
+    "You get 25 free arcane enchantments for every Collapse<br>(up to 25% of your bought arcane enchantments)",
+    -805,
+    false,
+    false,
+    1.8 * 10 ** 18
+)
+//research 26
+new research("Unlocks Challenge 10", -904, false, false, 10 ** 20)
+//research 27
+new research("Unlocks green antispice", -1001, false, false, 3 * 10 ** 20)
+//research 28
+new research(
+    "Collapse Challenges can be completed in bulk",
+    -907,
+    false,
+    false,
+    4.2 * 10 ** 21
+)
 //done initializing collapse researches
+
+//collapse challenge class
+class collapse_challenge {
+    static challenges = []
+
+    desc
+    goal
+    delta
+    unlock
+    scaling1
+    scaling2
+    scaling3
+    scaling4
+
+    //upgrade constructor
+    constructor(
+        desc,
+        goal,
+        delta,
+        unlock,
+        scaling1,
+        scaling2,
+        scaling3,
+        scaling4
+    ) {
+        this.desc = desc
+        this.id = collapse_challenge.challenges.length
+        this.goal = goal
+        this.delta = delta
+        this.unlock = unlock
+        this.scaling1 = scaling1
+        this.scaling2 = scaling2
+        this.scaling3 = scaling3
+        this.scaling4 = scaling4
+
+        collapse_challenge.challenges.push(this)
+
+        //entire challenge panel
+        let panel = document.createElement("DIV")
+        panel.className = "co_challenge_panel"
+
+        //all text div
+        let text = document.createElement("DIV")
+        text.className = "co_challenge_block"
+
+        //challenge header
+        let header = document.createElement("P")
+        header.innerHTML = "Challenge " + format_small(this.id + 7)
+        header.className = "co_challenge_header"
+
+        //challenge desc
+        let info = document.createElement("P")
+        info.innerHTML =
+            "<span class='small_text'>" +
+            this.desc +
+            "<br></span><br>Goal: <span class='atomic_spice'>+" +
+            format_idec(this.goal, game.notation) +
+            " atomic spice</span><br>Completions: 0"
+        info.className = "co_challenge_text"
+
+        //attaching text to text div
+        text.appendChild(header)
+        text.appendChild(info)
+
+        //challenge button
+        let button = document.createElement("BUTTON")
+        button.innerHTML = "Enter Challenge"
+        button.className = "co_challenge_button outside"
+        button.addEventListener("click", () => {
+            enter_collapse_challenge(this.id + 7)
+        })
+
+        //attaching stuff to challenge panel
+        panel.appendChild(text)
+        panel.appendChild(button)
+
+        //attaching challenge to ascension challenges page
+        challenge_map.set(this, panel)
+        document.getElementById("challenges_page2").appendChild(panel)
+    }
+}
+
+//initializing collapse challenges
+//challenge 7
+new collapse_challenge(
+    "Challenges 1, 3, 4, & 5 simultaneously<br>Reward: Normal spice multipliers are 2.5% stronger, and unlock 2 researches",
+    Decimal.pow(10, 25),
+    Decimal.pow(10, 13),
+    18,
+    5,
+    15,
+    15
+)
+//challenge 8
+new collapse_challenge(
+    "Unstable spice decay gives no boost, it instead produces sixth generators<br>Reward: Unstable spice decay now also produces arcane spice deities, and unlock a research",
+    Decimal.pow(10, 72),
+    Decimal.pow(10, 72),
+    20,
+    5,
+    10,
+    13,
+    13
+)
+//challenge 9
+new collapse_challenge(
+    "The game runs 99,999x slower, reach the goal in 999 microseconds or less<br>Reward: The game runs 2x faster, and unlock a research",
+    Decimal.pow(10, 164),
+    Decimal.pow(10, 156),
+    23,
+    5,
+    11,
+    11
+)
+//challenge 10
+new collapse_challenge(
+    "Color augment scaling is much stronger, and color augments begin at 4 color boosts<br>Ascension upgrade prices are also reduced<br>Reward: Color augments begin at 4,000,000 color boosts, and unlock a research",
+    Decimal.pow(10, 1350),
+    Decimal.pow(10, 317),
+    26,
+    4,
+    4
+)
+//done initializing collapse challenges
