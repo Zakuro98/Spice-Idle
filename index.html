@@ -87,6 +87,12 @@
                 <button id="research" class="subtab unlocked" onclick="goto_subtab(1)">
                     RESEARCH
                 </button>
+                <button id="collapse_challenges" class="subtab locked" onclick="goto_subtab(2)">
+                    LOCKED
+                </button>
+                <button id="antispice" class="subtab locked" onclick="goto_subtab(3)">
+                    LOCKED
+                </button>
             </div>
 
             <div id="statistics_tabs" class="submenu">
@@ -392,7 +398,7 @@
                             </div>
                             <div id="prestige_time">
                                 <p class="p_auto_text">
-                                    Auto-Prestige Goal (Seconds):
+                                    Auto-Prestige Goal (Real Seconds):
                                 </p>
                                 <input class="input" id="p_time_input" type="number" step="0.01" value="30" min="0.01">
                             </div>
@@ -561,7 +567,7 @@
                             </div>
                             <div id="ascend_time">
                                 <p class="p_auto_text">
-                                    Auto-Ascend Goal (Seconds):
+                                    Auto-Ascend Goal (Real Seconds):
                                 </p>
                                 <input class="input" id="a_time_input" type="number" step="0.01" value="30" min="0.01">
                             </div>
@@ -743,7 +749,7 @@
 
             <div id="challenges_page">
                 <p class="challenge_info">
-                    Entering an Ascension Challenge will reset your current Ascension
+                    Entering an Ascension Challenge will reset your current Ascension, and disable Ascension automation in the Challenge
                     <br>You must Ascend with the required amount of rainbow spice to complete the Challenge
                 </p>
 
@@ -882,13 +888,13 @@
                             </div>
                             <div id="collapse_time">
                                 <p class="p_auto_text">
-                                    Stop Ascending After (Seconds):
+                                    Stop Ascending After (Real Seconds):
                                 </p>
                                 <input class="input" id="co_time_input2" type="number" step="0.01" value="60" min="0.01">
                             </div>
                             <div id="collapse_time2">
                                 <p class="p_auto_text">
-                                    Auto-Collapse Goal (Seconds):
+                                    Auto-Collapse Goal (Real Seconds):
                                 </p>
                                 <input class="input" id="co_time_input" type="number" step="0.01" value="120" min="0.01">
                             </div>
@@ -903,16 +909,43 @@
                 <div id="collider_block">
                     <canvas id="collider_view" width="1440" height="720"></canvas>
                     <canvas id="collider_view2" width="1440" height="720"></canvas>
+                    <canvas id="collider_view3" class="pure_collider" width="1440" height="720"></canvas>
                 </div>
 
                 <div class="collider_menu">
-                    <p class="collider_text">
+                    <div id="collider_tabs">
+                        <button id="collider_tab1" class="spice_buy unstable_spice" onclick="game.collider_tab = 0">
+                            UNSTABLE SPICE
+                        </button>
+                        <button id="collider_tab2" class="spice_buy" onclick="game.collider_tab = 1">
+                            PURE ANTISPICE
+                        </button>
+                        <button id="collider_tab3" class="spice_buy" onclick="game.collider_tab = 2">
+                            RED ANTISPICE
+                        </button>
+                        <button id="collider_tab4" class="spice_buy" onclick="game.collider_tab = 3">
+                            YELLOW ANTISPICE
+                        </button>
+                        <button id="collider_tab5" class="spice_buy" onclick="game.collider_tab = 4">
+                            GREEN ANTISPICE
+                        </button>
+                    </div>
+                    <p id="collider_resource" class="collider_text">
                         Activating the Spice Collider will consume all atomic spice and create unstable spice
                     </p>
                     <p id="collider_info" class="collider_text">
                         Atomic spice efficiency: 60%
                         <br>Expected yield: <span class="unstable_spice">+0 unstable spice</span>
                     </p>
+                    <div id="collider_portion" class="distributor_block2">
+                        <p class="distributor_text">
+                            Portion of atomic spice to use:
+                        </p>
+                        <input class="input distributor_input" id="collider_input" type="number" value="100" min="1" max="100">
+                        <p class="distributor_percent">
+                            %
+                        </p>
+                    </div>
                     <button id="activate_collider" class="atomic_button co_unlocked" onclick="activate_collider()">
                         Activate Collider
                     </button>
@@ -934,6 +967,9 @@
                 </p>
                 <p class="spice_text decayed_spice">
                     decayed spice
+                </p>
+                <p id="decay_time" class="unstable_text">
+                    Your unstable spice will be completely decayed in a very long time
                 </p>
             </div>
 
@@ -991,6 +1027,81 @@
                     <button id="research_upgrade" class="spice_buy" onclick="research_upgrade()">
                         Upgrade: <span id="research_cost" class="atomic_cost" onclick="research_upgrade()">-25,000 atomic spice</span>
                     </button>
+                </div>
+            </div>
+
+            <div id="challenges_page2">
+                <p class="challenge_info">
+                    Entering a Collapse Challenge will reset your current Collapse, and disable Collapse automation in the Challenge
+                    <br>You must Collapse for the required amount of atomic spice to complete the Challenge
+                    <br><br>Collapse Challenge rewards do not apply in the Challenge they're from
+                </p>
+
+                <div class="center_button">
+                    <button class="atomic_button co_unlocked" onclick="exit_collapse_challenge()">
+                        Exit Challenge
+                    </button>
+                </div>
+            </div>
+
+            <div id="antispice_page">
+                <p id="antispice_reduction" class="antispice_text">
+                    Your antispice boosts have been reduced due to being in a Collapse challenge
+                </p>
+                <div class="antispice_panel">
+                    <div id="pure_antispice_block" class="antispice_block">
+                        <p id="pure_antispice_num" class="spice_num pure_antispice">
+                            0
+                        </p>
+                        <p class="spice_text pure_antispice">
+                            pure antispice
+                        </p>
+                        <p id="pure_antispice_boost" class="antispice_text">
+                            Your pure antispice is boosting arcane spice production 1.00x,
+                            <br>and making first generators 0.000% stronger
+                        </p>
+                    </div>
+                    <div id="red_antispice_block" class="antispice_block">
+                        <p id="red_antispice_num" class="spice_num red_antispice">
+                            0
+                        </p>
+                        <p class="spice_text red_antispice">
+                            red antispice
+                        </p>
+                        <p id="red_antispice_boost" class="antispice_text">
+                            Your red antispice is boosting red spice production 1.00x,
+                            <br>improving synergy between colors by 0.000%,
+                            <br>and making second generators 0.000% stronger
+                        </p>
+                    </div>
+                    <div id="yellow_antispice_block" class="antispice_block">
+                        <p id="yellow_antispice_num" class="spice_num yellow_antispice">
+                            0
+                        </p>
+                        <p class="spice_text yellow_antispice">
+                            yellow antispice
+                        </p>
+                        <p id="yellow_antispice_boost" class="antispice_text">
+                            Your yellow antispice is boosting yellow spice production 1.00x,
+                            <br>making color boosts and strengtheners 1.00x stronger,
+                            <br>and making third generators 0.000% stronger
+                        </p>
+                    </div>
+                </div>
+                <div class="antispice_panel">
+                    <div id="green_antispice_block" class="antispice_block">
+                        <p id="green_antispice_num" class="spice_num green_antispice">
+                            0
+                        </p>
+                        <p class="spice_text green_antispice">
+                            green antispice
+                        </p>
+                        <p id="green_antispice_boost" class="antispice_text">
+                            Your green antispice is boosting green spice production 1.00x,
+                            <br>making crystal infusions and arcane enchantments 1.00x stronger,
+                            <br>and making fourth generators 0.000% stronger
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -1138,11 +1249,12 @@
                     <br>A: Ascend
                     <br>N: Buy arcane enchantment
                     <br>C: Collapse
+                    <br>X: Exit challenge
                 </p>
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.4.2<br>Last updated January 3, 2023<br>Made by Zakuro
+                Spice Idle v1.5.0<br>Made by Zakuro<br><br>Last updated March 28, 2023
             </p>
             <a href="changelog.html" target="_blank" class="info link">Changelog</a>
             <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
