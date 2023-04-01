@@ -1995,13 +1995,13 @@ main {
     color: #fd74e2;
 }
 
-.link_red {
+.red_link {
     color: #ff2714;
     cursor: pointer;
     margin-right: 0.5em;
 }
 
-.link_red:hover {
+.red_link:hover {
     color: #fc594a;
     cursor: pointer;
     margin-right: 0.5em;
