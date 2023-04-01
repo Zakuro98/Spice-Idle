@@ -1981,6 +1981,10 @@ main {
     margin-bottom: 0.5em;
 }
 
+#red_info {
+    margin-top: 1.5em;
+}
+
 .link {
     color: #ff3dd8;
     cursor: pointer;
