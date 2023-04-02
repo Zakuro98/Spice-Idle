@@ -3143,6 +3143,10 @@ goto_tab(0)
 //load the game
 function load(savegame) {
     if (savegame === null) return
+    if (savegame.red_unlock !== undefined) {
+        alert("This save file is too powerful for this game")
+        return
+    }
 
     game = savegame
 
