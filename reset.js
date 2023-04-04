@@ -554,6 +554,7 @@ function ascend(override) {
 
             game.ascend_time_played = 0
             game.real_time_played[2] = 0
+            if (game.collapse_challenge === 7) game.ascend_challenge_timer = 0
 
             if (game.ascend_challenge !== 0) {
                 game.ascend_complete[game.ascend_challenge - 1] = true
@@ -650,6 +651,7 @@ function ascend(override) {
         if (override) {
             game.ascend_time_played = 0
             game.real_time_played[2] = 0
+            if (game.collapse_challenge === 7) game.ascend_challenge_timer = 0
 
             game.autopr_goal2[0] = 0
             game.autopr_goal2[1] = new Decimal(1)
