@@ -396,8 +396,9 @@ function tick() {
     game.unstable_spice = game.unstable_spice.mul(
         0.5 ** (1 / (delta_time * game.halflife))
     )
-    game.decayed_spice = game.total_unstable_spice.sub(
-        game.unstable_spice.round()
+    game.decayed_spice = Decimal.max(
+        game.total_unstable_spice.sub(game.unstable_spice.round()),
+        0
     )
 
     let decayed_amount = game.decayed_spice
@@ -461,10 +462,13 @@ function tick() {
             .pow(game.atomic_spice.log(10) * 0.0003333 + 1)
             .floor()
     } else if (game.collapse_complete[1] >= 1) {
-        game.free_deity = game.unstable_boost
-            .pow((1 + game.collapse_complete[1]) / 60000)
-            .floor()
-            .sub(1)
+        game.free_deity = Decimal.max(
+            game.unstable_boost
+                .pow((1 + game.collapse_complete[1]) / 60000)
+                .floor()
+                .sub(1),
+            0
+        )
     } else {
         game.free_deity = new Decimal(0)
     }
@@ -2440,32 +2444,47 @@ function tick() {
         let completions = game.collapse_complete[game.collapse_challenge - 7]
         let exponent = completions + game.pending_completions
 
-        if (c.scaling1 !== undefined && completions >= c.scaling1) {
-            if (completions >= c.scaling1) {
-                exponent = c.scaling1 + (completions - c.scaling1) * 1.5
+        if (
+            c.scaling1 !== undefined &&
+            completions + game.pending_completions >= c.scaling1
+        ) {
+            if (completions + game.pending_completions >= c.scaling1) {
+                exponent =
+                    c.scaling1 +
+                    (completions + game.pending_completions - c.scaling1) * 1.5
             }
 
             if (c.scaling2 !== undefined) {
-                if (completions >= c.scaling2) {
+                if (completions + game.pending_completions >= c.scaling2) {
                     exponent =
-                        (completions - c.scaling2) * 2 +
+                        (completions + game.pending_completions - c.scaling2) *
+                            2 +
                         (c.scaling2 - c.scaling1) * 1.5 +
                         c.scaling1
                 }
 
                 if (c.scaling3 !== undefined) {
-                    if (completions >= c.scaling3) {
+                    if (completions + game.pending_completions >= c.scaling3) {
                         exponent =
-                            (completions - c.scaling3) * 3 +
+                            (completions +
+                                game.pending_completions -
+                                c.scaling3) *
+                                3 +
                             (c.scaling3 - c.scaling2) * 2 +
                             (c.scaling2 - c.scaling1) * 1.5 +
                             c.scaling1
                     }
 
                     if (c.scaling4 !== undefined) {
-                        if (completions >= c.scaling4) {
+                        if (
+                            completions + game.pending_completions >=
+                            c.scaling4
+                        ) {
                             exponent =
-                                (completions - c.scaling4) * 5 +
+                                (completions +
+                                    game.pending_completions -
+                                    c.scaling4) *
+                                    5 +
                                 (c.scaling4 - c.scaling3) * 3 +
                                 (c.scaling3 - c.scaling2) * 2 +
                                 (c.scaling2 - c.scaling1) * 1.5 +
