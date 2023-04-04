@@ -3647,8 +3647,14 @@ function ascension_update() {
 
     if (game.half_distribute_unlocked) {
         document.getElementById("half_distribute").style.display = "block"
+        document.getElementById("jera_half").style.display = "block"
+        document.getElementById("raido_half").style.display = "block"
+        document.getElementById("othala_half").style.display = "block"
     } else {
         document.getElementById("half_distribute").style.display = "none"
+        document.getElementById("jera_half").style.display = "none"
+        document.getElementById("raido_half").style.display = "none"
+        document.getElementById("othala_half").style.display = "none"
     }
 
     if (game.research_complete[4] >= 1) {
@@ -5218,14 +5224,27 @@ function collapse_update() {
                     c.desc +=
                         "<br>Reward: Normal spice multipliers are " +
                         format_dec(2.5, game.notation) +
-                        "% stronger, and unlock 2 researches"
+                        "% stronger<br>Next research unlock in " +
+                        format_small(1) +
+                        " completion"
+                } else if (game.collapse_complete[c.id] === 1) {
+                    c.desc +=
+                        "<br>Currently: Normal spice multipliers are " +
+                        format_dec(2.5, game.notation) +
+                        "% stronger<br>Next: Normal spice multipliers are " +
+                        format_dec(5, game.notation) +
+                        "% stronger<br>Next research unlock in " +
+                        format_small(2) +
+                        " completions"
                 } else if (game.collapse_complete[c.id] === 2) {
                     c.desc +=
                         "<br>Currently: Normal spice multipliers are " +
                         format_dec(5, game.notation) +
                         "% stronger<br>Next: Normal spice multipliers are " +
                         format_dec(7.5, game.notation) +
-                        "% stronger, and unlock a research"
+                        "% stronger<br>Next research unlock in " +
+                        format_small(1) +
+                        " completion"
                 } else {
                     c.desc +=
                         "<br>Currently: Normal spice multipliers are " +
@@ -5246,7 +5265,30 @@ function collapse_update() {
                     "Unstable spice decay gives no boost, it instead produces sixth generators"
                 if (game.collapse_complete[c.id] === 0) {
                     c.desc +=
-                        "<br>Reward: Unstable spice decay now also produces arcane spice deities, and unlock a research"
+                        "<br>Reward: Unstable spice decay now also produces arcane spice deities<br>Next research unlock in " +
+                        format_small(1) +
+                        " completion"
+                } else if (game.collapse_complete[c.id] === 1) {
+                    c.desc +=
+                        "<br>Currently: Unstable spice decay has produced " +
+                        format_inum(
+                            game.unstable_boost
+                                .pow(2 / 60000)
+                                .floor()
+                                .sub(1),
+                            game.notation
+                        ) +
+                        " arcane spice deities<br>Next: Unstable spice decay will produce " +
+                        format_inum(
+                            game.unstable_boost
+                                .pow(3 / 60000)
+                                .floor()
+                                .sub(1),
+                            game.notation
+                        ) +
+                        " arcane spice deities<br>Next research unlock in " +
+                        format_small(2) +
+                        " completions"
                 } else if (game.collapse_complete[c.id] === 2) {
                     c.desc +=
                         "<br>Currently: Unstable spice decay has produced " +
@@ -5265,7 +5307,30 @@ function collapse_update() {
                                 .sub(1),
                             game.notation
                         ) +
-                        " arcane spice deities, and unlock a research"
+                        " arcane spice deities<br>Next research unlock in " +
+                        format_small(1) +
+                        " completion"
+                } else if (game.collapse_complete[c.id] === 3) {
+                    c.desc +=
+                        "<br>Currently: Unstable spice decay has produced " +
+                        format_inum(
+                            game.unstable_boost
+                                .pow(4 / 60000)
+                                .floor()
+                                .sub(1),
+                            game.notation
+                        ) +
+                        " arcane spice deities<br>Next: Unstable spice decay will produce " +
+                        format_inum(
+                            game.unstable_boost
+                                .pow(5 / 60000)
+                                .floor()
+                                .sub(1),
+                            game.notation
+                        ) +
+                        " arcane spice deities<br>Next research unlock in " +
+                        format_small(2) +
+                        " completions"
                 } else if (game.collapse_complete[c.id] === 4) {
                     c.desc +=
                         "<br>Currently: Unstable spice decay has produced " +
@@ -5284,7 +5349,9 @@ function collapse_update() {
                                 .sub(1),
                             game.notation
                         ) +
-                        " arcane spice deities, and unlock a research"
+                        " arcane spice deities<br>Next research unlock in " +
+                        format_small(1) +
+                        " completion"
                 } else {
                     c.desc +=
                         "<br>Currently: Unstable spice decay has produced " +
@@ -5315,21 +5382,57 @@ function collapse_update() {
                     c.desc +=
                         "<br>Reward: The game runs " +
                         format_num(2, game.notation) +
-                        "x faster, and unlock a research"
+                        "x faster<br>Next research unlock in " +
+                        format_small(1) +
+                        " completion"
+                } else if (game.collapse_complete[c.id] <= 2) {
+                    c.desc +=
+                        "<br>Currently: The game runs " +
+                        format_num(
+                            2 ** game.collapse_complete[c.id],
+                            game.notation
+                        ) +
+                        "x faster<br>Next: The game runs " +
+                        format_num(
+                            2 ** (game.collapse_complete[c.id] + 1),
+                            game.notation
+                        ) +
+                        "x faster<br>Next research unlock in " +
+                        format_small(4 - game.collapse_complete[c.id]) +
+                        " completions"
                 } else if (game.collapse_complete[c.id] === 3) {
                     c.desc +=
                         "<br>Currently: The game runs " +
                         format_num(8, game.notation) +
                         "x faster<br>Next: The game runs " +
                         format_num(16, game.notation) +
-                        "x faster, and unlock a research"
+                        "x faster<br>Next research unlock in " +
+                        format_small(1) +
+                        " completion"
+                } else if (game.collapse_complete[c.id] <= 5) {
+                    c.desc +=
+                        "<br>Currently: The game runs " +
+                        format_num(
+                            2 ** game.collapse_complete[c.id],
+                            game.notation
+                        ) +
+                        "x faster<br>Next: The game runs " +
+                        format_num(
+                            2 ** (game.collapse_complete[c.id] + 1),
+                            game.notation
+                        ) +
+                        "x faster<br>Next research unlock in " +
+                        format_small(7 - game.collapse_complete[c.id]) +
+                        " completions"
                 } else if (game.collapse_complete[c.id] === 6) {
                     c.desc +=
                         "<br>Currently: The game runs " +
                         format_num(64, game.notation) +
                         "x faster<br>Next: The game runs " +
                         format_num(128, game.notation) +
-                        "x faster, and unlock a research"
+                        "x faster<br>Next research unlock in " +
+                        format_small(1) +
+                        " completion"
                 } else {
                     c.desc +=
                         "<br>Currently: The game runs " +
@@ -5354,7 +5457,9 @@ function collapse_update() {
                     c.desc +=
                         "<br>Reward: Color augments begin at " +
                         format_small(4000000) +
-                        " color boosts, and unlock a research"
+                        " color boosts<br>Next research unlock in " +
+                        format_small(1) +
+                        " completion"
                 } else {
                     c.desc +=
                         "<br>Currently: Color augments begin at " +
