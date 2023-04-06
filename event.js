@@ -2568,6 +2568,10 @@ function buy_ascension_upgrade(id, budget) {
                         0
                     )
                     game.ascend_bought[id] = true
+                    if (id === 16 && game.collapse === 0) {
+                        confirmations("challenge")
+                        confirmations("challenge")
+                    }
 
                     for (let i = 0; i < 3; i++) {
                         game.autods_budget[i] = Math.max(
@@ -2617,9 +2621,13 @@ function enter_ascension_challenge(id) {
             if (game.ascend_challenge === 5) game.ascend_challenge_timer = 0
         }
     } else {
-        alert(
-            "You cannot enter an Ascension Challenge if you are already in one!"
-        )
+        if (game.ascend_challenge === id) {
+            ascend()
+        } else {
+            alert(
+                "You cannot enter an Ascension Challenge if you are already in one!"
+            )
+        }
     }
 }
 
@@ -3145,9 +3153,13 @@ function enter_collapse_challenge(id) {
             if (game.collapse_challenge === 9) game.gamespeed = 1 / 99999
         }
     } else {
-        alert(
-            "You cannot enter a Collapse Challenge if you are already in one!"
-        )
+        if (game.collapse_challenge === id) {
+            collapse()
+        } else {
+            alert(
+                "You cannot enter a Collapse Challenge if you are already in one!"
+            )
+        }
     }
 }
 
