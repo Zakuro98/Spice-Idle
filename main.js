@@ -978,11 +978,11 @@ function tick() {
             ].mul(
                 Decimal.pow(
                     1.08 + 0.04 * game.ascend_bought[6],
-                    game.crystal_infusion +
+                    (game.crystal_infusion +
                         game.prestige_bought[20] *
                             12 *
-                            (1 + game.ascend_bought[5]) *
-                            antispice_infusions
+                            (1 + game.ascend_bought[5])) *
+                        antispice_infusions
                 )
             )
         }
@@ -1509,6 +1509,35 @@ function tick() {
                     )
             }
         }
+
+        game.total_red_spice_boost[i] = Decimal.max(
+            game.total_red_spice_boost[i],
+            0
+        )
+        game.total_yellow_spice_boost[i] = Decimal.max(
+            game.total_yellow_spice_boost[i],
+            0
+        )
+        game.total_green_spice_boost[i] = Decimal.max(
+            game.total_green_spice_boost[i],
+            0
+        )
+        game.total_blue_spice_boost[i] = Decimal.max(
+            game.total_blue_spice_boost[i],
+            0
+        )
+        game.total_pink_spice_boost[i] = Decimal.max(
+            game.total_pink_spice_boost[i],
+            0
+        )
+        game.total_crystal_spice_boost[i] = Decimal.max(
+            game.total_crystal_spice_boost[i],
+            0
+        )
+        game.total_arcane_spice_boost[i] = Decimal.max(
+            game.total_arcane_spice_boost[i],
+            0
+        )
     }
 
     game.red_spice = game.red_spice.add(
@@ -2161,7 +2190,7 @@ function tick() {
         }
     }
 
-    if (game.ascend_bought[25]) {
+    if (game.ascend_bought[25] && game.color_boosts >= 10) {
         let amount = new Decimal(0)
         if (game.color_boosts <= 16)
             amount = new Decimal(2).pow((game.color_boosts - 10) / 3)
@@ -2433,9 +2462,9 @@ function tick() {
 
     game.atomic_portion =
         Number(document.getElementById("collider_input").value) / 100
-    if (game.atomic_portion === NaN) atomic_portion = 1
-    if (game.atomic_portion < 0.01) atomic_portion = 0.01
-    if (game.atomic_portion > 1) atomic_portion = 1
+    if (game.atomic_portion === NaN) game.atomic_portion = 1
+    if (game.atomic_portion < 0.01) game.atomic_portion = 0.01
+    if (game.atomic_portion > 1) game.atomic_portion = 1
 
     game.augment_start = 2000000 + 2000000 * game.collapse_complete[3]
 
@@ -2790,6 +2819,22 @@ document.body.addEventListener("keyup", function (event) {
     if (event.code === "KeyN") key.n = false
     if (event.code === "KeyC") key.c = false
     if (event.code === "KeyX") key.x = false
+})
+
+window.addEventListener("blur", function () {
+    for (let i = 0; i < 6; i++) {
+        key.digit[i] = false
+    }
+
+    key.s = false
+    key.m = false
+    key.b = false
+    key.p = false
+    key.i = false
+    key.a = false
+    key.n = false
+    key.c = false
+    key.x = false
 })
 
 function hotkey_tick() {
@@ -3609,6 +3654,7 @@ function graphics_loop() {
         research_update()
     }
     if (game.tab === 5) stats_update()
+    if (game.tab === 6) settings_update()
 
     window.setTimeout(graphics_loop, game.refresh_rate)
 }
