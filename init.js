@@ -1427,19 +1427,19 @@ new ascension_challenge(
 //challenge 4
 new ascension_challenge(
     "Generators 4-6 don't produce anything<br>Reward: Multipliers for generators 4-6 are slightly stronger",
-    Decimal.pow(10, 5850),
+    Decimal.pow(10, 4650),
     27
 )
 //challenge 5
 new ascension_challenge(
     "Normal/crystallized spice production stops after 1 second,<br>arcane enchantments do nothing except refresh production<br>Reward: Boosts from rune power are 4x stronger",
-    Decimal.pow(10, 15000),
+    Decimal.pow(10, 14000),
     28
 )
 //challenge 6
 new ascension_challenge(
     "Same as Challenge 1, but rune power production is disabled<br>Reward: Unlock Collapse",
-    Decimal.pow(10, 1440),
+    Decimal.pow(10, 1450),
     34
 )
 //done initializing ascension challenges
