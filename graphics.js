@@ -75,13 +75,6 @@ function spice_update() {
 
     document.getElementById("red_spice_num").innerHTML =
         format_idec(game.red_spice, game.notation) + " g"
-    document.getElementById("red_spice_up").innerHTML =
-        "+" +
-        format_idec(
-            game.red_spice_gen[0].floor().mul(game.total_red_spice_boost[0]),
-            game.notation
-        ) +
-        " g red spice/sec"
 
     let effective_red_spice = game.red_spice
     if (game.red_spice.cmp(Decimal.pow(10, 10 ** 12)) >= 0)
@@ -90,114 +83,143 @@ function spice_update() {
             .pow(1 / 3)
             .mul(Decimal.pow(10, 10 ** 12))
 
+    let synergy_str = ""
     if (
-        game.ascend_bought[30] &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
+        game.prestige_bought[11] >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
     ) {
-        if (game.prestige_bought[11] >= 1) {
-            document.getElementById("red_spice_up").innerHTML =
-                "+" +
+        synergy_str =
+            "<br><br>Red spice synergies:<br>Yellow, green, blue & pink spice production " +
+            format_idec(
+                Decimal.max(effective_red_spice.pow(0.005).add(1), 1),
+                game.notation
+            ) +
+            "x"
+
+        if (game.ascend_bought[0]) {
+            synergy_str =
+                "<br><br>Red spice synergies:<br>Yellow, green, blue & pink spice production " +
                 format_idec(
-                    game.red_spice_gen[0]
-                        .floor()
-                        .mul(game.total_red_spice_boost[0]),
-                    game.notation
-                ) +
-                " g red spice/sec<br><br>Your red spice is boosting yellow, green, blue, & pink spice production " +
-                format_idec(
-                    effective_red_spice.pow(0.0075).add(1).pow(antispice_power),
-                    game.notation
-                ) +
-                "x,<br>boosting crystallized spice production " +
-                format_idec(
-                    effective_red_spice
-                        .pow(0.00004)
-                        .add(1)
-                        .pow(antispice_power),
-                    game.notation
-                ) +
-                "x,<br>and boosting arcane spice production " +
-                format_idec(
-                    effective_red_spice
-                        .pow(0.00000025)
-                        .add(1)
-                        .pow(antispice_power),
-                    game.notation
-                ) +
-                "x"
-        }
-    } else if (
-        game.ascend_bought[18] &&
-        game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
-    ) {
-        if (game.prestige_bought[11] >= 1) {
-            document.getElementById("red_spice_up").innerHTML =
-                "+" +
-                format_idec(
-                    game.red_spice_gen[0]
-                        .floor()
-                        .mul(game.total_red_spice_boost[0]),
-                    game.notation
-                ) +
-                " g red spice/sec<br><br>Your red spice is boosting yellow, green, blue, & pink spice production " +
-                format_idec(
-                    effective_red_spice.pow(0.0075).add(1).pow(antispice_power),
-                    game.notation
-                ) +
-                "x,<br>and boosting crystallized spice production " +
-                format_idec(
-                    effective_red_spice
-                        .pow(0.00004)
-                        .add(1)
-                        .pow(antispice_power),
-                    game.notation
-                ) +
-                "x"
-        }
-    } else {
-        if (game.prestige_bought[11] >= 1) {
-            if (game.ascend_bought[0]) {
-                document.getElementById("red_spice_up").innerHTML =
-                    "+" +
-                    format_idec(
-                        game.red_spice_gen[0]
-                            .floor()
-                            .mul(game.total_red_spice_boost[0]),
-                        game.notation
-                    ) +
-                    " g red spice/sec<br><br>Your red spice is boosting yellow, green, blue, & pink spice production " +
-                    format_idec(
+                    Decimal.max(
                         effective_red_spice
                             .pow(0.0075)
                             .add(1)
                             .pow(antispice_power),
-                        game.notation
-                    ) +
-                    "x"
-            } else {
-                document.getElementById("red_spice_up").innerHTML =
-                    "+" +
-                    format_idec(
-                        game.red_spice_gen[0]
-                            .floor()
-                            .mul(game.total_red_spice_boost[0]),
-                        game.notation
-                    ) +
-                    " g red spice/sec<br><br>Your red spice is boosting yellow, green, blue, & pink spice production " +
-                    format_idec(
-                        effective_red_spice.pow(0.005).add(1),
-                        game.notation
-                    ) +
-                    "x"
-            }
+                        1
+                    ),
+                    game.notation
+                ) +
+                "x"
+        }
+
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            game.prestige_bought[11] === 0
+        ) {
+            synergy_str =
+                "<br><br>Red spice synergies:<br>Yellow, green, blue & pink spice production " +
+                format_dec(1, game.notation) +
+                "x"
         }
     }
+    if (game.ascend_bought[18] || game.collapse >= 1) {
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            !game.ascend_bought[18]
+        ) {
+            synergy_str +=
+                "<br>Crystallized spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        } else {
+            synergy_str +=
+                "<br>Crystallized spice production " +
+                format_idec(
+                    Decimal.max(
+                        effective_red_spice
+                            .pow(0.00004)
+                            .add(1)
+                            .pow(antispice_power),
+                        1
+                    ),
+                    game.notation
+                ) +
+                "x"
+        }
+    }
+    if (game.ascend_bought[30] || game.collapse >= 1) {
+        if (
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            !game.ascend_bought[30]
+        ) {
+            synergy_str +=
+                "<br>Arcane spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        } else {
+            synergy_str +=
+                "<br>Arcane spice production " +
+                format_idec(
+                    Decimal.max(
+                        effective_red_spice
+                            .pow(0.00000025)
+                            .add(1)
+                            .pow(antispice_power),
+                        1
+                    ),
+                    game.notation
+                ) +
+                "x"
+        }
+    }
+    document.getElementById("red_spice_up").innerHTML =
+        "+" +
+        format_idec(
+            game.red_spice_gen[0].floor().mul(game.total_red_spice_boost[0]),
+            game.notation
+        ) +
+        " g red spice/sec" +
+        synergy_str
 
     document.getElementById("yellow_spice_num").innerHTML =
         format_idec(game.yellow_spice, game.notation) + " g"
+
+    synergy_str = ""
+    if (
+        game.prestige_bought[8] >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    ) {
+        synergy_str =
+            "<br><br>Yellow spice synergies:<br>Red spice production " +
+            format_idec(
+                Decimal.max(
+                    game.yellow_spice.pow(0.075).add(1).pow(antispice_power),
+                    1
+                ),
+                game.notation
+            ) +
+            "x"
+
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            game.prestige_bought[8] === 0
+        ) {
+            synergy_str =
+                "<br><br>Yellow spice synergies:<br>Red spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        }
+    }
+
     document.getElementById("yellow_spice_up").innerHTML =
         "+" +
         format_idec(
@@ -206,30 +228,42 @@ function spice_update() {
                 .mul(game.total_yellow_spice_boost[0]),
             game.notation
         ) +
-        " g yellow spice/sec"
+        " g yellow spice/sec" +
+        synergy_str
+
+    document.getElementById("green_spice_num").innerHTML =
+        format_idec(game.green_spice, game.notation) + " g"
+
+    synergy_str = ""
     if (
-        game.prestige_bought[8] >= 1 &&
-        game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
-    )
-        document.getElementById("yellow_spice_up").innerHTML =
-            "+" +
+        game.prestige_bought[8] >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    ) {
+        synergy_str =
+            "<br><br>Green spice synergies:<br>Yellow spice production " +
             format_idec(
-                game.yellow_spice_gen[0]
-                    .floor()
-                    .mul(game.total_yellow_spice_boost[0]),
-                game.notation
-            ) +
-            " g yellow spice/sec<br><br>Your yellow spice is boosting red spice production " +
-            format_idec(
-                game.yellow_spice.pow(0.075).add(1).pow(antispice_power),
+                Decimal.max(
+                    game.green_spice.pow(0.075).add(1).pow(antispice_power),
+                    1
+                ),
                 game.notation
             ) +
             "x"
 
-    document.getElementById("green_spice_num").innerHTML =
-        format_idec(game.green_spice, game.notation) + " g"
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            game.prestige_bought[8] === 0
+        ) {
+            synergy_str =
+                "<br><br>Green spice synergies:<br>Yellow spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        }
+    }
+
     document.getElementById("green_spice_up").innerHTML =
         "+" +
         format_idec(
@@ -238,118 +272,119 @@ function spice_update() {
                 .mul(game.total_green_spice_boost[0]),
             game.notation
         ) +
-        " g green spice/sec"
+        " g green spice/sec" +
+        synergy_str
+
+    document.getElementById("blue_spice_num").innerHTML =
+        format_idec(game.blue_spice, game.notation) + " g"
+
+    synergy_str = ""
     if (
-        game.prestige_bought[8] >= 1 &&
-        game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
-    )
-        document.getElementById("green_spice_up").innerHTML =
-            "+" +
+        game.prestige_bought[8] >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    ) {
+        synergy_str =
+            "<br><br>Blue spice synergies:<br>Green spice production " +
             format_idec(
-                game.green_spice_gen[0]
-                    .floor()
-                    .mul(game.total_green_spice_boost[0]),
-                game.notation
-            ) +
-            " g green spice/sec<br><br>Your green spice is boosting yellow spice production " +
-            format_idec(
-                game.green_spice.pow(0.075).add(1).pow(antispice_power),
+                Decimal.max(
+                    game.blue_spice.pow(0.075).add(1).pow(antispice_power),
+                    1
+                ),
                 game.notation
             ) +
             "x"
 
-    document.getElementById("blue_spice_num").innerHTML =
-        format_idec(game.blue_spice, game.notation) + " g"
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            game.prestige_bought[8] === 0
+        ) {
+            synergy_str =
+                "<br><br>Blue spice synergies:<br>Green spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        }
+    }
+
     document.getElementById("blue_spice_up").innerHTML =
         "+" +
         format_idec(
             game.blue_spice_gen[0].floor().mul(game.total_blue_spice_boost[0]),
             game.notation
         ) +
-        " g blue spice/sec"
-    if (
-        game.prestige_bought[8] >= 1 &&
-        game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
-    )
-        document.getElementById("blue_spice_up").innerHTML =
-            "+" +
-            format_idec(
-                game.blue_spice_gen[0]
-                    .floor()
-                    .mul(game.total_blue_spice_boost[0]),
-                game.notation
-            ) +
-            " g blue spice/sec<br><br>Your blue spice is boosting green spice production " +
-            format_idec(
-                game.blue_spice.pow(0.075).add(1).pow(antispice_power),
-                game.notation
-            ) +
-            "x"
+        " g blue spice/sec" +
+        synergy_str
 
     document.getElementById("pink_spice_num").innerHTML =
         format_idec(game.pink_spice, game.notation) + " g"
 
-    let pink_str =
+    synergy_str = ""
+    if (
+        game.prestige_bought[8] >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    ) {
+        synergy_str =
+            "<br><br>Pink spice synergies:<br>Blue spice production " +
+            format_idec(
+                Decimal.max(
+                    game.pink_spice.pow(0.075).add(1).pow(antispice_power),
+                    1
+                ),
+                game.notation
+            ) +
+            "x"
+
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            game.prestige_bought[8] === 0
+        ) {
+            synergy_str =
+                "<br><br>Pink spice synergies:<br>Blue spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        }
+    }
+    if (game.ascend_bought[13] || game.collapse >= 1) {
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            !game.ascend_bought[13]
+        ) {
+            synergy_str +=
+                "<br>Crystallized spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        } else {
+            synergy_str +=
+                "<br>Crystallized spice production " +
+                format_idec(
+                    Decimal.max(
+                        game.pink_spice
+                            .pow(0.00008)
+                            .add(1)
+                            .pow(antispice_power),
+                        1
+                    ),
+                    game.notation
+                ) +
+                "x"
+        }
+    }
+
+    document.getElementById("pink_spice_up").innerHTML =
         "+" +
         format_idec(
             game.pink_spice_gen[0].floor().mul(game.total_pink_spice_boost[0]),
             game.notation
         ) +
-        " g pink spice/sec"
-
-    if (
-        game.ascend_bought[13] &&
-        game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
-    ) {
-        if (
-            game.prestige_bought[8] >= 1 &&
-            game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6 &&
-            game.collapse_challenge !== 7
-        )
-            pink_str +=
-                "<br><br>Your pink spice is boosting blue spice production " +
-                format_idec(
-                    game.pink_spice.pow(0.075).add(1).pow(antispice_power),
-                    game.notation
-                ) +
-                "x,<br>and boosting crystallized spice production " +
-                format_idec(
-                    game.pink_spice.pow(0.00008).add(1).pow(antispice_power),
-                    game.notation
-                ) +
-                "x"
-        else
-            pink_str +=
-                "<br><br>Your pink spice is boosting crystallized spice production " +
-                format_idec(
-                    game.pink_spice.pow(0.00008).add(1).pow(antispice_power),
-                    game.notation
-                ) +
-                "x"
-    } else {
-        if (
-            game.prestige_bought[8] >= 1 &&
-            game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6 &&
-            game.collapse_challenge !== 7
-        )
-            pink_str +=
-                "<br><br>Your pink spice is boosting blue spice production " +
-                format_idec(
-                    game.pink_spice.pow(0.075).add(1).pow(antispice_power),
-                    game.notation
-                ) +
-                "x"
-    }
-
-    document.getElementById("pink_spice_up").innerHTML = pink_str
+        " g pink spice/sec" +
+        synergy_str
 
     for (const gen of spice_gen.generators) {
         let element = spice_map.get(gen)
@@ -616,6 +651,11 @@ function spice_update() {
                                     game.notation
                                 ) +
                                 " red spice galaxies/sec"
+                        else if (game.ascend >= 1 || game.collapse >= 1)
+                            info_str +=
+                                ",<br>and producing " +
+                                format_dec(0, game.notation) +
+                                " red spice galaxies/sec"
                     } else {
                         info_str +=
                             " yellow spice " +
@@ -796,6 +836,11 @@ function spice_update() {
                                     game.notation
                                 ) +
                                 " yellow spice galaxies/sec"
+                        else if (game.ascend >= 1 || game.collapse >= 1)
+                            info_str +=
+                                ",<br>and producing " +
+                                format_dec(0, game.notation) +
+                                " yellow spice galaxies/sec"
                     } else {
                         info_str +=
                             " green spice " +
@@ -970,6 +1015,11 @@ function spice_update() {
                                         .pow(0.1),
                                     game.notation
                                 ) +
+                                " green spice galaxies/sec"
+                        else if (game.ascend >= 1 || game.collapse >= 1)
+                            info_str +=
+                                ",<br>and producing " +
+                                format_dec(0, game.notation) +
                                 " green spice galaxies/sec"
                     } else {
                         info_str +=
@@ -1173,6 +1223,11 @@ function spice_update() {
                                         .pow(0.1),
                                     game.notation
                                 ) +
+                                " blue spice galaxies/sec"
+                        else if (game.ascend >= 1 || game.collapse >= 1)
+                            info_str +=
+                                ",<br>and producing " +
+                                format_dec(0, game.notation) +
                                 " blue spice galaxies/sec"
                     } else {
                         info_str +=
@@ -1976,6 +2031,115 @@ function spice_update() {
             if (game.prestige_bought[22] >= 1)
                 document.getElementById("color_shift_button").innerHTML =
                     "Gain a spice boost"
+        } else if (game.collapse >= 1) {
+            if (game.color_boosts < 4) {
+                document.getElementById("color_shift_header").innerHTML =
+                    "Color Shift"
+                document.getElementById("color_shift_info").innerHTML =
+                    "You have " +
+                    format_small(game.color_boosts) +
+                    " color shifts,<br>boosting ALL spice generators " +
+                    format_idec(
+                        new Decimal(
+                            2 +
+                                0.2 * game.prestige_bought[2] +
+                                2 *
+                                    (game.ascend_bought[2] +
+                                        game.ascend_bought[14])
+                        ).pow(game.color_boosts * antispice_boosts),
+                        game.notation
+                    ) +
+                    "x<br><br>You have not yet reached Color augments"
+                if (game.prestige_bought[18] >= 1)
+                    document.getElementById("color_shift_info").innerHTML =
+                        "You have " +
+                        format_small(game.color_boosts) +
+                        " color shifts,<br>boosting ALL spice generators " +
+                        format_idec(
+                            new Decimal(
+                                6 +
+                                    2 *
+                                        (game.ascend_bought[2] +
+                                            game.ascend_bought[14])
+                            ).pow(game.color_boosts * antispice_boosts),
+                            game.notation
+                        ) +
+                        "x<br><br>You have not yet reached Color augments"
+                if (
+                    game.ascend_challenge === 1 ||
+                    game.ascend_challenge === 6 ||
+                    game.collapse_challenge === 7
+                )
+                    document.getElementById("color_shift_info").innerHTML =
+                        "You have " +
+                        format_small(game.color_boosts) +
+                        " color shifts,<br>boosting ALL spice generators " +
+                        format_idec(
+                            new Decimal(2).pow(
+                                game.color_boosts * antispice_boosts
+                            ),
+                            game.notation
+                        ) +
+                        "x<br><br>You have not yet reached Color augments"
+                document.getElementById("color_shift_button").innerHTML =
+                    "Reset for a new spice color"
+            } else {
+                document.getElementById("color_shift_header").innerHTML =
+                    "Color Boost"
+                document.getElementById("color_shift_info").innerHTML =
+                    "You have " +
+                    format_small(game.color_boosts) +
+                    " color boosts,<br>boosting ALL spice generators " +
+                    format_idec(
+                        new Decimal(
+                            2 +
+                                0.2 * game.prestige_bought[2] +
+                                2 *
+                                    (game.ascend_bought[2] +
+                                        game.ascend_bought[14])
+                        ).pow((game.color_boosts * 2 - 4) * antispice_boosts),
+                        game.notation
+                    ) +
+                    "x<br><br>You have not yet reached Color augments"
+                if (game.prestige_bought[18] >= 1)
+                    document.getElementById("color_shift_info").innerHTML =
+                        "You have " +
+                        format_small(game.color_boosts) +
+                        " color boosts,<br>boosting ALL spice generators " +
+                        format_idec(
+                            new Decimal(
+                                6 +
+                                    2 *
+                                        (game.ascend_bought[2] +
+                                            game.ascend_bought[14])
+                            ).pow(
+                                (game.color_boosts * 2 - 4) * antispice_boosts
+                            ),
+                            game.notation
+                        ) +
+                        "x<br><br>You have not yet reached Color augments"
+                if (
+                    game.ascend_challenge === 1 ||
+                    game.ascend_challenge === 6 ||
+                    game.collapse_challenge === 7
+                )
+                    document.getElementById("color_shift_info").innerHTML =
+                        "You have " +
+                        format_small(game.color_boosts) +
+                        " color boosts,<br>boosting ALL spice generators " +
+                        format_idec(
+                            new Decimal(2).pow(
+                                (game.color_boosts * 2 - 4) * antispice_boosts
+                            ),
+                            game.notation
+                        ) +
+                        "x<br><br>You have not yet reached Color augments"
+                document.getElementById("color_shift_button").innerHTML =
+                    "Reset for a spice boost"
+                if (game.prestige_bought[22] >= 1)
+                    document.getElementById("color_shift_button").innerHTML =
+                        "Gain a spice boost"
+            }
         }
         if (
             game.color_boosts >= 6 &&
@@ -2649,10 +2813,13 @@ function prestige_update() {
             }
         }
 
-        let str =
-            "+" +
-            format_idec(amount.div(10), game.notation) +
-            " μg rainbow spice/sec"
+        let str = "+" + format_dec(0, game.notation) + " μg rainbow spice/sec"
+        if (game.color_boosts >= 10) {
+            str =
+                "+" +
+                format_idec(amount.div(10), game.notation) +
+                " μg rainbow spice/sec"
+        }
 
         document.getElementById("rainbow_spice_up").innerHTML = str
         document.getElementById("rainbow_spice_up2").innerHTML = str
@@ -3112,6 +3279,65 @@ function crystal_update() {
 
     document.getElementById("crystal_spice_num").innerHTML =
         format_idec(game.crystal_spice, game.notation) + " g"
+
+    let synergy_str = ""
+    if (
+        game.prestige_bought[14] >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    ) {
+        synergy_str =
+            "<br><br>Crystallized spice synergies:<br>Pink spice production " +
+            format_idec(
+                Decimal.max(
+                    game.crystal_spice.pow(3).add(1).pow(antispice_power),
+                    1
+                ),
+                game.notation
+            ) +
+            "x"
+
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            game.prestige_bought[14] === 0
+        ) {
+            synergy_str =
+                "<br><br>Crystallized spice synergies:<br>Pink spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        }
+    }
+    if (
+        game.prestige_bought[16] >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    ) {
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            game.prestige_bought[16] === 0
+        ) {
+            synergy_str +=
+                "<br>Red, yellow, green & blue spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        } else {
+            synergy_str +=
+                "<br>Red, yellow, green & blue spice production " +
+                format_idec(
+                    Decimal.max(
+                        game.crystal_spice.pow(12).add(1).pow(antispice_power),
+                        1
+                    ),
+                    game.notation
+                ) +
+                "x"
+        }
+    }
+
     document.getElementById("crystal_spice_up").innerHTML =
         "+" +
         format_idec(
@@ -3121,50 +3347,8 @@ function crystal_update() {
                 .mul(3),
             game.notation
         ) +
-        " g crystallized spice/sec"
-    if (
-        game.prestige_bought[14] >= 1 &&
-        game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
-    ) {
-        document.getElementById("crystal_spice_up").innerHTML =
-            "+" +
-            format_idec(
-                game.crystal_spice_gen[0]
-                    .floor()
-                    .mul(game.total_crystal_spice_boost[0])
-                    .mul(3),
-                game.notation
-            ) +
-            " g crystallized spice/sec<br><br>Your crystallized spice is boosting pink spice production " +
-            format_idec(
-                game.crystal_spice.pow(3).add(1).pow(antispice_power),
-                game.notation
-            ) +
-            "x"
-        if (game.prestige_bought[16] >= 1)
-            document.getElementById("crystal_spice_up").innerHTML =
-                "+" +
-                format_idec(
-                    game.crystal_spice_gen[0]
-                        .floor()
-                        .mul(game.total_crystal_spice_boost[0])
-                        .mul(3),
-                    game.notation
-                ) +
-                " g crystallized spice/sec<br><br>Your crystallized spice is boosting pink spice production " +
-                format_idec(
-                    game.crystal_spice.pow(3).add(1).pow(antispice_power),
-                    game.notation
-                ) +
-                "x,<br>and boosting red, yellow, green & blue spice production " +
-                format_idec(
-                    game.crystal_spice.pow(12).add(1).pow(antispice_power),
-                    game.notation
-                ) +
-                "x"
-    }
+        " g crystallized spice/sec" +
+        synergy_str
 
     for (const gen of spice_gen.generators) {
         let element = spice_map.get(gen)
@@ -3271,6 +3455,11 @@ function crystal_update() {
                                         .pow(2),
                                     game.notation
                                 ) +
+                                " pink spice galaxies/sec"
+                        } else if (game.ascend >= 1 || game.collapse >= 1) {
+                            info_str +=
+                                ",<br>and producing " +
+                                format_dec(0, game.notation) +
                                 " pink spice galaxies/sec"
                         }
                     } else {
@@ -3495,25 +3684,37 @@ function crystal_update() {
             "x"
     }
     if (
-        game.prestige_bought[19] >= 1 &&
-        game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
-    )
-        s_str +=
-            ",<br>boosting all crystallized spice generators " +
-            format_idec(
-                Decimal.pow(
-                    1.08 + 0.04 * game.ascend_bought[6],
-                    game.crystal_infusion +
-                        game.prestige_bought[20] *
-                            12 *
-                            (1 + game.ascend_bought[5]) *
-                            antispice_infusions
-                ),
-                game.notation
-            ) +
-            "x"
+        game.prestige_bought[19] >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    ) {
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            game.prestige_bought[19] === 0
+        ) {
+            s_str +=
+                ",<br>and boosting all crystallized spice generators " +
+                format_dec(1, game.notation) +
+                "x"
+        } else {
+            s_str +=
+                ",<br>and boosting all crystallized spice generators " +
+                format_idec(
+                    Decimal.pow(
+                        1.08 + 0.04 * game.ascend_bought[6],
+                        game.crystal_infusion +
+                            game.prestige_bought[20] *
+                                12 *
+                                (1 + game.ascend_bought[5]) *
+                                antispice_infusions
+                    ),
+                    game.notation
+                ) +
+                "x"
+        }
+    }
 
     document.getElementById("crystal_info_i").innerHTML = s_str
     document.getElementById("crystal_cost_i").innerHTML =
@@ -4193,8 +4394,13 @@ function ascension_update() {
                 button.innerHTML = "Completed"
             } else {
                 if (game.ascend_challenge === c.id + 1) {
-                    button.className = "a_challenge_button inprogress"
-                    button.innerHTML = "In Progress"
+                    if (game.rainbow_spice.cmp(c.goal) >= 0) {
+                        button.className = "a_challenge_button finished"
+                        button.innerHTML = "Complete Challenge"
+                    } else {
+                        button.className = "a_challenge_button inprogress"
+                        button.innerHTML = "In Progress"
+                    }
                 } else {
                     button.className = "a_challenge_button incomplete"
                     button.innerHTML = "Enter Challenge"
@@ -4234,6 +4440,59 @@ function arcane_update() {
 
     document.getElementById("arcane_spice_num").innerHTML =
         format_idec(game.arcane_spice, game.notation) + " mg"
+
+    let synergy_str = ""
+    if (game.ascend_bought[22] || game.collapse >= 1) {
+        synergy_str =
+            "<br><br>Arcane spice synergies:<br>Crystallized spice production " +
+            format_idec(
+                Decimal.max(
+                    game.arcane_spice.pow(10).add(1).pow(antispice_power),
+                    1
+                ),
+                game.notation
+            ) +
+            "x"
+
+        if (
+            game.ascend_challenge === 1 ||
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            !game.ascend_bought[22]
+        ) {
+            synergy_str =
+                "<br><br>Arcane spice synergies:<br>Crystallized spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        }
+    }
+    if (game.ascend_bought[31] || game.collapse >= 1) {
+        if (
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            !game.ascend_bought[31]
+        ) {
+            synergy_str +=
+                "<br>Arcane spice production " +
+                format_dec(1, game.notation) +
+                "x"
+        } else {
+            synergy_str +=
+                "<br>Arcane spice production " +
+                format_idec(
+                    Decimal.max(
+                        game.arcane_spice
+                            .pow(0.0175)
+                            .add(1)
+                            .pow(antispice_power),
+                        1
+                    ),
+                    game.notation
+                ) +
+                "x"
+        }
+    }
+
     document.getElementById("arcane_spice_up").innerHTML =
         "+" +
         format_idec(
@@ -4243,54 +4502,8 @@ function arcane_update() {
                 .mul(5),
             game.notation
         ) +
-        " mg arcane spice/sec"
-    if (
-        game.ascend_bought[31] &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
-    ) {
-        document.getElementById("arcane_spice_up").innerHTML =
-            "+" +
-            format_idec(
-                game.arcane_spice_gen[0]
-                    .floor()
-                    .mul(game.total_arcane_spice_boost[0])
-                    .mul(5),
-                game.notation
-            ) +
-            " mg arcane spice/sec<br><br>Your arcane spice is boosting crystallized spice production " +
-            format_idec(
-                game.arcane_spice.pow(10).add(1).pow(antispice_power),
-                game.notation
-            ) +
-            "x,<br>and boosting arcane spice production " +
-            format_idec(
-                game.arcane_spice.pow(0.0175).add(1).pow(antispice_power),
-                game.notation
-            ) +
-            "x"
-    } else if (
-        game.ascend_bought[22] &&
-        game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
-    ) {
-        document.getElementById("arcane_spice_up").innerHTML =
-            "+" +
-            format_idec(
-                game.arcane_spice_gen[0]
-                    .floor()
-                    .mul(game.total_arcane_spice_boost[0])
-                    .mul(5),
-                game.notation
-            ) +
-            " mg arcane spice/sec<br><br>Your arcane spice is boosting crystallized spice production " +
-            format_idec(
-                game.arcane_spice.pow(10).add(1).pow(antispice_power),
-                game.notation
-            ) +
-            "x"
-    }
+        " mg arcane spice/sec" +
+        synergy_str
 
     for (const gen of spice_gen.generators) {
         let element = spice_map.get(gen)
@@ -4364,7 +4577,12 @@ function arcane_update() {
                                 game.arcane_spice_gen[gen.id].floor().pow(60),
                                 game.notation
                             ) +
-                            " crystallized spice galaxies/sec"
+                            " crystallized spice singularities/sec"
+                    } else if (game.collapse >= 1) {
+                        info_str +=
+                            ",<br>and producing " +
+                            format_dec(0, game.notation) +
+                            " crystallized spice singularities/sec"
                     }
                 } else {
                     if (gen.id === 5) {
@@ -4577,36 +4795,44 @@ function arcane_update() {
             "x"
     }
 
-    if (
-        game.ascend_bought[29] &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7
-    ) {
-        if (game.free_enchantment > 0) {
+    if (game.ascend_bought[29] || game.collapse >= 1) {
+        if (
+            game.ascend_challenge === 6 ||
+            game.collapse_challenge === 7 ||
+            !game.ascend_bought[29]
+        ) {
             s_str +=
                 ",<br>and boosting all arcane spice generators " +
-                format_idec(
-                    Decimal.pow(
-                        4 / 3,
-                        (game.arcane_enchantment + game.free_enchantment) *
-                            antispice_infusions
-                    ),
-                    game.notation
-                ) +
+                format_dec(1, game.notation) +
                 "x"
         } else {
-            s_str +=
-                ",<br>and boosting all arcane spice generators " +
-                format_idec(
-                    Decimal.pow(
-                        4 / 3,
-                        game.arcane_enchantment * antispice_infusions
-                    ),
-                    game.notation
-                ) +
-                "x"
+            if (game.free_enchantment > 0) {
+                s_str +=
+                    ",<br>and boosting all arcane spice generators " +
+                    format_idec(
+                        Decimal.pow(
+                            4 / 3,
+                            (game.arcane_enchantment + game.free_enchantment) *
+                                antispice_infusions
+                        ),
+                        game.notation
+                    ) +
+                    "x"
+            } else {
+                s_str +=
+                    ",<br>and boosting all arcane spice generators " +
+                    format_idec(
+                        Decimal.pow(
+                            4 / 3,
+                            game.arcane_enchantment * antispice_infusions
+                        ),
+                        game.notation
+                    ) +
+                    "x"
+            }
         }
     }
+
     if (game.ascend_challenge === 5 || game.collapse_challenge === 7) {
         s_str = "Arcane enchantments refresh spice production for 1 second"
     }
@@ -4642,15 +4868,15 @@ function arcane_update() {
 
 //graphics updates for collapse
 function collapse_update() {
-    let amount = game.collapse_spice.pow(5 * 10 ** -10).floor()
+    let collapse_amount = game.collapse_spice.pow(5 * 10 ** -10).floor()
 
-    if (amount.cmp(Decimal.pow(10, 1800)) >= 0) {
-        amount = amount
+    if (collapse_amount.cmp(Decimal.pow(10, 1800)) >= 0) {
+        collapse_amount = collapse_amount
             .div(Decimal.pow(10, 200))
-            .pow(10 / ((amount.log(10) * 0.3 - 56) ** 0.5 - 2))
+            .pow(10 / ((collapse_amount.log(10) * 0.3 - 56) ** 0.5 - 2))
             .mul(Decimal.pow(10, 200))
-    } else if (amount.cmp(Decimal.pow(10, 200)) >= 0) {
-        amount = amount
+    } else if (collapse_amount.cmp(Decimal.pow(10, 200)) >= 0) {
+        collapse_amount = collapse_amount
             .div(Decimal.pow(10, 200))
             .pow(0.5)
             .mul(Decimal.pow(10, 200))
@@ -4669,7 +4895,7 @@ function collapse_update() {
         if (rune_amount.cmp(Decimal.pow(10, 100)) >= 0)
             rune_amount = Decimal.pow(10, 100)
 
-        amount = amount.mul(rune_amount)
+        collapse_amount = collapse_amount.mul(rune_amount)
     }
 
     let total_completions = 0
@@ -4677,7 +4903,9 @@ function collapse_update() {
         total_completions += game.collapse_complete[i]
     }
     if (game.research_complete[22] >= 1 && game.collapse_challenge === 0)
-        amount = amount.mul(Decimal.pow(888, total_completions))
+        collapse_amount = collapse_amount.mul(
+            Decimal.pow(888, total_completions)
+        )
 
     let goal = new Decimal(1)
     if (game.collapse_challenge !== 0) {
@@ -4726,12 +4954,14 @@ function collapse_update() {
         )
     }
 
-    if (game.ascend_complete[5] && amount.cmp(goal) >= 0) {
+    if (game.ascend_complete[5] && collapse_amount.cmp(goal) >= 0) {
         document.getElementById("collapse_button").className =
             "collapse_button co_unlocked"
         document.getElementById("collapse_up").style.display = "block"
         document.getElementById("collapse_up").innerHTML =
-            "+" + format_inum(amount.floor(), game.notation) + " atomic spice"
+            "+" +
+            format_inum(collapse_amount.floor(), game.notation) +
+            " atomic spice"
         document.getElementById("collapse_req").style.color = "white"
 
         if (goal.cmp(1) === 1) {
@@ -4774,7 +5004,7 @@ function collapse_update() {
             document.getElementById("collapse_up").style.display = "block"
             document.getElementById("collapse_up").innerHTML =
                 "+" +
-                format_inum(amount.floor(), game.notation) +
+                format_inum(collapse_amount.floor(), game.notation) +
                 " atomic spice"
         } else {
             document.getElementById("collapse_req").innerHTML =
@@ -5482,14 +5712,6 @@ function collapse_update() {
         if (game.research_complete[c.unlock] >= 1) {
             panel.style.display = "flex"
 
-            if (game.collapse_challenge === c.id + 7) {
-                button.className = "co_challenge_button inside"
-                button.innerHTML = "In Progress"
-            } else {
-                button.className = "co_challenge_button outside"
-                button.innerHTML = "Enter Challenge"
-            }
-
             let completions = game.collapse_complete[c.id]
 
             let exponent = completions
@@ -5528,6 +5750,30 @@ function collapse_update() {
                         }
                     }
                 }
+            }
+
+            if (game.collapse_challenge === c.id + 7) {
+                if (
+                    collapse_amount.cmp(
+                        c.goal.mul(
+                            Decimal.pow(
+                                10,
+                                Math.round(
+                                    Decimal.pow(c.delta, exponent).log(10)
+                                )
+                            )
+                        )
+                    ) >= 0
+                ) {
+                    button.className = "co_challenge_button finished"
+                    button.innerHTML = "Complete Challenge"
+                } else {
+                    button.className = "co_challenge_button inside"
+                    button.innerHTML = "In Progress"
+                }
+            } else {
+                button.className = "co_challenge_button outside"
+                button.innerHTML = "Enter Challenge"
             }
 
             if (
@@ -6913,4 +7159,46 @@ function stats_update() {
     }
 
     document.getElementById("collapse_statistics_text").innerHTML = stats_str
+}
+
+//graphics updates for settings page
+function settings_update() {
+    let str =
+        "Hotkeys:<br>1-6: Buy until X of generator<br>Shift+1-6: Buy 1 of generator<br>S: Buy strengthener"
+
+    if (
+        game.color_boosts >= 1 ||
+        game.prestige >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    )
+        str += "<br>M: Max all"
+
+    if (game.half_distribute_unlocked) str += "<br>Shift+M: Max half"
+
+    if (
+        game.color_boosts >= 1 ||
+        game.prestige >= 1 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    )
+        str += "<br>B: Color shift/boost"
+
+    if (game.prestige >= 1 || game.ascend >= 1 || game.collapse >= 1)
+        str += "<br>P: Prestige"
+
+    if (game.prestige_bought[12] >= 1 || game.ascend >= 1 || game.collapse >= 1)
+        str += "<br>I: Buy crystal infusion"
+
+    if (game.ascend >= 1 || game.collapse >= 1) str += "<br>A: Ascend"
+
+    if (game.ascend_complete[0] || game.collapse >= 1)
+        str += "<br>N: Buy arcane enchantment"
+
+    if (game.collapse >= 1) str += "<br>C: Collapse"
+
+    if (game.ascend_bought[16] || game.collapse >= 1)
+        str += "<br>X: Exit challenge"
+
+    document.getElementById("hotkeys_list").innerHTML = str
 }
