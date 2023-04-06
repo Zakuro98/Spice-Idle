@@ -866,38 +866,50 @@ function condensed() {
 function confirmations(type, ignore) {
     switch (type) {
         case "ascend":
-            if (game.ascend_confirm) {
-                game.ascend_confirm = false
-                document.getElementById("ascend_confirm").innerHTML =
-                    "Ascension Confirmations<br>DISABLED"
+            if (game.ascend >= 1 || game.collapse >= 1) {
+                if (game.ascend_confirm) {
+                    game.ascend_confirm = false
+                    document.getElementById("ascend_confirm").innerHTML =
+                        "Ascension Confirmations<br>DISABLED"
+                } else {
+                    game.ascend_confirm = true
+                    if (game.autoas_toggle && !ignore) auto_toggle("ascend")
+                    document.getElementById("ascend_confirm").innerHTML =
+                        "Ascension Confirmations<br>ENABLED"
+                }
             } else {
-                game.ascend_confirm = true
-                if (game.autoas_toggle && !ignore) auto_toggle("ascend")
-                document.getElementById("ascend_confirm").innerHTML =
-                    "Ascension Confirmations<br>ENABLED"
+                document.getElementById("ascend_confirm").innerHTML = "?????"
             }
             break
         case "challenge":
-            if (game.challenge_confirm) {
-                game.challenge_confirm = false
-                document.getElementById("challenge_confirm").innerHTML =
-                    "Challenge Confirmations<br>DISABLED"
+            if (game.ascend_bought[16] || game.collapse >= 1) {
+                if (game.challenge_confirm) {
+                    game.challenge_confirm = false
+                    document.getElementById("challenge_confirm").innerHTML =
+                        "Challenge Confirmations<br>DISABLED"
+                } else {
+                    game.challenge_confirm = true
+                    document.getElementById("challenge_confirm").innerHTML =
+                        "Challenge Confirmations<br>ENABLED"
+                }
             } else {
-                game.challenge_confirm = true
-                document.getElementById("challenge_confirm").innerHTML =
-                    "Challenge Confirmations<br>ENABLED"
+                document.getElementById("challenge_confirm").innerHTML = "?????"
             }
             break
         case "collapse":
-            if (game.collapse_confirm) {
-                game.collapse_confirm = false
-                document.getElementById("collapse_confirm").innerHTML =
-                    "Collapse Confirmations<br>DISABLED"
+            if (game.collapse >= 1) {
+                if (game.collapse_confirm) {
+                    game.collapse_confirm = false
+                    document.getElementById("collapse_confirm").innerHTML =
+                        "Collapse Confirmations<br>DISABLED"
+                } else {
+                    game.collapse_confirm = true
+                    if (game.autoco_toggle && !ignore) auto_toggle("collapse")
+                    document.getElementById("collapse_confirm").innerHTML =
+                        "Collapse Confirmations<br>ENABLED"
+                }
             } else {
-                game.collapse_confirm = true
-                if (game.autoco_toggle && !ignore) auto_toggle("collapse")
-                document.getElementById("collapse_confirm").innerHTML =
-                    "Collapse Confirmations<br>ENABLED"
+                document.getElementById("collapse_confirm").innerHTML = "?????"
             }
             break
     }
@@ -975,13 +987,17 @@ function refresh_rate(ms) {
 
 //toggle spice collider animations
 function animations() {
-    if (game.collider_animation) {
-        game.collider_animation = false
-        document.getElementById("collidier_animation").innerHTML =
-            "Collider Animations<br>DISABLED"
+    if (game.collapse >= 1) {
+        if (game.collider_animation) {
+            game.collider_animation = false
+            document.getElementById("collidier_animation").innerHTML =
+                "Collider Animations<br>DISABLED"
+        } else {
+            game.collider_animation = true
+            document.getElementById("collidier_animation").innerHTML =
+                "Collider Animations<br>ENABLED"
+        }
     } else {
-        game.collider_animation = true
-        document.getElementById("collidier_animation").innerHTML =
-            "Collider Animations<br>ENABLED"
+        document.getElementById("collidier_animation").innerHTML = "?????"
     }
 }
