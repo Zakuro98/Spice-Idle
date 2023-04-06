@@ -646,6 +646,11 @@ function ascend(override) {
             ]
             game.crystal_strengthener = 0
             game.crystal_strengthener_price = Decimal.pow(2, 76)
+
+            if (game.ascend === 1 && game.collapse === 0) {
+                confirmations("ascend", true)
+                confirmations("ascend", true)
+            }
         }
     } else {
         if (override) {
@@ -941,6 +946,11 @@ function collapse(override) {
             }
 
             game.global_spice_boost = new Decimal(1)
+
+            if (game.collapse === 1) {
+                confirmations("collapse", true)
+                confirmations("collapse", true)
+            }
         }
     } else {
         if (override) {
