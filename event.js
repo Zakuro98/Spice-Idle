@@ -2870,6 +2870,7 @@ function activate_collider() {
                             .floor()
                             .log(100)
                     )
+                    if (p > 30) p = 30
                     break
                 case 2:
                     p += Math.floor(
@@ -2880,6 +2881,7 @@ function activate_collider() {
                             .floor()
                             .log(100)
                     )
+                    if (p > 30) p = 30
                     break
                 case 3:
                     p += Math.floor(
@@ -2890,6 +2892,7 @@ function activate_collider() {
                             .floor()
                             .log(100)
                     )
+                    if (p > 30) p = 30
                     break
                 case 4:
                     p += Math.floor(
@@ -2900,6 +2903,7 @@ function activate_collider() {
                             .floor()
                             .log(100)
                     )
+                    if (p > 30) p = 30
                     break
             }
 
