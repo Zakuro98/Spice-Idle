@@ -2,6 +2,7 @@
 let game = {
     version: "1.5.0",
 
+    available_subtabs: [4,2,3,3,3],
     tickspeed: 100,
     gamespeed: 1,
 

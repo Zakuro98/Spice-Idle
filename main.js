@@ -2787,22 +2787,210 @@ function collider_tick() {
 
 //handling hotkeys
 document.body.addEventListener("keydown", function (event) {
-    for (let i = 0; i < 6; i++) {
-        if (event.code === "Digit" + (i + 1)) key.digit[i] = true
+    let activeelement = document.activeElement
+    if (
+        activeelement.tagName == "INPUT" &&
+        (activeelement.type == "text" || activeelement.type == "number")
+    ) {
+        event.stopPropagation()
+    } else {
+        for (let i = 0; i < 6; i++) {
+            if (event.code === "Digit" + (i + 1)) key.digit[i] = true
+        }
+
+        if (event.shiftKey) key.shift = true
+        else key.shift = false
+
+        if (event.code === "KeyS") key.s = true
+        if (event.code === "KeyM") key.m = true
+        if (event.code === "KeyB") key.b = true
+        if (event.code === "KeyP") key.p = true
+        if (event.code === "KeyI") key.i = true
+        if (event.code === "KeyA") key.a = true
+        if (event.code === "KeyN") key.n = true
+        if (event.code === "KeyC") key.c = true
+        if (event.code === "KeyX") key.x = true
+        // upcoming: fast-button to change tab/subtabs
+        if (event.code === "ArrowUp") {
+            if (
+                game.tab == 0 &&
+                (game.color_boosts >= 10 || game.prestige > 0)
+            ) {
+                goto_tab(1)
+            } else if (
+                game.tab == 1 &&
+                (game.prestige_bought[25] || game.ascend > 0)
+            ) {
+                goto_tab(2)
+            } else if (
+                game.tab == 2 &&
+                (game.ascend_complete[5] || game.collapse > 0)
+            ) {
+                goto_tab(3)
+            } else if (game.tab == 3) {
+                goto_tab(5)
+            } else if (game.tab == 5) {
+                goto_tab(6)
+            } else if (game.tab == 6) {
+                goto_tab(0)
+            } else {
+                goto_tab(5)
+            } // if any pre/asc/coll aren't unlocked, it will hop into stats
+        }
+        if (event.code === "ArrowDown") {
+            if (game.tab == 0) {
+                goto_tab(6)
+            } else if (game.tab == 6) {
+                goto_tab(5)
+            } else if (game.tab == 5) {
+                // look for unlocked tabs reversed, hop into highest unlocked
+                if (game.ascend_complete[5] || game.collapse > 0) {
+                    goto_tab(3)
+                } else if (game.prestige_bought[25] || game.ascend > 0) {
+                    goto_tab(2)
+                } else if (game.color_boosts >= 10 || game.prestige > 0) {
+                    goto_tab(1)
+                } else {
+                    goto_tab(0)
+                }
+            } else if (game.tab == 3) {
+                goto_tab(2)
+            } else if (game.tab == 2) {
+                goto_tab(1)
+            } else goto_tab(0) // none of above of game.tab is 1, but we can save a few chars :D
+        }
+        if (event.code === "ArrowRight") {
+            switch (game.tab) {
+                case 0:
+                    if (game.color_boosts > 0) {
+                        game.subtab[0] == game.color_boosts ||
+                        game.subtab[0] == game.available_subtabs[0]
+                            ? goto_subtab(0)
+                            : goto_subtab(game.subtab[0] + 1)
+                    }
+                    break
+                case 1:
+                    if (game.prestige_bought[12] == 1) {
+                        game.subtab[1] == game.available_subtabs[1]
+                            ? goto_subtab(0)
+                            : goto_subtab(game.subtab[1] + 1)
+                    }
+                    break
+                case 2:
+                    if (!game.ascend_bought[16]) {
+                        // no challenges, swap between tabs
+                        game.subtab[3] == 0 ? goto_subtab(1) : goto_subtab(0)
+                    } else if (!game.ascend_complete[0]) {
+                        // challenge unlocked
+                        game.subtab[3] == game.available_subtabs[3] - 1
+                            ? goto_subtab(0)
+                            : goto_subtab(game.subtab[3] + 1)
+                    } else {
+                        // challenge completed
+                        game.subtab[3] == game.available_subtabs[3]
+                            ? goto_subtab(0)
+                            : goto_subtab(game.subtab[3] + 1)
+                    }
+                    break
+                case 3:
+                    if (game.research_complete[19]) {
+                        game.subtab[4] == game.available_subtabs[4]
+                            ? goto_subtab(0)
+                            : goto_subtab(game.subtab[4] + 1)
+                    } else if (game.research_complete[18]) {
+                        game.subtab[4] == game.available_subtabs[4] - 1
+                            ? goto_subtab(0)
+                            : goto_subtab(game.subtab[4] + 1)
+                    } else if (game.collapse >= 5) {
+                        game.subtab[4] == 0 ? goto_subtab(1) : goto_subtab(0)
+                    }
+                    break
+                case 5:
+                    if (game.collapse > 0) {
+                        game.subtab[2] == 3
+                            ? goto_subtab(0)
+                            : goto_subtab(game.subtab[2] + 1)
+                    } else if (game.ascend > 0) {
+                        game.subtab[2] == 2
+                            ? goto_subtab(0)
+                            : goto_subtab(game.subtab[2] + 1)
+                    } else if (game.prestige > 0) {
+                        game.subtab[2] == 0 ? goto_subtab(1) : goto_subtab(0)
+                    }
+                    break
+            }
+        }
+        if (event.code === "ArrowLeft") {
+            console.log(
+                "LEFT:",
+                game.tab,
+                game.subtab,
+                game.prestige,
+                game.ascend,
+                game.collapse
+            )
+            switch (game.tab) {
+                case 0:
+                    if (game.color_boosts > 0) {
+                        if (game.subtab[0] == 0) {
+                            // check for new players, if already color_boost or not
+                            game.color_boosts >= game.available_subtabs[0]
+                                ? goto_subtab(4)
+                                : goto_subtab(game.color_boost)
+                        } else {
+                            goto_subtab(game.subtab[0] - 1)
+                        }
+                    }
+                    break
+                case 1:
+                    if (game.prestige_bought[12] == 1) {
+                        game.subtab[game.tab] == 0
+                            ? goto_subtab(game.available_subtabs[game.tab])
+                            : goto_subtab(game.subtab[game.tab] - 1)
+                    }
+                    break
+                case 2:
+                    if (!game.ascend_bought[16]) {
+                        game.subtab[3] == 0 ? goto_subtab(1) : goto_subtab(0) // no challenges
+                    } else if (!game.ascend_complete[0]) {
+                        game.subtab[3] == 0
+                            ? goto_subtab(2)
+                            : goto_subtab(game.subtab[3] - 1) // challenge unlocked
+                    } else {
+                        game.subtab[3] == 0
+                            ? goto_subtab(3)
+                            : goto_subtab(game.subtab[3] - 1) // challenge completed
+                    }
+                    break
+                case 3:
+                    if (game.research_complete[19]) {
+                        game.subtab[4] == 0
+                            ? goto_subtab(game.available_subtabs[4])
+                            : goto_subtab(game.subtab[4] - 1)
+                    } else if (game.research_complete[18]) {
+                        game.subtab[4] == 0
+                            ? goto_subtab(game.available_subtabs[4] - 1)
+                            : goto_subtab(game.subtab[4] - 1)
+                    } else if (game.collapse >= 5) {
+                        game.subtab[4] == 0 ? goto_subtab(1) : goto_subtab(0)
+                    }
+                    break
+                case 5:
+                    if (game.collapse > 0) {
+                        game.subtab[2] == 0
+                            ? goto_subtab(3)
+                            : goto_subtab(game.subtab[2] - 1)
+                    } else if (game.ascend > 0) {
+                        game.subtab[2] == 0
+                            ? goto_subtab(2)
+                            : goto_subtab(game.subtab[2] - 1)
+                    } else if (game.prestige > 0) {
+                        game.subtab[2] == 0 ? goto_subtab(1) : goto_subtab(0)
+                    }
+                    break
+            }
+        }
     }
-
-    if (event.shiftKey) key.shift = true
-    else key.shift = false
-
-    if (event.code === "KeyS") key.s = true
-    if (event.code === "KeyM") key.m = true
-    if (event.code === "KeyB") key.b = true
-    if (event.code === "KeyP") key.p = true
-    if (event.code === "KeyI") key.i = true
-    if (event.code === "KeyA") key.a = true
-    if (event.code === "KeyN") key.n = true
-    if (event.code === "KeyC") key.c = true
-    if (event.code === "KeyX") key.x = true
 })
 
 document.body.addEventListener("keyup", function (event) {
