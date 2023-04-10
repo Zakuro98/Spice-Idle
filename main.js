@@ -2937,8 +2937,8 @@ document.body.addEventListener("keydown", function (event) {
                     }
                     break
                 case 1:
-                    game.prestige_bought[12] == 1 && game.subtab[0] == 0
-                        ? goto_subtab(available_subtabs[0])
+                    game.prestige_bought[12] == 1 && game.subtab[1] == 0
+                        ? goto_subtab(available_subtabs[1])
                         : goto_subtab(game.subtab[1] - 1)
                     break
                 case 2:
