@@ -7197,8 +7197,15 @@ function settings_update() {
 
     if (game.collapse >= 1) str += "<br>C: Collapse"
 
-    if (game.ascend_bought[16] || game.collapse >= 1)
+    if (game.ascend_bought[16] || game.collapse >= 1){
         str += "<br>X: Exit challenge"
+    }
+        str += "<br> Arrow keys:<br>▲▼: left/right switch tabs" // definetly add this one
+    if (game.color_boosts > 0 || game.prestige_bought[12] ) 
+    str += "<br>◄►: left/right switch subtabs"
+    // only add subtabs if there are subtabs (at least crystal_spice or color_boost >= 1 )
+
+
 
     document.getElementById("hotkeys_list").innerHTML = str
 }
