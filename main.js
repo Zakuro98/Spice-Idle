@@ -2811,6 +2811,9 @@ document.body.addEventListener("keydown", function (event) {
         if (event.code === "KeyC") key.c = true
         if (event.code === "KeyX") key.x = true
         // upcoming: fast-button to change tab/subtabs
+        // update/include the new variable "available_subtabs", if not found
+        if (undefined == game.available_subtabs) game.available_subtabs = [4,2,3,3,3]
+        // ArrowButton-Action ;)
         if (event.code === "ArrowUp") {
             if (
                 game.tab == 0 &&
@@ -2921,14 +2924,6 @@ document.body.addEventListener("keydown", function (event) {
             }
         }
         if (event.code === "ArrowLeft") {
-            console.log(
-                "LEFT:",
-                game.tab,
-                game.subtab,
-                game.prestige,
-                game.ascend,
-                game.collapse
-            )
             switch (game.tab) {
                 case 0:
                     if (game.color_boosts > 0) {
