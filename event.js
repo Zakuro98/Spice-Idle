@@ -562,10 +562,18 @@ function buy_strengthener(color) {
                         Math.floor(game.arcane_enchantment / 10) +
                         game.arcane_strengthener * 250
                     if (game.research_complete[25] >= 1) {
-                        let collapse_free = game.collapse * 25
-                        if (collapse_free > game.arcane_enchantment / 4)
+                        let collapse_free = game.collapse * 50
+                        if (game.collapse >= 100000)
                             collapse_free = Math.floor(
-                                game.arcane_enchantment / 4
+                                2500000 *
+                                    ((game.collapse - 87500) / 50000) ** 0.5 +
+                                    3750000
+                            )
+                        if (game.collapse >= 31337500)
+                            collapse_free = game.collapse + 34912500
+                        if (collapse_free > game.arcane_enchantment / 2)
+                            collapse_free = Math.floor(
+                                game.arcane_enchantment / 2
                             )
 
                         game.free_enchantment += collapse_free
@@ -1457,10 +1465,18 @@ function max_all(color) {
                         Math.floor(game.arcane_enchantment / 10) +
                         game.arcane_strengthener * 200
                     if (game.research_complete[25] >= 1) {
-                        let collapse_free = game.collapse * 25
-                        if (collapse_free > game.arcane_enchantment / 4)
+                        let collapse_free = game.collapse * 50
+                        if (game.collapse >= 100000)
                             collapse_free = Math.floor(
-                                game.arcane_enchantment / 4
+                                2500000 *
+                                    ((game.collapse - 87500) / 50000) ** 0.5 +
+                                    3750000
+                            )
+                        if (game.collapse >= 31337500)
+                            collapse_free = game.collapse + 34912500
+                        if (collapse_free > game.arcane_enchantment / 2)
+                            collapse_free = Math.floor(
+                                game.arcane_enchantment / 2
                             )
 
                         game.free_enchantment += collapse_free
@@ -1528,10 +1544,18 @@ function max_all(color) {
                         Math.floor(game.arcane_enchantment / 10) +
                         game.arcane_strengthener * 200
                     if (game.research_complete[25] >= 1) {
-                        let collapse_free = game.collapse * 25
-                        if (collapse_free > game.arcane_enchantment / 4)
+                        let collapse_free = game.collapse * 50
+                        if (game.collapse >= 100000)
                             collapse_free = Math.floor(
-                                game.arcane_enchantment / 4
+                                2500000 *
+                                    ((game.collapse - 87500) / 50000) ** 0.5 +
+                                    3750000
+                            )
+                        if (game.collapse >= 31337500)
+                            collapse_free = game.collapse + 34912500
+                        if (collapse_free > game.arcane_enchantment / 2)
+                            collapse_free = Math.floor(
+                                game.arcane_enchantment / 2
                             )
 
                         game.free_enchantment += collapse_free
@@ -1609,10 +1633,18 @@ function max_all(color) {
                         Math.floor(game.arcane_enchantment / 10) +
                         game.arcane_strengthener * 200
                     if (game.research_complete[25] >= 1) {
-                        let collapse_free = game.collapse * 25
-                        if (collapse_free > game.arcane_enchantment / 4)
+                        let collapse_free = game.collapse * 50
+                        if (game.collapse >= 100000)
                             collapse_free = Math.floor(
-                                game.arcane_enchantment / 4
+                                2500000 *
+                                    ((game.collapse - 87500) / 50000) ** 0.5 +
+                                    3750000
+                            )
+                        if (game.collapse >= 31337500)
+                            collapse_free = game.collapse + 34912500
+                        if (collapse_free > game.arcane_enchantment / 2)
+                            collapse_free = Math.floor(
+                                game.arcane_enchantment / 2
                             )
 
                         game.free_enchantment += collapse_free
@@ -2675,9 +2707,16 @@ function buy_enchantment() {
             if (game.research_complete[13] >= 1)
                 game.free_enchantment += game.arcane_strengthener * 200
             if (game.research_complete[25] >= 1) {
-                let collapse_free = game.collapse * 25
-                if (collapse_free > game.arcane_enchantment / 4)
-                    collapse_free = Math.floor(game.arcane_enchantment / 4)
+                let collapse_free = game.collapse * 50
+                if (game.collapse >= 100000)
+                    collapse_free = Math.floor(
+                        2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                            3750000
+                    )
+                if (game.collapse >= 31337500)
+                    collapse_free = game.collapse + 34912500
+                if (collapse_free > game.arcane_enchantment / 2)
+                    collapse_free = Math.floor(game.arcane_enchantment / 2)
 
                 game.free_enchantment += collapse_free
             }
@@ -2821,9 +2860,16 @@ function max_enchantment() {
             if (game.research_complete[13] >= 1)
                 game.free_enchantment += game.arcane_strengthener * 200
             if (game.research_complete[25] >= 1) {
-                let collapse_free = game.collapse * 25
-                if (collapse_free > game.arcane_enchantment / 4)
-                    collapse_free = Math.floor(game.arcane_enchantment / 4)
+                let collapse_free = game.collapse * 50
+                if (game.collapse >= 100000)
+                    collapse_free = Math.floor(
+                        2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                            3750000
+                    )
+                if (game.collapse >= 31337500)
+                    collapse_free = game.collapse + 34912500
+                if (collapse_free > game.arcane_enchantment / 2)
+                    collapse_free = Math.floor(game.arcane_enchantment / 2)
 
                 game.free_enchantment += collapse_free
             }
