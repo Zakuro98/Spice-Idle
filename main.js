@@ -2787,10 +2787,10 @@ function collider_tick() {
 
 //handling hotkeys
 document.body.addEventListener("keydown", function (event) {
-    let activeelement = document.activeElement
+    let active_element = document.activeElement
     if (
-        activeelement.tagName == "INPUT" &&
-        (activeelement.type == "text" || activeelement.type == "number")
+        active_element.tagName == "INPUT" &&
+        (active_element.type == "text" || active_element.type == "number")
     ) {
         event.stopPropagation()
     } else {
@@ -2814,7 +2814,7 @@ document.body.addEventListener("keydown", function (event) {
         // temporary variable "available_subtabs"
         let available_subtabs = [4, 2, 3, 3, 3]
         // ArrowButton-Action ;)
-        if (event.code === "ArrowDown") {
+        if (event.code === "ArrowUp") {
             if (
                 game.tab == 0 &&
                 (game.color_boosts >= 10 || game.prestige > 0)
@@ -2840,7 +2840,10 @@ document.body.addEventListener("keydown", function (event) {
                 goto_tab(5)
             } // if any pre/asc/coll aren't unlocked, it will hop into stats
         }
-        if (event.code === "ArrowUp") {
+
+        if (event.code === "ArrowDown") {
+            event.preventDefault()
+
             if (game.tab == 0) {
                 goto_tab(6)
             } else if (game.tab == 6) {
@@ -2863,6 +2866,8 @@ document.body.addEventListener("keydown", function (event) {
             } else goto_tab(0) // none of above of game.tab is 1, but we can save a few chars :D
         }
         if (event.code === "ArrowRight") {
+            event.preventDefault()
+
             switch (game.tab) {
                 case 0:
                     game.color_boosts > 0 &&
@@ -3789,6 +3794,9 @@ function tick_loop() {
     if (delta_time === undefined) {
         delta_time = game.tickspeed / game.gamespeed
     } else {
+        if (Date.now() < tick_time) tick_time = Date.now()
+        if (Date.now() > tick_time + 3600000) tick_time = Date.now() - 3600000
+
         delta_ms = Date.now() - tick_time
         delta_time = 1000 / (delta_ms * game.gamespeed)
         delta_ticks = Math.floor((delta_ms * game.tickspeed) / 1000)
