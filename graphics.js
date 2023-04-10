@@ -6296,6 +6296,24 @@ function research_update() {
                     ) +
                     "x"
                 break
+            case 11:
+                r.desc =
+                    "You get " +
+                    format_small(1) +
+                    " free arcane enchantment for every " +
+                    format_small(10) +
+                    " arcane enchantments you have<br>Currently: +" +
+                    format_small(Math.floor(game.arcane_enchantment / 10)) +
+                    " free arcane enchantments"
+                break
+            case 13:
+                r.desc =
+                    "You get " +
+                    format_small(200) +
+                    " free arcane enchantments for every arcane strengthener you have<br>Currently: +" +
+                    format_small(game.arcane_strengthener * 200) +
+                    " free arcane enchantments"
+                break
             case 15:
                 r.desc = "Unlocks automation for Collapse"
                 if (game.collapse_challenge !== 0) {
@@ -6352,6 +6370,69 @@ function research_update() {
                         format_small(888) +
                         "x more atomic spice for every Collapse challenge completion<br>Disabled in Collapse Challenges"
                 }
+                break
+            case 25:
+                r.desc =
+                    "You get " +
+                    format_small(50) +
+                    " free arcane enchantments for every Collapse (up to " +
+                    format_small(50) +
+                    "% of your bought arcane enchantments)"
+                if (game.collapse >= 100000) {
+                    if (
+                        -5000 *
+                            5 ** 0.5 *
+                            ((game.collapse - 87501) ** 0.5 -
+                                (game.collapse - 87500) ** 0.5) <
+                        2
+                    ) {
+                        r.desc =
+                            "You get " +
+                            format_small(1) +
+                            " free arcane enchantment for every Collapse<br>(up to " +
+                            format_small(50) +
+                            "% of your bought arcane enchantments)"
+                    } else {
+                        r.desc =
+                            "You get about " +
+                            format_small(
+                                Math.floor(
+                                    -5000 *
+                                        5 ** 0.5 *
+                                        ((game.collapse - 87501) ** 0.5 -
+                                            (game.collapse - 87500) ** 0.5)
+                                )
+                            ) +
+                            " free arcane enchantments for every Collapse (up to " +
+                            format_small(50) +
+                            "% of your bought arcane enchantments)"
+                    }
+                }
+                if (game.collapse >= 31337500) {
+                    r.desc =
+                        "You get " +
+                        format_small(1) +
+                        " free arcane enchantment for every Collapse (up to " +
+                        format_small(50) +
+                        "% of your bought arcane enchantments)"
+                }
+                let collapse_free = game.collapse * 50
+                if (game.collapse >= 100000)
+                    collapse_free = Math.floor(
+                        2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                            3750000
+                    )
+                if (game.collapse >= 31337500)
+                    collapse_free = game.collapse + 34912500
+                r.desc +=
+                    "<br>Currently: +" +
+                    format_small(collapse_free) +
+                    " free arcane enchantments"
+                if (collapse_free > game.arcane_enchantment / 2)
+                    r.desc +=
+                        "<br>Limited to: +" +
+                        format_small(Math.floor(game.arcane_enchantment / 2)) +
+                        " free arcane enchantments"
                 break
         }
     }
@@ -7163,8 +7244,13 @@ function stats_update() {
 
 //graphics updates for settings page
 function settings_update() {
-    let str =
-        "Hotkeys:<br>1-6: Buy until X of generator<br>Shift+1-6: Buy 1 of generator<br>S: Buy strengthener"
+    let str = "Hotkeys:<br>Up: Next tab<br>Down: Previous tab"
+
+    if (game.color_boosts > 0 || game.prestige_bought[12])
+        str += "<br>Right: Next subtab<br>Left: Previous subtab"
+
+    str +=
+        "<br>1-6: Buy until X of generator<br>Shift+1-6: Buy 1 of generator<br>S: Buy strengthener"
 
     if (
         game.color_boosts >= 1 ||
@@ -7197,15 +7283,8 @@ function settings_update() {
 
     if (game.collapse >= 1) str += "<br>C: Collapse"
 
-    if (game.ascend_bought[16] || game.collapse >= 1){
+    if (game.ascend_bought[16] || game.collapse >= 1)
         str += "<br>X: Exit challenge"
-    }
-        str += "<br> Arrow keys:<br>▲▼: left/right switch tabs" // definetly add this one
-    if (game.color_boosts > 0 || game.prestige_bought[12] ) 
-    str += "<br>◄►: left/right switch subtabs"
-    // only add subtabs if there are subtabs (at least crystal_spice or color_boost >= 1 )
-
-
 
     document.getElementById("hotkeys_list").innerHTML = str
 }
