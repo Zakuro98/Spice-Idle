@@ -1600,7 +1600,7 @@ new research(
     "You get 1 free arcane enchantment for every 10 arcane enchantments you have",
     9,
     false,
-    false,
+    true,
     400000
 )
 //research 12
@@ -1616,7 +1616,7 @@ new research(
     "You get 200 free arcane enchantments for every arcane strengthener you have",
     11,
     false,
-    false,
+    true,
     2000000
 )
 //research 14
@@ -1670,7 +1670,7 @@ new research(
     "You get 25 free arcane enchantments for every Collapse<br>(up to 25% of your bought arcane enchantments)",
     -805,
     false,
-    false,
+    true,
     1.8 * 10 ** 18
 )
 //research 26
