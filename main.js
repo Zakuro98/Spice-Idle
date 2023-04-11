@@ -2800,16 +2800,9 @@ document.body.addEventListener("keydown", function (event) {
 
         if (event.shiftKey) key.shift = true
         else key.shift = false
-
-        if (event.code === "KeyS") key.s = true
-        if (event.code === "KeyM") key.m = true
-        if (event.code === "KeyB") key.b = true
-        if (event.code === "KeyP") key.p = true
-        if (event.code === "KeyI") key.i = true
-        if (event.code === "KeyA") key.a = true
-        if (event.code === "KeyN") key.n = true
-        if (event.code === "KeyC") key.c = true
-        if (event.code === "KeyX") key.x = true
+        
+        let hotkeys = ["s","m","b","p","i","a","n","c","x"]
+        if(hotkeys.includes(event.key)) key[hotkeys[hotkeys.indexOf(event.key)]] 
         // upcoming: fast-button to change tab/subtabs
         // temporary variable "available_subtabs"
         let available_subtabs = [4, 2, 3, 3, 3]
@@ -2989,16 +2982,8 @@ document.body.addEventListener("keyup", function (event) {
     for (let i = 0; i < 6; i++) {
         if (event.code === "Digit" + (i + 1)) key.digit[i] = false
     }
-
-    if (event.code === "KeyS") key.s = false
-    if (event.code === "KeyM") key.m = false
-    if (event.code === "KeyB") key.b = false
-    if (event.code === "KeyP") key.p = false
-    if (event.code === "KeyI") key.i = false
-    if (event.code === "KeyA") key.a = false
-    if (event.code === "KeyN") key.n = false
-    if (event.code === "KeyC") key.c = false
-    if (event.code === "KeyX") key.x = false
+    let hotkeys = ["s","m","b","p","i","a","n","c","x"]
+    if(hotkeys.includes(event.key)) key[hotkeys[hotkeys.indexOf(event.key)]] = true
 })
 
 window.addEventListener("blur", function () {
