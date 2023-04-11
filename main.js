@@ -2800,16 +2800,9 @@ document.body.addEventListener("keydown", function (event) {
 
         if (event.shiftKey) key.shift = true
         else key.shift = false
-
-        if (event.code === "KeyS") key.s = true
-        if (event.code === "KeyM") key.m = true
-        if (event.code === "KeyB") key.b = true
-        if (event.code === "KeyP") key.p = true
-        if (event.code === "KeyI") key.i = true
-        if (event.code === "KeyA") key.a = true
-        if (event.code === "KeyN") key.n = true
-        if (event.code === "KeyC") key.c = true
-        if (event.code === "KeyX") key.x = true
+        
+        let hotkeys = ["s","m","b","p","i","a","n","c","x"]
+        if(hotkeys.includes(event.key)) key[hotkeys[hotkeys.indexOf(event.key)]] 
         // upcoming: fast-button to change tab/subtabs
         // temporary variable "available_subtabs"
         let available_subtabs = [4, 2, 3, 3, 3]
