@@ -2880,6 +2880,8 @@ document.body.addEventListener("keydown", function (event) {
                     game.prestige_bought[12] == 1 &&
                     game.subtab[1] == available_subtabs[1]
                         ? goto_subtab(0)
+						: game.prestige_bought[12] == 0 ?
+						{} //Stops new players getting Out of bounds
                         : goto_subtab(game.subtab[1] + 1)
                     break
                 case 2:
@@ -2939,6 +2941,8 @@ document.body.addEventListener("keydown", function (event) {
                 case 1:
                     game.prestige_bought[12] == 1 && game.subtab[1] == 0
                         ? goto_subtab(available_subtabs[1])
+						: game.prestige_bought[12] == 0 ?
+						{} //Stops new players getting Out of bounds
                         : goto_subtab(game.subtab[1] - 1)
                     break
                 case 2:
