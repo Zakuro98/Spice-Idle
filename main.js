@@ -2801,7 +2801,7 @@ document.body.addEventListener("keydown", function (event) {
         if (event.shiftKey) key.shift = true
         else key.shift = false
 
-		var ekey = event.code.substr(-1)
+		let ekey = event.code.substr(-1)
 		let hotkeys = ["s","m","b","p","i","a","n","c","x"]
 		if(hotkeys.includes(ekey))
 			key[hotkeys[hotkeys.indexOf(ekey)]] = true 
@@ -2992,7 +2992,7 @@ document.body.addEventListener("keyup", function (event) {
 	let ekey = event.code.substr(-1)
 	let hotkeys = ["s","m","b","p","i","a","n","c","x"]
 	if(hotkeys.includes(ekey))
-		key[hotkeys[hotkeys.indexOf(ekey)]] = true 
+		key[hotkeys[hotkeys.indexOf(ekey)]] = false 
 })
 
 window.addEventListener("blur", function () {
