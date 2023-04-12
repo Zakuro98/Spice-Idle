@@ -2786,6 +2786,18 @@ function collider_tick() {
 }
 
 //handling hotkeys
+function switch_key(eventcode, state) {
+    if (eventcode.startsWith("Digit")){ // is it a "Digit" key, between 1 and 6? change its state to 'state'
+        if (parseInt(eventcode.substring(5) >= 1 && parseInt(eventcode.substring(5) <= 6))) {
+            key.digit[parseInt(eventcode.substring(5))] = state
+        }
+    }
+    else if (eventcode.startsWith("Key")){ // a "Key"-key? and in a list? change its state to 'state'
+        if (["a","b","c","i","m","n","p","s","x"].includes(eventcode.substring(3).toLowerCase())) {
+            key[eventcode.substring(3).toLowerCase()] = state
+        }
+    }
+}
 document.body.addEventListener("keydown", function (event) {
     let active_element = document.activeElement
     if (
@@ -2794,191 +2806,259 @@ document.body.addEventListener("keydown", function (event) {
     ) {
         event.stopPropagation()
     } else {
-        for (let i = 0; i < 6; i++) {
-            if (event.code === "Digit" + (i + 1)) key.digit[i] = true
-        }
+        switch_key(event.code, true) // change corresponding key and or key.digit(if between 1-6)
 
-        if (event.shiftKey) key.shift = true
-        else key.shift = false
-
-        if (event.code === "KeyS") key.s = true
-        if (event.code === "KeyM") key.m = true
-        if (event.code === "KeyB") key.b = true
-        if (event.code === "KeyP") key.p = true
-        if (event.code === "KeyI") key.i = true
-        if (event.code === "KeyA") key.a = true
-        if (event.code === "KeyN") key.n = true
-        if (event.code === "KeyC") key.c = true
-        if (event.code === "KeyX") key.x = true
         // upcoming: fast-button to change tab/subtabs
         // temporary variable "available_subtabs"
         let available_subtabs = [4, 2, 3, 3, 3]
         // ArrowButton-Action ;)
         if (event.code === "ArrowUp") {
+            // swich Tabs to the right (+rightmost to leftmost)
             if (
-                game.tab == 0 &&
-                (game.color_boosts >= 10 || game.prestige > 0)
+                game.tab == 0 && // on Spices AND
+                (game.color_boosts >= 10 || game.prestige > 0) // unlocked Prestige?
             ) {
-                goto_tab(1)
+                goto_tab(1) // goto Prestige
             } else if (
+                // same as before, this time checking for Ascension unlocked
                 game.tab == 1 &&
                 (game.prestige_bought[25] || game.ascend > 0)
             ) {
                 goto_tab(2)
             } else if (
+                //
                 game.tab == 2 &&
                 (game.ascend_complete[5] || game.collapse > 0)
             ) {
                 goto_tab(3)
             } else if (game.tab == 3) {
+                // from collapse straight into Stats
                 goto_tab(5)
             } else if (game.tab == 5) {
+                // stats to Settings
                 goto_tab(6)
             } else if (game.tab == 6) {
+                // Settings to Spices
                 goto_tab(0)
             } else {
+                // if any pre/asc/coll aren't unlocked, it will hop into stats
                 goto_tab(5)
-            } // if any pre/asc/coll aren't unlocked, it will hop into stats
+            }
         }
 
         if (event.code === "ArrowDown") {
-            event.preventDefault()
+            // Switch Tabs to the left (+ leftmost to rightmost)
+            event.preventDefault() // will prevent default behaviour
 
             if (game.tab == 0) {
-                goto_tab(6)
+                // Sitting on "Spices" ?
+                goto_tab(6) // goto "Settings"
             } else if (game.tab == 6) {
-                goto_tab(5)
+                // from Settings
+                goto_tab(5) // to "Statistic"
             } else if (game.tab == 5) {
+                // Special-Case: from "Statistic"
                 // look for unlocked tabs reversed, hop into highest unlocked
                 if (game.ascend_complete[5] || game.collapse > 0) {
+                    // are there collapse already?
                     goto_tab(3)
                 } else if (game.prestige_bought[25] || game.ascend > 0) {
+                    // maybe ascension?
                     goto_tab(2)
                 } else if (game.color_boosts >= 10 || game.prestige > 0) {
+                    // still not? then maybe Prestige
                     goto_tab(1)
                 } else {
+                    // new player, not unlocked any tab, hit him to "Spices"
                     goto_tab(0)
                 }
             } else if (game.tab == 3) {
+                // still have to check from collapse downwards
                 goto_tab(2)
             } else if (game.tab == 2) {
+                // ascension-check
                 goto_tab(1)
-            } else goto_tab(0) // none of above of game.tab is 1, but we can save a few chars :D
+            } else goto_tab(0) // no need to check for Prestige
         }
         if (event.code === "ArrowRight") {
-            event.preventDefault()
+            // Will switch Subtabs to the right, based on conditions
+            event.preventDefault() // same as before, to prevent default behavior
 
-            switch (game.tab) {
-                case 0:
-                    game.color_boosts > 0 &&
-                    (game.subtab[0] == game.color_boosts ||
-                        game.subtab[0] == available_subtabs[0])
-                        ? goto_subtab(0)
-                        : goto_subtab(game.subtab[0] + 1)
+            switch (
+                game.tab // get value game.tab, which is a number in between 0-6 (only caring about 0,1,2,3%5 bc they have subtabs)
+            ) {
+                case 0: // case for Spice-Subtabs
+                    if (game.color_boosts > 0)
+                        if (
+                            game.subtab[0] == game.color_boosts ||
+                            game.subtab[0] == available_subtabs[0]
+                        )
+                            // are there color-Shifts/Boosts?
+                            // is this the rightmost unlocked spice?
+                            goto_subtab(0) // go back to red spices
+                        else goto_subtab(game.subtab[0] + 1) // otherwise move one right
                     break
-                case 1:
-                    game.prestige_bought[12] == 1 &&
-                    game.subtab[1] == available_subtabs[1]
-                        ? goto_subtab(0)
-                        : goto_subtab(game.subtab[1] + 1)
+                case 1: // case Prestige-Subtabs
+                    if (game.prestige_bought[12] == 1)
+                        if (game.subtab[1] == available_subtabs[1])
+                            // did we unlocked crystal spice?
+                            // are we rightmost?
+                            goto_subtab(0) // go back to leftmost
+                        else goto_subtab(game.subtab[1] + 1) // otherwise shift one to the right
+
                     break
-                case 2:
-                    if (!game.ascend_bought[16]) {
-                        game.subtab[3] == 0 ? goto_subtab(1) : goto_subtab(0)
-                    } else if (!game.ascend_complete[0]) {
-                        game.subtab[3] == available_subtabs[3] - 1
-                            ? goto_subtab(0)
-                            : goto_subtab(game.subtab[3] + 1)
-                    } else {
-                        game.subtab[3] == available_subtabs[3]
-                            ? goto_subtab(0)
-                            : goto_subtab(game.subtab[3] + 1)
-                    }
+                case 2: //case Ascension-Subtabs, index 3 on game.subtabs
+                    if (game.ascend_complete[0])
+                        if (game.subtab[3] == available_subtabs[3])
+                            // if challenge completed, behave as usual, rightmost to leftmost, else +1
+                            goto_subtab(0)
+                        else goto_subtab(game.subtab[3] + 1)
+                    else if (game.ascend_bought[16])
+                        if (game.subtab[3] == available_subtabs[3] - 1)
+                            // no complete, but challenge unlocked?
+                            // as before, but skip locked subtab
+                            goto_subtab(0)
+                        else goto_subtab(game.subtab[3] + 1)
+                    else if (game.subtab[3] == 0)
+                        // otherwise, if challenges not unlocked, switch between subtab 0 and 1
+                        goto_subtab(1)
+                    else goto_subtab(0)
+
                     break
-                case 3:
-                    if (game.research_complete[19]) {
-                        game.subtab[4] == available_subtabs[4]
-                            ? goto_subtab(0)
-                            : goto_subtab(game.subtab[4] + 1)
-                    } else if (game.research_complete[18]) {
-                        game.subtab[4] == available_subtabs[4] - 1
-                            ? goto_subtab(0)
-                            : goto_subtab(game.subtab[4] + 1)
-                    } else if (game.collapse >= 5) {
-                        game.subtab[4] == 0 ? goto_subtab(1) : goto_subtab(0)
-                    }
+                case 3: // case Collapse, checking for research completed, using index 4 on game.subtabs
+                    if (game.research_complete[19])
+                        if (game.subtab[4] == available_subtabs[4])
+                            // this research is unlocked after completing Collapse-challenge
+                            // all Sub unlocked, rightmost to leftmost, else go right
+                            goto_subtab(0)
+                        else goto_subtab(game.subtab[4] + 1)
+                    else if (game.research_complete[18])
+                        if (game.subtab[4] == available_subtabs[4] - 1)
+                            // this research unlocks challenges
+                            // skip 4th subtab, else go right
+                            goto_subtab(0)
+                        else goto_subtab(game.subtab[4] + 1)
+                    else if (game.collapse >= 5)
+                        if (game.subtab[4] == 0)
+                            // research unlocked?
+                            // switch between research and collapse
+                            goto_subtab(1)
+                        else goto_subtab(0)
+
                     break
-                case 5:
-                    if (game.collapse > 0) {
-                        game.subtab[2] == 3
+                case 5: // case Statistic, using index 2 on subtabs
+                    if (game.collapse > 0)
+                        if (game.subtab[2] == 3)
+                            // already done a collapse?
+                            // rightmost to leftmost, else go one subtab right
+                            goto_subtab(0)
+                        else goto_subtab(game.subtab[2] + 1)
+                    else if (game.ascend > 0)
+                        // no collapse but already ascended?
+                        game.subtab[2] == 2 // as before, but skip the locked subtab for collapse
                             ? goto_subtab(0)
                             : goto_subtab(game.subtab[2] + 1)
-                    } else if (game.ascend > 0) {
-                        game.subtab[2] == 2
-                            ? goto_subtab(0)
-                            : goto_subtab(game.subtab[2] + 1)
-                    } else if (game.prestige > 0) {
-                        game.subtab[2] == 0 ? goto_subtab(1) : goto_subtab(0)
-                    }
+                    else if (game.prestige > 0)
+                        if (game.subtab[2] == 0)
+                            // only prestige done?
+                            // switch between 'Past Prestiges' and 'Statistics' subtabs
+                            goto_subtab(1)
+                        else goto_subtab(0)
+
                     break
             }
         }
         if (event.code === "ArrowLeft") {
-            switch (game.tab) {
-                case 0:
-                    if (game.color_boosts > 0) {
-                        if (game.subtab[0] == 0) {
-                            game.color_boosts >= available_subtabs[0]
-                                ? goto_subtab(4)
-                                : goto_subtab(game.color_boost)
-                        } else {
-                            goto_subtab(game.subtab[0] - 1)
-                        }
-                    }
+            // Switch Subtabs left, based on conditions + leftmost to rightmost
+            switch (
+                game.tab // still a tab-based conditioning
+            ) {
+                case 0: // case Spices
+                    if (game.color_boosts > 0)
+                        if (game.subtab[0] == 0)
+                            // do we have shifts/Boosts?
+                            if (game.color_boosts >= available_subtabs[0])
+                                // are we on red spices?
+                                // are shift/boosts greater/equal (subtabs - 1)?
+                                goto_subtab(4) // go to rightmost subtab
+                            else goto_subtab(game.color_boost)
+                        // else to the subtab we just unlocked
+                        else goto_subtab(game.subtab[0] - 1) // otherwise, just move one to the left
+
                     break
-                case 1:
-                    game.prestige_bought[12] == 1 && game.subtab[1] == 0
-                        ? goto_subtab(available_subtabs[1])
-                        : goto_subtab(game.subtab[1] - 1)
+                case 1: // case Prestige
+                    if (game.prestige_bought[12] == 1)
+                        if (game.subtab[1] == 0)
+                            // colored spices unlocked?
+                            // AND on leftmost subtab?
+                            goto_subtab(
+                                available_subtabs[1]
+                            ) // goto rightmost subtab
+                        else goto_subtab(game.subtab[1] - 1)
+                    // otherwise, just move one to the left
+                    else goto_subtab(0) // ensure he's staying on prestige only, as long as nothing else unlocked
+
                     break
-                case 2:
-                    if (!game.ascend_bought[16]) {
-                        game.subtab[3] == 0 ? goto_subtab(1) : goto_subtab(0)
-                    } else if (!game.ascend_complete[0]) {
-                        game.subtab[3] == 0
-                            ? goto_subtab(2)
-                            : goto_subtab(game.subtab[3] - 1)
-                    } else {
-                        game.subtab[3] == 0
-                            ? goto_subtab(3)
-                            : goto_subtab(game.subtab[3] - 1)
-                    }
+                case 2: // case Ascension. It's using index 3 on game.subtab
+                    if (game.ascend_complete[0])
+                        if (!game.subtab[3])
+                            // challenge 1 completed?
+                            // and on leftmost subtab? goto rightmost, else only one left
+                            goto_subtab(available_subtabs[3])
+                        else goto_subtab(game.subtab[3] - 1)
+                    else if (game.ascend_bought[16])
+                        if (!game.subtab[3])
+                            // challenge just unlocked, behave as before, but skip 4th subtab
+                            goto_subtab(available_subtabs[3] - 1)
+                        else goto_subtab(game.subtab[3] - 1)
+                    else if (!game.subtab[3])
+                        // only 2 subtabs? swtich between them
+                        goto_subtab(1)
+                    else goto_subtab(0)
+
                     break
-                case 3:
-                    if (game.research_complete[19]) {
-                        game.subtab[4] == 0
-                            ? goto_subtab(game.available_subtabs[4])
-                            : goto_subtab(game.subtab[4] - 1)
-                    } else if (game.research_complete[18]) {
-                        game.subtab[4] == 0
-                            ? goto_subtab(game.available_subtabs[4] - 1)
-                            : goto_subtab(game.subtab[4] - 1)
-                    } else if (game.collapse >= 5) {
-                        game.subtab[4] == 0 ? goto_subtab(1) : goto_subtab(0)
-                    }
+                case 3: // case Collape, using index 4 on game.subtab
+                    if (game.research_complete[19])
+                        if (game.subtab[4] == 0)
+                            // challenge 1 completed?
+                            // leftmost to rightmost, else only one left
+                            goto_subtab(available_subtabs[4])
+                        else goto_subtab(game.subtab[4] - 1)
+                    else if (game.research_complete[18])
+                        if (game.subtab[4] == 0)
+                            // challenge just unlocked?
+                            // leftmost to rightmost, skipping 4th subtab
+                            goto_subtab(available_subtabs[4] - 1)
+                        else goto_subtab(game.subtab[4] - 1)
+                    else if (game.collapse >= 5)
+                        if (game.subtab[4] == 0)
+                            // more or exact 5 collapses? you unlocked research, switch between both
+                            goto_subtab(1)
+                        else goto_subtab(0)
+                    else goto_subtab(0) // ensure staying on subtab 0, if nothing else is available
+
                     break
-                case 5:
-                    if (game.collapse > 0) {
-                        game.subtab[2] == 0
-                            ? goto_subtab(3)
-                            : goto_subtab(game.subtab[2] - 1)
-                    } else if (game.ascend > 0) {
-                        game.subtab[2] == 0
-                            ? goto_subtab(2)
-                            : goto_subtab(game.subtab[2] - 1)
-                    } else if (game.prestige > 0) {
-                        game.subtab[2] == 0 ? goto_subtab(1) : goto_subtab(0)
-                    }
+                case 5: // case Stats, index 2 on game.subtab
+                    if (game.collapse > 0)
+                        if (game.subtab[2] == 0)
+                            // collapse done?
+                            // right to left, leftmost to righmost
+                            goto_subtab(available_subtabs[2])
+                        else goto_subtab(game.subtab[2] - 1)
+                    else if (game.ascend > 0)
+                        if (game.subtab[2] == 0)
+                            // only ascension?
+                            // right to left, leftmost to rightmost, skip collapse-subtab
+                            goto_subtab(available_subtabs[2] - 1)
+                        else goto_subtab(game.subtab[2] - 1)
+                    else if (game.prestige > 0)
+                        if (game.subtab[2] == 0)
+                            // only prestige
+                            // skip between stats and prestige
+                            goto_subtab(1)
+                        else goto_subtab(0)
+                    else goto_subtab(0) // just for ensuring
+
                     break
             }
         }
@@ -2986,19 +3066,7 @@ document.body.addEventListener("keydown", function (event) {
 })
 
 document.body.addEventListener("keyup", function (event) {
-    for (let i = 0; i < 6; i++) {
-        if (event.code === "Digit" + (i + 1)) key.digit[i] = false
-    }
-
-    if (event.code === "KeyS") key.s = false
-    if (event.code === "KeyM") key.m = false
-    if (event.code === "KeyB") key.b = false
-    if (event.code === "KeyP") key.p = false
-    if (event.code === "KeyI") key.i = false
-    if (event.code === "KeyA") key.a = false
-    if (event.code === "KeyN") key.n = false
-    if (event.code === "KeyC") key.c = false
-    if (event.code === "KeyX") key.x = false
+    switch_key(event.code, false) // same as in keydown, this time "false" them
 })
 
 window.addEventListener("blur", function () {
