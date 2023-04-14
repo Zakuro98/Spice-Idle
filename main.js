@@ -3002,7 +3002,7 @@ document.body.addEventListener("keydown", function (event) {
                                 // are we on red spices?
                                 // are shift/boosts greater/equal (subtabs - 1)?
                                 goto_subtab(4) // go to rightmost subtab
-                            else goto_subtab(game.color_boost)
+                            else goto_subtab(game.color_boosts)
                         // else to the subtab we just unlocked
                         else goto_subtab(game.subtab[0] - 1)
                     // otherwise, just move one to the left
