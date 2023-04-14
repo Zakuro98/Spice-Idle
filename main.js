@@ -2787,13 +2787,23 @@ function collider_tick() {
 
 //handling hotkeys
 function switch_key(eventcode, state) {
-    if (eventcode.startsWith("Digit")){ // is it a "Digit" key, between 1 and 6? change its state to 'state'
-        if (parseInt(eventcode.substring(5) >= 1 && parseInt(eventcode.substring(5) <= 6))) {
+    if (eventcode.startsWith("Digit")) {
+        // is it a "Digit" key, between 1 and 6? change its state to 'state'
+        if (
+            parseInt(
+                eventcode.substring(5) >= 1 &&
+                    parseInt(eventcode.substring(5) <= 6)
+            )
+        ) {
             key.digit[parseInt(eventcode.substring(5))] = state
         }
-    }
-    else if (eventcode.startsWith("Key")){ // a "Key"-key? and in a list? change its state to 'state'
-        if (["a","b","c","i","m","n","p","s","x"].includes(eventcode.substring(3).toLowerCase())) {
+    } else if (eventcode.startsWith("Key")) {
+        // a "Key"-key? and in a list? change its state to 'state'
+        if (
+            ["a", "b", "c", "i", "m", "n", "p", "s", "x"].includes(
+                eventcode.substring(3).toLowerCase()
+            )
+        ) {
             key[eventcode.substring(3).toLowerCase()] = state
         }
     }
@@ -2816,13 +2826,18 @@ document.body.addEventListener("keydown", function (event) {
             // swich Tabs to the right (+rightmost to leftmost)
             if (
                 game.tab == 0 && // on Spices AND
-                (game.color_boosts >= 10 || game.prestige > 0 || game.ascend > 0 || game.collapse > 0) // unlocked Prestige+?
+                (game.color_boosts >= 10 ||
+                    game.prestige > 0 ||
+                    game.ascend > 0 ||
+                    game.collapse > 0) // unlocked Prestige+?
             ) {
                 goto_tab(1) // goto Prestige
             } else if (
                 // same as before, this time checking for Ascension+ unlocked
                 game.tab == 1 &&
-                (game.prestige_bought[25] || game.ascend > 0 || game.collapse > 0) 
+                (game.prestige_bought[25] ||
+                    game.ascend > 0 ||
+                    game.collapse > 0)
             ) {
                 goto_tab(2)
             } else if (
@@ -2896,7 +2911,9 @@ document.body.addEventListener("keydown", function (event) {
                             // are there color-Shifts/Boosts?
                             // is this the rightmost unlocked spice?
                             goto_subtab(0) // go back to red spices
-                        else goto_subtab(game.subtab[0] + 1) // otherwise move one right
+                        else goto_subtab(game.subtab[0] + 1)
+                    // otherwise move one right
+                    else goto_subtab(0) // ensure staying on subtab 0, if nothing unlocked
                     break
                 case 1: // case Prestige-Subtabs
                     if (game.prestige_bought[12] == 1)
@@ -2904,7 +2921,9 @@ document.body.addEventListener("keydown", function (event) {
                             // did we unlocked crystal spice?
                             // are we rightmost?
                             goto_subtab(0) // go back to leftmost
-                        else goto_subtab(game.subtab[1] + 1) // otherwise shift one to the right
+                        else goto_subtab(game.subtab[1] + 1)
+                    // otherwise shift one to the right
+                    else goto_subtab(0) // ensure staying on subtab 0, if nothing unlocked
 
                     break
                 case 2: //case Ascension-Subtabs, index 3 on game.subtabs
@@ -2944,6 +2963,7 @@ document.body.addEventListener("keydown", function (event) {
                             // switch between research and collapse
                             goto_subtab(1)
                         else goto_subtab(0)
+                    else goto_subtab(0) // ensure staying on subtab 0, if nothing unlocked
 
                     break
                 case 5: // case Statistic, using index 2 on subtabs
@@ -2964,6 +2984,7 @@ document.body.addEventListener("keydown", function (event) {
                             // switch between 'Past Prestiges' and 'Statistics' subtabs
                             goto_subtab(1)
                         else goto_subtab(0)
+                    else goto_subtab(0) // ensure staying on subtab 0, if nothing unlocked
 
                     break
             }
@@ -2976,14 +2997,16 @@ document.body.addEventListener("keydown", function (event) {
                 case 0: // case Spices
                     if (game.color_boosts > 0)
                         if (game.subtab[0] == 0)
-                            // do we have shifts/Boosts?
                             if (game.color_boosts >= available_subtabs[0])
+                                // do we have shifts/Boosts?
                                 // are we on red spices?
                                 // are shift/boosts greater/equal (subtabs - 1)?
                                 goto_subtab(4) // go to rightmost subtab
                             else goto_subtab(game.color_boost)
                         // else to the subtab we just unlocked
-                        else goto_subtab(game.subtab[0] - 1) // otherwise, just move one to the left
+                        else goto_subtab(game.subtab[0] - 1)
+                    // otherwise, just move one to the left
+                    else goto_subtab(0)
 
                     break
                 case 1: // case Prestige
@@ -2991,9 +3014,8 @@ document.body.addEventListener("keydown", function (event) {
                         if (game.subtab[1] == 0)
                             // colored spices unlocked?
                             // AND on leftmost subtab?
-                            goto_subtab(
-                                available_subtabs[1]
-                            ) // goto rightmost subtab
+                            goto_subtab(available_subtabs[1])
+                        // goto rightmost subtab
                         else goto_subtab(game.subtab[1] - 1)
                     // otherwise, just move one to the left
                     else goto_subtab(0) // ensure he's staying on prestige only, as long as nothing else unlocked
@@ -3057,7 +3079,7 @@ document.body.addEventListener("keydown", function (event) {
                             // skip between stats and prestige
                             goto_subtab(1)
                         else goto_subtab(0)
-                    else goto_subtab(0) // just for ensuring
+                    else goto_subtab(0) // ensure staying on subtab 0, if nothing unlocked
 
                     break
             }
