@@ -2816,13 +2816,13 @@ document.body.addEventListener("keydown", function (event) {
             // swich Tabs to the right (+rightmost to leftmost)
             if (
                 game.tab == 0 && // on Spices AND
-                (game.color_boosts >= 10 || game.prestige > 0) // unlocked Prestige?
+                (game.color_boosts >= 10 || game.prestige > 0 || game.ascend > 0 || game.collapse > 0) // unlocked Prestige+?
             ) {
                 goto_tab(1) // goto Prestige
             } else if (
-                // same as before, this time checking for Ascension unlocked
+                // same as before, this time checking for Ascension+ unlocked
                 game.tab == 1 &&
-                (game.prestige_bought[25] || game.ascend > 0)
+                (game.prestige_bought[25] || game.ascend > 0 || game.collapse > 0) 
             ) {
                 goto_tab(2)
             } else if (
