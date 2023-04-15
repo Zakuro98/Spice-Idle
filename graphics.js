@@ -2607,11 +2607,17 @@ function spice_update() {
                 document.getElementById("green_max_all").style.display = "none"
                 document.getElementById("blue").innerHTML = "LOCKED"
                 document.getElementById("blue").className = "subtab locked"
+                document.getElementById("pink").innerHTML = "LOCKED"
+                document.getElementById("pink").className = "subtab locked"
             }
         } else {
             document.getElementById("yellow_max_all").style.display = "none"
             document.getElementById("green").innerHTML = "LOCKED"
             document.getElementById("green").className = "subtab locked"
+            document.getElementById("blue").innerHTML = "LOCKED"
+            document.getElementById("blue").className = "subtab locked"
+            document.getElementById("pink").innerHTML = "LOCKED"
+            document.getElementById("pink").className = "subtab locked"
         }
     } else {
         document.getElementById("spices_tabs").style.display = "none"
