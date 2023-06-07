@@ -3070,7 +3070,7 @@ function activate_collider() {
                     .floor()
 
                 if (game.antispice[1].cmp(Decimal.pow(10, 36)) >= 0)
-                    game.antispice[0] = Decimal.pow(10, 36)
+                    game.antispice[1] = Decimal.pow(10, 36)
 
                 game.atomic_spice = game.atomic_spice.mul(
                     1 - game.atomic_portion
