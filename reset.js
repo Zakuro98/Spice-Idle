@@ -2,8 +2,11 @@
 function color_boost(override) {
     let can_boost = false
     let scaling = 1
-    if (game.ascend_challenge === 3 || game.collapse_challenge === 7)
+    let scaling2 = 1n
+    if (game.ascend_challenge === 3 || game.collapse_challenge === 7) {
         scaling = 10
+        scaling2 = 10n
+    }
     switch (game.color_boosts) {
         case 0:
             if (game.red_spice_gen[5].cmp(50 * scaling) >= 0) can_boost = true
@@ -116,6 +119,12 @@ function color_boost(override) {
             game.blue_spice = new Decimal(5)
             game.pink_spice = new Decimal(5)
 
+            game.highest_red_spice = new Decimal(5)
+            game.highest_yellow_spice = new Decimal(5)
+            game.highest_green_spice = new Decimal(5)
+            game.highest_blue_spice = new Decimal(5)
+            game.highest_pink_spice = new Decimal(5)
+
             game.global_spice_boost = new Decimal(1)
 
             game.red_spice_gen = [
@@ -126,7 +135,7 @@ function color_boost(override) {
                 new Decimal(0),
                 new Decimal(0),
             ]
-            game.red_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.red_spice_bought = [0n, 0n, 0n, 0n, 0n, 0n]
             game.red_spice_boost = [
                 new Decimal(1),
                 new Decimal(1),
@@ -162,7 +171,7 @@ function color_boost(override) {
                 new Decimal(0),
                 new Decimal(0),
             ]
-            game.yellow_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.yellow_spice_bought = [0n, 0n, 0n, 0n, 0n, 0n]
             game.yellow_spice_boost = [
                 new Decimal(1),
                 new Decimal(1),
@@ -198,7 +207,7 @@ function color_boost(override) {
                 new Decimal(0),
                 new Decimal(0),
             ]
-            game.green_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.green_spice_bought = [0n, 0n, 0n, 0n, 0n, 0n]
             game.green_spice_boost = [
                 new Decimal(1),
                 new Decimal(1),
@@ -234,7 +243,7 @@ function color_boost(override) {
                 new Decimal(0),
                 new Decimal(0),
             ]
-            game.blue_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.blue_spice_bought = [0n, 0n, 0n, 0n, 0n, 0n]
             game.blue_spice_boost = [
                 new Decimal(1),
                 new Decimal(1),
@@ -270,7 +279,7 @@ function color_boost(override) {
                 new Decimal(0),
                 new Decimal(0),
             ]
-            game.pink_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.pink_spice_bought = [0n, 0n, 0n, 0n, 0n, 0n]
             game.pink_spice_boost = [
                 new Decimal(1),
                 new Decimal(1),
@@ -308,7 +317,7 @@ function color_boost(override) {
                                 (9 -
                                     33 ** 0.5 -
                                     Math.cbrt(
-                                        -8 * game.pink_spice_bought[5] -
+                                        -8 * Number(game.pink_spice_bought[5]) -
                                             36 * 33 ** 0.5 +
                                             500
                                     ))
@@ -317,46 +326,57 @@ function color_boost(override) {
                     if (game.pink_spice_bought[5] <= 150 * scaling) {
                         game.color_boosts =
                             Math.floor(
-                                (game.pink_spice_bought[5] / scaling + 50) / 25
+                                (Number(game.pink_spice_bought[5]) / scaling +
+                                    50) /
+                                    25
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 1200 * scaling) {
                         game.color_boosts =
                             Math.floor(
-                                (game.pink_spice_bought[5] / scaling + 250) / 50
+                                (Number(game.pink_spice_bought[5]) / scaling +
+                                    250) /
+                                    50
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 9000 * scaling) {
                         game.color_boosts =
                             Math.floor(
-                                (game.pink_spice_bought[5] / scaling + 975) / 75
+                                (Number(game.pink_spice_bought[5]) / scaling +
+                                    975) /
+                                    75
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 18000 * scaling) {
                         game.color_boosts =
                             Math.floor(
-                                (game.pink_spice_bought[5] / scaling + 4300) /
+                                (Number(game.pink_spice_bought[5]) / scaling +
+                                    4300) /
                                     100
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 63000 * scaling) {
                         game.color_boosts =
                             Math.floor(
-                                (game.pink_spice_bought[5] / scaling + 15450) /
+                                (Number(game.pink_spice_bought[5]) / scaling +
+                                    15450) /
                                     150
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 198600 * scaling) {
                         game.color_boosts =
                             Math.floor(
-                                (game.pink_spice_bought[5] / scaling + 41600) /
+                                (Number(game.pink_spice_bought[5]) / scaling +
+                                    41600) /
                                     200
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 1069500 * scaling) {
                         game.color_boosts =
                             Math.floor(
-                                (game.pink_spice_bought[5] / scaling + 161700) /
+                                (Number(game.pink_spice_bought[5]) / scaling +
+                                    161700) /
                                     300
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 2768000 * scaling) {
                         game.color_boosts =
                             Math.floor(
-                                (game.pink_spice_bought[5] / scaling + 982500) /
+                                (Number(game.pink_spice_bought[5]) / scaling +
+                                    982500) /
                                     500
                             ) + 1
                     } else if (
@@ -365,7 +385,7 @@ function color_boost(override) {
                     ) {
                         game.color_boosts =
                             Math.floor(
-                                (game.pink_spice_bought[5] / scaling +
+                                (Number(game.pink_spice_bought[5]) / scaling +
                                     4733000) /
                                     1000
                             ) + 1
@@ -375,7 +395,7 @@ function color_boost(override) {
                     ) {
                         game.color_boosts =
                             Math.floor(
-                                (game.pink_spice_bought[5] / scaling +
+                                (Number(game.pink_spice_bought[5]) / scaling +
                                     79737500) /
                                     2500
                             ) + 1
@@ -385,7 +405,8 @@ function color_boost(override) {
                             Math.floor(
                                 (2 * game.augment_start -
                                     5001 +
-                                    ((8 * game.pink_spice_bought[5]) / scaling -
+                                    ((8 * Number(game.pink_spice_bought[5])) /
+                                        scaling -
                                         8 * amount +
                                         25010001) **
                                         0.5) /
@@ -412,11 +433,20 @@ function prestige(override) {
         if (game.color_boosts <= 16)
             amount = new Decimal(2).pow((game.color_boosts - 10) / 3)
         else amount = new Decimal(2).pow((game.color_boosts - 8) / 4)
+        if (game.research_complete[31] >= 1 && game.collapse_challenge !== 12) {
+            if (game.color_boosts >= game.augment_start) {
+                let augment_amount = new Decimal(2).pow(
+                    (game.augment_start - 8) / 4
+                )
+                amount = amount.div(augment_amount).pow(1.5).mul(augment_amount)
+            }
+        }
         if (
             game.ascend_bought[15] &&
             game.ascend_challenge !== 1 &&
             game.ascend_challenge !== 6 &&
-            game.collapse_challenge !== 7
+            game.collapse_challenge !== 7 &&
+            game.collapse_challenge !== 12
         ) {
             if (game.ascend < 10240)
                 amount = amount.mul(Decimal.pow(2, game.ascend / 20))
@@ -426,7 +456,38 @@ function prestige(override) {
                 )
         }
 
+        if (game.antispice[4].cmp(1) >= 0) {
+            let antispice_amount = game.antispice[4]
+            if (antispice_amount.cmp(new Decimal(20000)) >= 0)
+                antispice_amount = antispice_amount
+                    .div(new Decimal(20000))
+                    .pow(0.5)
+                    .mul(new Decimal(20000))
+            if (
+                antispice_amount.cmp(Decimal.pow(10, 11).mul(2 * 5 ** 0.5)) >= 0
+            )
+                antispice_amount = antispice_amount
+                    .div(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
+                    .pow(0.5)
+                    .mul(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
+
+            if (game.collapse_challenge !== 0) {
+                amount = amount.pow(
+                    1 + antispice_amount.log(10) ** 0.75 * 0.0325
+                )
+            } else {
+                amount = amount.pow(
+                    1 + antispice_amount.log(10) ** 0.75 * 0.065
+                )
+            }
+        }
+
+        if (game.antispice_bought[2]) {
+            amount = amount.pow(1.15)
+        }
+
         game.rainbow_spice = game.rainbow_spice.add(amount)
+        game.antitotal_spice[6] = game.antitotal_spice[6].add(amount)
         for (let i = 8; i >= 0; i--) {
             game.prestige_amount_history[i + 1] =
                 game.prestige_amount_history[i]
@@ -450,12 +511,13 @@ function prestige(override) {
         }
 
         game.crystal_spice = new Decimal(0)
+        game.highest_crystal_spice = new Decimal(0)
         for (let i = 0; i < 6; i++) {
             game.crystal_spice_gen[i] = new Decimal(
-                game.crystal_spice_bought[i]
+                game.crystal_spice_bought[i].toString()
             )
         }
-        game.crystal_infusion = 0
+        game.crystal_infusion = 0n
         game.crystal_infusion_price = new Decimal(10)
 
         color_boost(true)
@@ -474,7 +536,7 @@ function ascend(override) {
         goal = ascension_challenge.challenges[game.ascend_challenge - 1].goal
     }
 
-    if (game.rainbow_spice.cmp(goal) >= 0) {
+    if (game.rainbow_spice.cmp(goal) >= 0 && game.collapse_challenge !== 11) {
         let ascend_ready = false
 
         if (override || !game.ascend_confirm) ascend_ready = true
@@ -489,15 +551,63 @@ function ascend(override) {
         }
 
         if (ascend_ready) {
-            if (!override) game.ascend++
+            if (!override) {
+                let total_completions = 0
+                for (let i = 0; i < 6; i++) {
+                    total_completions += game.collapse_complete[i]
+                }
+
+                if (game.research_complete[36] >= 1) {
+                    let ascension_amount =
+                        1 + (1.05 ** (total_completions - 55)) ** 2.7
+                    if (ascension_amount >= 10000)
+                        ascension_amount =
+                            (ascension_amount / 10000) ** 0.5 * 10000
+                    game.ascend += Math.floor(ascension_amount)
+                } else game.ascend++
+            }
             let amount = Math.floor(
                 (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8
             )
-            if (game.research_complete[10] >= 1)
+            if (
+                game.research_complete[10] >= 1 &&
+                game.collapse_challenge !== 12
+            )
                 amount = Math.floor(
                     (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8 *
                         (Math.log2((game.collapse + 25) / 25) ** 2 * 6.27 + 1)
                 )
+
+            if (game.antispice[4].cmp(1) >= 0) {
+                let antispice_amount = game.antispice[4]
+                if (antispice_amount.cmp(new Decimal(20000)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(new Decimal(20000))
+                        .pow(0.5)
+                        .mul(new Decimal(20000))
+                if (
+                    antispice_amount.cmp(
+                        Decimal.pow(10, 11).mul(2 * 5 ** 0.5)
+                    ) >= 0
+                )
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
+
+                if (game.collapse_challenge !== 0) {
+                    amount =
+                        amount **
+                        (1 + antispice_amount.log(10) ** 0.75 * 0.0325)
+                } else {
+                    amount =
+                        amount ** (1 + antispice_amount.log(10) ** 0.75 * 0.065)
+                }
+            }
+
+            if (game.antispice_bought[3]) {
+                amount = amount ** 1.25
+            }
 
             game.ansuz += amount
 
@@ -593,28 +703,37 @@ function ascend(override) {
             }
 
             game.arcane_spice = new Decimal(0)
+            game.highest_arcane_spice = new Decimal(0)
             for (let i = 0; i < 6; i++) {
                 game.arcane_spice_gen[i] = new Decimal(
-                    game.arcane_spice_bought[i]
+                    game.arcane_spice_bought[i].toString()
                 )
             }
-            game.arcane_enchantment = 0
+            game.arcane_enchantment = 0n
             game.arcane_enchantment_price = new Decimal(25)
 
-            game.free_enchantment = 0
-            if (game.research_complete[13] >= 1)
-                game.free_enchantment = game.arcane_strengthener * 200
-            if (game.research_complete[25] >= 1) {
-                let collapse_free = game.collapse * 50
+            game.free_enchantment = 0n
+            if (
+                game.research_complete[13] >= 1 &&
+                game.collapse_challenge !== 12
+            )
+                game.free_enchantment = BigInt(game.arcane_strengthener) * 200n
+            if (
+                game.research_complete[25] >= 1 &&
+                game.collapse_challenge !== 12
+            ) {
+                let collapse_free = BigInt(game.collapse) * 50n
                 if (game.collapse >= 100000)
-                    collapse_free = Math.floor(
-                        2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                            3750000
+                    collapse_free = BigInt(
+                        Math.floor(
+                            2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                                3750000
+                        )
                     )
                 if (game.collapse >= 31337500)
-                    collapse_free = game.collapse + 34912500
-                if (collapse_free > game.arcane_enchantment / 2)
-                    collapse_free = Math.floor(game.arcane_enchantment / 2)
+                    collapse_free = BigInt(game.collapse) + 34912500n
+                if (collapse_free > game.arcane_enchantment / 2n)
+                    collapse_free = game.arcane_enchantment / 2n
 
                 game.free_enchantment += collapse_free
             }
@@ -642,7 +761,7 @@ function ascend(override) {
                 new Decimal(0),
                 new Decimal(0),
             ]
-            game.crystal_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.crystal_spice_bought = [0n, 0n, 0n, 0n, 0n, 0n]
             game.crystal_spice_boost = [
                 new Decimal(1),
                 new Decimal(1),
@@ -660,7 +779,7 @@ function ascend(override) {
             }
         }
     } else {
-        if (override) {
+        if (override && game.collapse_challenge !== 11) {
             game.ascend_time_played = 0
             game.real_time_played[2] = 0
             if (game.collapse_challenge === 7) game.ascend_challenge_timer = 0
@@ -697,28 +816,37 @@ function ascend(override) {
             }
 
             game.arcane_spice = new Decimal(0)
+            game.highest_arcane_spice = new Decimal(0)
             for (let i = 0; i < 6; i++) {
                 game.arcane_spice_gen[i] = new Decimal(
-                    game.arcane_spice_bought[i]
+                    game.arcane_spice_bought[i].toString()
                 )
             }
-            game.arcane_enchantment = 0
+            game.arcane_enchantment = 0n
             game.arcane_enchantment_price = new Decimal(25)
 
-            game.free_enchantment = 0
-            if (game.research_complete[13] >= 1)
-                game.free_enchantment = game.arcane_strengthener * 200
-            if (game.research_complete[25] >= 1) {
-                let collapse_free = game.collapse * 50
+            game.free_enchantment = 0n
+            if (
+                game.research_complete[13] >= 1 &&
+                game.collapse_challenge !== 12
+            )
+                game.free_enchantment = BigInt(game.arcane_strengthener) * 200n
+            if (
+                game.research_complete[25] >= 1 &&
+                game.collapse_challenge !== 12
+            ) {
+                let collapse_free = BigInt(game.collapse) * 50n
                 if (game.collapse >= 100000)
-                    collapse_free = Math.floor(
-                        2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                            3750000
+                    collapse_free = BigInt(
+                        Math.floor(
+                            2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                                3750000
+                        )
                     )
                 if (game.collapse >= 31337500)
-                    collapse_free = game.collapse + 34912500
-                if (collapse_free > game.arcane_enchantment / 2)
-                    collapse_free = Math.floor(game.arcane_enchantment / 2)
+                    collapse_free = BigInt(game.collapse) + 34912500n
+                if (collapse_free > game.arcane_enchantment / 2n)
+                    collapse_free = game.arcane_enchantment / 2n
 
                 game.free_enchantment += collapse_free
             }
@@ -746,7 +874,7 @@ function ascend(override) {
                 new Decimal(0),
                 new Decimal(0),
             ]
-            game.crystal_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.crystal_spice_bought = [0n, 0n, 0n, 0n, 0n, 0n]
             game.crystal_spice_boost = [
                 new Decimal(1),
                 new Decimal(1),
@@ -770,6 +898,12 @@ function collapse(override) {
             .div(Decimal.pow(10, 200))
             .pow(10 / ((amount.log(10) * 0.3 - 56) ** 0.5 - 2))
             .mul(Decimal.pow(10, 200))
+
+        if (amount.cmp(Decimal.pow(10, 20000)) >= 0)
+            amount = Decimal.pow(
+                10,
+                20000 * (amount.log(10) / 20000) ** (2 / 3)
+            )
     } else if (amount.cmp(Decimal.pow(10, 200)) >= 0) {
         amount = amount
             .div(Decimal.pow(10, 200))
@@ -788,7 +922,7 @@ function collapse(override) {
                 rune_amount.div(Decimal.pow(10, 50)).log(10) ** 0.5 + 50
             )
         if (rune_amount.cmp(Decimal.pow(10, 100)) >= 0)
-            rune_amount = Decimal.pow(10, 100)
+            rune_amount = Decimal.pow(10, 200 - 10000 / rune_amount.log(10))
 
         amount = amount.mul(rune_amount)
     }
@@ -804,50 +938,152 @@ function collapse(override) {
     if (game.collapse_challenge !== 0) {
         let c = collapse_challenge.challenges[game.collapse_challenge - 7]
         let completions = game.collapse_complete[game.collapse_challenge - 7]
-        let exponent = completions
 
-        if (c.scaling1 !== undefined && completions >= c.scaling1) {
-            if (completions >= c.scaling1) {
-                exponent = c.scaling1 + (completions - c.scaling1) * 1.5
-            }
+        let temp_goal = c.goal.mul(c.delta.pow(completions))
 
-            if (c.scaling2 !== undefined) {
-                if (completions >= c.scaling2) {
-                    exponent =
-                        (completions - c.scaling2) * 2 +
-                        (c.scaling2 - c.scaling1) * 1.5 +
-                        c.scaling1
-                }
+        let extra = [1, 1, 1, 1, 1, 1]
+        let superstep = c.goal.mul(c.delta.pow(Math.abs(c.scaling1) - 1))
+        let superdelta = c.delta
+        let step1 = c.goal
+        if (c.scaling1 !== undefined) {
+            if (c.scaling1 < 0) extra[0] = 0
+            step1 = step1.mul(c.delta.pow(Math.abs(c.scaling1) - 1))
+            if (completions >= Math.abs(c.scaling1))
+                temp_goal = step1.mul(
+                    c.delta2.pow(
+                        completions - Math.abs(c.scaling1) + extra[0] + 1
+                    )
+                )
 
-                if (c.scaling3 !== undefined) {
-                    if (completions >= c.scaling3) {
-                        exponent =
-                            (completions - c.scaling3) * 3 +
-                            (c.scaling3 - c.scaling2) * 2 +
-                            (c.scaling2 - c.scaling1) * 1.5 +
-                            c.scaling1
-                    }
-
-                    if (c.scaling4 !== undefined) {
-                        if (completions >= c.scaling4) {
-                            exponent =
-                                (completions - c.scaling4) * 5 +
-                                (c.scaling4 - c.scaling3) * 3 +
-                                (c.scaling3 - c.scaling2) * 2 +
-                                (c.scaling2 - c.scaling1) * 1.5 +
-                                c.scaling1
-                        }
-                    }
-                }
-            }
+            superstep = step1.mul(
+                c.delta2.pow(c.superscaling - Math.abs(c.scaling1) + extra[0])
+            )
+            superdelta = c.delta2
         }
 
-        goal = c.goal.mul(
-            Decimal.pow(10, Math.round(Decimal.pow(c.delta, exponent).log(10)))
-        )
+        let step2 = step1
+        if (c.scaling2 !== undefined) {
+            if (c.scaling2 < 0) extra[1] = 0
+            step2 = step2.mul(
+                c.delta2.pow(
+                    Math.abs(c.scaling2) - Math.abs(c.scaling1) + extra[0]
+                )
+            )
+            if (completions >= Math.abs(c.scaling2))
+                temp_goal = step2.mul(
+                    c.delta3.pow(
+                        completions - Math.abs(c.scaling2) + extra[1] + 1
+                    )
+                )
+
+            superstep = step2.mul(
+                c.delta3.pow(c.superscaling - Math.abs(c.scaling2) + extra[1])
+            )
+            superdelta = c.delta3
+        }
+
+        let step3 = step2
+        if (c.scaling3 !== undefined) {
+            if (c.scaling3 < 0) extra[2] = 0
+            step3 = step3.mul(
+                c.delta3.pow(
+                    Math.abs(c.scaling3) - Math.abs(c.scaling2) + extra[1]
+                )
+            )
+            if (completions >= Math.abs(c.scaling3))
+                temp_goal = step3.mul(
+                    c.delta4.pow(
+                        completions - Math.abs(c.scaling3) + extra[2] + 1
+                    )
+                )
+
+            superstep = step3.mul(
+                c.delta4.pow(c.superscaling - Math.abs(c.scaling3) + extra[2])
+            )
+            superdelta = c.delta4
+        }
+
+        let step4 = step3
+        if (c.scaling4 !== undefined) {
+            if (c.scaling4 < 0) extra[3] = 0
+            step4 = step4.mul(
+                c.delta4.pow(
+                    Math.abs(c.scaling4) - Math.abs(c.scaling3) + extra[2]
+                )
+            )
+            if (completions >= Math.abs(c.scaling4))
+                temp_goal = step4.mul(
+                    c.delta5.pow(
+                        completions - Math.abs(c.scaling4) + extra[3] + 1
+                    )
+                )
+
+            superstep = step4.mul(
+                c.delta5.pow(c.superscaling - Math.abs(c.scaling4) + extra[3])
+            )
+            superdelta = c.delta5
+        }
+
+        let step5 = step4
+        if (c.scaling5 !== undefined) {
+            if (c.scaling5 < 0) extra[4] = 0
+            step5 = step5.mul(
+                c.delta5.pow(
+                    Math.abs(c.scaling5) - Math.abs(c.scaling4) + extra[3]
+                )
+            )
+            if (completions >= Math.abs(c.scaling5))
+                temp_goal = step5.mul(
+                    c.delta6.pow(
+                        completions - Math.abs(c.scaling5) + extra[4] + 1
+                    )
+                )
+
+            superstep = step5.mul(
+                c.delta6.pow(c.superscaling - Math.abs(c.scaling5) + extra[4])
+            )
+            superdelta = c.delta6
+        }
+
+        let step6 = step5
+        if (c.scaling6 !== undefined) {
+            if (c.scaling6 < 0) extra[5] = 0
+            step6 = step6.mul(
+                c.delta6.pow(
+                    Math.abs(c.scaling6) - Math.abs(c.scaling5) + extra[4]
+                )
+            )
+            if (completions >= Math.abs(c.scaling6))
+                temp_goal = step6.mul(
+                    c.delta7.pow(
+                        completions - Math.abs(c.scaling6) + extra[5] + 1
+                    )
+                )
+
+            superstep = step6.mul(
+                c.delta7.pow(c.superscaling - Math.abs(c.scaling6) + extra[5])
+            )
+            superdelta = c.delta7
+        }
+
+        if (completions >= c.superscaling) {
+            temp_goal = superstep.mul(
+                superdelta.pow(
+                    ((completions - c.superscaling + 2) *
+                        (completions - c.superscaling + 3)) /
+                        2 -
+                        1
+                )
+            )
+        }
+
+        goal = temp_goal
     }
 
-    if (game.ascend_complete[5] && amount.cmp(goal) >= 0) {
+    if (
+        (game.ascend_complete[5] || game.collapse_challenge === 11) &&
+        amount.cmp(goal) >= 0
+    ) {
         let collapse_ready = false
 
         if (override || !game.collapse_confirm) collapse_ready = true
@@ -862,7 +1098,14 @@ function collapse(override) {
         }
 
         if (collapse_ready) {
-            if (!override) game.collapse++
+            if (!override) {
+                if (game.research_complete[36] >= 1) {
+                    let collapse_amount = 1 + 1.05 ** (total_completions - 55)
+                    if (collapse_amount > 100)
+                        collapse_amount = (collapse_amount / 100) ** 0.5 * 100
+                    game.collapse += Math.floor(collapse_amount)
+                } else game.collapse++
+            }
             game.atomic_spice = game.atomic_spice.add(amount)
 
             game.unstable_spice = game.total_unstable_spice
@@ -876,6 +1119,7 @@ function collapse(override) {
             game.collapse_amount_history[0] = amount
             game.collapse_time_history[0] = game.collapse_time_played
 
+            let old_time = game.real_time_played[3]
             game.collapse_time_played = 0
             game.real_time_played[3] = 0
             game.collapse_spice = new Decimal(5)
@@ -938,7 +1182,7 @@ function collapse(override) {
                 new Decimal(0),
                 new Decimal(0),
             ]
-            game.arcane_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.arcane_spice_bought = [0n, 0n, 0n, 0n, 0n, 0n]
             game.arcane_spice_boost = [
                 new Decimal(1),
                 new Decimal(1),
@@ -950,23 +1194,63 @@ function collapse(override) {
             game.arcane_strengthener = 0
             game.arcane_strengthener_price = 5000000
 
-            game.free_enchantment = 0
-            if (game.research_complete[25] >= 1) {
-                let collapse_free = game.collapse * 50
+            game.free_enchantment = 0n
+            if (
+                game.research_complete[25] >= 1 &&
+                game.collapse_challenge !== 12
+            ) {
+                let collapse_free = BigInt(game.collapse) * 50n
                 if (game.collapse >= 100000)
-                    collapse_free = Math.floor(
-                        2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                            3750000
+                    collapse_free = BigInt(
+                        Math.floor(
+                            2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                                3750000
+                        )
                     )
                 if (game.collapse >= 31337500)
-                    collapse_free = game.collapse + 34912500
-                if (collapse_free > game.arcane_enchantment / 2)
-                    collapse_free = Math.floor(game.arcane_enchantment / 2)
+                    collapse_free = BigInt(game.collapse) + 34912500n
+                if (collapse_free > game.arcane_enchantment / 2n)
+                    collapse_free = game.arcane_enchantment / 2n
 
                 game.free_enchantment = collapse_free
             }
 
             game.global_spice_boost = new Decimal(1)
+
+            let basic_amount = game.atomic_spice
+                .mul(game.atomic_portion)
+                .add(game.spent_atomic_spice[0])
+                .pow(game.atomic_efficiency / 132)
+            if (basic_amount.cmp(Decimal.pow(10, 420)) >= 0)
+                basic_amount = Decimal.pow(
+                    10,
+                    (basic_amount.log(10) / 420) ** 0.8 * 420
+                )
+
+            let rainbow_amount =
+                (game.antitotal_spice[6].log(10) - 11300000) / 900000
+            if (rainbow_amount < 0) rainbow_amount = 0
+            if (rainbow_amount > 24) rainbow_amount = 24
+            let atomic_amount =
+                (game.spent_atomic_spice[6]
+                    .add(game.atomic_spice.mul(game.atomic_portion))
+                    .log(10) -
+                    31320) /
+                1620
+            if (atomic_amount < 0) atomic_amount = 0
+            if (atomic_amount > 24) atomic_amount = 24
+
+            let third_condition = true
+
+            if (old_time < 0.5 && game.collider_animation)
+                third_condition = false
+
+            if (
+                game.research_complete[34] >= 1 &&
+                game.autosc_toggle &&
+                third_condition
+            )
+                auto_collider()
 
             if (game.collapse === 1) {
                 confirmations("collapse", true)
@@ -1029,7 +1313,7 @@ function collapse(override) {
                 new Decimal(0),
                 new Decimal(0),
             ]
-            game.arcane_spice_bought = [0, 0, 0, 0, 0, 0]
+            game.arcane_spice_bought = [0n, 0n, 0n, 0n, 0n, 0n]
             game.arcane_spice_boost = [
                 new Decimal(1),
                 new Decimal(1),
@@ -1041,18 +1325,23 @@ function collapse(override) {
             game.arcane_strengthener = 0
             game.arcane_strengthener_price = 5000000
 
-            game.free_enchantment = 0
-            if (game.research_complete[25] >= 1) {
-                let collapse_free = game.collapse * 50
+            game.free_enchantment = 0n
+            if (
+                game.research_complete[25] >= 1 &&
+                game.collapse_challenge !== 12
+            ) {
+                let collapse_free = BigInt(game.collapse) * 50n
                 if (game.collapse >= 100000)
-                    collapse_free = Math.floor(
-                        2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                            3750000
+                    collapse_free = BigInt(
+                        Math.floor(
+                            2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                                3750000
+                        )
                     )
                 if (game.collapse >= 31337500)
-                    collapse_free = game.collapse + 34912500
-                if (collapse_free > game.arcane_enchantment / 2)
-                    collapse_free = Math.floor(game.arcane_enchantment / 2)
+                    collapse_free = BigInt(game.collapse) + 34912500n
+                if (collapse_free > game.arcane_enchantment / 2n)
+                    collapse_free = game.arcane_enchantment / 2n
 
                 game.free_enchantment = collapse_free
             }
