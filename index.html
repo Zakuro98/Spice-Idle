@@ -517,6 +517,9 @@
                         <p id="ansuz_num" class="ansuz_num runes">
                             0 ᚫ
                         </p>
+                        <p id="ansuz_up" class="spice_up">
+                            +0.000 ᚫ/sec
+                        </p>
                         <div id="rune_control_block">
                             <div class="rune_control">
                                 <button class="rune_button a_unlocked" onclick="recall_runes(1)">
@@ -735,6 +738,9 @@
                         <p id="ansuz_num2" class="ansuz_num runes">
                             0 ᚫ
                         </p>
+                        <p id="ansuz_up2" class="spice_up">
+                            +0.000 ᚫ/sec
+                        </p>
                     </div>
 
                     <div class="rune_control">
@@ -788,6 +794,9 @@
                         </p>
                         <p id="ansuz_num3" class="ansuz_num runes">
                             0 ᚫ
+                        </p>
+                        <p id="ansuz_up3" class="spice_up">
+                            +0.000 ᚫ/sec
                         </p>
                         <div id="arcane_rune_control" class="rune_control">
                             <button class="rune_button a_unlocked" onclick="recall_runes(3)">
@@ -927,7 +936,7 @@
                             UNSTABLE SPICE
                         </button>
                         <button id="collider_tab2" class="spice_buy" onclick="game.collider_tab = 1">
-                            PURE ANTISPICE
+                            BASIC ANTISPICE
                         </button>
                         <button id="collider_tab3" class="spice_buy" onclick="game.collider_tab = 2">
                             RED ANTISPICE
@@ -937,6 +946,15 @@
                         </button>
                         <button id="collider_tab5" class="spice_buy" onclick="game.collider_tab = 4">
                             GREEN ANTISPICE
+                        </button>
+                        <button id="collider_tab6" class="spice_buy" onclick="game.collider_tab = 5">
+                            BLUE ANTISPICE
+                        </button>
+                        <button id="collider_tab7" class="spice_buy" onclick="game.collider_tab = 6">
+                            PINK ANTISPICE
+                        </button>
+                        <button id="collider_tab8" class="spice_buy" onclick="game.collider_tab = 7">
+                            RAINBOW ANTISPICE
                         </button>
                     </div>
                     <p id="collider_resource" class="collider_text">
@@ -957,6 +975,9 @@
                     </div>
                     <button id="activate_collider" class="atomic_button co_unlocked" onclick="activate_collider()">
                         Activate Collider
+                    </button>
+                    <button id="collider_auto" class="atomic_button co_unlocked" onclick="auto_toggle('collider')">
+                        Auto: OFF
                     </button>
                 </div>
                 
@@ -1040,7 +1061,7 @@
             </div>
 
             <div id="challenges_page2">
-                <p class="challenge_info">
+                <p id="collapse_challenge_info" class="challenge_info">
                     Entering a Collapse Challenge will reset your current Collapse, and disable Collapse automation in the Challenge
                     <br>You must Collapse for the required amount of atomic spice to complete the Challenge
                     <br><br>Collapse Challenge rewards do not apply in the Challenge they're from
@@ -1063,10 +1084,10 @@
                             0
                         </p>
                         <p class="spice_text pure_antispice">
-                            pure antispice
+                            basic antispice
                         </p>
                         <p id="pure_antispice_boost" class="antispice_text">
-                            Your pure antispice is boosting arcane spice production 1.00x,
+                            Your basic antispice is boosting arcane spice production 1.00x,
                             <br>and making first generators 0.000% stronger
                         </p>
                     </div>
@@ -1110,6 +1131,55 @@
                             <br>making crystal infusions and arcane enchantments 1.00x stronger,
                             <br>and making fourth generators 0.000% stronger
                         </p>
+                    </div>
+                    <div id="blue_antispice_block" class="antispice_block">
+                        <p id="blue_antispice_num" class="spice_num blue_antispice">
+                            0
+                        </p>
+                        <p class="spice_text blue_antispice">
+                            blue antispice
+                        </p>
+                        <p id="blue_antispice_boost" class="antispice_text">
+                            Your blue antispice is boosting blue spice production 1.00x,
+                            <br>increasing Prestige and Ascension gains by 0.000%,
+                            <br>and making fifth generators 0.000% stronger
+                        </p>
+                    </div>
+                    <div id="pink_antispice_block" class="antispice_block">
+                        <p id="pink_antispice_num" class="spice_num pink_antispice">
+                            0
+                        </p>
+                        <p class="spice_text pink_antispice">
+                            pink antispice
+                        </p>
+                        <p id="pink_antispice_boost" class="antispice_text">
+                            Your pink antispice is boosting pink spice production 1.00x,
+                            <br>boosting crystallized spice production 1.00x,
+                            <br>and making sixth generators 0.000% stronger
+                        </p>
+                    </div>
+                </div>
+                <div class="antispice_panel">
+                    <div id="rainbow_antispice_block" class="antispice_block">
+                        <p id="rainbow_antispice_num" class="spice_num rainbow_antispice">
+                            0
+                        </p>
+                        <p class="spice_text rainbow_antispice">
+                            rainbow antispice
+                        </p>
+                        <p id="total_rainbow_antispice" class="antispice_text">
+                            You have a total of 0 rainbow antispice
+                        </p>
+
+                        <p id="antiperks_title" class="collapse_title rainbow_antispice">
+                            Antispice Perks
+                        </p>
+                        <div class="center_button">
+                            <button id="refund_perks" class="atomic_button ap_unlocked2" onclick="refund_antispice_perks()">
+                                Refund Antispice Perks
+                            </button>
+                        </div>
+                        <div id="antispice_perk_block"></div>
                     </div>
                 </div>
             </div>
@@ -1247,6 +1317,10 @@
 
                 <p id="hotkeys_list" class="hotkeys_list">
                     Hotkeys:
+                    <br>Up: Next tab
+                    <br>Down: Previous tab
+                    <br>Right: Next subtab
+                    <br>Left: Previous subtab
                     <br>1-6: Buy until X of generator
                     <br>Shift+1-6: Buy 1 of generator
                     <br>S: Buy strengthener
@@ -1259,15 +1333,11 @@
                     <br>N: Buy arcane enchantment
                     <br>C: Collapse
                     <br>X: Exit challenge
-                    <br>Up: Next tab
-                    <br>Down: Previous tab
-                    <br>Right: Next subtab
-                    <br>Left: Previous subtab
                 </p>
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.5.4<br>Made by Zakuro<br><br>Last updated April 10, 2023
+                Spice Idle v1.6.0<br>Made by Zakuro<br><br>Last updated June 30, 2023
             </p>
             <a href="changelog.html" target="_blank" class="info link">Changelog</a>
             <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
