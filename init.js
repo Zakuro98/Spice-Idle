@@ -516,7 +516,7 @@ function format_small(num) {
     }
 
     let expn = Math.floor(Math.log10(num))
-    if (num / 10 ** expn >= 9.9995) num = 10 ** (expn + 1)
+    if (num / 10 ** expn >= 9.9995 && expn >= 9) num = 10 ** (expn + 1)
 
     if (game.notation === 10) {
         return format_num(num, 10)
