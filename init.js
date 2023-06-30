@@ -1,6 +1,12 @@
+Decimal.precision = 50
+
+BigInt.prototype.toJSON = function () {
+    return this.toString()
+}
+
 //initializing game variables
 let game = {
-    version: "1.5.0",
+    version: "1.6.0",
 
     tickspeed: 100,
     gamespeed: 1,
@@ -19,6 +25,7 @@ let game = {
     global_spice_boost: new Decimal(1),
 
     red_spice: new Decimal(5),
+    highest_red_spice: new Decimal(5),
     red_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -35,7 +42,7 @@ let game = {
         new Decimal(6 * 10 ** 13),
         new Decimal(9 * 10 ** 20),
     ],
-    red_spice_bought: [0, 0, 0, 0, 0, 0],
+    red_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     red_spice_boost: [
         new Decimal(1),
         new Decimal(1),
@@ -57,6 +64,7 @@ let game = {
     red_strengthener_price: new Decimal(1000000),
 
     yellow_spice: new Decimal(5),
+    highest_yellow_spice: new Decimal(5),
     yellow_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -73,7 +81,7 @@ let game = {
         new Decimal(3 * 10 ** 14),
         new Decimal(5.5 * 10 ** 21),
     ],
-    yellow_spice_bought: [0, 0, 0, 0, 0, 0],
+    yellow_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     yellow_spice_boost: [
         new Decimal(1),
         new Decimal(1),
@@ -95,6 +103,7 @@ let game = {
     yellow_strengthener_price: new Decimal(3000000),
 
     green_spice: new Decimal(5),
+    highest_green_spice: new Decimal(5),
     green_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -111,7 +120,7 @@ let game = {
         new Decimal(1.5 * 10 ** 15),
         new Decimal(3 * 10 ** 22),
     ],
-    green_spice_bought: [0, 0, 0, 0, 0, 0],
+    green_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     green_spice_boost: [
         new Decimal(1),
         new Decimal(1),
@@ -133,6 +142,7 @@ let game = {
     green_strengthener_price: new Decimal(9000000),
 
     blue_spice: new Decimal(5),
+    highest_blue_spice: new Decimal(5),
     blue_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -149,7 +159,7 @@ let game = {
         new Decimal(7.5 * 10 ** 15),
         new Decimal(2 * 10 ** 23),
     ],
-    blue_spice_bought: [0, 0, 0, 0, 0, 0],
+    blue_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     blue_spice_boost: [
         new Decimal(1),
         new Decimal(1),
@@ -171,6 +181,7 @@ let game = {
     blue_strengthener_price: new Decimal(2.5 * 10 ** 7),
 
     pink_spice: new Decimal(5),
+    highest_pink_spice: new Decimal(5),
     pink_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -187,7 +198,7 @@ let game = {
         new Decimal(4 * 10 ** 16),
         new Decimal(10 ** 22),
     ],
-    pink_spice_bought: [0, 0, 0, 0, 0, 0],
+    pink_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     pink_spice_boost: [
         new Decimal(1),
         new Decimal(1),
@@ -227,6 +238,7 @@ let game = {
     prestige_time_history: new Array(10).fill(-1),
 
     crystal_spice: new Decimal(0),
+    highest_crystal_spice: new Decimal(0),
     crystal_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -243,7 +255,7 @@ let game = {
         Decimal.pow(2, 100),
         Decimal.pow(2, 124),
     ],
-    crystal_spice_bought: [0, 0, 0, 0, 0, 0],
+    crystal_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     crystal_spice_boost: [
         new Decimal(1),
         new Decimal(1),
@@ -264,7 +276,7 @@ let game = {
     crystal_strengthener: 0,
     crystal_strengthener_price: Decimal.pow(2, 76),
 
-    crystal_infusion: 0,
+    crystal_infusion: 0n,
     crystal_infusion_price: new Decimal(10),
     autoin_toggle: false,
 
@@ -300,6 +312,7 @@ let game = {
     ascend_complete: new Array(6).fill(false),
 
     arcane_spice: new Decimal(0),
+    highest_arcane_spice: new Decimal(0),
     arcane_spice_gen: [
         new Decimal(0),
         new Decimal(0),
@@ -316,7 +329,7 @@ let game = {
         3 * 10 ** 9,
         4 * 10 ** 11,
     ],
-    arcane_spice_bought: [0, 0, 0, 0, 0, 0],
+    arcane_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     arcane_spice_boost: [
         new Decimal(1),
         new Decimal(1),
@@ -339,7 +352,7 @@ let game = {
     arcane_strengthener: 0,
     arcane_strengthener_price: 5000000,
 
-    arcane_enchantment: 0,
+    arcane_enchantment: 0n,
     free_enchantment: 0,
     arcane_enchantment_price: new Decimal(25),
     autoen_toggle: false,
@@ -365,8 +378,8 @@ let game = {
     research_view: 0,
     research_select: 0,
     research_pause: true,
-    research_complete: new Array(30).fill(0),
-    data: new Array(29).fill(0),
+    research_complete: new Array(38).fill(0),
+    data: new Array(38).fill(0),
     data_boosts: 0,
 
     autods_toggle: false,
@@ -377,6 +390,8 @@ let game = {
     autoco_mode: 0,
     autoco_goal: [new Decimal(10 ** 50), 120],
     autoco_stop: [new Decimal(10 ** 25), 60],
+
+    autosc_toggle: false,
 
     collapse_challenge: 0,
     collapse_complete: new Array(6).fill(0),
@@ -414,6 +429,68 @@ let game = {
         new Decimal(0),
         new Decimal(0),
     ],
+    total_rainbow_antispice: 0,
+    antispice_bought: new Array(10).fill(false),
+    antispice_order: new Array(8).fill(0),
+
+    limit_active: false,
+    realm_limit: Decimal.pow(10, 1.54 * 10 ** 17),
+    red_limit: [
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+    ],
+    yellow_limit: [
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+    ],
+    green_limit: [
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+    ],
+    blue_limit: [
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+    ],
+    pink_limit: [
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+    ],
+    crystal_limit: [
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+    ],
+    arcane_limit: [
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+        new Decimal(0),
+    ],
 
     real_time_played: [0, 0, 0, 0],
 }
@@ -434,12 +511,229 @@ let key = {
 }
 
 function format_small(num) {
+    if (typeof num === "bigint") {
+        num = Number(num)
+    }
+
+    let expn = Math.floor(Math.log10(num))
+    if (num / 10 ** expn >= 9.9995) num = 10 ** (expn + 1)
+
     if (game.notation === 10) {
         return format_num(num, 10)
     } else if (game.notation === 11) {
         return format_num(num, 11)
     } else {
-        return format_num(num, 0)
+        if (
+            (game.notation === 2 && num >= 10 ** 9) ||
+            (game.notation === 12 && num >= 10 ** 36)
+        ) {
+            let mantissa = num / 10 ** Math.floor(Math.log10(num))
+            return mantissa.toFixed(6) + "e" + Math.floor(Math.log10(num))
+        } else if (
+            (game.notation === 3 && num >= 10 ** 9) ||
+            (game.notation === 13 && num >= 10 ** 36)
+        ) {
+            let exponent = Math.floor(Math.log10(num) / 3) * 3
+            let mantissa = num / 10 ** exponent
+            if (mantissa < 10) {
+                return mantissa.toFixed(6) + "e" + exponent
+            } else if (mantissa < 100) {
+                return mantissa.toFixed(5) + "e" + exponent
+            } else {
+                return mantissa.toFixed(4) + "e" + exponent
+            }
+        } else if (
+            (game.notation === 4 && num >= 10 ** 9) ||
+            ((game.notation === 12 || game.notation === 13) &&
+                num >= 10 ** 9 &&
+                num < 10 ** 36)
+        ) {
+            const single_array_cond = [
+                "",
+                "M",
+                "B",
+                "T",
+                "Qa",
+                "Qn",
+                "Se",
+                "Sp",
+                "Oc",
+                "No",
+            ]
+            const one_array_cond = [
+                "",
+                "U",
+                "D",
+                "T",
+                "Qa",
+                "Qn",
+                "Se",
+                "Sp",
+                "O",
+                "N",
+            ]
+            const ten_array_cond = [
+                "",
+                "Dc",
+                "Vg",
+                "Tg",
+                "Qg",
+                "Qi",
+                "Sx",
+                "Sg",
+                "Og",
+                "Ng",
+                "Ce",
+            ]
+
+            let order = Math.floor(Math.log10(num) / 3) - 1
+            let one_str = ""
+            let ten_str = ""
+            if (order < 10) {
+                one_str = single_array_cond[order]
+            } else {
+                one_str = one_array_cond[order % 10]
+                ten_str = ten_array_cond[Math.floor(order / 10)]
+            }
+
+            let lead = num / 10 ** (3 * order + 3)
+            let lead_str = ""
+            if (lead < 10) {
+                lead_str = lead.toFixed(6)
+            } else if (lead < 100) {
+                lead_str = lead.toFixed(5)
+            } else {
+                lead_str = lead.toFixed(4)
+            }
+
+            return lead_str + " " + one_str + ten_str
+        } else if (game.notation === 5 && num >= 10 ** 9) {
+            return "e" + Math.log10(num).toFixed(6)
+        } else if (game.notation === 6 && num >= 10 ** 9) {
+            const alphabet = [
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F",
+                "G",
+                "H",
+                "I",
+                "J",
+                "K",
+                "L",
+                "M",
+                "N",
+                "O",
+                "P",
+                "Q",
+                "R",
+                "S",
+                "T",
+                "U",
+                "V",
+                "W",
+                "X",
+                "Y",
+                "Z",
+                "A",
+            ]
+            let order = Math.floor(Math.log10(num) / 3) - 1
+            let lead = num / 10 ** (3 * order + 3)
+            let lead_str = ""
+            if (lead < 10) {
+                lead_str = lead.toFixed(6)
+            } else if (lead < 100) {
+                lead_str = lead.toFixed(5)
+            } else {
+                lead_str = lead.toFixed(4)
+            }
+
+            output = lead_str + " "
+            order -= 1
+            if (order === 0) {
+                output += "A"
+            } else if (order > 0) {
+                let index = 0
+                for (
+                    let i = Math.floor(Math.log(order) / Math.log(26));
+                    i >= 0;
+                    i--
+                ) {
+                    index = (Math.floor(order / 26 ** i) - 1) % 26
+                    if (i === 0) index += 1
+                    output += alphabet[index]
+                }
+            }
+
+            return output
+        } else if (game.notation === 7 && num >= 10 ** 9) {
+            const cancer_alphabet = [
+                "😠",
+                "🎂",
+                "🎄",
+                "💀",
+                "🍆",
+                "🐱",
+                "🌈",
+                "💯",
+                "🍦",
+                "🎃",
+                "💋",
+                "😂",
+                "🌙",
+                "⛔",
+                "🐙",
+                "💩",
+                "❓",
+                "☢",
+                "🙈",
+                "👍",
+                "☂",
+                "✌",
+                "⚠",
+                "❌",
+                "😋",
+                "⚡",
+                "😠",
+            ]
+            let order = Math.floor(Math.log10(num) / 3) - 1
+            let lead = num / 10 ** (3 * order + 3)
+            let lead_str = ""
+            if (lead < 10) {
+                lead_str = lead.toFixed(6)
+            } else if (lead < 100) {
+                lead_str = lead.toFixed(5)
+            } else {
+                lead_str = lead.toFixed(4)
+            }
+
+            output = lead_str
+            order -= 1
+            if (order === 0) {
+                output += "A"
+            } else if (order > 0) {
+                let index = 0
+                for (
+                    let i = Math.floor(Math.log(order) / Math.log(26));
+                    i >= 0;
+                    i--
+                ) {
+                    index = (Math.floor(order / 26 ** i) - 1) % 26
+                    if (i === 0) index += 1
+                    output += cancer_alphabet[index]
+                }
+            }
+
+            return output
+        } else if (game.notation === 9 && num >= 10 ** 9) {
+            let exponent =
+                Math.log(num) / Math.log(1.7976931348622053 * 10 ** 308)
+            return exponent.toFixed(6) + "∞"
+        } else {
+            return format_num(num, 0)
+        }
     }
 }
 
@@ -520,6 +814,7 @@ const ascension_map3 = new Map()
 const challenge_map = new Map()
 const research_map = new Map()
 const research_map2 = new Map()
+const antispice_map = new Map()
 
 //spice generator class
 class spice_gen {
@@ -1421,7 +1716,7 @@ new ascension_challenge(
 //challenge 3
 new ascension_challenge(
     "Color boost requirements scale 10x harder<br>Reward: Strengtheners and infusions are even stronger",
-    Decimal.pow(10, 600),
+    Decimal.pow(10, 700),
     24
 )
 //challenge 4
@@ -1662,28 +1957,76 @@ new research(
     1.75 * 10 ** 13
 )
 //research 23
-new research("Unlocks Challenge 9", -803, false, false, 2 * 10 ** 15)
+new research("Unlocks Challenge 9", -803, false, false, 5 * 10 ** 15)
 //research 24
-new research("Unlocks yellow antispice", -901, false, false, 6.9 * 10 ** 15)
+new research("Unlocks yellow antispice", -901, false, false, 3 * 10 ** 16)
 //research 25
 new research(
-    "You get 25 free arcane enchantments for every Collapse<br>(up to 25% of your bought arcane enchantments)",
+    "You get 50 free arcane enchantments for every Collapse (up to 50% of your bought arcane enchantments)",
     -805,
     false,
     true,
-    1.8 * 10 ** 18
+    6 * 10 ** 19
 )
 //research 26
-new research("Unlocks Challenge 10", -904, false, false, 10 ** 20)
+new research("Unlocks Challenge 10", -904, false, false, 4 * 10 ** 20)
 //research 27
-new research("Unlocks green antispice", -1001, false, false, 3 * 10 ** 20)
+new research("Unlocks green antispice", -1001, false, false, 10 ** 21)
 //research 28
 new research(
     "Collapse Challenges can be completed in bulk",
     -907,
     false,
     false,
-    4.2 * 10 ** 21
+    2.8 * 10 ** 24
+)
+//research 29
+new research("Unlocks Challenge 11", -1005, false, false, 5.4 * 10 ** 26)
+//research 30
+new research("Unlocks blue antispice", -1101, false, false, 7 * 10 ** 27)
+//research 31
+new research(
+    "You gain 50% more rainbow spice after color augments begin",
+    -1009,
+    false,
+    false,
+    8.6 * 10 ** 33
+)
+//research 32
+new research("Unlocks Challenge 12", -1106, false, false, 1.68 * 10 ** 35)
+//research 33
+new research("Unlocks pink antispice", -1201, false, false, 6.8 * 10 ** 35)
+//research 34
+new research(
+    "Unlocks Spice Collider automation",
+    -1203,
+    false,
+    false,
+    3.6 * 10 ** 42
+)
+//research 35
+new research(
+    "Rune power boosts are an extra 2x stronger (for up to 24x)",
+    -1111,
+    false,
+    false,
+    Math.floor(10 ** 44)
+)
+//research 36
+new research(
+    "You gain 1x more Times Ascended stat on Ascension,<br>and you gain 1x more Times Collapsed stat on Collapse<br>(Based on Collapse challenge completions)",
+    -1205,
+    false,
+    true,
+    Math.floor(((1 + 5 ** 0.5) / 2) * 10 ** 50)
+)
+//research 37
+new research(
+    "Unlocks rainbow antispice",
+    -1208,
+    false,
+    false,
+    Math.floor(Math.E * 10 ** 57)
 )
 //done initializing collapse researches
 
@@ -1692,34 +2035,61 @@ class collapse_challenge {
     static challenges = []
 
     desc
+    unlock
+    superscaling
     goal
     delta
-    unlock
     scaling1
+    delta2
     scaling2
+    delta3
     scaling3
+    delta4
     scaling4
+    delta5
+    scaling5
+    delta6
+    scaling6
+    delta7
 
     //upgrade constructor
     constructor(
         desc,
+        unlock,
+        superscaling,
         goal,
         delta,
-        unlock,
         scaling1,
+        delta2,
         scaling2,
+        delta3,
         scaling3,
-        scaling4
+        delta4,
+        scaling4,
+        delta5,
+        scaling5,
+        delta6,
+        scaling6,
+        delta7
     ) {
         this.desc = desc
         this.id = collapse_challenge.challenges.length
+        this.unlock = unlock
+        this.superscaling = superscaling
         this.goal = goal
         this.delta = delta
-        this.unlock = unlock
         this.scaling1 = scaling1
+        this.delta2 = delta2
         this.scaling2 = scaling2
+        this.delta3 = delta3
         this.scaling3 = scaling3
+        this.delta4 = delta4
         this.scaling4 = scaling4
+        this.delta5 = delta5
+        this.scaling5 = scaling5
+        this.delta6 = delta6
+        this.scaling6 = scaling6
+        this.delta7 = delta7
 
         collapse_challenge.challenges.push(this)
 
@@ -1771,42 +2141,165 @@ class collapse_challenge {
 //initializing collapse challenges
 //challenge 7
 new collapse_challenge(
-    "Challenges 1, 3, 4, & 5 simultaneously<br>Reward: Normal spice multipliers are 2.5% stronger, and unlock 2 researches",
-    Decimal.pow(10, 25),
-    Decimal.pow(10, 13),
+    "Challenges 1, 3, 4, & 5 simultaneously<br>Reward: Normal spice multipliers are 2.5% stronger<br>Next research unlock in 1 completion",
     18,
+    35,
+    Decimal.pow(10, 25),
+    Decimal.pow(10, 17),
     5,
-    15,
-    15
+    Decimal.pow(10, 21),
+    14,
+    Decimal.pow(10, 27),
+    21,
+    Decimal.pow(10, 39),
+    -27,
+    Decimal.pow(10, 76),
+    32,
+    Decimal.pow(10, 64),
+    -35,
+    Decimal.pow(10, 32)
 )
 //challenge 8
 new collapse_challenge(
-    "Unstable spice decay gives no boost, it instead produces sixth generators<br>Reward: Unstable spice decay now also produces arcane spice deities, and unlock a research",
-    Decimal.pow(10, 72),
-    Decimal.pow(10, 72),
+    "Unstable spice decay gives no boost, it instead produces sixth generators<br>Reward: Unstable spice decay now also produces arcane spice deities<br>Next research unlock in 1 completion",
     20,
-    5,
-    10,
-    13,
-    13
+    29,
+    Decimal.pow(10, 78),
+    Decimal.pow(10, 87),
+    3,
+    Decimal.pow(10, 124),
+    7,
+    Decimal.pow(10, 152),
+    11,
+    Decimal.pow(10, 208),
+    15,
+    Decimal.pow(10, 256),
+    -19,
+    Decimal.pow(10, 432),
+    -24,
+    Decimal.pow(10, 512)
 )
 //challenge 9
 new collapse_challenge(
-    "The game runs 99,999x slower, reach the goal in 999 microseconds or less<br>Reward: The game runs 2x faster, and unlock a research",
-    Decimal.pow(10, 164),
-    Decimal.pow(10, 156),
+    "The game runs 99,999x slower, reach the goal in 999 microseconds or less<br>Reward: The game runs 2x faster<br>Next research unlock in 1 completion",
     23,
-    5,
-    11,
-    11
+    24,
+    Decimal.pow(10, 235),
+    Decimal.pow(10, 205),
+    4,
+    Decimal.pow(10, 250),
+    8,
+    Decimal.pow(10, 350),
+    12,
+    Decimal.pow(10, 400),
+    -16,
+    Decimal.pow(10, 650)
 )
 //challenge 10
 new collapse_challenge(
-    "Color augment scaling is much stronger, and color augments begin at 4 color boosts<br>Ascension upgrade prices are also reduced<br>Reward: Color augments begin at 4,000,000 color boosts, and unlock a research",
-    Decimal.pow(10, 1350),
-    Decimal.pow(10, 317),
+    "Color augment scaling is much stronger, and color augments begin at 4 color boosts<br>Ascension upgrade prices are also reduced<br>Reward: Color augments begin at 4,000,000 color boosts<br>Next research unlock in 1 completion",
     26,
-    4,
-    4
+    21,
+    Decimal.pow(10, 1475),
+    Decimal.pow(10, 225),
+    -5,
+    Decimal.pow(10, 375),
+    10,
+    Decimal.pow(10, 450),
+    -13,
+    Decimal.pow(10, 700)
+)
+//challenge 11
+new collapse_challenge(
+    "Ascension is disabled, but Challenge 6 is not required to Collapse<br>Reward: You gain 1% of your pending Ansuz runes every second<br>Next research unlock in 1 completion",
+    29,
+    18,
+    Decimal.pow(10, 1460),
+    Decimal.pow(10, 140),
+    6,
+    Decimal.pow(10, 180),
+    -11,
+    Decimal.pow(10, 260),
+    -14,
+    Decimal.pow(10, 360)
+)
+//challenge 12
+new collapse_challenge(
+    "Same as Challenge 6, but all research boosts are disabled, and red, yellow, green, & blue spice production is disabled, and the unstable spice boost is not disabled<br>Reward: You gain data 2x faster while researching<br>Next research unlock in 1 completion",
+    32,
+    9,
+    Decimal.pow(10, 250),
+    Decimal.pow(10, 90),
+    -2,
+    Decimal.pow(10, 80),
+    -4,
+    Decimal.pow(10, 70),
+    -6,
+    Decimal.pow(10, 60),
+    -7,
+    Decimal.pow(10, 50)
 )
 //done initializing collapse challenges
+
+//antispice perk class
+class antispice_perk {
+    static perks = []
+
+    desc
+    price
+
+    //upgrade constructor
+    constructor(desc, price) {
+        this.desc = desc
+        this.id = antispice_perk.perks.length
+        this.price = price
+
+        antispice_perk.perks.push(this)
+
+        //antispice perk button
+        let button = document.createElement("BUTTON")
+        button.innerHTML =
+            '<span id="ap_desc' +
+            this.id +
+            '">' +
+            this.desc +
+            '</span><br><span id="ap_cost' +
+            this.id +
+            '" class="bold">---</span>'
+        button.className = "antispice_perk ap_unlocked"
+        button.addEventListener("click", () => {
+            buy_antispice_perk(this.id)
+        })
+
+        //attaching upgrade to antispice perks page
+        antispice_map.set(this, button)
+        document.getElementById("antispice_perk_block").appendChild(button)
+    }
+}
+
+//initializing antispice perks
+//[0]
+new antispice_perk("Repeatable researches are 11% stronger", 0)
+//[1]
+new antispice_perk("Challenge 7-12 rewards are 5% stronger", 0)
+//[2]
+new antispice_perk("You gain 15% more rainbow spice from Prestige", 0)
+//[3]
+new antispice_perk("You gain 25% more Ansuz runes from Ascension", 0)
+//[4]
+new antispice_perk("Color boosts and strengtheners are 30% stronger", 0)
+//[5]
+new antispice_perk(
+    "Crystal infusions and arcane enchantments are 5.4% stronger",
+    0
+)
+//[6]
+new antispice_perk("ALL spice production multipliers are 1.2% stronger", 0)
+//[7]
+new antispice_perk(
+    "The game speed multiplier is 50% stronger outside of Challenge 9",
+    0
+)
+//[8]
+new antispice_perk("Unlocks Expansion", 12)
+//done initializing antispice perks
