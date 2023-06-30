@@ -10,7 +10,7 @@ function format_num(num, not, nospace) {
     }
 
     let expn = Math.floor(Math.log10(num))
-    if (num / 10 ** expn >= 9.9995) num = 10 ** (expn + 1)
+    if (num / 10 ** expn >= 9.9995 && expn >= 6) num = 10 ** (expn + 1)
 
     let output = ""
     if (typeof num === "bigint") {
@@ -646,7 +646,7 @@ function format_inf(num, not, enot) {
     }
 
     let expn = Math.floor(num.log(10))
-    if (num.div(Decimal.pow(10, expn)).cmp(9.9995) >= 0)
+    if (num.div(Decimal.pow(10, expn)).cmp(9.9995) >= 0 && expn >= 6)
         num = Decimal.pow(10, expn + 1)
 
     let output = ""
@@ -1868,7 +1868,7 @@ function format_dec(num, not) {
     if (not === undefined) not = 0
 
     let expn = Math.floor(Math.log10(num))
-    if (num / 10 ** expn >= 9.9995) num = 10 ** (expn + 1)
+    if (num / 10 ** expn >= 9.9995 && expn >= 6) num = 10 ** (expn + 1)
 
     if (not === 8) {
         return "???"
@@ -2008,7 +2008,7 @@ function format_infdec(num, not, enot) {
     if (not === undefined) not = 0
 
     let expn = Math.floor(num.log(10))
-    if (num.div(Decimal.pow(10, expn)).cmp(9.9995) >= 0)
+    if (num.div(Decimal.pow(10, expn)).cmp(9.9995) >= 0 && expn >= 6)
         num = Decimal.pow(10, expn + 1)
 
     if (num.cmp(1.7976931348622053 * 10 ** 308) === -1) {
