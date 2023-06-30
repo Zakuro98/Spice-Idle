@@ -2931,18 +2931,18 @@ function tick() {
                             .mul(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
 
                     if (game.collapse_challenge !== 0) {
-                        amount = amount.pow(
-                            1 + antispice_amount.log(10) ** 0.75 * 0.0325
-                        )
+                        amount =
+                            amount **
+                            (1 + antispice_amount.log(10) ** 0.75 * 0.0325)
                     } else {
-                        amount = amount.pow(
-                            1 + antispice_amount.log(10) ** 0.75 * 0.065
-                        )
+                        amount =
+                            amount **
+                            (1 + antispice_amount.log(10) ** 0.75 * 0.065)
                     }
                 }
 
                 if (game.antispice_bought[2]) {
-                    amount = amount.pow(1.15)
+                    amount = amount ** 1.15
                 }
 
                 if (amount >= game.autoas_goal[0] && !stop) ascend()
