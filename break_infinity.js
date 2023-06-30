@@ -47,7 +47,7 @@
 
   var MAX_SIGNIFICANT_DIGITS = 17; // Highest value you can safely put here is Number.MAX_SAFE_INTEGER-MAX_SIGNIFICANT_DIGITS
 
-  var EXP_LIMIT = 9e15; // The largest exponent that can appear in a Number, though not all mantissas are valid here.
+  var EXP_LIMIT = Number.MAX_VALUE; // The largest exponent that can appear in a Number, though not all mantissas are valid here.
 
   var NUMBER_EXP_MAX = 308; // The smallest exponent that can appear in a Number, though not all mantissas are valid here.
 
