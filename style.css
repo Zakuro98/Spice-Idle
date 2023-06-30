@@ -1185,6 +1185,17 @@ main {
     text-align: right;
 }
 
+#ansuz_up, #ansuz_up2 {
+    margin-top: -0.1em;
+    margin-bottom: 0.75em;
+}
+
+#ansuz_up3 {
+    margin-top: -0.1em;
+    margin-bottom: 0.75em;
+    text-align: right;
+}
+
 #arcane_buy_n, #arcane_max_n {
     display: inline;
 }
@@ -1328,6 +1339,30 @@ main {
     box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse);
 }
 
+.co_active {
+    background-color: #333333;
+    color: white;
+    text-shadow: 0 0 0.2em white, 0 0 0.4em #cccccc;
+    border: 1px solid white;
+    box-shadow: 0 0 0.2em white, 0 0 0.4em #cccccc, 0 0 0.2em white inset, 0 0 0.8em #cccccc inset;
+}
+
+.co_active:hover {
+    background-color: #555555;
+    color: white;
+    text-shadow: 0 0 0.2em white, 0 0 0.4em white;
+    border: 1px solid white;
+    box-shadow: 0 0 0.2em white, 0 0 0.4em #cccccc, 0 0 0.2em white inset, 0 0 1em white inset;
+}
+
+.co_active:active {
+    background-color: white;
+    color: black;
+    text-shadow: none;
+    border: 1px solid white;
+    box-shadow: 0 0 0.2em white, 0 0 0.4em #cccccc;
+}
+
 .collider_menu {
     margin-bottom: 5em;
 }
@@ -1368,7 +1403,7 @@ main {
 
 #collider_tab2:hover {
     background-color: #333333;
-    box-shadow: 0 0 0.2em white inset;
+    box-shadow: 0 0 0.4em white inset;
 }
 
 #collider_tab2:active, #collider_tab2.current_tab {
@@ -1387,7 +1422,7 @@ main {
 
 #collider_tab3:hover {
     background-color: #003338;
-    box-shadow: 0 0 0.2em #14ebff inset;
+    box-shadow: 0 0 0.4em #14ebff inset;
 }
 
 #collider_tab3:active, #collider_tab3.current_tab {
@@ -1406,11 +1441,11 @@ main {
 
 #collider_tab4:hover {
     background-color: #000b38;
-    box-shadow: 0 0 0.2em #385dff inset;
+    box-shadow: 0 0 0.4em #1f48ff inset;
 }
 
 #collider_tab4:active, #collider_tab4.current_tab {
-    background-color: #385dff;
+    background-color: #1f48ff;
     color: black;
     text-shadow: none;
     box-shadow: none;
@@ -1425,11 +1460,68 @@ main {
 
 #collider_tab5:hover {
     background-color: #30081b;
-    box-shadow: 0 0 0.2em #ea1a78 inset;
+    box-shadow: 0 0 0.4em #ea1a78 inset;
 }
 
 #collider_tab5:active, #collider_tab5.current_tab {
     background-color: #ea1a78;
+    color: black;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+#collider_tab6 {
+    background-color: black;
+    border: 1px solid #ff8c00;
+    color: #ff8c00;
+    text-shadow: 0 0 0.2em #ff8c00, 0 0 0.5em #9f6319;
+}
+
+#collider_tab6:hover {
+    background-color: #301e08;
+    box-shadow: 0 0 0.4em #ff8c00 inset;
+}
+
+#collider_tab6:active, #collider_tab6.current_tab {
+    background-color: #ff8c00;
+    color: black;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+#collider_tab7 {
+    background-color: black;
+    border: 1px solid #3dff64;
+    color: #3dff64;
+    text-shadow: 0 0 0.2em #3dff64, 0 0 0.5em #1fc740;
+}
+
+#collider_tab7:hover {
+    background-color: #0a3d14;
+    box-shadow: 0 0 0.4em #3dff64 inset;
+}
+
+#collider_tab7:active, #collider_tab7.current_tab {
+    background-color: #3dff64;
+    color: black;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+#collider_tab8 {
+    background-color: black;
+    border: 1px solid var(--rainbow_antispice);
+    color: var(--rainbow_antispice);
+    text-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.5em var(--rainbow_antispice2);
+}
+
+#collider_tab8:hover {
+    background-color: var(--rainbow_antispice3);
+    box-shadow: 0 0 0.4em var(--rainbow_antispice) inset;
+}
+
+#collider_tab8:active, #collider_tab8.current_tab {
+    background-color: var(--rainbow_antispice);
     color: black;
     text-shadow: none;
     box-shadow: none;
@@ -1521,6 +1613,18 @@ main {
     filter: drop-shadow(0 0 0.1em #ea1a78) drop-shadow(0 0 0.2em #430a23) drop-shadow(0 0 0.3em #1f0511) drop-shadow(0 0 0.4em #11030a) drop-shadow(0 0 0.5em black);
 }
 
+.blue_collider {
+    filter: drop-shadow(0 0 0.1em #ff8c00) drop-shadow(0 0 0.2em #43290a) drop-shadow(0 0 0.3em #1f1305) drop-shadow(0 0 0.4em #110b03) drop-shadow(0 0 0.5em black);
+}
+
+.pink_collider {
+    filter: drop-shadow(0 0 0.1em #3dff64) drop-shadow(0 0 0.2em #0c501a) drop-shadow(0 0 0.3em #06270d) drop-shadow(0 0 0.4em #041607) drop-shadow(0 0 0.5em black);
+}
+
+.rainbow_collider {
+    filter: drop-shadow(0 0 0.1em var(--rainbow_antispice)) drop-shadow(0 0 0.2em var(--rainbow_antispice4)) drop-shadow(0 0 0.3em var(--rainbow_antispice5)) drop-shadow(0 0 0.4em var(--rainbow_antispice6)) drop-shadow(0 0 0.5em black);
+}
+
 .collider_text {
     color: white;
     font-size: 1.25em;
@@ -1561,6 +1665,21 @@ main {
     text-shadow: 0 0 0.1em #ea1a78, 0 0 0.2em #430a23, 0 0 0.3em #1f0511, 0 0 0.4em #11030a, 0 0 0.5em black;
 }
 
+.blue_antispice {
+    color: #ff8c00;
+    text-shadow: 0 0 0.1em #ff8c00, 0 0 0.2em #43290a, 0 0 0.3em #1f1305, 0 0 0.4em #110b03, 0 0 0.5em black;
+}
+
+.pink_antispice {
+    color: #3dff64;
+    text-shadow: 0 0 0.1em #3dff64, 0 0 0.2em #0c501a, 0 0 0.3em #06270d, 0 0 0.4em #041607, 0 0 0.5em black;
+}
+
+.rainbow_antispice {
+    color: var(--rainbow_antispice);
+    text-shadow: 0 0 0.1em var(--rainbow_antispice), 0 0 0.2em var(--rainbow_antispice4), 0 0 0.3em var(--rainbow_antispice5), 0 0 0.4em var(--rainbow_antispice6), 0 0 0.5em black;
+}
+
 .unstable_text {
     color: white;
     font-size: 1.25em;
@@ -1578,7 +1697,7 @@ main {
     font-weight: bold;
 }
 
-#research_title {
+#research_title, #antiperks_title {
     margin-top: 1.5em;
 }
 
@@ -1587,6 +1706,10 @@ main {
     font-size: 1.25em;
     margin-top: 0em;
     margin-bottom: 0em;
+}
+
+#research_info {
+    width: 47em;
 }
 
 .research_number {
@@ -1677,6 +1800,11 @@ main {
     #research_control {
         width: 100%;
     }
+
+    #research_info {
+        width: 100%;
+    }
+    
 }
 
 .research_toggle {
@@ -1912,6 +2040,111 @@ main {
 
 #antispice_reduction {
     font-size: 1.5em;
+}
+
+#antispice_perk_block {
+    display: flex;
+    flex-wrap: wrap;
+    width: 64.8em;
+    height: 12em;
+    margin-left: calc(50% - 32.4em);
+    margin-bottom: 18.5em;
+}
+
+@media (pointer: coarse) {
+    #antispice_perk_block {
+        width: 32.4em;
+        height: 54em;
+        margin-left: calc(50% - 16.2em);
+    }
+}
+
+.antispice_perk {
+    padding: 0.5em 0.5em;
+    font-family: "Fira Code";
+    font-size: 0.9em;
+    font-weight: 400;
+    margin: 0.5em;
+    width: 17em;
+    height: 9em;
+}
+
+.ap_locked {
+    background-color: black;
+    color: var(--rainbow_antispice);
+    border: 1px solid var(--rainbow_antispice);
+}
+
+.ap_unlocked {
+    background-color: var(--rainbow_antispice5);
+    color: var(--rainbow_antispice);
+    text-shadow: 0 0 0.15em var(--rainbow_antispice), 0 0 0.3em var(--rainbow_antispice4), 0 0 0.45em var(--rainbow_antispice5), 0 0 0.6em var(--rainbow_antispice6), 0 0 0.75em black;
+    border: 1px solid var(--rainbow_antispice);
+    box-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.4em var(--rainbow_antispice4), 0 0 0.6em var(--rainbow_antispice5), 0 0 0.8em var(--rainbow_antispice6), 0 0 1em black, 0 0 1em var(--rainbow_antispice2) inset, 0 0 2.5em var(--rainbow_antispice7) inset;
+}
+
+.ap_unlocked:hover {
+    background-color: var(--rainbow_antispice4);
+    color: white;
+    text-shadow: 0 0 0.15em var(--rainbow_antispice), 0 0 0.3em var(--rainbow_antispice4), 0 0 0.45em var(--rainbow_antispice5), 0 0 0.6em var(--rainbow_antispice6), 0 0 0.75em black;
+    border: 1px solid var(--rainbow_antispice);
+    box-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.4em var(--rainbow_antispice4), 0 0 0.6em var(--rainbow_antispice5), 0 0 0.8em var(--rainbow_antispice6), 0 0 1em black, 0 0 2em var(--rainbow_antispice) inset, 0 0 5em var(--rainbow_antispice2) inset;
+}
+
+.ap_unlocked:active {
+    background-color: var(--rainbow_antispice);
+    color: black;
+    text-shadow: 0 0 0.25em black, 0 0 0.5em black;
+    border: 1px solid var(--rainbow_antispice);
+    box-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.4em var(--rainbow_antispice4), 0 0 0.6em var(--rainbow_antispice5), 0 0 0.8em var(--rainbow_antispice6), 0 0 1em black;
+}
+
+.ap_unlocked2 {
+    background-color: var(--rainbow_antispice5);
+    color: var(--rainbow_antispice);
+    text-shadow: 0 0 0.075em var(--rainbow_antispice), 0 0 0.15em var(--rainbow_antispice4), 0 0 0.225em var(--rainbow_antispice5), 0 0 0.3em var(--rainbow_antispice6), 0 0 0.375em black;
+    border: 1px solid var(--rainbow_antispice);
+    box-shadow: 0 0 0.1em var(--rainbow_antispice), 0 0 0.2em var(--rainbow_antispice4), 0 0 0.3em var(--rainbow_antispice5), 0 0 0.4em var(--rainbow_antispice6), 0 0 0.5em black, 0 0 0.5em var(--rainbow_antispice2) inset, 0 0 1.25em var(--rainbow_antispice7) inset;
+}
+
+.ap_unlocked2:hover {
+    background-color: var(--rainbow_antispice4);
+    color: white;
+    text-shadow: 0 0 0.075em var(--rainbow_antispice), 0 0 0.15em var(--rainbow_antispice4), 0 0 0.225em var(--rainbow_antispice5), 0 0 0.3em var(--rainbow_antispice6), 0 0 0.375em black;
+    border: 1px solid var(--rainbow_antispice);
+    box-shadow: 0 0 0.1em var(--rainbow_antispice), 0 0 0.2em var(--rainbow_antispice4), 0 0 0.3em var(--rainbow_antispice5), 0 0 0.4em var(--rainbow_antispice6), 0 0 0.5em black, 0 0 1em var(--rainbow_antispice) inset, 0 0 2.5em var(--rainbow_antispice2) inset;
+}
+
+.ap_unlocked2:active {
+    background-color: var(--rainbow_antispice);
+    color: black;
+    text-shadow: 0 0 0.125em black, 0 0 0.25em black;
+    border: 1px solid var(--rainbow_antispice);
+    box-shadow: 0 0 0.1em var(--rainbow_antispice), 0 0 0.2em var(--rainbow_antispice4), 0 0 0.3em var(--rainbow_antispice5), 0 0 0.4em var(--rainbow_antispice6), 0 0 0.5em black;
+}
+
+.ap_bought {
+    background-color: var(--rainbow_antispice);
+    color: black;
+    text-shadow: 0 0 0.25em black, 0 0 0.5em black;
+    border: 1px solid var(--rainbow_antispice);
+    box-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.4em var(--rainbow_antispice4), 0 0 0.6em var(--rainbow_antispice5), 0 0 0.8em var(--rainbow_antispice6), 0 0 1em black;
+}
+
+.ap_special {
+    margin-left: 27.5em;
+    margin-top: 2.5em;
+}
+
+@media (pointer: coarse) {
+    .ap_special {
+        margin-left: 9.625em;
+    }
+}
+
+#refund_perks {
+    margin-top: 0.25em;
+    margin-bottom: 0.75em;
 }
 
 .statistics_text {
