@@ -5162,7 +5162,10 @@ function load(savegame) {
         ]
     }
 
-    if (game.realm_limit === Decimal.pow(10, 10 ** 17) || game.realm_limit === Decimal.pow(10, 1.54 * 10 ** 17)) {
+    if (
+        game.realm_limit.cmp(Decimal.pow(10, 10 ** 17)) === 0 ||
+        game.realm_limit.cmp(Decimal.pow(10, 1.54 * 10 ** 17)) === 0
+    ) {
         game.realm_limit = new Decimal("3.3383819898588070e+154271828182845904")
 
         if (game.limit_active) {
