@@ -5162,69 +5162,68 @@ function load(savegame) {
         ]
     }
 
-    if (!game.limit_active && game.realm_limit === Decimal.pow(10, 10 ** 17)) {
+    if (game.realm_limit === Decimal.pow(10, 10 ** 17) || game.realm_limit === Decimal.pow(10, 1.54 * 10 ** 17)) {
         game.realm_limit = new Decimal("3.3383819898588070e+154271828182845904")
-    }
 
-    if (game.limit_active && game.realm_limit === Decimal.pow(10, 10 ** 17)) {
-        game.realm_limit = new Decimal("3.3383819898588070e+154271828182845904")
-        game.limit_active = false
-        game.red_limit = [
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-        ]
-        game.yellow_limit = [
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-        ]
-        game.green_limit = [
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-        ]
-        game.blue_limit = [
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-        ]
-        game.pink_limit = [
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-        ]
-        game.crystal_limit = [
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-        ]
-        game.arcane_limit = [
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-            new Decimal(0),
-        ]
+        if (game.limit_active) {
+            game.limit_active = false
+            game.red_limit = [
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+            ]
+            game.yellow_limit = [
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+            ]
+            game.green_limit = [
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+            ]
+            game.blue_limit = [
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+            ]
+            game.pink_limit = [
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+            ]
+            game.crystal_limit = [
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+            ]
+            game.arcane_limit = [
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+                new Decimal(0),
+            ]
+        }
     }
 
     game.version = "1.6.0"
