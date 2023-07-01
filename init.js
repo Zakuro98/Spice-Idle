@@ -353,7 +353,7 @@ let game = {
     arcane_strengthener_price: 5000000,
 
     arcane_enchantment: 0n,
-    free_enchantment: 0,
+    free_enchantment: 0n,
     arcane_enchantment_price: new Decimal(25),
     autoen_toggle: false,
 
