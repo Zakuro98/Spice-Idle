@@ -4751,6 +4751,7 @@ function delete_save() {
         game.arcane_strengthener = 0
         game.arcane_strengthener_price = 5000000
         game.arcane_enchantment = 0n
+        game.free_enchantment = 0n
         game.arcane_enchantment_price = new Decimal(25)
         game.arcane_unlocked = [true, false, false, false, false, false]
         game.arcane_max_unlocked = false
@@ -5163,7 +5164,7 @@ function load(savegame) {
     }
 
     game.version = "1.6.0"
-    
+
     game.realm_limit = new Decimal(game.realm_limit)
 
     if (
