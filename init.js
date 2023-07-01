@@ -434,7 +434,7 @@ let game = {
     antispice_order: new Array(8).fill(0),
 
     limit_active: false,
-    realm_limit: Decimal.pow(10, 1.54 * 10 ** 17),
+    realm_limit: new Decimal("3.3383819898588070e+154271828182845904"),
     red_limit: [
         new Decimal(0),
         new Decimal(0),
