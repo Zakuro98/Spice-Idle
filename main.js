@@ -5162,6 +5162,10 @@ function load(savegame) {
         ]
     }
 
+    game.version = "1.6.0"
+    
+    game.realm_limit = new Decimal(game.realm_limit)
+
     if (
         game.realm_limit.cmp(Decimal.pow(10, 10 ** 17)) === 0 ||
         game.realm_limit.cmp(Decimal.pow(10, 1.54 * 10 ** 17)) === 0
@@ -5228,8 +5232,6 @@ function load(savegame) {
             ]
         }
     }
-
-    game.version = "1.6.0"
 
     game.red_spice = new Decimal(game.red_spice)
     game.highest_red_spice = new Decimal(game.highest_red_spice)
@@ -5324,7 +5326,6 @@ function load(savegame) {
     game.unstable_boost = new Decimal(game.unstable_boost)
     game.collapse_spice = new Decimal(game.collapse_spice)
     game.free_deity = new Decimal(game.free_deity)
-    game.realm_limit = new Decimal(game.realm_limit)
 
     if (game.prestige_price !== undefined) {
         for (const u of prestige_upgrade.upgrades) {
