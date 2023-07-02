@@ -211,6 +211,29 @@ function tick() {
         "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,24%)"
     )
 
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice8",
+        ((game.real_time_played[0] * 36 + 180) % 360) + "deg"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice9",
+        -60 *
+            Math.cos(
+                (((game.real_time_played[0] * 36 + 280) % 360) * Math.PI) / 180
+            ) +
+            160 +
+            "%"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice10",
+        10 *
+            Math.cos(
+                (((game.real_time_played[0] * 36 + 280) % 360) * Math.PI) / 180
+            ) +
+            90 +
+            "%"
+    )
+
     if (game.high_visibility) {
         document.documentElement.style.setProperty(
             "--rainbow_spice2",
@@ -3710,7 +3733,7 @@ function collider_tick() {
                 break
             case 7:
             case 15:
-                ctx2.strokeStyle = "#ffffff"
+                ctx2.strokeStyle = "#f53d3d"
                 break
         }
         ctx2.stroke()
@@ -3790,7 +3813,7 @@ function collider_tick() {
                     break
                 case 7:
                 case 15:
-                    ctx2.strokeStyle = "#ffffff"
+                    ctx2.strokeStyle = "#f53d3d"
                     break
             }
             ctx2.stroke()
