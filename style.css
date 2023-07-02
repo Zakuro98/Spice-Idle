@@ -1622,7 +1622,7 @@ main {
 }
 
 .rainbow_collider {
-    filter: drop-shadow(0 0 0.1em var(--rainbow_antispice)) drop-shadow(0 0 0.2em var(--rainbow_antispice4)) drop-shadow(0 0 0.3em var(--rainbow_antispice5)) drop-shadow(0 0 0.4em var(--rainbow_antispice6)) drop-shadow(0 0 0.5em black);
+    filter: hue-rotate(var(--rainbow_antispice8)) brightness(var(--rainbow_antispice9)) saturate(var(--rainbow_antispice10)) drop-shadow(0 0 0.1em var(--rainbow_antispice)) drop-shadow(0 0 0.2em var(--rainbow_antispice4)) drop-shadow(0 0 0.3em var(--rainbow_antispice5)) drop-shadow(0 0 0.4em var(--rainbow_antispice6)) drop-shadow(0 0 0.5em black);
 }
 
 .collider_text {
