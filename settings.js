@@ -867,6 +867,8 @@ function confirmations(type, ignore) {
     switch (type) {
         case "ascend":
             if (game.ascend >= 1 || game.collapse >= 1) {
+                document.getElementById("ascend_confirm").className =
+                    "settings_button can_modify"
                 if (game.ascend_confirm) {
                     game.ascend_confirm = false
                     document.getElementById("ascend_confirm").innerHTML =
@@ -878,11 +880,15 @@ function confirmations(type, ignore) {
                         "Ascension Confirmations<br>ENABLED"
                 }
             } else {
+                document.getElementById("ascend_confirm").className =
+                    "settings_button"
                 document.getElementById("ascend_confirm").innerHTML = "?????"
             }
             break
         case "challenge":
             if (game.ascend_bought[16] || game.collapse >= 1) {
+                document.getElementById("challenge_confirm").className =
+                    "settings_button can_modify"
                 if (game.challenge_confirm) {
                     game.challenge_confirm = false
                     document.getElementById("challenge_confirm").innerHTML =
@@ -893,11 +899,15 @@ function confirmations(type, ignore) {
                         "Challenge Confirmations<br>ENABLED"
                 }
             } else {
+                document.getElementById("challenge_confirm").className =
+                    "settings_button"
                 document.getElementById("challenge_confirm").innerHTML = "?????"
             }
             break
         case "collapse":
             if (game.collapse >= 1) {
+                document.getElementById("collapse_confirm").className =
+                    "settings_button can_modify"
                 if (game.collapse_confirm) {
                     game.collapse_confirm = false
                     document.getElementById("collapse_confirm").innerHTML =
@@ -909,6 +919,8 @@ function confirmations(type, ignore) {
                         "Collapse Confirmations<br>ENABLED"
                 }
             } else {
+                document.getElementById("collapse_confirm").className =
+                    "settings_button"
                 document.getElementById("collapse_confirm").innerHTML = "?????"
             }
             break
@@ -988,16 +1000,61 @@ function refresh_rate(ms) {
 //toggle spice collider animations
 function animations() {
     if (game.collapse >= 1) {
+        document.getElementById("collider_animation").className =
+            "settings_button can_modify"
         if (game.collider_animation) {
             game.collider_animation = false
-            document.getElementById("collidier_animation").innerHTML =
+            document.getElementById("collider_animation").innerHTML =
                 "Collider Animations<br>DISABLED"
         } else {
             game.collider_animation = true
-            document.getElementById("collidier_animation").innerHTML =
+            document.getElementById("collider_animation").innerHTML =
                 "Collider Animations<br>ENABLED"
         }
     } else {
-        document.getElementById("collidier_animation").innerHTML = "?????"
+        document.getElementById("collider_animation").className =
+            "settings_button"
+        document.getElementById("collider_animation").innerHTML = "?????"
+    }
+}
+
+//toggle reset resource/min display
+function resource_efficiency() {
+    if (game.prestige >= 1 || game.ascend >= 1 || game.collapse >= 1) {
+        document.getElementById("resource_efficiency").className =
+            "settings_button can_modify"
+        if (game.resource_efficiency) {
+            game.resource_efficiency = false
+            document.getElementById("resource_efficiency").innerHTML =
+                "Reset Layer Resource/min<br>HIDE"
+        } else {
+            game.resource_efficiency = true
+            document.getElementById("resource_efficiency").innerHTML =
+                "Reset Layer Resource/min<br>SHOW"
+        }
+    } else {
+        document.getElementById("resource_efficiency").className =
+            "settings_button"
+        document.getElementById("resource_efficiency").innerHTML = "?????"
+    }
+}
+
+//toggle reduced flashing
+function reduce_flashing() {
+    if (game.prestige >= 1 || game.ascend >= 1 || game.collapse >= 1) {
+        document.getElementById("reduce_flashing").className =
+            "settings_button can_modify"
+        if (game.reduce_flashing) {
+            game.reduce_flashing = false
+            document.getElementById("reduce_flashing").innerHTML =
+                "Reduce Flashing<br>DISABLED"
+        } else {
+            game.reduce_flashing = true
+            document.getElementById("reduce_flashing").innerHTML =
+                "Reduce Flashing<br>ENABLED"
+        }
+    } else {
+        document.getElementById("reduce_flashing").className = "settings_button"
+        document.getElementById("reduce_flashing").innerHTML = "?????"
     }
 }
