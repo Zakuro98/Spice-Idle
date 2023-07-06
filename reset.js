@@ -499,6 +499,11 @@ function prestige(override) {
         game.prestige_time_played = 0
         game.real_time_played[1] = 0
 
+        game.peak_rainbow_gain = new Decimal(0)
+        game.peak_rainbow_amount = new Decimal(0)
+        game.peak_rainbow_boosts = 0
+        game.peak_rainbow_time = 0
+
         if (game.ascend_bought[9] && !override) {
             if (game.autopr_mode === 0) {
                 game.autopr_goal2[0] += game.autopr_delta[0]
@@ -666,6 +671,10 @@ function ascend(override) {
             game.real_time_played[2] = 0
             if (game.collapse_challenge === 7) game.ascend_challenge_timer = 0
 
+            game.peak_ansuz_gain = 0
+            game.peak_ansuz_amount = 0
+            game.peak_ansuz_time = 0
+
             if (game.ascend_challenge !== 0) {
                 game.ascend_complete[game.ascend_challenge - 1] = true
                 game.ascend_challenge = 0
@@ -783,6 +792,10 @@ function ascend(override) {
             game.ascend_time_played = 0
             game.real_time_played[2] = 0
             if (game.collapse_challenge === 7) game.ascend_challenge_timer = 0
+
+            game.peak_ansuz_gain = 0
+            game.peak_ansuz_amount = 0
+            game.peak_ansuz_time = 0
 
             game.autopr_goal2[0] = 0
             game.autopr_goal2[1] = new Decimal(1)
@@ -1124,6 +1137,10 @@ function collapse(override) {
             game.real_time_played[3] = 0
             game.collapse_spice = new Decimal(5)
 
+            game.peak_atomic_gain = new Decimal(0)
+            game.peak_atomic_amount = new Decimal(0)
+            game.peak_atomic_time = 0
+
             if (game.collapse_challenge !== 0) {
                 if (game.research_complete[28] >= 1) {
                     game.collapse_complete[game.collapse_challenge - 7] +=
@@ -1217,29 +1234,6 @@ function collapse(override) {
 
             game.global_spice_boost = new Decimal(1)
 
-            let basic_amount = game.atomic_spice
-                .mul(game.atomic_portion)
-                .add(game.spent_atomic_spice[0])
-                .pow(game.atomic_efficiency / 132)
-            if (basic_amount.cmp(Decimal.pow(10, 420)) >= 0)
-                basic_amount = Decimal.pow(
-                    10,
-                    (basic_amount.log(10) / 420) ** 0.8 * 420
-                )
-
-            let rainbow_amount =
-                (game.antitotal_spice[6].log(10) - 11300000) / 900000
-            if (rainbow_amount < 0) rainbow_amount = 0
-            if (rainbow_amount > 24) rainbow_amount = 24
-            let atomic_amount =
-                (game.spent_atomic_spice[6]
-                    .add(game.atomic_spice.mul(game.atomic_portion))
-                    .log(10) -
-                    31320) /
-                1620
-            if (atomic_amount < 0) atomic_amount = 0
-            if (atomic_amount > 24) atomic_amount = 24
-
             let third_condition = true
 
             if (old_time < 0.5 && game.collider_animation)
@@ -1264,6 +1258,10 @@ function collapse(override) {
             game.collapse_time_played = 0
             game.real_time_played[3] = 0
             game.collapse_spice = new Decimal(5)
+
+            game.peak_atomic_gain = new Decimal(0)
+            game.peak_atomic_amount = new Decimal(0)
+            game.peak_atomic_time = 0
 
             game.ascend_challenge = 0
             game.ascend_complete = new Array(6).fill(false)
