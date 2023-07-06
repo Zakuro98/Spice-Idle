@@ -6,7 +6,7 @@ BigInt.prototype.toJSON = function () {
 
 //initializing game variables
 let game = {
-    version: "1.6.0",
+    version: "1.6.2",
 
     tickspeed: 100,
     gamespeed: 1,
@@ -21,6 +21,8 @@ let game = {
     refresh_rate: 20,
     collapse_confirm: true,
     collider_animation: true,
+    resource_efficiency: false,
+    reduce_flashing: false,
 
     global_spice_boost: new Decimal(1),
 
@@ -492,6 +494,19 @@ let game = {
         new Decimal(0),
     ],
 
+    peak_rainbow_gain: new Decimal(0),
+    peak_rainbow_boosts: 0,
+    peak_rainbow_amount: new Decimal(0),
+    peak_rainbow_time: 0,
+
+    peak_ansuz_gain: 0,
+    peak_ansuz_amount: 0,
+    peak_ansuz_time: 0,
+
+    peak_atomic_gain: new Decimal(0),
+    peak_atomic_amount: new Decimal(0),
+    peak_atomic_time: 0,
+
     real_time_played: [0, 0, 0, 0],
 }
 
@@ -863,8 +878,9 @@ class spice_gen {
 
         //buy one generator
         let gen_buy = document.createElement("BUTTON")
+        gen_buy.id = this.color + "_buy" + this.id
         gen_buy.innerHTML =
-            'Buy one: <span id="' +
+            'Buy one: </span><span id="' +
             this.color +
             "_cost" +
             this.id +
@@ -878,8 +894,9 @@ class spice_gen {
 
         //buy until 10 generator
         let gen_until = document.createElement("BUTTON")
+        gen_until.id = this.color + "_ubuy" + this.id
         gen_until.innerHTML =
-            'Buy until 10: <span id="' +
+            'Buy until 10: </span><span id="' +
             this.color +
             "_ucost" +
             this.id +
@@ -888,7 +905,7 @@ class spice_gen {
             '_cost">---</span>'
         if (this.color === "crystal")
             gen_until.innerHTML =
-                'Buy until 5: <span id="' +
+                'Buy until 5: </span><span id="' +
                 this.color +
                 "_ucost" +
                 this.id +
@@ -897,7 +914,7 @@ class spice_gen {
                 '_cost">---</span>'
         if (this.color === "arcane")
             gen_until.innerHTML =
-                'Buy until 3: <span id="' +
+                'Buy until 3: </span><span id="' +
                 this.color +
                 "_ucost" +
                 this.id +
@@ -1003,6 +1020,7 @@ class prestige_upgrade {
         this.id = prestige_upgrade.upgrades.length
         this.price = price
         this.max = max
+        this.unbought = 0
 
         prestige_upgrade.upgrades.push(this)
 
@@ -1200,6 +1218,7 @@ class ascension_upgrade {
         this.x = x
         this.y = y
         this.challenge = challenge
+        this.unbought = 0
 
         ascension_upgrade.upgrades.push(this)
 
