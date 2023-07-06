@@ -47,6 +47,7 @@ main {
     font-size: 2em;
     border: none;
     flex: 1;
+    cursor: default;
 }
 
 .subtab {
@@ -76,6 +77,7 @@ main {
 .unlocked {
     color: #aaaaaa;
     font-weight: normal;
+    cursor: pointer;
 }
 
 .unlocked:hover {
@@ -214,6 +216,7 @@ main {
     border: 1px solid white;
     margin-bottom: 0.3em;
     margin-right: 0.3em;
+    cursor: default;
 }
 
 .spice_buy:hover {
@@ -224,8 +227,13 @@ main {
     background-color: #571c66;
 }
 
+.can_buy {
+    cursor: pointer;
+}
+
 .noshift {
     color: #9b9b9b;
+    cursor: default;
 }
 
 .noshift:hover {
@@ -239,40 +247,48 @@ main {
 .shift1 {
     color: #ffd107;
     text-shadow: 0 0 0.2em #ffd107;
+    cursor: pointer;
 }
 
 .shift2 {
     color: #25dd8a;
     text-shadow: 0 0 0.2em #25dd8a;
+    cursor: pointer;
 }
 
 .shift3 {
     color: #0072ff;
     text-shadow: 0 0 0.2em #0072ff;
+    cursor: pointer;
 }
 
 .shift4 {
     color: #ff3dd8;
     text-shadow: 0 0 0.2em #ff3dd8;
+    cursor: pointer;
 }
 
 .boost {
     color: var(--rainbow_spice2);
     text-shadow: 0 0 0.2em var(--rainbow_spice);
+    cursor: pointer;
 }
 
 .max_all {
     font-size: 1.25em;
+    cursor: pointer;
 }
 
 .a_disabled {
     font-size: 1.25em;
     color: #ff2714;
+    cursor: pointer;
 }
 
 .a_enabled {
     font-size: 1.25em;
     color: #25dd8a;
+    cursor: pointer;
 }
 
 #boost_auto, #infusion_auto, #enchantment_auto, #prestige_auto_toggle, #ascend_auto_toggle, #collapse_auto_toggle {
@@ -409,6 +425,20 @@ main {
     font-weight: 400;
     margin-left: 0.4em;
     flex-grow: 0;
+    cursor: default;
+}
+
+.reset_efficiency {
+    font-size: 1.25em;
+    font-weight: 400;
+    color: white;
+    margin-top: 1em;
+    margin-bottom: 0em;
+    text-align: right;
+}
+
+#collapse_efficiency {
+    margin-bottom: -3.675em;
 }
 
 #prestige_upgrade_block {
@@ -451,6 +481,7 @@ main {
     margin: 0.5em;
     width: 17em;
     height: 9em;
+    cursor: default;
 }
 
 .bold {
@@ -474,6 +505,7 @@ main {
     text-shadow: 0 0 0.2em var(--rainbow_spice);
     border: 1px solid var(--rainbow_spice2);
     box-shadow: 0 0 0.3em var(--rainbow_spice), 0 0 0.3em var(--rainbow_spice) inset;
+    cursor: pointer;
 }
 
 .p_unlocked:hover {
@@ -498,6 +530,7 @@ main {
     text-shadow: 0 0 0.5em var(--rainbow_spice);
     border: 1px solid var(--rainbow_spice2);
     box-shadow: 0 0 0.5em var(--rainbow_spice), 0 0 0.5em var(--rainbow_spice) inset;
+    cursor: pointer;
 }
 
 .p_unlocked2:hover {
@@ -530,6 +563,7 @@ main {
     text-shadow: 0em 0em 0.2em #ff2ad4, 0em 0em 0.5em #ff2ad4;
     border: 1px solid #ff2ad4;
     box-shadow: 0em 0em 0.5em #ff2ad4, 0em 0em 3em #ff2ad4 inset;
+    cursor: pointer;
 }
 
 .c_unlocked:hover {
@@ -596,6 +630,7 @@ main {
 
 #prestige_auto_mode, #ascend_auto_mode, #collapse_auto_mode {
     margin-right: 0em;
+    cursor: pointer;
 }
 
 #prestige_boosts, #prestige_spice, #prestige_time, #prestige_boosts_delta, #prestige_spice_delta, #ascend_runes, #ascend_time, #collapse_spice, #collapse_spice2, #collapse_time, #collapse_time2 {
@@ -727,6 +762,11 @@ main {
     font-weight: 400;
     margin-left: 0.4em;
     flex-grow: 0;
+    cursor: default;
+}
+
+.ascension_upgrade {
+    cursor: default;
 }
 
 .a_locked {
@@ -741,6 +781,7 @@ main {
     text-shadow: 0 0 0.2em var(--ascension);
     border: 1px solid var(--ascension2);
     box-shadow: 0 0 0.3em var(--ascension), 0 0 1em var(--ascension) inset;
+    cursor: pointer;
 }
 
 .a_unlocked:hover {
@@ -765,6 +806,7 @@ main {
     text-shadow: 0 0 0.2em var(--ascension);
     border: 1px solid var(--ascension2);
     box-shadow: 0 0 0.6em var(--ascension), 0 0 2em var(--ascension) inset;
+    cursor: pointer;
 }
 
 .a_unlocked2:hover {
@@ -803,6 +845,7 @@ main {
     text-shadow: 0 0 0.5em #cccccc;
     border: 1px solid white;
     box-shadow: 0 0 0.6em white, 0 0 0.6em white inset, 0 0 2em #cccccc inset;
+    cursor: pointer;
 }
 
 .ac_unlocked:hover {
@@ -827,6 +870,7 @@ main {
     text-shadow: 0 0 0.2em #cccccc;
     border: 1px solid white;
     box-shadow: 0 0 0.15em white, 0 0 0.3em #cccccc inset, 0 0 1em #cccccc inset;
+    cursor: pointer;
 }
 
 .a_active:hover {
@@ -1107,6 +1151,7 @@ main {
     width: 7.5em;
     flex-grow: 0;
     margin-left: 1em;
+    cursor: default;
 }
 
 .incomplete {
@@ -1115,6 +1160,7 @@ main {
     text-shadow: 0 0 0.2em var(--ascension);
     border: 1px solid var(--ascension2);
     box-shadow: 0 0 0.4em var(--ascension), 0 0 1em var(--ascension) inset;
+    cursor: pointer;
 }
 
 .incomplete:hover {
@@ -1147,6 +1193,7 @@ main {
     text-shadow: 0 0 0.2em #cccccc;
     border: 1px solid white;
     box-shadow: 0 0 0.4em white, 0 0 1em white inset;
+    cursor: pointer;
 }
 
 .finished:hover {
@@ -1278,6 +1325,7 @@ main {
     font-weight: 400;
     margin-left: 0.4em;
     flex-grow: 0;
+    cursor: default;
 }
 
 .collapse_title {
@@ -1321,6 +1369,7 @@ main {
     text-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse);
     border: 1px solid var(--collapse2);
     box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse), 0 0 0.2em var(--collapse2) inset, 0 0 0.8em var(--collapse) inset;
+    cursor: pointer;
 }
 
 .co_unlocked:hover {
@@ -1345,6 +1394,7 @@ main {
     text-shadow: 0 0 0.2em white, 0 0 0.4em #cccccc;
     border: 1px solid white;
     box-shadow: 0 0 0.2em white, 0 0 0.4em #cccccc, 0 0 0.2em white inset, 0 0 0.8em #cccccc inset;
+    cursor: pointer;
 }
 
 .co_active:hover {
@@ -1379,6 +1429,7 @@ main {
     color: var(--unstable_spice3);
     box-shadow: 0 0 0.2em var(--unstable_spice) inset;
     text-shadow: 0 0 0.2em var(--unstable_spice2), 0 0 0.5em var(--unstable_spice);
+    cursor: pointer;
 }
 
 #collider_tab1:hover {
@@ -1394,11 +1445,16 @@ main {
     box-shadow: none;
 }
 
+#collider_tab1.current_tab {
+    cursor: default;
+}
+
 #collider_tab2 {
     background-color: black;
     border: 1px solid white;
     color: white;
     text-shadow: 0 0 0.2em white, 0 0 0.5em #aaaaaa;
+    cursor: pointer;
 }
 
 #collider_tab2:hover {
@@ -1413,11 +1469,16 @@ main {
     box-shadow: none;
 }
 
+#collider_tab2.current_tab {
+    cursor: default;
+}
+
 #collider_tab3 {
     background-color: black;
     border: 1px solid #14ebff;
     color: #14ebff;
     text-shadow: 0 0 0.2em #14ebff, 0 0 0.5em #00a8b8;
+    cursor: pointer;
 }
 
 #collider_tab3:hover {
@@ -1432,11 +1493,16 @@ main {
     box-shadow: none;
 }
 
+#collider_tab3.current_tab {
+    cursor: default;
+}
+
 #collider_tab4 {
     background-color: black;
     border: 1px solid #1f48ff;
     color: #1f48ff;
     text-shadow: 0 0 0.2em #1f48ff, 0 0 0.5em #0025b8;
+    cursor: pointer;
 }
 
 #collider_tab4:hover {
@@ -1451,11 +1517,16 @@ main {
     box-shadow: none;
 }
 
+#collider_tab4.current_tab {
+    cursor: default;
+}
+
 #collider_tab5 {
     background-color: black;
     border: 1px solid #ea1a78;
     color: #ea1a78;
     text-shadow: 0 0 0.2em #ea1a78, 0 0 0.5em #9f1955;
+    cursor: pointer;
 }
 
 #collider_tab5:hover {
@@ -1470,11 +1541,16 @@ main {
     box-shadow: none;
 }
 
+#collider_tab5.current_tab {
+    cursor: default;
+}
+
 #collider_tab6 {
     background-color: black;
     border: 1px solid #ff8c00;
     color: #ff8c00;
     text-shadow: 0 0 0.2em #ff8c00, 0 0 0.5em #9f6319;
+    cursor: pointer;
 }
 
 #collider_tab6:hover {
@@ -1489,11 +1565,16 @@ main {
     box-shadow: none;
 }
 
+#collider_tab6.current_tab {
+    cursor: default;
+}
+
 #collider_tab7 {
     background-color: black;
     border: 1px solid #3dff64;
     color: #3dff64;
     text-shadow: 0 0 0.2em #3dff64, 0 0 0.5em #1fc740;
+    cursor: pointer;
 }
 
 #collider_tab7:hover {
@@ -1508,11 +1589,16 @@ main {
     box-shadow: none;
 }
 
+#collider_tab7.current_tab {
+    cursor: default;
+}
+
 #collider_tab8 {
     background-color: black;
     border: 1px solid var(--rainbow_antispice);
     color: var(--rainbow_antispice);
     text-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.5em var(--rainbow_antispice2);
+    cursor: pointer;
 }
 
 #collider_tab8:hover {
@@ -1525,6 +1611,10 @@ main {
     color: black;
     text-shadow: none;
     box-shadow: none;
+}
+
+#collider_tab8.current_tab {
+    cursor: default;
 }
 
 #collider_block {
@@ -1744,6 +1834,7 @@ main {
     border: 1px solid white;
     margin-right: 0.3em;
     margin-bottom: 0.3em;
+    cursor: pointer;
 }
 
 .research_button:hover {
@@ -1772,6 +1863,7 @@ main {
     background-color: white;
     color: black;
     text-shadow: none;
+    cursor: default;
 }
 
 .r_active, .r_active:hover, .r_active:active {
@@ -1779,6 +1871,7 @@ main {
     color: black;
     text-shadow: none;
     border: 1px solid var(--collapse3);
+    cursor: default;
 }
 
 #research_info_block {
@@ -1822,6 +1915,7 @@ main {
     text-shadow: 0 0 0.2em var(--collapse2);
     border: 1px solid var(--collapse2);
     box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.2em var(--collapse2) inset;
+    cursor: pointer;
 }
 
 .r_begin:hover {
@@ -1846,6 +1940,7 @@ main {
     text-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse);
     border: 1px solid var(--collapse2);
     box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse), 0 0 0.2em var(--collapse2) inset, 0 0 0.8em var(--collapse) inset;
+    cursor: pointer;
 }
 
 .r_pause:hover {
@@ -1871,6 +1966,7 @@ main {
     font-weight: 700;
     border: 1px solid var(--collapse3);
     box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse);
+    cursor: default;
 }
 
 #research_back {
@@ -1956,6 +2052,7 @@ main {
     text-shadow: 0 0 0.2em var(--collapse2), 0 0 0.5em var(--collapse);
     border: 1px solid var(--collapse2);
     box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse), 0 0 0.2em var(--collapse2) inset, 0 0 1em var(--collapse) inset;
+    cursor: pointer;
 }
 
 .outside:hover {
@@ -1980,6 +2077,7 @@ main {
     text-shadow: none;
     border: 1px solid var(--collapse3);
     box-shadow: 0 0 0.4em var(--collapse2);
+    cursor: default;
 }
 
 @media (pointer: coarse) {
@@ -2073,6 +2171,7 @@ main {
     background-color: black;
     color: var(--rainbow_antispice);
     border: 1px solid var(--rainbow_antispice);
+    cursor: default;
 }
 
 .ap_unlocked {
@@ -2081,6 +2180,7 @@ main {
     text-shadow: 0 0 0.15em var(--rainbow_antispice), 0 0 0.3em var(--rainbow_antispice4), 0 0 0.45em var(--rainbow_antispice5), 0 0 0.6em var(--rainbow_antispice6), 0 0 0.75em black;
     border: 1px solid var(--rainbow_antispice);
     box-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.4em var(--rainbow_antispice4), 0 0 0.6em var(--rainbow_antispice5), 0 0 0.8em var(--rainbow_antispice6), 0 0 1em black, 0 0 1em var(--rainbow_antispice2) inset, 0 0 2.5em var(--rainbow_antispice7) inset;
+    cursor: pointer;
 }
 
 .ap_unlocked:hover {
@@ -2105,6 +2205,7 @@ main {
     text-shadow: 0 0 0.075em var(--rainbow_antispice), 0 0 0.15em var(--rainbow_antispice4), 0 0 0.225em var(--rainbow_antispice5), 0 0 0.3em var(--rainbow_antispice6), 0 0 0.375em black;
     border: 1px solid var(--rainbow_antispice);
     box-shadow: 0 0 0.1em var(--rainbow_antispice), 0 0 0.2em var(--rainbow_antispice4), 0 0 0.3em var(--rainbow_antispice5), 0 0 0.4em var(--rainbow_antispice6), 0 0 0.5em black, 0 0 0.5em var(--rainbow_antispice2) inset, 0 0 1.25em var(--rainbow_antispice7) inset;
+    cursor: pointer;
 }
 
 .ap_unlocked2:hover {
@@ -2129,6 +2230,7 @@ main {
     text-shadow: 0 0 0.25em black, 0 0 0.5em black;
     border: 1px solid var(--rainbow_antispice);
     box-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.4em var(--rainbow_antispice4), 0 0 0.6em var(--rainbow_antispice5), 0 0 0.8em var(--rainbow_antispice6), 0 0 1em black;
+    cursor: default;
 }
 
 .ap_special {
@@ -2192,6 +2294,11 @@ main {
     border: 1px solid white;
     margin-left: 0.25em;
     margin-right: 0.25em;
+    cursor: default;
+}
+
+.can_modify {
+    cursor: pointer;
 }
 
 .settings_button:hover {
