@@ -403,6 +403,10 @@
                                 <input class="input" id="p_time_input" type="number" step="0.01" value="30" min="0.01">
                             </div>
                         </div>
+                        <p id="prestige_efficiency" class="reset_efficiency">
+                            Currently: +0.000 μg rainbow spice/min
+                            Peak: +0.000 μg rainbow spice/min at 0 color boosts
+                        </p>
                     </div>
                 </div>
 
@@ -575,6 +579,10 @@
                                 <input class="input" id="a_time_input" type="number" step="0.01" value="30" min="0.01">
                             </div>
                         </div>
+                        <p id="ascend_efficiency" class="reset_efficiency">
+                            Currently: +0.000 ᚫ/min
+                            Peak: +0.000 ᚫ/min at +0 ᚫ
+                        </p>
                     </div>
                 </div>
 
@@ -769,7 +777,7 @@
                 </p>
 
                 <div class="center_button">
-                    <button class="rune_button a_unlocked" onclick="exit_ascension_challenge()">
+                    <button id="exit_ascension_challenge" class="rune_button a_unlocked" onclick="exit_ascension_challenge()">
                         Exit Challenge
                     </button>
                 </div>
@@ -917,6 +925,10 @@
                                 <input class="input" id="co_time_input" type="number" step="0.01" value="120" min="0.01">
                             </div>
                         </div>
+                        <p id="collapse_efficiency" class="reset_efficiency">
+                            Currently: +0.000 atomic spice/min
+                            Peak: +0.000 atomic spice/min at +0 atomic spice
+                        </p>
                     </div>
                 </div>
 
@@ -1068,7 +1080,7 @@
                 </p>
 
                 <div class="center_button">
-                    <button class="atomic_button co_unlocked" onclick="exit_collapse_challenge()">
+                    <button id="exit_collapse_challenge" class="atomic_button co_unlocked" onclick="exit_collapse_challenge()">
                         Exit Challenge
                     </button>
                 </div>
@@ -1249,50 +1261,60 @@
 
             <div id="settings_page">
                 <div id="save_block" class="settings_block">
-                    <button id="save" class="settings_button s_big" onclick="save()">
+                    <button id="save" class="settings_button can_modify s_big" onclick="save()">
                         SAVE
                     </button>
-                    <button id="export" class="settings_button s_big" onclick="export_save()">
+                    <button id="export" class="settings_button can_modify s_big" onclick="export_save()">
                         EXPORT
                     </button>
-                    <button id="import" class="settings_button s_big" onclick="import_save()">
+                    <button id="import" class="settings_button can_modify s_big" onclick="import_save()">
                         IMPORT
                     </button>
                 </div>
 
                 <div id="settings_block1" class="settings_block">
-                    <button id="notation" class="settings_button" onclick="notation()">
+                    <button id="notation" class="settings_button can_modify" onclick="notation()">
                         Notation
                         <br>SCIENTIFIC
                     </button>
-                    <button id="hotkeys" class="settings_button" onclick="hotkeys()">
+                    <button id="hotkeys" class="settings_button can_modify" onclick="hotkeys()">
                         Hotkeys
                         <br>ENABLED
                     </button>
-                    <button id="condensed" class="settings_button" onclick="condensed()">
+                    <button id="condensed" class="settings_button can_modify" onclick="condensed()">
                         Condensed Generators
                         <br>DISABLED
                     </button>
                 </div>
                 <div id="settings_block2" class="settings_block">
-                    <button id="exponent_notation" class="settings_button" onclick="exponent_notation()">
+                    <button id="exponent_notation" class="settings_button can_modify" onclick="exponent_notation()">
                         Exponent Notation
                         <br>LONG
                     </button>
-                    <button id="high_visibility" class="settings_button" onclick="high_visibility()">
+                    <button id="high_visibility" class="settings_button can_modify" onclick="high_visibility()">
                         Text Visibility
                         <br>DEFAULT
                     </button>
-                    <button id="refresh_rate" class="settings_button" onclick="refresh_rate()">
+                    <button id="refresh_rate" class="settings_button can_modify" onclick="refresh_rate()">
                         Refresh Rate
                         <br>20 MS
                     </button>
                 </div>
                 <div id="settings_block3" class="settings_block">
+                    <button id="resource_efficiency" class="settings_button" onclick="resource_efficiency()">
+                        Reset Layer Resource/min
+                        <br>HIDE
+                    </button>
+                    <button id="reduce_flashing" class="settings_button" onclick="reduce_flashing()">
+                        Reduce Flashing
+                        <br>DISABLED
+                    </button>
                     <button id="ascend_confirm" class="settings_button" onclick="confirmations('ascend')">
                         Ascension Confirmations
                         <br>ENABLED
                     </button>
+                </div>
+                <div id="settings_block4" class="settings_block">
                     <button id="challenge_confirm" class="settings_button" onclick="confirmations('challenge')">
                         Challenge Confirmations
                         <br>ENABLED
@@ -1301,16 +1323,14 @@
                         Collapse Confirmations
                         <br>ENABLED
                     </button>
-                </div>
-                <div id="settings_block4" class="settings_block">
-                    <button id="collidier_animation" class="settings_button" onclick="animations()">
+                    <button id="collider_animation" class="settings_button" onclick="animations()">
                         Collider Animations
                         <br>ENABLED
                     </button>
                 </div>
 
                 <div id="wipe_block" class="settings_block">
-                    <button id="wipe_save" class="settings_button s_big" onclick="delete_save()">
+                    <button id="wipe_save" class="settings_button can_modify s_big" onclick="delete_save()">
                         DELETE SAVE
                     </button>
                 </div>
@@ -1337,7 +1357,7 @@
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.6.1<br>Made by Zakuro<br><br>Last updated July 2, 2023
+                Spice Idle v1.6.2<br>Made by Zakuro<br><br>Last updated July 6, 2023
             </p>
             <a href="changelog.html" target="_blank" class="info link">Changelog</a>
             <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
