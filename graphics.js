@@ -681,9 +681,53 @@ function spice_update() {
                 if (game.red_spice.cmp(game.red_spice_price[gen.id]) >= 0) {
                     document.getElementById("red_cost" + gen.id).className =
                         "red_cost"
+                    document.getElementById("red_buy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("red_cost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("red_buy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("red_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById("red_buy" + gen.id)
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById("red_buy" + gen.id).style.width =
+                        "auto"
+
+                    let width2 =
+                        (document.getElementById("red_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById("red_buy" + gen.id)
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "red_buy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "red_buy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById("red_buy" + gen.id).style.width =
+                        "auto"
                 }
 
                 n = 10n - (game.red_spice_bought[gen.id] % 10n)
@@ -695,9 +739,53 @@ function spice_update() {
                 if (game.red_spice.cmp(price) >= 0) {
                     document.getElementById("red_ucost" + gen.id).className =
                         "red_cost"
+                    document.getElementById("red_ubuy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("red_ucost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("red_ubuy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("red_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById("red_ubuy" + gen.id)
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById("red_ubuy" + gen.id).style.width =
+                        "auto"
+
+                    let width2 =
+                        (document.getElementById("red_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById("red_ubuy" + gen.id)
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "red_ubuy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "red_ubuy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById("red_buy" + gen.id).style.width =
+                        "auto"
                 }
 
                 if (gen.id === 0) {
@@ -867,9 +955,57 @@ function spice_update() {
                 ) {
                     document.getElementById("yellow_cost" + gen.id).className =
                         "yellow_cost"
+                    document.getElementById("yellow_buy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("yellow_cost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("yellow_buy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("yellow_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "yellow_buy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById("yellow_buy" + gen.id).style.width =
+                        "auto"
+
+                    let width2 =
+                        (document.getElementById("yellow_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "yellow_buy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "yellow_buy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "yellow_buy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById("yellow_buy" + gen.id).style.width =
+                        "auto"
                 }
 
                 n = 10n - (game.yellow_spice_bought[gen.id] % 10n)
@@ -881,9 +1017,59 @@ function spice_update() {
                 if (game.yellow_spice.cmp(price) >= 0) {
                     document.getElementById("yellow_ucost" + gen.id).className =
                         "yellow_cost"
+                    document.getElementById("yellow_ubuy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("yellow_ucost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("yellow_ubuy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("yellow_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "yellow_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById(
+                        "yellow_ubuy" + gen.id
+                    ).style.width = "auto"
+
+                    let width2 =
+                        (document.getElementById("yellow_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "yellow_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "yellow_ubuy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "yellow_ubuy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById(
+                        "yellow_ubuy" + gen.id
+                    ).style.width = "auto"
                 }
 
                 if (gen.id === 0) {
@@ -1048,9 +1234,57 @@ function spice_update() {
                 if (game.green_spice.cmp(game.green_spice_price[gen.id]) >= 0) {
                     document.getElementById("green_cost" + gen.id).className =
                         "green_cost"
+                    document.getElementById("green_buy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("green_cost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("green_buy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("green_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "green_buy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById("green_buy" + gen.id).style.width =
+                        "auto"
+
+                    let width2 =
+                        (document.getElementById("green_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "green_buy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "green_buy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "green_buy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById("green_buy" + gen.id).style.width =
+                        "auto"
                 }
 
                 n = 10n - (game.green_spice_bought[gen.id] % 10n)
@@ -1062,9 +1296,57 @@ function spice_update() {
                 if (game.green_spice.cmp(price) >= 0) {
                     document.getElementById("green_ucost" + gen.id).className =
                         "green_cost"
+                    document.getElementById("green_ubuy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("green_ucost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("green_ubuy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("green_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "green_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById("green_ubuy" + gen.id).style.width =
+                        "auto"
+
+                    let width2 =
+                        (document.getElementById("green_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "green_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "green_ubuy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "green_ubuy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById("green_ubuy" + gen.id).style.width =
+                        "auto"
                 }
 
                 if (gen.id === 0) {
@@ -1229,9 +1511,53 @@ function spice_update() {
                 if (game.blue_spice.cmp(game.blue_spice_price[gen.id]) >= 0) {
                     document.getElementById("blue_cost" + gen.id).className =
                         "blue_cost"
+                    document.getElementById("blue_buy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("blue_cost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("blue_buy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("blue_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById("blue_buy" + gen.id)
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById("blue_buy" + gen.id).style.width =
+                        "auto"
+
+                    let width2 =
+                        (document.getElementById("blue_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById("blue_buy" + gen.id)
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "blue_buy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "blue_buy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById("blue_buy" + gen.id).style.width =
+                        "auto"
                 }
 
                 n = 10n - (game.blue_spice_bought[gen.id] % 10n)
@@ -1243,9 +1569,57 @@ function spice_update() {
                 if (game.blue_spice.cmp(price) >= 0) {
                     document.getElementById("blue_ucost" + gen.id).className =
                         "blue_cost"
+                    document.getElementById("blue_ubuy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("blue_ucost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("blue_ubuy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("blue_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "blue_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById("blue_ubuy" + gen.id).style.width =
+                        "auto"
+
+                    let width2 =
+                        (document.getElementById("blue_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "blue_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "blue_ubuy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "blue_ubuy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById("blue_ubuy" + gen.id).style.width =
+                        "auto"
                 }
 
                 if (gen.id === 0) {
@@ -1468,9 +1842,53 @@ function spice_update() {
                 if (game.pink_spice.cmp(game.pink_spice_price[gen.id]) >= 0) {
                     document.getElementById("pink_cost" + gen.id).className =
                         "pink_cost"
+                    document.getElementById("pink_buy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("pink_cost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("pink_buy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("pink_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById("pink_buy" + gen.id)
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById("pink_buy" + gen.id).style.width =
+                        "auto"
+
+                    let width2 =
+                        (document.getElementById("pink_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById("pink_buy" + gen.id)
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "pink_buy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "pink_buy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById("pink_buy" + gen.id).style.width =
+                        "auto"
                 }
 
                 n = 10n - (game.pink_spice_bought[gen.id] % 10n)
@@ -1482,9 +1900,57 @@ function spice_update() {
                 if (game.pink_spice.cmp(price) >= 0) {
                     document.getElementById("pink_ucost" + gen.id).className =
                         "pink_cost"
+                    document.getElementById("pink_ubuy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("pink_ucost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("pink_ubuy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("pink_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "pink_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById("pink_ubuy" + gen.id).style.width =
+                        "auto"
+
+                    let width2 =
+                        (document.getElementById("pink_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "pink_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "pink_ubuy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "pink_ubuy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById("pink_ubuy" + gen.id).style.width =
+                        "auto"
                 }
 
                 if (gen.id === 0) {
@@ -1628,8 +2094,42 @@ function spice_update() {
             " g red spice"
         if (game.red_spice.cmp(game.red_strengthener_price) >= 0) {
             document.getElementById("red_cost_s").className = "red_cost"
+            document.getElementById("red_buy_s").className = "spice_buy can_buy"
         } else {
             document.getElementById("red_cost_s").className = "empty_cost"
+            document.getElementById("red_buy_s").className = "spice_buy"
+        }
+
+        if (game.reduce_flashing) {
+            let width =
+                (document.getElementById("red_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(document.getElementById("red_buy_s"))[
+                            "font-size"
+                        ]
+                    ) -
+                0.8
+
+            document.getElementById("red_buy_s").style.width = "auto"
+
+            let width2 =
+                (document.getElementById("red_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(document.getElementById("red_buy_s"))[
+                            "font-size"
+                        ]
+                    ) -
+                0.8
+
+            if (width2 > width) {
+                document.getElementById("red_buy_s").style.width =
+                    width2 + 0.89 + "em"
+            } else {
+                document.getElementById("red_buy_s").style.width =
+                    width + 0.89 + "em"
+            }
+        } else {
+            document.getElementById("red_buy_s").style.width = "auto"
         }
     } else {
         document.getElementById("red_gen_s").style.display = "none"
@@ -1739,8 +2239,43 @@ function spice_update() {
             " g yellow spice"
         if (game.yellow_spice.cmp(game.yellow_strengthener_price) >= 0) {
             document.getElementById("yellow_cost_s").className = "yellow_cost"
+            document.getElementById("yellow_buy_s").className =
+                "spice_buy can_buy"
         } else {
             document.getElementById("yellow_cost_s").className = "empty_cost"
+            document.getElementById("yellow_buy_s").className = "spice_buy"
+        }
+
+        if (game.reduce_flashing) {
+            let width =
+                (document.getElementById("yellow_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(
+                            document.getElementById("yellow_buy_s")
+                        )["font-size"]
+                    ) -
+                0.8
+
+            document.getElementById("yellow_buy_s").style.width = "auto"
+
+            let width2 =
+                (document.getElementById("yellow_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(
+                            document.getElementById("yellow_buy_s")
+                        )["font-size"]
+                    ) -
+                0.8
+
+            if (width2 > width) {
+                document.getElementById("yellow_buy_s").style.width =
+                    width2 + 0.89 + "em"
+            } else {
+                document.getElementById("yellow_buy_s").style.width =
+                    width + 0.89 + "em"
+            }
+        } else {
+            document.getElementById("yellow_buy_s").style.width = "auto"
         }
     } else {
         document.getElementById("yellow_gen_s").style.display = "none"
@@ -1850,8 +2385,43 @@ function spice_update() {
             " g green spice"
         if (game.green_spice.cmp(game.green_strengthener_price) >= 0) {
             document.getElementById("green_cost_s").className = "green_cost"
+            document.getElementById("green_buy_s").className =
+                "spice_buy can_buy"
         } else {
             document.getElementById("green_cost_s").className = "empty_cost"
+            document.getElementById("green_buy_s").className = "spice_buy"
+        }
+
+        if (game.reduce_flashing) {
+            let width =
+                (document.getElementById("green_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(
+                            document.getElementById("green_buy_s")
+                        )["font-size"]
+                    ) -
+                0.8
+
+            document.getElementById("green_buy_s").style.width = "auto"
+
+            let width2 =
+                (document.getElementById("green_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(
+                            document.getElementById("green_buy_s")
+                        )["font-size"]
+                    ) -
+                0.8
+
+            if (width2 > width) {
+                document.getElementById("green_buy_s").style.width =
+                    width2 + 0.89 + "em"
+            } else {
+                document.getElementById("green_buy_s").style.width =
+                    width + 0.89 + "em"
+            }
+        } else {
+            document.getElementById("green_buy_s").style.width = "auto"
         }
     } else {
         document.getElementById("green_gen_s").style.display = "none"
@@ -1961,8 +2531,43 @@ function spice_update() {
             " g blue spice"
         if (game.blue_spice.cmp(game.blue_strengthener_price) >= 0) {
             document.getElementById("blue_cost_s").className = "blue_cost"
+            document.getElementById("blue_buy_s").className =
+                "spice_buy can_buy"
         } else {
             document.getElementById("blue_cost_s").className = "empty_cost"
+            document.getElementById("blue_buy_s").className = "spice_buy"
+        }
+
+        if (game.reduce_flashing) {
+            let width =
+                (document.getElementById("blue_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(document.getElementById("blue_buy_s"))[
+                            "font-size"
+                        ]
+                    ) -
+                0.8
+
+            document.getElementById("blue_buy_s").style.width = "auto"
+
+            let width2 =
+                (document.getElementById("blue_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(document.getElementById("blue_buy_s"))[
+                            "font-size"
+                        ]
+                    ) -
+                0.8
+
+            if (width2 > width) {
+                document.getElementById("blue_buy_s").style.width =
+                    width2 + 0.89 + "em"
+            } else {
+                document.getElementById("blue_buy_s").style.width =
+                    width + 0.89 + "em"
+            }
+        } else {
+            document.getElementById("blue_buy_s").style.width = "auto"
         }
     } else {
         document.getElementById("blue_gen_s").style.display = "none"
@@ -2043,8 +2648,43 @@ function spice_update() {
             " g pink spice"
         if (game.pink_spice.cmp(game.pink_strengthener_price) >= 0) {
             document.getElementById("pink_cost_s").className = "pink_cost"
+            document.getElementById("pink_buy_s").className =
+                "spice_buy can_buy"
         } else {
             document.getElementById("pink_cost_s").className = "empty_cost"
+            document.getElementById("pink_buy_s").className = "spice_buy"
+        }
+
+        if (game.reduce_flashing) {
+            let width =
+                (document.getElementById("pink_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(document.getElementById("pink_buy_s"))[
+                            "font-size"
+                        ]
+                    ) -
+                0.8
+
+            document.getElementById("pink_buy_s").style.width = "auto"
+
+            let width2 =
+                (document.getElementById("pink_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(document.getElementById("pink_buy_s"))[
+                            "font-size"
+                        ]
+                    ) -
+                0.8
+
+            if (width2 > width) {
+                document.getElementById("pink_buy_s").style.width =
+                    width2 + 0.89 + "em"
+            } else {
+                document.getElementById("pink_buy_s").style.width =
+                    width + 0.89 + "em"
+            }
+        } else {
+            document.getElementById("pink_buy_s").style.width = "auto"
         }
     } else {
         document.getElementById("pink_gen_s").style.display = "none"
@@ -2939,6 +3579,97 @@ function prestige_update() {
         if (game.color_boosts >= 4 && game.collapse_challenge === 10)
             document.getElementById("prestige_req").innerHTML =
                 format_small(game.color_boosts) + " color augments done"
+
+        if (game.resource_efficiency) {
+            document.getElementById("prestige_efficiency").style.display =
+                "block"
+
+            let efficiency_str =
+                "Currently: +" +
+                format_idec(
+                    amount.div(game.prestige_time_played).mul(60),
+                    game.notation
+                ) +
+                " μg rainbow spice/min"
+
+            if (game.prestige_bought[15] >= 1) {
+                switch (game.autopr_mode) {
+                    case 0:
+                        if (game.peak_rainbow_boosts >= game.augment_start)
+                            efficiency_str +=
+                                "<br>Peak: +" +
+                                format_idec(
+                                    game.peak_rainbow_gain.mul(60),
+                                    game.notation
+                                ) +
+                                " μg rainbow spice/min at " +
+                                format_small(
+                                    game.peak_rainbow_boosts,
+                                    game.notation
+                                ) +
+                                " color augments"
+                        else
+                            efficiency_str +=
+                                "<br>Peak: +" +
+                                format_idec(
+                                    game.peak_rainbow_gain.mul(60),
+                                    game.notation
+                                ) +
+                                " μg rainbow spice/min at " +
+                                format_small(
+                                    game.peak_rainbow_boosts,
+                                    game.notation
+                                ) +
+                                " color boosts"
+                        break
+                    case 1:
+                        efficiency_str +=
+                            "<br>Peak: +" +
+                            format_idec(
+                                game.peak_rainbow_gain.mul(60),
+                                game.notation
+                            ) +
+                            " μg rainbow spice/min at +" +
+                            format_idec(
+                                game.peak_rainbow_amount,
+                                game.notation
+                            ) +
+                            " μg rainbow spice"
+                        break
+                    case 2:
+                        if (game.peak_rainbow_time < 1)
+                            efficiency_str +=
+                                "<br>Peak: +" +
+                                format_idec(
+                                    game.peak_rainbow_gain.mul(60),
+                                    game.notation
+                                ) +
+                                " μg rainbow spice/min at " +
+                                game.peak_rainbow_time.toFixed(2) +
+                                "s"
+                        else
+                            efficiency_str +=
+                                "<br>Peak: +" +
+                                format_idec(
+                                    game.peak_rainbow_gain.mul(60),
+                                    game.notation
+                                ) +
+                                " μg rainbow spice/min at " +
+                                format_dec(
+                                    game.peak_rainbow_time,
+                                    game.notation
+                                ) +
+                                "s"
+                        break
+                }
+            }
+
+            document.getElementById("prestige_efficiency").innerHTML =
+                efficiency_str
+        } else {
+            document.getElementById("prestige_efficiency").style.display =
+                "none"
+        }
     } else {
         document.getElementById("prestige_button").className =
             "prestige_button p_locked"
@@ -2946,6 +3677,7 @@ function prestige_update() {
         document.getElementById("prestige_req").style.color = "grey"
         document.getElementById("prestige_req").innerHTML =
             "10 color boosts required"
+        document.getElementById("prestige_efficiency").style.display = "none"
     }
 
     if (game.prestige_bought[12] >= 1) {
@@ -3488,8 +4220,18 @@ function prestige_update() {
         document.getElementById("pr_cost" + u.id).innerHTML =
             "-" + format_idec(u.price, game.notation) + " μg rainbow spice"
 
+        let bought = true
+        if (game.reduce_flashing) {
+            if (game.prestige_bought[u.id] < u.max) u.unbought++
+            else u.unbought = 0
+            if (u.unbought >= game.tickspeed / 2) bought = false
+        } else {
+            u.unbought = 0
+            if (game.prestige_bought[u.id] < u.max) bought = false
+        }
+
         if (u.id === 25) {
-            if (game.prestige_bought[u.id] >= u.max) {
+            if (bought) {
                 button.className = "prestige_upgrade c_bought p_special"
             } else {
                 if (game.rainbow_spice.cmp(u.price) >= 0) {
@@ -3505,7 +4247,7 @@ function prestige_update() {
                 button.style.display = "block"
             }
         } else if (u.id === 12) {
-            if (game.prestige_bought[u.id] >= u.max) {
+            if (bought) {
                 button.className = "prestige_upgrade p_bought p_special"
             } else {
                 if (game.rainbow_spice.cmp(u.price) >= 0) {
@@ -3515,7 +4257,7 @@ function prestige_update() {
                 }
             }
         } else if (u.id < 12) {
-            if (game.prestige_bought[u.id] >= u.max) {
+            if (bought) {
                 button.className = "prestige_upgrade p_bought"
             } else {
                 if (game.rainbow_spice.cmp(u.price) >= 0) {
@@ -3525,7 +4267,7 @@ function prestige_update() {
                 }
             }
         } else {
-            if (game.prestige_bought[u.id] >= u.max) {
+            if (bought) {
                 button.className = "prestige_upgrade c_bought"
             } else {
                 if (game.rainbow_spice.cmp(u.price) >= 0) {
@@ -3843,9 +4585,59 @@ function crystal_update() {
                 ) {
                     document.getElementById("crystal_cost" + gen.id).className =
                         "rainbow_cost"
+                    document.getElementById("crystal_buy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("crystal_cost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("crystal_buy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("crystal_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "crystal_buy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById(
+                        "crystal_buy" + gen.id
+                    ).style.width = "auto"
+
+                    let width2 =
+                        (document.getElementById("crystal_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "crystal_buy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "crystal_buy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "crystal_buy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById(
+                        "crystal_buy" + gen.id
+                    ).style.width = "auto"
                 }
 
                 n = 5n - (game.crystal_spice_bought[gen.id] % 5n)
@@ -3860,10 +4652,60 @@ function crystal_update() {
                     document.getElementById(
                         "crystal_ucost" + gen.id
                     ).className = "rainbow_cost"
+                    document.getElementById("crystal_ubuy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById(
                         "crystal_ucost" + gen.id
                     ).className = "empty_cost"
+                    document.getElementById("crystal_ubuy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("crystal_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "crystal_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById(
+                        "crystal_ubuy" + gen.id
+                    ).style.width = "auto"
+
+                    let width2 =
+                        (document.getElementById("crystal_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "crystal_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "crystal_ubuy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "crystal_ubuy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById(
+                        "crystal_ubuy" + gen.id
+                    ).style.width = "auto"
                 }
 
                 if (gen.id === 0) {
@@ -3932,8 +4774,43 @@ function crystal_update() {
             " μg rainbow spice"
         if (game.rainbow_spice.cmp(game.crystal_strengthener_price) >= 0) {
             document.getElementById("crystal_cost_s").className = "rainbow_cost"
+            document.getElementById("crystal_buy_s").className =
+                "spice_buy can_buy"
         } else {
             document.getElementById("crystal_cost_s").className = "empty_cost"
+            document.getElementById("crystal_buy_s").className = "spice_buy"
+        }
+
+        if (game.reduce_flashing) {
+            let width =
+                (document.getElementById("crystal_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(
+                            document.getElementById("crystal_buy_s")
+                        )["font-size"]
+                    ) -
+                0.8
+
+            document.getElementById("crystal_buy_s").style.width = "auto"
+
+            let width2 =
+                (document.getElementById("crystal_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(
+                            document.getElementById("crystal_buy_s")
+                        )["font-size"]
+                    ) -
+                0.8
+
+            if (width2 > width) {
+                document.getElementById("crystal_buy_s").style.width =
+                    width2 + 0.89 + "em"
+            } else {
+                document.getElementById("crystal_buy_s").style.width =
+                    width + 0.89 + "em"
+            }
+        } else {
+            document.getElementById("crystal_buy_s").style.width = "auto"
         }
     } else {
         document.getElementById("crystal_gen_s").style.display = "none"
@@ -4092,8 +4969,42 @@ function crystal_update() {
         " g crystallized spice"
     if (game.crystal_spice.cmp(game.crystal_infusion_price) >= 0) {
         document.getElementById("crystal_cost_i").className = "crystal_cost"
+        document.getElementById("crystal_buy_i").className = "spice_buy can_buy"
     } else {
         document.getElementById("crystal_cost_i").className = "empty_cost"
+        document.getElementById("crystal_buy_i").className = "spice_buy"
+    }
+
+    if (game.reduce_flashing) {
+        let width =
+            (document.getElementById("crystal_buy_i").offsetWidth - 1) /
+                parseFloat(
+                    getComputedStyle(document.getElementById("crystal_buy_i"))[
+                        "font-size"
+                    ]
+                ) -
+            0.8
+
+        document.getElementById("crystal_buy_i").style.width = "auto"
+
+        let width2 =
+            (document.getElementById("crystal_buy_i").offsetWidth - 1) /
+                parseFloat(
+                    getComputedStyle(document.getElementById("crystal_buy_i"))[
+                        "font-size"
+                    ]
+                ) -
+            0.8
+
+        if (width2 > width) {
+            document.getElementById("crystal_buy_i").style.width =
+                width2 + 0.89 + "em"
+        } else {
+            document.getElementById("crystal_buy_i").style.width =
+                width + 0.89 + "em"
+        }
+    } else {
+        document.getElementById("crystal_buy_i").style.width = "auto"
     }
 
     if (
@@ -4185,6 +5096,64 @@ function ascension_update() {
                     ),
                     game.notation
                 ) + " μg rainbow spice for next ᚫ"
+
+        if (game.resource_efficiency && game.ascend_challenge === 0) {
+            document.getElementById("ascend_efficiency").style.display = "block"
+
+            let efficiency_str =
+                "Currently: +" +
+                format_dec(
+                    (amount / game.ascend_time_played) * 60,
+                    game.notation
+                ) +
+                " ᚫ/min"
+
+            if (game.ascend_bought[12]) {
+                switch (game.autoas_mode) {
+                    case 0:
+                        efficiency_str +=
+                            "<br>Peak: +" +
+                            format_dec(
+                                game.peak_ansuz_gain * 60,
+                                game.notation
+                            ) +
+                            " ᚫ/min at +" +
+                            format_num(game.peak_ansuz_amount, game.notation) +
+                            " ᚫ"
+                        break
+                    case 1:
+                        if (game.peak_ansuz_time < 1)
+                            efficiency_str +=
+                                "<br>Peak: +" +
+                                format_dec(
+                                    game.peak_ansuz_gain * 60,
+                                    game.notation
+                                ) +
+                                " ᚫ/min at " +
+                                game.peak_ansuz_time.toFixed(2) +
+                                "s"
+                        else
+                            efficiency_str +=
+                                "<br>Peak: +" +
+                                format_dec(
+                                    game.peak_ansuz_gain * 60,
+                                    game.notation
+                                ) +
+                                " ᚫ/min at " +
+                                format_dec(
+                                    game.peak_ansuz_time,
+                                    game.notation
+                                ) +
+                                "s"
+                        break
+                }
+            }
+
+            document.getElementById("ascend_efficiency").innerHTML =
+                efficiency_str
+        } else {
+            document.getElementById("ascend_efficiency").style.display = "none"
+        }
     } else {
         document.getElementById("ascend_button").className =
             "ascend_button a_locked"
@@ -4192,6 +5161,7 @@ function ascension_update() {
         document.getElementById("ascend_req").style.color = "grey"
         document.getElementById("ascend_req").innerHTML =
             format_idec(goal, game.notation) + " μg rainbow spice required"
+        document.getElementById("ascend_efficiency").style.display = "none"
     }
 
     document.getElementById("ansuz_num").innerHTML =
@@ -4754,7 +5724,17 @@ function ascension_update() {
             }
         }
 
-        if (game.ascend_bought[u.id]) {
+        let bought = true
+        if (game.reduce_flashing) {
+            if (!game.ascend_bought[u.id]) u.unbought++
+            else u.unbought = 0
+            if (u.unbought >= game.tickspeed / 2) bought = false
+        } else {
+            u.unbought = 0
+            if (!game.ascend_bought[u.id]) bought = false
+        }
+
+        if (bought) {
             button.className = "ascension_upgrade a_bought"
             if (u.challenge !== 0)
                 button.className = "ascension_upgrade ac_bought"
@@ -4867,6 +5847,14 @@ function ascension_update() {
         }
     } else {
         document.getElementById("ascend_auto_block").style.display = "none"
+    }
+
+    if (game.ascend_challenge !== 0) {
+        document.getElementById("exit_ascension_challenge").style.display =
+            "block"
+    } else {
+        document.getElementById("exit_ascension_challenge").style.display =
+            "none"
     }
 
     for (const c of ascension_challenge.challenges) {
@@ -5200,9 +6188,57 @@ function arcane_update() {
                 if (game.ansuz >= game.arcane_spice_price[gen.id]) {
                     document.getElementById("arcane_cost" + gen.id).className =
                         "rune_cost"
+                    document.getElementById("arcane_buy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("arcane_cost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("arcane_buy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("arcane_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "arcane_buy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById("arcane_buy" + gen.id).style.width =
+                        "auto"
+
+                    let width2 =
+                        (document.getElementById("arcane_buy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "arcane_buy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "arcane_buy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "arcane_buy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById("arcane_buy" + gen.id).style.width =
+                        "auto"
                 }
 
                 n = 3n - (game.arcane_spice_bought[gen.id] % 3n)
@@ -5215,9 +6251,59 @@ function arcane_update() {
                 if (game.ansuz >= price) {
                     document.getElementById("arcane_ucost" + gen.id).className =
                         "rune_cost"
+                    document.getElementById("arcane_ubuy" + gen.id).className =
+                        "spice_buy can_buy"
                 } else {
                     document.getElementById("arcane_ucost" + gen.id).className =
                         "empty_cost"
+                    document.getElementById("arcane_ubuy" + gen.id).className =
+                        "spice_buy"
+                }
+
+                if (game.reduce_flashing) {
+                    let width =
+                        (document.getElementById("arcane_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "arcane_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    document.getElementById(
+                        "arcane_ubuy" + gen.id
+                    ).style.width = "auto"
+
+                    let width2 =
+                        (document.getElementById("arcane_ubuy" + gen.id)
+                            .offsetWidth -
+                            1) /
+                            parseFloat(
+                                getComputedStyle(
+                                    document.getElementById(
+                                        "arcane_ubuy" + gen.id
+                                    )
+                                )["font-size"]
+                            ) -
+                        0.8
+
+                    if (width2 > width) {
+                        document.getElementById(
+                            "arcane_ubuy" + gen.id
+                        ).style.width = width2 + 0.89 + "em"
+                    } else {
+                        document.getElementById(
+                            "arcane_ubuy" + gen.id
+                        ).style.width = width + 0.89 + "em"
+                    }
+                } else {
+                    document.getElementById(
+                        "arcane_ubuy" + gen.id
+                    ).style.width = "auto"
                 }
 
                 if (game.arcane_unlocked[gen.id]) {
@@ -5290,8 +6376,43 @@ function arcane_update() {
             " ᚫ"
         if (game.ansuz >= game.arcane_strengthener_price) {
             document.getElementById("arcane_cost_s").className = "rune_cost"
+            document.getElementById("arcane_buy_s").className =
+                "spice_buy can_buy"
         } else {
             document.getElementById("arcane_cost_s").className = "empty_cost"
+            document.getElementById("arcane_buy_s").className = "spice_buy"
+        }
+
+        if (game.reduce_flashing) {
+            let width =
+                (document.getElementById("arcane_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(
+                            document.getElementById("arcane_buy_s")
+                        )["font-size"]
+                    ) -
+                0.8
+
+            document.getElementById("arcane_buy_s").style.width = "auto"
+
+            let width2 =
+                (document.getElementById("arcane_buy_s").offsetWidth - 1) /
+                    parseFloat(
+                        getComputedStyle(
+                            document.getElementById("arcane_buy_s")
+                        )["font-size"]
+                    ) -
+                0.8
+
+            if (width2 > width) {
+                document.getElementById("arcane_buy_s").style.width =
+                    width2 + 0.89 + "em"
+            } else {
+                document.getElementById("arcane_buy_s").style.width =
+                    width + 0.89 + "em"
+            }
+        } else {
+            document.getElementById("arcane_buy_s").style.width = "auto"
         }
     } else {
         document.getElementById("arcane_gen_s").style.display = "none"
@@ -5408,8 +6529,42 @@ function arcane_update() {
         " mg arcane spice"
     if (game.arcane_spice.cmp(game.arcane_enchantment_price) >= 0) {
         document.getElementById("arcane_cost_n").className = "arcane_cost"
+        document.getElementById("arcane_buy_n").className = "spice_buy can_buy"
     } else {
         document.getElementById("arcane_cost_n").className = "empty_cost"
+        document.getElementById("arcane_buy_n").className = "spice_buy"
+    }
+
+    if (game.reduce_flashing) {
+        let width =
+            (document.getElementById("arcane_buy_n").offsetWidth - 1) /
+                parseFloat(
+                    getComputedStyle(document.getElementById("arcane_buy_n"))[
+                        "font-size"
+                    ]
+                ) -
+            0.8
+
+        document.getElementById("arcane_buy_n").style.width = "auto"
+
+        let width2 =
+            (document.getElementById("arcane_buy_n").offsetWidth - 1) /
+                parseFloat(
+                    getComputedStyle(document.getElementById("arcane_buy_n"))[
+                        "font-size"
+                    ]
+                ) -
+            0.8
+
+        if (width2 > width) {
+            document.getElementById("arcane_buy_n").style.width =
+                width2 + 0.89 + "em"
+        } else {
+            document.getElementById("arcane_buy_n").style.width =
+                width + 0.89 + "em"
+        }
+    } else {
+        document.getElementById("arcane_buy_n").style.width = "auto"
     }
 
     if (game.arcane_max_unlocked) {
@@ -5662,6 +6817,69 @@ function collapse_update() {
             document.getElementById("collapse_req").innerHTML =
                 "Challenge 6 completed"
         }
+
+        if (game.resource_efficiency && game.collapse_challenge === 0) {
+            document.getElementById("collapse_efficiency").style.display =
+                "block"
+
+            let efficiency_str =
+                "Currently: +" +
+                format_idec(
+                    collapse_amount.div(game.collapse_time_played).mul(60),
+                    game.notation
+                ) +
+                " atomic spice/min"
+
+            if (game.research_complete[15] >= 1) {
+                switch (game.autoco_mode) {
+                    case 0:
+                        efficiency_str +=
+                            "<br>Peak: +" +
+                            format_idec(
+                                game.peak_atomic_gain.mul(60),
+                                game.notation
+                            ) +
+                            " atomic spice/min at +" +
+                            format_idec(
+                                game.peak_atomic_amount,
+                                game.notation
+                            ) +
+                            " atomic spice"
+                        break
+                    case 1:
+                        if (game.peak_atomic_time < 1)
+                            efficiency_str +=
+                                "<br>Peak: +" +
+                                format_idec(
+                                    game.peak_atomic_gain.mul(60),
+                                    game.notation
+                                ) +
+                                " atomic spice/min at " +
+                                game.peak_atomic_time.toFixed(2) +
+                                "s"
+                        else
+                            efficiency_str +=
+                                "<br>Peak: +" +
+                                format_idec(
+                                    game.peak_atomic_gain.mul(60),
+                                    game.notation
+                                ) +
+                                " atomic spice/min at " +
+                                format_dec(
+                                    game.peak_atomic_time,
+                                    game.notation
+                                ) +
+                                "s"
+                        break
+                }
+            }
+
+            document.getElementById("collapse_efficiency").innerHTML =
+                efficiency_str
+        } else {
+            document.getElementById("collapse_efficiency").style.display =
+                "none"
+        }
     } else {
         document.getElementById("collapse_button").className =
             "collapse_button co_locked"
@@ -5685,6 +6903,8 @@ function collapse_update() {
             document.getElementById("collapse_req").innerHTML =
                 "Challenge 6 required"
         }
+
+        document.getElementById("collapse_efficiency").style.display = "none"
     }
 
     document.getElementById("atomic_spice_num").innerHTML = format_inum(
@@ -6353,6 +7573,14 @@ function collapse_update() {
 
         document.getElementById("antispice").innerHTML = "LOCKED"
         document.getElementById("antispice").className = "subtab locked"
+    }
+
+    if (game.collapse_challenge !== 0) {
+        document.getElementById("exit_collapse_challenge").style.display =
+            "block"
+    } else {
+        document.getElementById("exit_collapse_challenge").style.display =
+            "none"
     }
 
     if (total_completions > 1) {
@@ -8281,9 +9509,14 @@ function research_update() {
                     .mul(16384)
                     .round()
             ) >= 0
-        )
+        ) {
             document.getElementById("research_cost").className = "atomic_cost"
-        else document.getElementById("research_cost").className = "empty_cost"
+            document.getElementById("research_upgrade").className =
+                "spice_buy can_buy"
+        } else {
+            document.getElementById("research_cost").className = "empty_cost"
+            document.getElementById("research_upgrade").className = "spice_buy"
+        }
     }
 }
 
@@ -8813,15 +10046,21 @@ function antispice_update() {
             format_num(game.total_rainbow_antispice, game.notation) +
             " rainbow antispice"
 
+        let total_bought = 0
+        for (let i = 0; i < 8; i++) {
+            if (game.antispice_bought[i]) total_bought++
+        }
+
+        if (total_bought >= 1 && !game.antispice_bought[8]) {
+            document.getElementById("refund_perks").style.display = "block"
+        } else {
+            document.getElementById("refund_perks").style.display = "none"
+        }
+
         for (const p of antispice_perk.perks) {
             let button = antispice_map.get(p)
             if (p.id !== 8)
                 document.getElementById("ap_desc" + p.id).innerHTML = p.desc
-
-            let total_bought = 0
-            for (let i = 0; i < 8; i++) {
-                if (game.antispice_bought[i]) total_bought++
-            }
 
             let price = p.price
             if (p.price === 0) {
