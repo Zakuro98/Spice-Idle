@@ -649,6 +649,9 @@ function max_all(color) {
         Math.log(a) ** 2 -
         196 * Math.log(10000) * Math.log(a) +
         4 * Math.log(10000) ** 2
+
+    let generators = 1
+    let budget = new Decimal(0)
     switch (color) {
         case "red":
             if (game.red_strengthener < 25) {
@@ -762,21 +765,45 @@ function max_all(color) {
                     }
                 }
             }
+            generators = 1
+            for (let i = 1; i < 6; i++) {
+                if (game.red_spice.cmp(game.red_spice_price[i]) >= 0)
+                    generators++
+            }
+            budget = game.red_spice.div(generators)
             for (let i = 5; i >= 0; i--) {
-                if (game.red_spice_bought[i] === 0n) buy_gen("red", i)
-                buy_until10("red", i)
+                let red_budget = budget
+                if (
+                    game.red_spice_bought[i] === 0n &&
+                    red_budget.cmp(game.red_spice_price[i]) >= 0
+                ) {
+                    game.red_spice = Decimal.max(
+                        game.red_spice.sub(game.red_spice_price[i]),
+                        0
+                    )
+                    red_budget = Decimal.max(
+                        red_budget.sub(game.red_spice_price[i]),
+                        0
+                    )
+                    game.red_spice_price[i] = game.red_spice_price[i].mul(1.2)
+                    game.red_spice_gen[i] = game.red_spice_gen[i].add(1)
+                    game.red_spice_bought[i] += 1n
+                }
                 let m = BigInt(
                     Math.floor(
                         new Decimal(1)
                             .sub(
-                                game.red_spice
+                                red_budget
                                     .mul(-0.2)
                                     .div(game.red_spice_price[i])
                             )
                             .log(10) / Math.log10(1.2)
                     )
                 )
-                if (game.red_spice_bought[i] >= 10n) m = (m / 10n) * 10n
+                if (game.red_spice_bought[i] + m >= 10n)
+                    m =
+                        ((game.red_spice_bought[i] + m) / 10n) * 10n -
+                        game.red_spice_bought[i]
                 if (m > 0n) {
                     let price = game.red_spice_price[i]
                         .mul(
@@ -932,21 +959,46 @@ function max_all(color) {
                     }
                 }
             }
+            generators = 1
+            for (let i = 1; i < 6; i++) {
+                if (game.yellow_spice.cmp(game.yellow_spice_price[i]) >= 0)
+                    generators++
+            }
+            budget = game.yellow_spice.div(generators)
             for (let i = 5; i >= 0; i--) {
-                if (game.yellow_spice_bought[i] === 0n) buy_gen("yellow", i)
-                buy_until10("yellow", i)
+                let yellow_budget = budget
+                if (
+                    game.yellow_spice_bought[i] === 0n &&
+                    yellow_budget.cmp(game.yellow_spice_price[i]) >= 0
+                ) {
+                    game.yellow_spice = Decimal.max(
+                        game.yellow_spice.sub(game.yellow_spice_price[i]),
+                        0
+                    )
+                    yellow_budget = Decimal.max(
+                        yellow_budget.sub(game.yellow_spice_price[i]),
+                        0
+                    )
+                    game.yellow_spice_price[i] =
+                        game.yellow_spice_price[i].mul(1.3)
+                    game.yellow_spice_gen[i] = game.yellow_spice_gen[i].add(1)
+                    game.yellow_spice_bought[i] += 1n
+                }
                 let m = BigInt(
                     Math.floor(
                         new Decimal(1)
                             .sub(
-                                game.yellow_spice
+                                yellow_budget
                                     .mul(-0.3)
                                     .div(game.yellow_spice_price[i])
                             )
                             .log(10) / Math.log10(1.3)
                     )
                 )
-                if (game.yellow_spice_bought[i] >= 10n) m = (m / 10n) * 10n
+                if (game.yellow_spice_bought[i] + m >= 10n)
+                    m =
+                        ((game.yellow_spice_bought[i] + m) / 10n) * 10n -
+                        game.yellow_spice_bought[i]
                 if (m > 0n) {
                     let price = game.yellow_spice_price[i]
                         .mul(
@@ -1103,21 +1155,46 @@ function max_all(color) {
                     }
                 }
             }
+            generators = 1
+            for (let i = 1; i < 6; i++) {
+                if (game.green_spice.cmp(game.green_spice_price[i]) >= 0)
+                    generators++
+            }
+            budget = game.green_spice.div(generators)
             for (let i = 5; i >= 0; i--) {
-                if (game.green_spice_bought[i] === 0n) buy_gen("green", i)
-                buy_until10("green", i)
+                let green_budget = budget
+                if (
+                    game.green_spice_bought[i] === 0n &&
+                    green_budget.cmp(game.green_spice_price[i]) >= 0
+                ) {
+                    game.green_spice = Decimal.max(
+                        game.green_spice.sub(game.green_spice_price[i]),
+                        0
+                    )
+                    green_budget = Decimal.max(
+                        green_budget.sub(game.green_spice_price[i]),
+                        0
+                    )
+                    game.green_spice_price[i] =
+                        game.green_spice_price[i].mul(1.4)
+                    game.green_spice_gen[i] = game.green_spice_gen[i].add(1)
+                    game.green_spice_bought[i] += 1n
+                }
                 let m = BigInt(
                     Math.floor(
                         new Decimal(1)
                             .sub(
-                                game.green_spice
+                                green_budget
                                     .mul(-0.4)
                                     .div(game.green_spice_price[i])
                             )
                             .log(10) / Math.log10(1.4)
                     )
                 )
-                if (game.green_spice_bought[i] >= 10n) m = (m / 10n) * 10n
+                if (game.green_spice_bought[i] + m >= 10n)
+                    m =
+                        ((game.green_spice_bought[i] + m) / 10n) * 10n -
+                        game.green_spice_bought[i]
                 if (m > 0n) {
                     let price = game.green_spice_price[i]
                         .mul(
@@ -1268,21 +1345,45 @@ function max_all(color) {
                     }
                 }
             }
+            generators = 1
+            for (let i = 1; i < 6; i++) {
+                if (game.blue_spice.cmp(game.blue_spice_price[i]) >= 0)
+                    generators++
+            }
+            budget = game.blue_spice.div(generators)
             for (let i = 5; i >= 0; i--) {
-                if (game.blue_spice_bought[i] === 0n) buy_gen("blue", i)
-                buy_until10("blue", i)
+                let blue_budget = budget
+                if (
+                    game.blue_spice_bought[i] === 0n &&
+                    blue_budget.cmp(game.blue_spice_price[i]) >= 0
+                ) {
+                    game.blue_spice = Decimal.max(
+                        game.blue_spice.sub(game.blue_spice_price[i]),
+                        0
+                    )
+                    blue_budget = Decimal.max(
+                        blue_budget.sub(game.blue_spice_price[i]),
+                        0
+                    )
+                    game.blue_spice_price[i] = game.blue_spice_price[i].mul(1.5)
+                    game.blue_spice_gen[i] = game.blue_spice_gen[i].add(1)
+                    game.blue_spice_bought[i] += 1n
+                }
                 let m = BigInt(
                     Math.floor(
                         new Decimal(1)
                             .sub(
-                                game.blue_spice
+                                blue_budget
                                     .mul(-0.5)
                                     .div(game.blue_spice_price[i])
                             )
                             .log(10) / Math.log10(1.5)
                     )
                 )
-                if (game.blue_spice_bought[i] >= 10n) m = (m / 10n) * 10n
+                if (game.blue_spice_bought[i] + m >= 10n)
+                    m =
+                        ((game.blue_spice_bought[i] + m) / 10n) * 10n -
+                        game.blue_spice_bought[i]
                 if (m > 0n) {
                     let price = game.blue_spice_price[i]
                         .mul(
@@ -1430,21 +1531,45 @@ function max_all(color) {
                     }
                 }
             }
+            generators = 1
+            for (let i = 1; i < 6; i++) {
+                if (game.pink_spice.cmp(game.pink_spice_price[i]) >= 0)
+                    generators++
+            }
+            budget = game.pink_spice.div(generators)
             for (let i = 5; i >= 0; i--) {
-                if (game.pink_spice_bought[i] === 0n) buy_gen("pink", i)
-                buy_until10("pink", i)
+                let pink_budget = budget
+                if (
+                    game.pink_spice_bought[i] === 0n &&
+                    pink_budget.cmp(game.pink_spice_price[i]) >= 0
+                ) {
+                    game.pink_spice = Decimal.max(
+                        game.pink_spice.sub(game.pink_spice_price[i]),
+                        0
+                    )
+                    pink_budget = Decimal.max(
+                        pink_budget.sub(game.pink_spice_price[i]),
+                        0
+                    )
+                    game.pink_spice_price[i] = game.pink_spice_price[i].mul(1.6)
+                    game.pink_spice_gen[i] = game.pink_spice_gen[i].add(1)
+                    game.pink_spice_bought[i] += 1n
+                }
                 let m = BigInt(
                     Math.floor(
                         new Decimal(1)
                             .sub(
-                                game.pink_spice
+                                pink_budget
                                     .mul(-0.6)
                                     .div(game.pink_spice_price[i])
                             )
                             .log(10) / Math.log10(1.6)
                     )
                 )
-                if (game.pink_spice_bought[i] >= 10n) m = (m / 10n) * 10n
+                if (game.pink_spice_bought[i] + m >= 10n)
+                    m =
+                        ((game.pink_spice_bought[i] + m) / 10n) * 10n -
+                        game.pink_spice_bought[i]
                 if (m > 0n) {
                     let price = game.pink_spice_price[i]
                         .mul(
@@ -1502,21 +1627,46 @@ function max_all(color) {
                     game.crystal_strengthener_price.mul(new Decimal(64).pow(n))
                 game.crystal_strengthener += n
             }
+            generators = 1
+            for (let i = 1; i < 6; i++) {
+                if (game.rainbow_spice.cmp(game.crystal_spice_price[i]) >= 0)
+                    generators++
+            }
+            budget = game.rainbow_spice.div(generators)
             for (let i = 5; i >= 0; i--) {
-                if (game.crystal_spice_bought[i] === 0n) buy_gen("crystal", i)
-                buy_until10("crystal", i)
+                let rainbow_budget = budget
+                if (
+                    game.crystal_spice_bought[i] === 0n &&
+                    rainbow_budget.cmp(game.crystal_spice_price[i]) >= 0
+                ) {
+                    game.rainbow_spice = Decimal.max(
+                        game.rainbow_spice.sub(game.crystal_spice_price[i]),
+                        0
+                    )
+                    rainbow_budget = Decimal.max(
+                        rainbow_budget.sub(game.crystal_spice_price[i]),
+                        0
+                    )
+                    game.crystal_spice_price[i] =
+                        game.crystal_spice_price[i].mul(2)
+                    game.crystal_spice_gen[i] = game.crystal_spice_gen[i].add(1)
+                    game.crystal_spice_bought[i] += 1n
+                }
                 let m = BigInt(
                     Math.floor(
                         new Decimal(1)
                             .sub(
-                                game.rainbow_spice
+                                rainbow_budget
                                     .mul(-1)
                                     .div(game.crystal_spice_price[i])
                             )
                             .log(10) / Math.log10(2)
                     )
                 )
-                if (game.crystal_spice_bought[i] >= 5n) m = (m / 5n) * 5n
+                if (game.crystal_spice_bought[i] + m >= 5n)
+                    m =
+                        ((game.crystal_spice_bought[i] + m) / 5n) * 5n -
+                        game.crystal_spice_bought[i]
                 if (m > 0) {
                     let price = game.crystal_spice_price[i]
                         .mul(
@@ -1595,17 +1745,42 @@ function max_all(color) {
                     if (game.autods_budget[i] < 0) game.autods_budget[i] = 0
                 }
             }
+            generators = 1
+            for (let i = 1; i < 6; i++) {
+                if (game.ansuz >= game.arcane_spice_price[i]) generators++
+            }
+            budget = Math.floor(game.ansuz / generators)
             for (let i = 5; i >= 0; i--) {
-                if (game.arcane_spice_bought[i] === 0n) buy_gen("arcane", i)
-                buy_until10("arcane", i)
+                let ansuz_budget = budget
+                if (
+                    game.arcane_spice_bought[i] === 0n &&
+                    ansuz_budget >= game.arcane_spice_price[i]
+                ) {
+                    game.ansuz = Math.max(
+                        game.ansuz - game.arcane_spice_price[i],
+                        0
+                    )
+                    ansuz_budget = Math.max(
+                        ansuz_budget - game.arcane_spice_price[i],
+                        0
+                    )
+                    game.arcane_spice_price[i] *= 1.1
+                    game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(1)
+                    game.arcane_spice_bought[i] += 1n
+                }
                 let m = BigInt(
                     Math.floor(
                         Math.log10(
-                            1 - (game.ansuz * -0.1) / game.arcane_spice_price[i]
+                            1 -
+                                (ansuz_budget * -0.1) /
+                                    game.arcane_spice_price[i]
                         ) / Math.log10(1.1)
                     )
                 )
-                if (game.arcane_spice_bought[i] >= 3n) m = (m / 3n) * 3n
+                if (game.arcane_spice_bought[i] + m >= 3n)
+                    m =
+                        ((game.arcane_spice_bought[i] + m) / 3n) * 3n -
+                        game.arcane_spice_bought[i]
                 if (m > 0n) {
                     let price = Math.round(
                         (game.arcane_spice_price[i] *
@@ -1636,17 +1811,18 @@ function max_all(color) {
             }
             break
         case "arcane_half":
-            let budget = game.ansuz / 2
+            let budget2 = game.ansuz / 2
             n = Math.floor(
-                Math.log10(1 - (budget * -7) / game.arcane_strengthener_price) /
-                    Math.log10(8)
+                Math.log10(
+                    1 - (budget2 * -7) / game.arcane_strengthener_price
+                ) / Math.log10(8)
             )
             if (n > 0) {
                 let price = Math.round(
                     (game.arcane_strengthener_price * (1 - 8 ** n)) / -7
                 )
                 game.ansuz = Math.max(game.ansuz - price, 0)
-                budget = Math.max(budget - price, 0)
+                budget2 = Math.max(budget2 - price, 0)
                 game.arcane_strengthener_price *= 8 ** n
                 game.arcane_strengthener += n
 
@@ -1688,21 +1864,28 @@ function max_all(color) {
                     if (game.autods_budget[i] < 0) game.autods_budget[i] = 0
                 }
             }
+            generators = 1
+            for (let i = 1; i < 6; i++) {
+                if (budget2 >= game.arcane_spice_price[i]) generators++
+            }
+            budget = Math.floor(budget2 / generators)
             for (let i = 5; i >= 0; i--) {
                 let temp_budget = budget
                 if (game.arcane_spice_bought[i] === 0n)
-                    temp_budget = buy_gen("arcane", i, budget)
-                if (temp_budget !== undefined) budget = temp_budget
-                temp_budget = buy_until10("arcane", i, budget)
-                if (temp_budget !== undefined) budget = temp_budget
+                    temp_budget = buy_gen("arcane", i, temp_budget)
                 let m = BigInt(
                     Math.floor(
                         Math.log10(
-                            1 - (budget * -0.1) / game.arcane_spice_price[i]
+                            1 -
+                                (temp_budget * -0.1) /
+                                    game.arcane_spice_price[i]
                         ) / Math.log10(1.1)
                     )
                 )
-                if (game.arcane_spice_bought[i] >= 3n) m = (m / 3n) * 3n
+                if (game.arcane_spice_bought[i] + m >= 3n)
+                    m =
+                        ((game.arcane_spice_bought[i] + m) / 3n) * 3n -
+                        game.arcane_spice_bought[i]
                 if (m > 0n) {
                     let price = Math.round(
                         (game.arcane_spice_price[i] *
@@ -1710,7 +1893,7 @@ function max_all(color) {
                             -0.1
                     )
                     game.ansuz = Math.max(game.ansuz - price, 0)
-                    budget = Math.max(budget - price, 0)
+                    temp_budget = Math.max(temp_budget - price, 0)
                     game.arcane_spice_price[i] *= 1.1 ** m.toString()
                     game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(
                         m.toString()
@@ -1783,25 +1966,32 @@ function max_all(color) {
                     }
                 }
             }
+            generators = 1
+            for (let i = 1; i < 6; i++) {
+                if (game.autods_budget[2] >= game.arcane_spice_price[i])
+                    generators++
+            }
+            budget = Math.floor(game.autods_budget[2] / generators)
             for (let i = 5; i >= 0; i--) {
-                let temp_budget = game.autods_budget[2]
-                if (game.arcane_spice_bought[i] === 0n)
-                    temp_budget = buy_gen("arcane", i, game.autods_budget[2])
-                if (temp_budget !== undefined)
-                    game.autods_budget[2] = temp_budget
-                temp_budget = buy_until10("arcane", i, game.autods_budget[2])
-                if (temp_budget !== undefined)
-                    game.autods_budget[2] = temp_budget
+                let temp_budget = budget
+                if (game.arcane_spice_bought[i] === 0n) {
+                    let old_budget = temp_budget
+                    temp_budget = buy_gen("arcane", i, temp_budget)
+                    game.autods_budget[2] -= old_budget - temp_budget
+                }
                 let m = BigInt(
                     Math.floor(
                         Math.log10(
                             1 -
-                                (game.autods_budget[2] * -0.1) /
+                                (temp_budget * -0.1) /
                                     game.arcane_spice_price[i]
                         ) / Math.log10(1.1)
                     )
                 )
-                if (game.arcane_spice_bought[i] >= 3n) m = (m / 3n) * 3n
+                if (game.arcane_spice_bought[i] >= 3n)
+                    m =
+                        ((game.arcane_spice_bought[i] + m) / 3n) * 3n -
+                        game.arcane_spice_bought[i]
                 if (m > 0n) {
                     let price = Math.round(
                         (game.arcane_spice_price[i] *
@@ -1809,6 +1999,7 @@ function max_all(color) {
                             -0.1
                     )
                     game.ansuz = Math.max(game.ansuz - price, 0)
+                    temp_budget = Math.max(temp_budget - price, 0)
                     game.autods_budget[2] = Math.max(
                         game.autods_budget[2] - price,
                         0
@@ -3124,7 +3315,12 @@ function activate_collider() {
     let rainbow_amount = (game.antitotal_spice[6].log(10) - 11300000) / 900000
     if (rainbow_amount < 0) rainbow_amount = 0
     if (rainbow_amount > 24) rainbow_amount = 24
-    let atomic_amount = (game.spent_atomic_spice[6].log(10) - 31320) / 1620
+    let atomic_amount =
+        (game.spent_atomic_spice[6]
+            .add(game.atomic_spice.mul(game.atomic_portion))
+            .log(10) -
+            31320) /
+        1620
     if (atomic_amount < 0) atomic_amount = 0
     if (atomic_amount > 24) atomic_amount = 24
 
@@ -3531,6 +3727,11 @@ function activate_collider() {
                     game.atomic_spice.mul(game.atomic_portion)
                 )
 
+                atomic_amount =
+                    (game.spent_atomic_spice[6].log(10) - 31320) / 1620
+                if (atomic_amount < 0) atomic_amount = 0
+                if (atomic_amount > 24) atomic_amount = 24
+
                 let old_total = game.total_rainbow_antispice
                 game.total_rainbow_antispice = Math.floor(
                     atomic_amount + rainbow_amount
@@ -3573,7 +3774,12 @@ function auto_collider() {
     let rainbow_amount = (game.antitotal_spice[6].log(10) - 11300000) / 900000
     if (rainbow_amount < 0) rainbow_amount = 0
     if (rainbow_amount > 24) rainbow_amount = 24
-    let atomic_amount2 = (game.spent_atomic_spice[6].log(10) - 31320) / 1620
+    let atomic_amount2 =
+        (game.spent_atomic_spice[6]
+            .add(game.atomic_spice.mul(game.atomic_portion))
+            .log(10) -
+            31320) /
+        1620
     if (atomic_amount2 < 0) atomic_amount2 = 0
     if (atomic_amount2 > 24) atomic_amount2 = 24
 
@@ -3783,12 +3989,6 @@ function auto_collider() {
                     (pink_gain.log(10) / 7.5) ** 0.8 * 7.5
                 )
             if (pink_gain.cmp(game.antispice[5]) === 1) highest_spice = 6
-            let atomic_amount2 =
-                (game.spent_atomic_spice[6].add(atomic_amount).log(10) -
-                    31320) /
-                1620
-            if (atomic_amount2 < 0) atomic_amount2 = 0
-            if (atomic_amount2 > 24) atomic_amount2 = 24
             let rainbow_gain = Math.floor(rainbow_amount + atomic_amount2)
             if (rainbow_gain > game.total_rainbow_antispice) highest_spice = 7
 
@@ -4012,6 +4212,11 @@ function auto_collider() {
                 game.spent_atomic_spice[6] =
                     game.spent_atomic_spice[6].add(atomic_amount)
 
+                atomic_amount2 =
+                    (game.spent_atomic_spice[6].log(10) - 31320) / 1620
+                if (atomic_amount2 < 0) atomic_amount2 = 0
+                if (atomic_amount2 > 24) atomic_amount2 = 24
+
                 let old_total = game.total_rainbow_antispice
                 game.total_rainbow_antispice = Math.floor(
                     atomic_amount2 + rainbow_amount
@@ -4163,6 +4368,12 @@ function refund_antispice_perks() {
             }
 
             collapse(true)
+
+            if (game.collapse_challenge === 9) {
+                game.gamespeed = 1 / 99999
+            } else {
+                game.gamespeed = 2 ** game.collapse_complete[2]
+            }
         }
     }
 }
