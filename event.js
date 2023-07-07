@@ -177,9 +177,9 @@ function buy_gen(color, id, budget) {
                         3,
                         arcane_bought.toString()
                     )
-
-                    return budget
                 }
+
+                return budget
             } else {
                 if (game.ansuz >= Math.round(game.arcane_spice_price[id])) {
                     game.ansuz = Math.max(
