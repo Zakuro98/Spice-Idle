@@ -639,6 +639,12 @@ main {
     margin-top: 0.25em;
 }
 
+#prestige_goal {
+    display: flex;
+    justify-content: right;
+    margin-top: 0.3em;
+}
+
 @media (pointer: coarse) {
     .prestige_header {
         flex-direction: column;
@@ -696,6 +702,14 @@ main {
     margin-right: 0.5em;
     text-align: right;
     display: inline;
+}
+
+#prestige_goal_text {
+    margin-top: 0.3em;
+}
+
+#prestige_goal_reset {
+    margin-right: 0em;
 }
 
 .input {
