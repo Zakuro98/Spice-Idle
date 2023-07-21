@@ -5052,6 +5052,7 @@ function delete_save() {
         game.prestige_time_played = 0
         game.prestige_amount_history = new Array(10).fill(-1)
         game.prestige_time_history = new Array(10).fill(-1)
+        game.prestige_real_time_history = new Array(10).fill(-1)
 
         prestige_upgrade.upgrades[0].price = new Decimal(1)
         prestige_upgrade.upgrades[2].price = new Decimal(2)
@@ -5094,6 +5095,8 @@ function delete_save() {
         game.ascend_time_played = 0
         game.ascend_amount_history = new Array(10).fill(-1)
         game.ascend_time_history = new Array(10).fill(-1)
+        game.ascend_real_time_history = new Array(10).fill(-1)
+        game.ascend_challenge_history = new Array(10).fill(-1)
 
         game.ascend_challenge = 0
         game.ascend_complete = new Array(6).fill(false)
@@ -5138,6 +5141,8 @@ function delete_save() {
         game.collapse_time_played = 0
         game.collapse_amount_history = new Array(10).fill(-1)
         game.collapse_time_history = new Array(10).fill(-1)
+        game.collapse_real_time_history = new Array(10).fill(-1)
+        game.collapse_challenge_history = new Array(10).fill(-1)
 
         game.collapse_challenge = 0
         game.collapse_complete = new Array(6).fill(0)
