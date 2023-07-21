@@ -787,8 +787,15 @@ function goto_subtab(id) {
 function notation(not) {
     if (not === undefined) {
         game.notation++
-        if (game.notation === 8) game.notation++
-        if (game.notation > 13) game.notation = 2
+        if (game.notation === 8) {
+            if (key.shift) game.notation = 16
+            else game.notation = 9
+        } else if (game.notation === 17) {
+            if (!key.shift) game.notation = 9
+        } else if (game.notation === 18) game.notation = 9
+        else if (game.notation === 12) game.notation = 14
+        else if (game.notation === 16) game.notation = 12
+        else if (game.notation === 14) game.notation = 2
     } else {
         game.notation = not
     }
@@ -834,6 +841,22 @@ function notation(not) {
         case 13:
             document.getElementById("notation").innerHTML =
                 "Notation<br>MIXED ENGINEERING"
+            break
+        case 14:
+            document.getElementById("notation").innerHTML =
+                "Notation<br>IMPERIAL"
+            break
+        case 15:
+            document.getElementById("notation").innerHTML = "Notation<br>RANDOM"
+            format_randomize()
+            break
+        case 16:
+            document.getElementById("notation").innerHTML =
+                "Notation<br>CANCER (STAGE 2️⃣)"
+            break
+        case 17:
+            document.getElementById("notation").innerHTML =
+                "Notation<br>🎀 ℭ𝓪ℕＣє𝐑 (ֆ𝓉αムᴇ 🥉) 🎀"
             break
     }
 }
