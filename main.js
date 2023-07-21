@@ -5005,7 +5005,18 @@ function export_save() {
 
 //importing a save file
 function import_save() {
-    let save_file = atob(prompt("Paste your exported save code here:"))
+    let input = prompt("Paste your exported save code here:")
+    if (input === "cancer2" || input === "stage2") {
+        notation(16)
+        return
+    }
+    if (input === "cancer3" || input === "stage3") {
+        notation(17)
+        return
+    }
+
+    let save_file = atob(input)
+
     let valid_json = true
     try {
         JSON.parse(save_file)
