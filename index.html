@@ -402,6 +402,14 @@
                                 </p>
                                 <input class="input" id="p_time_input" type="number" step="0.01" value="30" min="0.01">
                             </div>
+                            <div id="prestige_goal">
+                                <p id="prestige_goal_text" class="p_auto_text">
+                                    Current Auto-Prestige Goal: 10 color boosts
+                                </p>
+                                <button id="prestige_goal_reset" class="spice_buy" onclick="prestige_goal_reset()">
+                                    Reset
+                                </button>
+                            </div>
                         </div>
                         <p id="prestige_efficiency" class="reset_efficiency">
                             Currently: +0.000 μg rainbow spice/min
@@ -787,13 +795,13 @@
                 <div class="arcane_header">
                     <div class="arcane_panel">
                         <p id="arcane_spice_num" class="spice_num arcane_spice">
-                            0.000 g
+                            0.000 mg
                         </p>
                         <p class="spice_text arcane_spice">
                             arcane spice
                         </p>
                         <p id="arcane_spice_up" class="spice_up">
-                            +0.000 g arcane spice/sec
+                            +0.000 mg arcane spice/sec
                         </p>
                     </div>
                     <div class="ansuz_panel">
@@ -1357,13 +1365,15 @@
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.6.3<br>Made by Zakuro<br><br>Last updated July 7, 2023
+                Spice Idle v1.6.4<br>Made by Zakuro<br><br>Last updated July 21, 2023
             </p>
             <a href="changelog.html" target="_blank" class="info link">Changelog</a>
             <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
             <a href="https://discord.gg/fuQSBkYYqH" target="_blank" class="info link">Discord</a>
         </main>
         <script src="break_infinity.js" charset="utf-8" type="text/javascript"></script>
+        <script src="imperial.js" charset="utf-8" type="text/javascript"></script>
+        <script src="cancer.js" charset="utf-8" type="text/javascript"></script>
         <script src="format.js" charset="utf-8" type="text/javascript"></script>
         <script src="init.js" charset="utf-8" type="text/javascript"></script>
         <script src="settings.js" charset="utf-8" type="text/javascript"></script>
