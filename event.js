@@ -2626,6 +2626,12 @@ function max_infusion() {
     }
 }
 
+//reset dynamic auto-prestige goal
+function prestige_goal_reset() {
+    if (game.autopr_mode === 0) game.autopr_goal2[0] = 0
+    if (game.autopr_mode === 1) game.autopr_goal2[1] = new Decimal(1)
+}
+
 //convert runes
 function convert_rune(id, max, half) {
     if (game.ansuz >= 1) {
@@ -3030,8 +3036,9 @@ function enter_ascension_challenge(id) {
 //exiting an ascension challenge
 function exit_ascension_challenge() {
     if (game.ascend_challenge !== 0) {
+        let challenge = game.ascend_challenge
         game.ascend_challenge = 0
-        ascend(true)
+        ascend(true, challenge)
     }
 }
 
@@ -3313,15 +3320,19 @@ function activate_collider() {
         (game.antitotal_spice[5].log(10) / (3.75 * 10 ** 13)) ** 0.5
     )
     let rainbow_amount = (game.antitotal_spice[6].log(10) - 11300000) / 900000
-    if (rainbow_amount < 0) rainbow_amount = 0
+    if (rainbow_amount > 0.5)
+        rainbow_amount = ((rainbow_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+    else rainbow_amount = 0.5
     if (rainbow_amount > 24) rainbow_amount = 24
     let atomic_amount =
         (game.spent_atomic_spice[6]
             .add(game.atomic_spice.mul(game.atomic_portion))
             .log(10) -
-            31320) /
-        1620
-    if (atomic_amount < 0) atomic_amount = 0
+            30976) /
+        2048
+    if (atomic_amount > 0.5)
+        atomic_amount = ((atomic_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+    else atomic_amount = 0.5
     if (atomic_amount > 24) atomic_amount = 24
 
     let pending_amount = new Decimal(0)
@@ -3514,15 +3525,7 @@ function activate_collider() {
                     if (p > 30) p = 30
                     break
                 case 7:
-                    p += Math.floor(
-                        ((game.spent_atomic_spice[6]
-                            .add(game.atomic_spice.mul(game.atomic_portion))
-                            .log(10) -
-                            31320) /
-                            1620 +
-                            rainbow_amount) /
-                            2
-                    )
+                    p += Math.floor((atomic_amount + rainbow_amount) / 2)
                     if (p > 30) p = 30
                     break
             }
@@ -3728,8 +3731,11 @@ function activate_collider() {
                 )
 
                 atomic_amount =
-                    (game.spent_atomic_spice[6].log(10) - 31320) / 1620
-                if (atomic_amount < 0) atomic_amount = 0
+                    (game.spent_atomic_spice[6].log(10) - 30976) / 2048
+                if (atomic_amount > 0.5)
+                    atomic_amount =
+                        ((atomic_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+                else atomic_amount = 0.5
                 if (atomic_amount > 24) atomic_amount = 24
 
                 let old_total = game.total_rainbow_antispice
@@ -3772,15 +3778,19 @@ function auto_collider() {
         (game.antitotal_spice[5].log(10) / (3.75 * 10 ** 13)) ** 0.5
     )
     let rainbow_amount = (game.antitotal_spice[6].log(10) - 11300000) / 900000
-    if (rainbow_amount < 0) rainbow_amount = 0
+    if (rainbow_amount > 0.5)
+        rainbow_amount = ((rainbow_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+    else rainbow_amount = 0.5
     if (rainbow_amount > 24) rainbow_amount = 24
     let atomic_amount2 =
         (game.spent_atomic_spice[6]
             .add(game.atomic_spice.mul(game.atomic_portion))
             .log(10) -
-            31320) /
-        1620
-    if (atomic_amount2 < 0) atomic_amount2 = 0
+            30976) /
+        2048
+    if (atomic_amount2 > 0.5)
+        atomic_amount2 = ((atomic_amount2 - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+    else atomic_amount2 = 0.5
     if (atomic_amount2 > 24) atomic_amount2 = 24
 
     let pending_amount = new Decimal(0)
@@ -3933,7 +3943,11 @@ function auto_collider() {
                     10,
                     (basic_gain.log(10) / 420) ** 0.8 * 420
                 )
-            if (basic_gain.cmp(game.antispice[0]) === 1) highest_spice = 1
+            if (
+                basic_gain.cmp(game.antispice[0]) === 1 &&
+                game.research_complete[19] >= 1
+            )
+                highest_spice = 1
             let red_gain = game.spent_atomic_spice[1]
                 .add(atomic_amount)
                 .pow(game.atomic_efficiency / 320)
@@ -3944,7 +3958,11 @@ function auto_collider() {
                     10,
                     (red_gain.log(10) / 336) ** 0.8 * 336
                 )
-            if (red_gain.cmp(game.antispice[1]) === 1) highest_spice = 2
+            if (
+                red_gain.cmp(game.antispice[1]) === 1 &&
+                game.research_complete[21] >= 1
+            )
+                highest_spice = 2
             let yellow_gain = game.spent_atomic_spice[2]
                 .add(atomic_amount)
                 .pow(game.atomic_efficiency / 1000)
@@ -3955,7 +3973,11 @@ function auto_collider() {
                     10,
                     (yellow_gain.log(10) / 116) ** 0.8 * 116
                 )
-            if (yellow_gain.cmp(game.antispice[2]) === 1) highest_spice = 3
+            if (
+                yellow_gain.cmp(game.antispice[2]) === 1 &&
+                game.research_complete[24] >= 1
+            )
+                highest_spice = 3
             let green_gain = game.spent_atomic_spice[3]
                 .add(atomic_amount)
                 .pow(game.atomic_efficiency / 2575)
@@ -3966,7 +3988,11 @@ function auto_collider() {
                     10,
                     (green_gain.log(10) / 48) ** 0.8 * 48
                 )
-            if (green_gain.cmp(game.antispice[3]) === 1) highest_spice = 4
+            if (
+                green_gain.cmp(game.antispice[3]) === 1 &&
+                game.research_complete[27] >= 1
+            )
+                highest_spice = 4
             let blue_gain = game.spent_atomic_spice[4]
                 .add(atomic_amount)
                 .pow(game.atomic_efficiency / 4850)
@@ -3977,7 +4003,11 @@ function auto_collider() {
                     10,
                     (blue_gain.log(10) / 19) ** 0.8 * 19
                 )
-            if (blue_gain.cmp(game.antispice[4]) === 1) highest_spice = 5
+            if (
+                blue_gain.cmp(game.antispice[4]) === 1 &&
+                game.research_complete[30] >= 1
+            )
+                highest_spice = 5
             let pink_gain = game.spent_atomic_spice[5]
                 .add(atomic_amount)
                 .pow(game.atomic_efficiency / 16500)
@@ -3988,9 +4018,17 @@ function auto_collider() {
                     10,
                     (pink_gain.log(10) / 7.5) ** 0.8 * 7.5
                 )
-            if (pink_gain.cmp(game.antispice[5]) === 1) highest_spice = 6
+            if (
+                pink_gain.cmp(game.antispice[5]) === 1 &&
+                game.research_complete[33] >= 1
+            )
+                highest_spice = 6
             let rainbow_gain = Math.floor(rainbow_amount + atomic_amount2)
-            if (rainbow_gain > game.total_rainbow_antispice) highest_spice = 7
+            if (
+                rainbow_gain > game.total_rainbow_antispice &&
+                game.research_complete[37] >= 1
+            )
+                highest_spice = 7
 
             switch (highest_spice) {
                 case 0:
@@ -4213,8 +4251,11 @@ function auto_collider() {
                     game.spent_atomic_spice[6].add(atomic_amount)
 
                 atomic_amount2 =
-                    (game.spent_atomic_spice[6].log(10) - 31320) / 1620
-                if (atomic_amount2 < 0) atomic_amount2 = 0
+                    (game.spent_atomic_spice[6].log(10) - 30976) / 2048
+                if (atomic_amount2 > 0.5)
+                    atomic_amount2 =
+                        ((atomic_amount2 - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+                else atomic_amount2 = 0.5
                 if (atomic_amount2 > 24) atomic_amount2 = 24
 
                 let old_total = game.total_rainbow_antispice
@@ -4325,8 +4366,9 @@ function enter_collapse_challenge(id) {
 //exiting a collapse challenge
 function exit_collapse_challenge() {
     if (game.collapse_challenge !== 0) {
+        let challenge = game.collapse_challenge
         game.collapse_challenge = 0
-        collapse(true)
+        collapse(true, challenge)
     }
 }
 
