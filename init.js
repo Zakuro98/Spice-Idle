@@ -6,7 +6,7 @@ BigInt.prototype.toJSON = function () {
 
 //initializing game variables
 let game = {
-    version: "1.6.2",
+    version: "1.6.4",
 
     tickspeed: 100,
     gamespeed: 1,
@@ -238,6 +238,7 @@ let game = {
 
     prestige_amount_history: new Array(10).fill(-1),
     prestige_time_history: new Array(10).fill(-1),
+    prestige_real_time_history: new Array(10).fill(-1),
 
     crystal_spice: new Decimal(0),
     highest_crystal_spice: new Decimal(0),
@@ -307,6 +308,8 @@ let game = {
 
     ascend_amount_history: new Array(10).fill(-1),
     ascend_time_history: new Array(10).fill(-1),
+    ascend_real_time_history: new Array(10).fill(-1),
+    ascend_challenge_history: new Array(10).fill(-1),
 
     ascend_time_played: 0,
 
@@ -374,6 +377,8 @@ let game = {
 
     collapse_amount_history: new Array(10).fill(-1),
     collapse_time_history: new Array(10).fill(-1),
+    collapse_real_time_history: new Array(10).fill(-1),
+    collapse_challenge_history: new Array(10).fill(-1),
 
     collapse_time_played: 0,
 
@@ -525,28 +530,56 @@ let key = {
     x: false,
 }
 
-function format_small(num) {
+function format_small(num, not) {
+    if (not === undefined) not = game.notation
+
     if (typeof num === "bigint") {
         num = Number(num)
     }
 
     let expn = Math.floor(Math.log10(num))
-    if (num / 10 ** expn >= 9.9995 && expn >= 9) num = 10 ** (expn + 1)
+    if (num / 10 ** expn >= 9.9999995 && expn >= 9 && not !== 0)
+        num = 10 ** (expn + 1)
 
-    if (game.notation === 10) {
+    if (not === 10) {
         return format_num(num, 10)
-    } else if (game.notation === 11) {
+    } else if (not === 11) {
         return format_num(num, 11)
+    } else if (not === 14) {
+        return format_num(num, 14)
+    } else if (not === 15) {
+        let output = format_small(num, random_notation)
+        let output2 = output.replaceAll(
+            '<span style="text-decoration:overline">',
+            "("
+        )
+        output = output2.replaceAll("</span>", ")")
+
+        output2 = ""
+        let index = -1
+        for (let i = 0; i < output.length; i++) {
+            index = notation_charlist.indexOf(output[i])
+            if (index === -1) {
+                output2 += output[i]
+            } else {
+                output2 += random_charlist[index]
+            }
+        }
+
+        output = output2.replaceAll(
+            "(",
+            '<span style="text-decoration:overline">'
+        )
+        return output.replaceAll(")", "</span>")
+    } else if (not === 17) {
+        return format_cancer3(num, "number")
     } else {
-        if (
-            (game.notation === 2 && num >= 10 ** 9) ||
-            (game.notation === 12 && num >= 10 ** 36)
-        ) {
+        if ((not === 2 && num >= 10 ** 9) || (not === 12 && num >= 10 ** 36)) {
             let mantissa = num / 10 ** Math.floor(Math.log10(num))
             return mantissa.toFixed(6) + "e" + Math.floor(Math.log10(num))
         } else if (
-            (game.notation === 3 && num >= 10 ** 9) ||
-            (game.notation === 13 && num >= 10 ** 36)
+            (not === 3 && num >= 10 ** 9) ||
+            (not === 13 && num >= 10 ** 36)
         ) {
             let exponent = Math.floor(Math.log10(num) / 3) * 3
             let mantissa = num / 10 ** exponent
@@ -558,10 +591,8 @@ function format_small(num) {
                 return mantissa.toFixed(4) + "e" + exponent
             }
         } else if (
-            (game.notation === 4 && num >= 10 ** 9) ||
-            ((game.notation === 12 || game.notation === 13) &&
-                num >= 10 ** 9 &&
-                num < 10 ** 36)
+            (not === 4 && num >= 10 ** 9) ||
+            ((not === 12 || not === 13) && num >= 10 ** 9 && num < 10 ** 36)
         ) {
             const single_array_cond = [
                 "",
@@ -622,38 +653,10 @@ function format_small(num) {
             }
 
             return lead_str + " " + one_str + ten_str
-        } else if (game.notation === 5 && num >= 10 ** 9) {
+        } else if (not === 5 && num >= 10 ** 9) {
             return "e" + Math.log10(num).toFixed(6)
-        } else if (game.notation === 6 && num >= 10 ** 9) {
-            const alphabet = [
-                "A",
-                "B",
-                "C",
-                "D",
-                "E",
-                "F",
-                "G",
-                "H",
-                "I",
-                "J",
-                "K",
-                "L",
-                "M",
-                "N",
-                "O",
-                "P",
-                "Q",
-                "R",
-                "S",
-                "T",
-                "U",
-                "V",
-                "W",
-                "X",
-                "Y",
-                "Z",
-                "A",
-            ]
+        } else if (not === 6 && num >= 10 ** 9) {
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             let order = Math.floor(Math.log10(num) / 3) - 1
             let lead = num / 10 ** (3 * order + 3)
             let lead_str = ""
@@ -666,53 +669,29 @@ function format_small(num) {
             }
 
             output = lead_str + " "
-            order -= 1
-            if (order === 0) {
-                output += "A"
-            } else if (order > 0) {
+
+            if (order <= 26) {
+                output += alphabet[order - 1]
+            } else {
+                let letters = []
+                let remainder = 0
                 let index = 0
-                for (
-                    let i = Math.floor(Math.log(order) / Math.log(26));
-                    i >= 0;
-                    i--
-                ) {
-                    index = (Math.floor(order / 26 ** i) - 1) % 26
-                    if (i === 0) index += 1
-                    output += alphabet[index]
+                while (order > 26) {
+                    remainder = order % 26
+                    if (remainder === 0) index = 25
+                    else index = remainder - 1
+                    letters.push(alphabet[index])
+                    order = (order - remainder) / 26
+                    if (remainder === 0) order--
                 }
+                letters.push(alphabet[order - 1])
+                output += letters.reverse().join("")
             }
 
             return output
-        } else if (game.notation === 7 && num >= 10 ** 9) {
-            const cancer_alphabet = [
-                "😠",
-                "🎂",
-                "🎄",
-                "💀",
-                "🍆",
-                "🐱",
-                "🌈",
-                "💯",
-                "🍦",
-                "🎃",
-                "💋",
-                "😂",
-                "🌙",
-                "⛔",
-                "🐙",
-                "💩",
-                "❓",
-                "☢",
-                "🙈",
-                "👍",
-                "☂",
-                "✌",
-                "⚠",
-                "❌",
-                "😋",
-                "⚡",
-                "😠",
-            ]
+        } else if (not === 7 && num >= 10 ** 9) {
+            const cancer_alphabet =
+                "😠🎂🎄💀🍆🐱🌈💯🍦🎃💋😂🌙⛔🐙💩❓😡🙈👍🌂✌😩❌🪀⚡"
             let order = Math.floor(Math.log10(num) / 3) - 1
             let lead = num / 10 ** (3 * order + 3)
             let lead_str = ""
@@ -725,27 +704,32 @@ function format_small(num) {
             }
 
             output = lead_str
-            order -= 1
-            if (order === 0) {
-                output += "A"
-            } else if (order > 0) {
+
+            if (order <= 26) {
+                output += Array.from(cancer_alphabet)[order - 1]
+            } else {
+                let emoji = []
+                let remainder = 0
                 let index = 0
-                for (
-                    let i = Math.floor(Math.log(order) / Math.log(26));
-                    i >= 0;
-                    i--
-                ) {
-                    index = (Math.floor(order / 26 ** i) - 1) % 26
-                    if (i === 0) index += 1
-                    output += cancer_alphabet[index]
+                while (order > 26) {
+                    remainder = order % 26
+                    if (remainder === 0) index = 25
+                    else index = remainder - 1
+                    emoji.push(Array.from(cancer_alphabet)[index])
+                    order = (order - remainder) / 26
+                    if (remainder === 0) order--
                 }
+                emoji.push(Array.from(cancer_alphabet)[order - 1])
+                output += emoji.reverse().join("")
             }
 
             return output
-        } else if (game.notation === 9 && num >= 10 ** 9) {
+        } else if (not === 9 && num >= 10 ** 9) {
             let exponent =
                 Math.log(num) / Math.log(1.7976931348622053 * 10 ** 308)
             return exponent.toFixed(6) + "∞"
+        } else if (not === 16 && num >= 10 ** 9) {
+            return format_cancer2(num, 6)
         } else {
             return format_num(num, 0)
         }
