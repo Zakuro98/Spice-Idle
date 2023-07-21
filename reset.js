@@ -492,9 +492,14 @@ function prestige(override) {
             game.prestige_amount_history[i + 1] =
                 game.prestige_amount_history[i]
             game.prestige_time_history[i + 1] = game.prestige_time_history[i]
+            game.prestige_real_time_history[i + 1] =
+                game.prestige_real_time_history[i]
         }
         game.prestige_amount_history[0] = amount
         game.prestige_time_history[0] = game.prestige_time_played
+        if (game.real_time_played[1] !== game.prestige_time_played)
+            game.prestige_real_time_history[0] = game.real_time_played[1]
+        else game.prestige_real_time_history[0] = -1
 
         game.prestige_time_played = 0
         game.real_time_played[1] = 0
@@ -535,7 +540,7 @@ function prestige(override) {
 }
 
 //code for ascending
-function ascend(override) {
+function ascend(override, challenge) {
     let goal = Decimal.pow(2, 1024)
     if (game.ascend_challenge !== 0) {
         goal = ascension_challenge.challenges[game.ascend_challenge - 1].goal
@@ -663,9 +668,21 @@ function ascend(override) {
                 game.ascend_amount_history[i + 1] =
                     game.ascend_amount_history[i]
                 game.ascend_time_history[i + 1] = game.ascend_time_history[i]
+                game.ascend_real_time_history[i + 1] =
+                    game.ascend_real_time_history[i]
+                game.ascend_challenge_history[i + 1] =
+                    game.ascend_challenge_history[i]
             }
             game.ascend_amount_history[0] = amount
             game.ascend_time_history[0] = game.ascend_time_played
+            if (game.real_time_played[2] !== game.ascend_time_played)
+                game.ascend_real_time_history[0] = game.real_time_played[2]
+            else game.ascend_real_time_history[0] = -1
+            if (game.ascend_challenge !== 0)
+                game.ascend_challenge_history[0] = game.ascend_challenge
+            else if (challenge !== undefined)
+                game.ascend_challenge_history[0] = challenge
+            else game.ascend_challenge_history[0] = -1
 
             game.ascend_time_played = 0
             game.real_time_played[2] = 0
@@ -903,7 +920,7 @@ function ascend(override) {
 }
 
 //code for collapsing
-function collapse(override) {
+function collapse(override, challenge) {
     let amount = game.collapse_spice.pow(5 * 10 ** -10).floor()
 
     if (amount.cmp(Decimal.pow(10, 1800)) >= 0) {
@@ -924,7 +941,11 @@ function collapse(override) {
             .mul(Decimal.pow(10, 200))
     }
 
-    if (game.research_complete[5] >= 1 && game.collapse_challenge === 0) {
+    if (
+        game.research_complete[5] >= 1 &&
+        game.collapse_challenge === 0 &&
+        challenge === undefined
+    ) {
         let rune_amount = Decimal.pow(
             1.2,
             (game.total_rune_power / 10 ** 28) ** 0.2
@@ -944,7 +965,11 @@ function collapse(override) {
     for (let i = 0; i < 6; i++) {
         total_completions += game.collapse_complete[i]
     }
-    if (game.research_complete[22] >= 1 && game.collapse_challenge === 0)
+    if (
+        game.research_complete[22] >= 1 &&
+        game.collapse_challenge === 0 &&
+        challenge === undefined
+    )
         amount = amount.mul(Decimal.pow(888, total_completions))
 
     let goal = new Decimal(1)
@@ -1128,9 +1153,21 @@ function collapse(override) {
                     game.collapse_amount_history[i]
                 game.collapse_time_history[i + 1] =
                     game.collapse_time_history[i]
+                game.collapse_real_time_history[i + 1] =
+                    game.collapse_real_time_history[i]
+                game.collapse_challenge_history[i + 1] =
+                    game.collapse_challenge_history[i]
             }
             game.collapse_amount_history[0] = amount
             game.collapse_time_history[0] = game.collapse_time_played
+            if (game.real_time_played[3] !== game.collapse_time_played)
+                game.collapse_real_time_history[0] = game.real_time_played[3]
+            else game.collapse_real_time_history[0] = -1
+            if (game.collapse_challenge !== 0)
+                game.collapse_challenge_history[0] = game.collapse_challenge
+            else if (challenge !== undefined)
+                game.collapse_challenge_history[0] = challenge
+            else game.collapse_challenge_history[0] = -1
 
             let old_time = game.real_time_played[3]
             game.collapse_time_played = 0
