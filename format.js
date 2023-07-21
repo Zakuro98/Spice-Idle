@@ -1,3 +1,27 @@
+const notation_options = [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14]
+const exponent_options = [0, 2, 3, 4]
+let random_notation = notation_options[Math.floor(Math.random() * 12)]
+let random_exponent = exponent_options[Math.floor(Math.random() * 4)]
+const notation_charlist =
+    "0123456789,.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-∞·:∴∷⁙↑+/^!?%&μ#"
+let random_charlist = notation_charlist
+    .split("")
+    .sort(function () {
+        return 0.5 - Math.random()
+    })
+    .join("")
+
+function format_randomize() {
+    random_notation = notation_options[Math.floor(Math.random() * 12)]
+    random_exponent = exponent_options[Math.floor(Math.random() * 4)]
+    random_charlist = notation_charlist
+        .split("")
+        .sort(function () {
+            return 0.5 - Math.random()
+        })
+        .join("")
+}
+
 function format_num(num, not, nospace) {
     let negative = false
     let cutoff = 1000000
@@ -10,7 +34,8 @@ function format_num(num, not, nospace) {
     }
 
     let expn = Math.floor(Math.log10(num))
-    if (num / 10 ** expn >= 9.9995 && expn >= 6) num = 10 ** (expn + 1)
+    if (num / 10 ** expn >= 9.9995 && expn >= 6 && not !== 0)
+        num = 10 ** (expn + 1)
 
     let output = ""
     if (typeof num === "bigint") {
@@ -203,35 +228,7 @@ function format_num(num, not, nospace) {
                 output = "e" + exponent3.toFixed(3)
                 break
             case 6:
-                const alphabet = [
-                    "A",
-                    "B",
-                    "C",
-                    "D",
-                    "E",
-                    "F",
-                    "G",
-                    "H",
-                    "I",
-                    "J",
-                    "K",
-                    "L",
-                    "M",
-                    "N",
-                    "O",
-                    "P",
-                    "Q",
-                    "R",
-                    "S",
-                    "T",
-                    "U",
-                    "V",
-                    "W",
-                    "X",
-                    "Y",
-                    "Z",
-                    "A",
-                ]
+                const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 let order3 = Math.floor(Math.log10(num) / 3) - 1
                 let lead3 = num / 10 ** (3 * order3 + 3)
                 let lead_str3 = ""
@@ -244,52 +241,28 @@ function format_num(num, not, nospace) {
                 }
 
                 output = lead_str3 + " "
-                order3 -= 1
-                if (order3 === 0) {
-                    output += "A"
-                } else if (order3 > 0) {
+
+                if (order3 <= 26) {
+                    output += alphabet[order3 - 1]
+                } else {
+                    let letters = []
+                    let remainder = 0
                     let index = 0
-                    for (
-                        let i = Math.floor(Math.log(order3) / Math.log(26));
-                        i >= 0;
-                        i--
-                    ) {
-                        index = (Math.floor(order3 / 26 ** i) - 1) % 26
-                        if (i === 0) index += 1
-                        output += alphabet[index]
+                    while (order3 > 26) {
+                        remainder = order3 % 26
+                        if (remainder === 0) index = 25
+                        else index = remainder - 1
+                        letters.push(alphabet[index])
+                        order3 = (order3 - remainder) / 26
+                        if (remainder === 0) order3--
                     }
+                    letters.push(alphabet[order3 - 1])
+                    output += letters.reverse().join("")
                 }
                 break
             case 7:
-                const cancer_alphabet = [
-                    "😠",
-                    "🎂",
-                    "🎄",
-                    "💀",
-                    "🍆",
-                    "🐱",
-                    "🌈",
-                    "💯",
-                    "🍦",
-                    "🎃",
-                    "💋",
-                    "😂",
-                    "🌙",
-                    "⛔",
-                    "🐙",
-                    "💩",
-                    "❓",
-                    "☢",
-                    "🙈",
-                    "👍",
-                    "☂",
-                    "✌",
-                    "⚠",
-                    "❌",
-                    "😋",
-                    "⚡",
-                    "😠",
-                ]
+                const cancer_alphabet =
+                    "😠🎂🎄💀🍆🐱🌈💯🍦🎃💋😂🌙⛔🐙💩❓😡🙈👍🌂✌😩❌🪀⚡"
                 let order4 = Math.floor(Math.log10(num) / 3) - 1
                 let lead4 = num / 10 ** (3 * order4 + 3)
                 let lead_str4 = ""
@@ -302,26 +275,32 @@ function format_num(num, not, nospace) {
                 }
 
                 output = lead_str4
-                order4 -= 1
-                if (order4 === 0) {
-                    output += "😠"
-                } else if (order4 > 0) {
+
+                if (order4 <= 26) {
+                    output += Array.from(cancer_alphabet)[order4 - 1]
+                } else {
+                    let emoji = []
+                    let remainder2 = 0
                     let index2 = 0
-                    for (
-                        let i = Math.floor(Math.log(order4) / Math.log(26));
-                        i >= 0;
-                        i--
-                    ) {
-                        index2 = (Math.floor(order4 / 26 ** i) - 1) % 26
-                        if (i === 0) index2 += 1
-                        output += cancer_alphabet[index2]
+                    while (order4 > 26) {
+                        remainder2 = order4 % 26
+                        if (remainder2 === 0) index2 = 25
+                        else index2 = remainder2 - 1
+                        emoji.push(Array.from(cancer_alphabet)[index2])
+                        order4 = (order4 - remainder2) / 26
+                        if (remainder2 === 0) order4--
                     }
+                    emoji.push(Array.from(cancer_alphabet)[order4 - 1])
+                    output += emoji.reverse().join("")
                 }
                 break
             case 9:
                 let exponent4 =
                     Math.log(num) / Math.log(1.7976931348622053 * 10 ** 308)
                 output = exponent4.toFixed(3) + "∞"
+                break
+            case 16:
+                output = format_cancer2(num)
                 break
         }
     }
@@ -457,77 +436,13 @@ function format_num(num, not, nospace) {
         if (output === "") output = "0"
     }
     if (not === 11) {
-        const char_array = [
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F",
-            "G",
-            "H",
-            "I",
-            "J",
-            "K",
-            "L",
-            "M",
-            "N",
-            "O",
-            "P",
-            "Q",
-            "R",
-            "S",
-            "T",
-            "U",
-            "V",
-            "W",
-            "X",
-            "Y",
-            "Z",
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i",
-            "j",
-            "k",
-            "l",
-            "m",
-            "n",
-            "o",
-            "p",
-            "q",
-            "r",
-            "s",
-            "t",
-            "u",
-            "v",
-            "w",
-            "x",
-            "y",
-            "z",
-            "+",
-            "/",
-        ]
+        const char_array =
+            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/"
         output = ""
 
         let exponent = Math.floor(Math.log(num) / Math.log(64))
 
-        if (num >= cutoff) {
+        if (num >= 64 ** Math.log10(cutoff)) {
             output =
                 char_array[Math.floor(num / 64 ** exponent)] +
                 "." +
@@ -544,6 +459,35 @@ function format_num(num, not, nospace) {
         }
 
         if (output === "") output = "0"
+    }
+    if (not === 14) {
+        output = format_imperial(num, "number")
+    }
+    if (not === 15) {
+        output = format_num(num, random_notation)
+        let output2 = output.replaceAll(
+            '<span style="text-decoration:overline">',
+            "("
+        )
+        output = output2.replaceAll("</span>", ")")
+
+        output2 = ""
+        let index = -1
+        for (let i = 0; i < output.length; i++) {
+            index = notation_charlist.indexOf(output[i])
+            if (index === -1) {
+                output2 += output[i]
+            } else {
+                output2 += random_charlist[index]
+            }
+        }
+
+        output = output2.replaceAll(
+            "(",
+            '<span style="text-decoration:overline">'
+        )
+        output2 = output.replaceAll(")", "</span>")
+        output = output2
     }
     if ((not === 12 || not === 13) && num < 10 ** 36 && num >= cutoff) {
         const single_array_cond = [
@@ -628,6 +572,9 @@ function format_num(num, not, nospace) {
     if (negative) {
         output = "-" + output
     }
+    if (not === 17) {
+        output = format_cancer3(num, "number")
+    }
     if (not === 8) {
         output = "???"
     }
@@ -646,7 +593,11 @@ function format_inf(num, not, enot) {
     }
 
     let expn = Math.floor(num.log(10))
-    if (num.div(Decimal.pow(10, expn)).cmp(9.9995) >= 0 && expn >= 6)
+    if (
+        num.div(Decimal.pow(10, expn)).cmp(9.9995) >= 0 &&
+        expn >= 6 &&
+        not !== 0
+    )
         num = Decimal.pow(10, expn + 1)
 
     let output = ""
@@ -1375,35 +1326,7 @@ function format_inf(num, not, enot) {
                 }
                 break
             case 6:
-                const alphabet = [
-                    "A",
-                    "B",
-                    "C",
-                    "D",
-                    "E",
-                    "F",
-                    "G",
-                    "H",
-                    "I",
-                    "J",
-                    "K",
-                    "L",
-                    "M",
-                    "N",
-                    "O",
-                    "P",
-                    "Q",
-                    "R",
-                    "S",
-                    "T",
-                    "U",
-                    "V",
-                    "W",
-                    "X",
-                    "Y",
-                    "Z",
-                    "A",
-                ]
+                const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 let order3 = Math.floor(num.exponent / 3) - 1
                 let lead3 = num
                     .div(new Decimal(10).pow(3 * order3 + 3))
@@ -1418,52 +1341,28 @@ function format_inf(num, not, enot) {
                 }
 
                 output = lead_str3 + " "
-                order3 -= 1
-                if (order3 === 0) {
-                    output += "A"
-                } else if (order3 > 0) {
+
+                if (order3 <= 26) {
+                    output += alphabet[order3 - 1]
+                } else {
+                    let letters = []
+                    let remainder = 0
                     let index = 0
-                    for (
-                        let i = Math.floor(Math.log(order3) / Math.log(26));
-                        i >= 0;
-                        i--
-                    ) {
-                        index = (Math.floor(order3 / 26 ** i) - 1) % 26
-                        if (i === 0) index += 1
-                        output += alphabet[index]
+                    while (order3 > 26) {
+                        remainder = order3 % 26
+                        if (remainder === 0) index = 25
+                        else index = remainder - 1
+                        letters.push(alphabet[index])
+                        order3 = (order3 - remainder) / 26
+                        if (remainder === 0) order3--
                     }
+                    letters.push(alphabet[order3 - 1])
+                    output += letters.reverse().join("")
                 }
                 break
             case 7:
-                const cancer_alphabet = [
-                    "😠",
-                    "🎂",
-                    "🎄",
-                    "💀",
-                    "🍆",
-                    "🐱",
-                    "🌈",
-                    "💯",
-                    "🍦",
-                    "🎃",
-                    "💋",
-                    "😂",
-                    "🌙",
-                    "⛔",
-                    "🐙",
-                    "💩",
-                    "❓",
-                    "☢",
-                    "🙈",
-                    "👍",
-                    "☂",
-                    "✌",
-                    "⚠",
-                    "❌",
-                    "😋",
-                    "⚡",
-                    "😠",
-                ]
+                const cancer_alphabet =
+                    "😠🎂🎄💀🍆🐱🌈💯🍦🎃💋😂🌙⛔🐙💩❓😡🙈👍🌂✌😩❌🪀⚡"
                 let order4 = Math.floor(num.exponent / 3) - 1
                 let lead4 = num
                     .div(new Decimal(10).pow(3 * order4 + 3))
@@ -1478,20 +1377,23 @@ function format_inf(num, not, enot) {
                 }
 
                 output = lead_str4
-                order4 -= 1
-                if (order4 === 0) {
-                    output += "😠"
-                } else if (order4 > 0) {
+
+                if (order4 <= 26) {
+                    output += Array.from(cancer_alphabet)[order4 - 1]
+                } else {
+                    let emoji = []
+                    let remainder2 = 0
                     let index2 = 0
-                    for (
-                        let i = Math.floor(Math.log(order4) / Math.log(26));
-                        i >= 0;
-                        i--
-                    ) {
-                        index2 = (Math.floor(order4 / 26 ** i) - 1) % 26
-                        if (i === 0) index2 += 1
-                        output += cancer_alphabet[index2]
+                    while (order4 > 26) {
+                        remainder2 = order4 % 26
+                        if (remainder2 === 0) index2 = 25
+                        else index2 = remainder2 - 1
+                        emoji.push(Array.from(cancer_alphabet)[index2])
+                        order4 = (order4 - remainder2) / 26
+                        if (remainder2 === 0) order4--
                     }
+                    emoji.push(Array.from(cancer_alphabet)[order4 - 1])
+                    output += emoji.reverse().join("")
                 }
                 break
             case 9:
@@ -1507,6 +1409,9 @@ function format_inf(num, not, enot) {
                 } else {
                     output = format_num(exponent4, enot, true) + "∞"
                 }
+                break
+            case 16:
+                output = format_cancer2(num)
                 break
         }
     }
@@ -1644,77 +1549,13 @@ function format_inf(num, not, enot) {
         if (output === "") output = "0"
     }
     if (not === 11) {
-        const char_array = [
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F",
-            "G",
-            "H",
-            "I",
-            "J",
-            "K",
-            "L",
-            "M",
-            "N",
-            "O",
-            "P",
-            "Q",
-            "R",
-            "S",
-            "T",
-            "U",
-            "V",
-            "W",
-            "X",
-            "Y",
-            "Z",
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i",
-            "j",
-            "k",
-            "l",
-            "m",
-            "n",
-            "o",
-            "p",
-            "q",
-            "r",
-            "s",
-            "t",
-            "u",
-            "v",
-            "w",
-            "x",
-            "y",
-            "z",
-            "+",
-            "/",
-        ]
+        const char_array =
+            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/"
         output = ""
 
         let exponent = Math.floor(num.log(64))
 
-        if (num.cmp(cutoff) === 1 || num.cmp(cutoff) === 0) {
+        if (num.cmp(Decimal.pow(64, Math.log10(cutoff))) >= 0) {
             output =
                 char_array[
                     Math.floor(
@@ -1738,10 +1579,7 @@ function format_inf(num, not, enot) {
                     ) % 64
                 ] +
                 "^"
-            let exponent2 = Math.floor(Math.log(exponent) / Math.log(64))
-            for (let i = exponent2; i >= 0; i--) {
-                output += char_array[Math.floor(exponent / 64 ** i) % 64]
-            }
+            output += format_num(exponent, 11)
         } else {
             let num2 = num.toNumber()
             for (let i = exponent; i >= 0; i--) {
@@ -1750,6 +1588,35 @@ function format_inf(num, not, enot) {
         }
 
         if (output === "") output = "0"
+    }
+    if (not === 14) {
+        output = format_imperial(num, "number")
+    }
+    if (not === 15) {
+        output = format_inf(num, random_notation, random_exponent)
+        let output2 = output.replaceAll(
+            '<span style="text-decoration:overline">',
+            "("
+        )
+        output = output2.replaceAll("</span>", ")")
+
+        output2 = ""
+        let index = -1
+        for (let i = 0; i < output.length; i++) {
+            index = notation_charlist.indexOf(output[i])
+            if (index === -1) {
+                output2 += output[i]
+            } else {
+                output2 += random_charlist[index]
+            }
+        }
+
+        output = output2.replaceAll(
+            "(",
+            '<span style="text-decoration:overline">'
+        )
+        output2 = output.replaceAll(")", "</span>")
+        output = output2
     }
     if (
         (not === 12 || not === 13) &&
@@ -1855,8 +1722,17 @@ function format_inf(num, not, enot) {
             }
         }
     }
+    if (
+        num.cmp(Decimal.pow(10, 1.7976931348622053 * 10 ** 308)) >= 0 &&
+        not !== 9
+    ) {
+        output = "∞"
+    }
     if (negative) {
         output = "-" + output
+    }
+    if (not === 17) {
+        output = format_cancer3(num, "number")
     }
     if (not === 8) {
         output = "???"
@@ -1903,72 +1779,8 @@ function format_dec(num, not) {
         if (num >= 64 ** 2) {
             return format_num(Math.round(num), not)
         } else {
-            const char_array = [
-                "0",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "A",
-                "B",
-                "C",
-                "D",
-                "E",
-                "F",
-                "G",
-                "H",
-                "I",
-                "J",
-                "K",
-                "L",
-                "M",
-                "N",
-                "O",
-                "P",
-                "Q",
-                "R",
-                "S",
-                "T",
-                "U",
-                "V",
-                "W",
-                "X",
-                "Y",
-                "Z",
-                "a",
-                "b",
-                "c",
-                "d",
-                "e",
-                "f",
-                "g",
-                "h",
-                "i",
-                "j",
-                "k",
-                "l",
-                "m",
-                "n",
-                "o",
-                "p",
-                "q",
-                "r",
-                "s",
-                "t",
-                "u",
-                "v",
-                "w",
-                "x",
-                "y",
-                "z",
-                "+",
-                "/",
-            ]
+            const char_array =
+                "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/"
             output = ""
 
             let exponent = Math.floor(Math.log(num) / Math.log(64))
@@ -1991,6 +1803,35 @@ function format_dec(num, not) {
 
             return output
         }
+    } else if (not === 14) {
+        return format_imperial(num, "decimal")
+    } else if (not === 15) {
+        let output = format_dec(num, random_notation)
+        let output2 = output.replaceAll(
+            '<span style="text-decoration:overline">',
+            "("
+        )
+        output = output2.replaceAll("</span>", ")")
+
+        output2 = ""
+        let index = -1
+        for (let i = 0; i < output.length; i++) {
+            index = notation_charlist.indexOf(output[i])
+            if (index === -1) {
+                output2 += output[i]
+            } else {
+                output2 += random_charlist[index]
+            }
+        }
+
+        output = output2.replaceAll(
+            "(",
+            '<span style="text-decoration:overline">'
+        )
+        output2 = output.replaceAll(")", "</span>")
+        return output2
+    } else if (not === 17) {
+        return format_cancer3(num, "decimal")
     } else {
         if (num >= 100) {
             return format_num(Math.round(num), not)
@@ -2019,115 +1860,147 @@ function format_infdec(num, not, enot) {
 }
 
 function format_time(input, not, precise) {
-    if (not === undefined) not = 0
+    if (not === undefined) not = 2
+    let true_not = not
+    if (not === 15) not = random_notation
+    if (not === 14) not = 2
 
     var time = input
+    if (time < 0) time = 0
     let output = undefined
     if (time < 1) {
         if (precise) {
             if (time < 10 ** -6) {
-                output = format_dec(time * 10 ** 9, 0) + "ns"
+                output = format_dec(time * 10 ** 9, not) + "ns"
             } else if (time < 0.001) {
-                output = format_dec(time * 1000000, 0) + "μs"
+                output = format_dec(time * 1000000, not) + "μs"
             } else {
-                output = format_dec(time * 1000, 0) + "ms"
+                output = format_dec(time * 1000, not) + "ms"
             }
         } else {
-            output = time.toFixed(3) + "s"
+            output = format_dec(time, not) + "s"
         }
-    } else if (time < 10) {
-        output = time.toFixed(2) + "s"
     } else if (time < 60) {
-        output = time.toFixed(1) + "s"
+        output = format_dec(time, not) + "s"
     } else if (time < 3600) {
         let colon = ":"
-        if (time % 60 < 10) colon = ":0"
-        output = Math.floor(time / 60) + colon + (Math.floor(time) % 60)
+        if (time % 60 < 10 && not !== 10 && not !== 11)
+            colon = ":" + format_small(0, not)
+        output =
+            format_num(Math.floor(time / 60), not) +
+            colon +
+            format_num(Math.floor(time) % 60, not)
     } else if (time < 360000) {
         let colon1 = ":"
         let colon2 = ":"
-        if (Math.floor(time / 60) % 60 < 10) colon1 = ":0"
-        if (time % 60 < 10) colon2 = ":0"
+        if (Math.floor(time / 60) % 60 < 10 && not !== 10 && not !== 11)
+            colon1 = ":" + format_small(0, not)
+        if (time % 60 < 10 && not !== 10 && not !== 11)
+            colon2 = ":" + format_small(0, not)
         output =
-            Math.floor(time / 3600) +
+            format_num(Math.floor(time / 3600), not) +
             colon1 +
-            (Math.floor(time / 60) % 60) +
+            format_num(Math.floor(time / 60) % 60, not) +
             colon2 +
-            (Math.floor(time) % 60)
+            format_num(Math.floor(time) % 60, not)
     } else if (time < 31536000) {
-        output = format_dec(time / 86400, 0) + "d"
+        output = format_dec(time / 86400, not) + "d"
     } else {
-        output = format_dec(time / 31536000, game.notation) + "yr"
+        output = format_dec(time / 31536000, not) + "yr"
     }
 
+    if (true_not === 15) {
+        let output2 = output.replaceAll(
+            '<span style="text-decoration:overline">',
+            "("
+        )
+        output = output2.replaceAll("</span>", ")")
+
+        output2 = ""
+        let index = -1
+        for (let i = 0; i < output.length; i++) {
+            index = notation_charlist.indexOf(output[i])
+            if (index === -1) {
+                output2 += output[i]
+            } else {
+                output2 += random_charlist[index]
+            }
+        }
+
+        output = output2.replaceAll(
+            "(",
+            '<span style="text-decoration:overline">'
+        )
+        output2 = output.replaceAll(")", "</span>")
+        output = output2
+    }
+
+    if (not === 17) output = format_time_cancer(time, precise)
     if (not === 8) output = "???"
     return output
 }
 
-function format_time_long(input, not, precise) {
-    if (not === undefined) not = 0
+function format_time_long(input, not, speed, precise) {
+    if (not === undefined) not = 2
+    if (speed === undefined) speed = 1
 
     var time = input
+    if (time < 0) time = 0
     let output = undefined
-    if (time < 1) {
+    if (time < 1 && speed < 480) {
         if (precise) {
             if (time < 10 ** -6) {
-                output = format_dec(time * 10 ** 9, 0) + " nanoseconds"
+                output = format_dec(time * 10 ** 9, not) + " nanoseconds"
             } else if (time < 0.001) {
-                output = format_dec(time * 1000000, 0) + " microseconds"
+                output = format_dec(time * 1000000, not) + " microseconds"
             } else {
-                output = format_dec(time * 1000, 0) + " milliseconds"
+                output = format_dec(time * 1000, not) + " milliseconds"
             }
         } else {
-            output = time.toFixed(3) + " seconds"
+            output = format_dec(time, not) + " seconds"
         }
-    } else if (time < 10) {
-        output = time.toFixed(2) + " seconds"
-    } else if (time < 60) {
-        output = time.toFixed(1) + " seconds"
-    } else if (time < 3600) {
-        if (Math.floor(time) % 60 !== 0)
+    } else if (time < 60 && speed < 480) {
+        output = format_dec(time, not) + " seconds"
+    } else if (time < 3600 && speed < 14400) {
+        if (Math.floor(time) % 60 !== 0 && speed < 480)
             output =
-                Math.floor(time / 60) +
+                format_num(Math.floor(time / 60), not) +
                 " minutes, " +
-                (Math.floor(time) % 60) +
+                format_num(Math.floor(time) % 60, not) +
                 " seconds"
-        else output = Math.floor(time / 60) + " minutes"
-    } else if (time < 86400) {
-        output = Math.floor(time / 3600) + " hours"
-        if (Math.floor(time / 60) % 60 !== 0)
-            output += ", " + (Math.floor(time / 60) % 60) + " minutes"
-        if (Math.floor(time) % 60 !== 0)
-            output += ", " + (Math.floor(time) % 60) + " seconds"
-    } else if (time < 31536000) {
-        output = Math.floor(time / 86400) + " days"
-        if (Math.floor(time / 3600) % 24 !== 0)
-            output += ", " + (Math.floor(time / 3600) % 24) + " hours"
-        if (Math.floor(time / 60) % 60 !== 0)
-            output += ", " + (Math.floor(time / 60) % 60) + " minutes"
-        if (Math.floor(time) % 60 !== 0)
-            output += ", " + (Math.floor(time) % 60) + " seconds"
-    } else if (time < 315360000) {
-        output = Math.floor(time / 31536000) + " years"
-        if (Math.floor(time / 86400) % 365 !== 0)
-            output += ", " + (Math.floor(time / 86400) % 365) + " days"
-        if (Math.floor(time / 3600) % 24 !== 0)
-            output += ", " + (Math.floor(time / 3600) % 24) + " hours"
-        if (Math.floor(time / 60) % 60 !== 0)
-            output += ", " + (Math.floor(time / 60) % 60) + " minutes"
-    } else if (time < 3153600000) {
-        output = Math.floor(time / 31536000) + " years"
-        if (Math.floor(time / 86400) % 365 !== 0)
-            output += ", " + (Math.floor(time / 86400) % 365) + " days"
-        if (Math.floor(time / 3600) % 24 !== 0)
-            output += ", " + (Math.floor(time / 3600) % 24) + " hours"
-    } else if (time < 315360000000) {
-        output = format_num(Math.floor(time / 31536000), 0) + " years"
-        if (Math.floor(time / 86400) % 365 !== 0)
-            output += ", " + (Math.floor(time / 86400) % 365) + " days"
+        else output = format_num(Math.floor(time / 60), not) + " minutes"
+    } else if (time < 86400 && speed < 345600) {
+        output = format_num(Math.floor(time / 3600), not) + " hours"
+        if (Math.floor(time / 60) % 60 !== 0 && speed < 14400)
+            output +=
+                ", " + format_num(Math.floor(time / 60) % 60, not) + " minutes"
+        if (Math.floor(time) % 60 !== 0 && speed < 480)
+            output += ", " + format_num(Math.floor(time) % 60, not) + " seconds"
+    } else if (time < 31536000 && speed < 126144000) {
+        output = format_num(Math.floor(time / 86400), not) + " days"
+        if (Math.floor(time / 3600) % 24 !== 0 && speed < 345600)
+            output +=
+                ", " + format_num(Math.floor(time / 3600) % 24, not) + " hours"
+        if (Math.floor(time / 60) % 60 !== 0 && speed < 14400)
+            output +=
+                ", " + format_num(Math.floor(time / 60) % 60, not) + " minutes"
+        if (Math.floor(time) % 60 !== 0 && speed < 480)
+            output += ", " + format_num(Math.floor(time) % 60, not) + " seconds"
     } else {
-        output =
-            format_num(Math.floor(time / 31536000), game.notation) + " years"
+        if (speed >= 126144000)
+            output = format_num(Math.floor(time / 31536000), not) + " years"
+        else output = format_small(Math.floor(time / 31536000)) + " years"
+        if (Math.floor(time / 86400) % 365 !== 0 && speed < 126144000)
+            output +=
+                ", " + format_num(Math.floor(time / 86400) % 365, not) + " days"
+        if (Math.floor(time / 3600) % 24 !== 0 && speed < 345600)
+            output +=
+                ", " + format_num(Math.floor(time / 3600) % 24, not) + " hours"
+        if (Math.floor(time / 60) % 60 !== 0 && speed < 14400)
+            output +=
+                ", " + format_num(Math.floor(time / 60) % 60, not) + " minutes"
+        if (Math.floor(time) % 60 !== 0 && speed < 480)
+            output += ", " + format_num(Math.floor(time) % 60, not) + " seconds"
     }
 
     if (not === 8) output = "???"
