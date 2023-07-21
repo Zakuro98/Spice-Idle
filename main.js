@@ -2581,8 +2581,8 @@ function tick() {
     else game.autopr_goal[1] = new Decimal(1)
 
     game.autopr_goal[2] = Number(document.getElementById("p_time_input").value)
-    if (game.autopr_goal[2] === NaN) game.autopr_goal[0] = 30
-    if (game.autopr_goal[2] < 0.01) game.autopr_goal[0] = 0.01
+    if (game.autopr_goal[2] === NaN) game.autopr_goal[2] = 30
+    if (game.autopr_goal[2] < 0.01) game.autopr_goal[2] = 0.01
 
     game.autopr_delta[0] = Number(
         document.getElementById("p_boosts_input2").value
@@ -4140,7 +4140,10 @@ function collider_tick() {
             } else if (collider.type === 7) {
                 let rainbow_amount =
                     (game.antitotal_spice[6].log(10) - 11300000) / 900000
-                if (rainbow_amount < 0) rainbow_amount = 0
+                if (rainbow_amount > 0.5)
+                    rainbow_amount =
+                        ((rainbow_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+                else rainbow_amount = 0.5
                 if (rainbow_amount > 24) rainbow_amount = 24
 
                 game.spent_atomic_spice[6] = game.spent_atomic_spice[6].add(
@@ -4148,8 +4151,11 @@ function collider_tick() {
                 )
 
                 let atomic_amount =
-                    (game.spent_atomic_spice[6].log(10) - 31320) / 1620
-                if (atomic_amount < 0) atomic_amount = 0
+                    (game.spent_atomic_spice[6].log(10) - 30976) / 2048
+                if (atomic_amount > 0.5)
+                    atomic_amount =
+                        ((atomic_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+                else atomic_amount = 0.5
                 if (atomic_amount > 24) atomic_amount = 24
                 let old_total = game.total_rainbow_antispice
                 game.total_rainbow_antispice = Math.floor(
@@ -4187,15 +4193,21 @@ function collider_tick() {
                 )
                 let rainbow_amount =
                     (game.antitotal_spice[6].log(10) - 11300000) / 900000
-                if (rainbow_amount < 0) rainbow_amount = 0
+                if (rainbow_amount > 0.5)
+                    rainbow_amount =
+                        ((rainbow_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+                else rainbow_amount = 0.5
                 if (rainbow_amount > 24) rainbow_amount = 24
                 let atomic_amount2 =
                     (game.spent_atomic_spice[6]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .log(10) -
-                        31320) /
-                    1620
-                if (atomic_amount2 < 0) atomic_amount2 = 0
+                        30976) /
+                    2048
+                if (atomic_amount2 > 0.5)
+                    atomic_amount2 =
+                        ((atomic_amount2 - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+                else atomic_amount2 = 0.5
                 if (atomic_amount2 > 24) atomic_amount2 = 24
 
                 let pending_amount = new Decimal(0)
@@ -4455,8 +4467,11 @@ function collider_tick() {
                         game.spent_atomic_spice[6].add(atomic_amount)
 
                     atomic_amount2 =
-                        (game.spent_atomic_spice[6].log(10) - 31320) / 1620
-                    if (atomic_amount2 < 0) atomic_amount2 = 0
+                        (game.spent_atomic_spice[6].log(10) - 30976) / 2048
+                    if (atomic_amount2 > 0.5)
+                        atomic_amount2 =
+                            ((atomic_amount2 - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+                    else atomic_amount2 = 0.5
                     if (atomic_amount2 > 24) atomic_amount2 = 24
                     let old_total = game.total_rainbow_antispice
                     game.total_rainbow_antispice = Math.floor(
@@ -4506,6 +4521,9 @@ function switch_key(eventcode, state) {
             key[eventcode.substring(3).toLowerCase()] = state
         }
     }
+
+    if (eventcode === "ShiftLeft" || eventcode === "ShiftRight")
+        key.shift = state
 }
 document.body.addEventListener("keydown", function (event) {
     let active_element = document.activeElement
@@ -4795,6 +4813,7 @@ window.addEventListener("blur", function () {
         key.digit[i] = false
     }
 
+    key.shift = false
     key.s = false
     key.m = false
     key.b = false
@@ -4971,7 +4990,7 @@ function hotkey_tick() {
 
 //saving the game
 function save() {
-    game.version = "1.6.2"
+    game.version = "1.6.4"
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
         game.prestige_price[u.id] = u.price
@@ -5241,6 +5260,12 @@ function load(savegame) {
     if (savegame === null) return
     if (savegame.red_unlock !== undefined) {
         alert("This save file is too powerful for this game")
+        return
+    }
+    if (savegame.exp !== undefined && savegame.amp !== undefined) {
+        alert(
+            "You just tried to load an EXP Simulator save file into Spice Idle... Why did you think that would work?"
+        )
         return
     }
 
@@ -5521,9 +5546,17 @@ function load(savegame) {
             game.peak_atomic_amount = "0"
             game.peak_atomic_time = 0
         }
+
+        if ((major === 6 && minor < 4) || major < 6) {
+            game.prestige_real_time_history = new Array(10).fill(-1)
+            game.ascend_real_time_history = new Array(10).fill(-1)
+            game.ascend_challenge_history = new Array(10).fill(-1)
+            game.collapse_real_time_history = new Array(10).fill(-1)
+            game.collapse_challenge_history = new Array(10).fill(-1)
+        }
     }
 
-    game.version = "1.6.2"
+    game.version = "1.6.4"
 
     game.realm_limit = new Decimal(game.realm_limit)
 
