@@ -68,6 +68,9 @@ function tabs_update() {
 
 //graphics updates for spice generators
 function spice_update() {
+    let spice_unit = " g"
+    if (game.notation === 14) spice_unit = ""
+
     let antispice_power = 1
     if (game.antispice[1].cmp(1) >= 0) {
         let antispice_amount = game.antispice[1]
@@ -92,7 +95,7 @@ function spice_update() {
     }
 
     document.getElementById("red_spice_num").innerHTML =
-        format_idec(game.red_spice, game.notation) + " g"
+        format_idec(game.red_spice, game.notation) + spice_unit
 
     let effective_red_spice = game.highest_red_spice
     if (game.highest_red_spice.cmp(Decimal.pow(10, 10 ** 12)) >= 0)
@@ -205,7 +208,8 @@ function spice_update() {
         limit_str =
             "<br><br>You have exhausted all available resources in this realm...<br>There is no more room for your empire here<br><span class='bold'>After " +
             format_idec(game.realm_limit, game.notation) +
-            " g red spice, all spice production multipliers will be heavily reduced</span>"
+            spice_unit +
+            " red spice, all spice production multipliers will be heavily reduced</span>"
     }
 
     document.getElementById("red_spice_up").innerHTML =
@@ -214,7 +218,8 @@ function spice_update() {
             game.red_spice_gen[0].floor().mul(game.total_red_spice_boost[0]),
             game.notation
         ) +
-        " g red spice/sec" +
+        spice_unit +
+        " red spice/sec" +
         synergy_str +
         limit_str
     if (
@@ -231,13 +236,14 @@ function spice_update() {
                     .mul(game.total_red_spice_boost[0]),
                 game.notation
             ) +
-            " g red spice/sec" +
+            spice_unit +
+            " red spice/sec" +
             synergy_str +
             limit_str +
             "<br><br>For every ten red spice generators purchased, that generator's boost increases by 1"
 
     document.getElementById("yellow_spice_num").innerHTML =
-        format_idec(game.yellow_spice, game.notation) + " g"
+        format_idec(game.yellow_spice, game.notation) + spice_unit
 
     synergy_str = ""
     if (
@@ -281,7 +287,8 @@ function spice_update() {
                 .mul(game.total_yellow_spice_boost[0]),
             game.notation
         ) +
-        " g yellow spice/sec" +
+        spice_unit +
+        " yellow spice/sec" +
         synergy_str +
         limit_str
     if (
@@ -298,13 +305,14 @@ function spice_update() {
                     .mul(game.total_yellow_spice_boost[0]),
                 game.notation
             ) +
-            " g yellow spice/sec" +
+            spice_unit +
+            " yellow spice/sec" +
             synergy_str +
             limit_str +
             "<br><br>For every ten yellow spice generators purchased, that generator's boost increases by 1"
 
     document.getElementById("green_spice_num").innerHTML =
-        format_idec(game.green_spice, game.notation) + " g"
+        format_idec(game.green_spice, game.notation) + spice_unit
 
     synergy_str = ""
     if (
@@ -348,7 +356,8 @@ function spice_update() {
                 .mul(game.total_green_spice_boost[0]),
             game.notation
         ) +
-        " g green spice/sec" +
+        spice_unit +
+        " green spice/sec" +
         synergy_str +
         limit_str
     if (
@@ -365,13 +374,14 @@ function spice_update() {
                     .mul(game.total_green_spice_boost[0]),
                 game.notation
             ) +
-            " g green spice/sec" +
+            spice_unit +
+            " green spice/sec" +
             synergy_str +
             limit_str +
             "<br><br>For every ten green spice generators purchased, that generator's boost increases by 1"
 
     document.getElementById("blue_spice_num").innerHTML =
-        format_idec(game.blue_spice, game.notation) + " g"
+        format_idec(game.blue_spice, game.notation) + spice_unit
 
     synergy_str = ""
     if (
@@ -413,7 +423,8 @@ function spice_update() {
             game.blue_spice_gen[0].floor().mul(game.total_blue_spice_boost[0]),
             game.notation
         ) +
-        " g blue spice/sec" +
+        spice_unit +
+        " blue spice/sec" +
         synergy_str +
         limit_str
     if (
@@ -430,13 +441,14 @@ function spice_update() {
                     .mul(game.total_blue_spice_boost[0]),
                 game.notation
             ) +
-            " g blue spice/sec" +
+            spice_unit +
+            " blue spice/sec" +
             synergy_str +
             limit_str +
             "<br><br>For every ten blue spice generators purchased, that generator's boost increases by 1"
 
     document.getElementById("pink_spice_num").innerHTML =
-        format_idec(game.pink_spice, game.notation) + " g"
+        format_idec(game.pink_spice, game.notation) + spice_unit
 
     synergy_str = ""
     if (
@@ -519,7 +531,8 @@ function spice_update() {
             game.pink_spice_gen[0].floor().mul(game.total_pink_spice_boost[0]),
             game.notation
         ) +
-        " g pink spice/sec" +
+        spice_unit +
+        " pink spice/sec" +
         synergy_str +
         limit_str
     if (
@@ -536,7 +549,8 @@ function spice_update() {
                     .mul(game.total_pink_spice_boost[0]),
                 game.notation
             ) +
-            " g pink spice/sec" +
+            spice_unit +
+            " pink spice/sec" +
             synergy_str +
             limit_str +
             "<br><br>For every ten pink spice generators purchased, that generator's multiplier increases by 1"
@@ -637,7 +651,7 @@ function spice_update() {
                         game.notation
                     )
                     if (gen.id === 0) {
-                        info_str += " g red spice/sec"
+                        info_str += spice_unit + " red spice/sec"
                     } else {
                         info_str +=
                             " red spice " +
@@ -677,7 +691,8 @@ function spice_update() {
                 document.getElementById("red_cost" + gen.id).innerHTML =
                     "-" +
                     format_idec(game.red_spice_price[gen.id], game.notation) +
-                    " g red spice"
+                    spice_unit +
+                    " red spice"
                 if (game.red_spice.cmp(game.red_spice_price[gen.id]) >= 0) {
                     document.getElementById("red_cost" + gen.id).className =
                         "red_cost"
@@ -735,7 +750,10 @@ function spice_update() {
                     .mul(1 - 1.2 ** n.toString())
                     .div(-0.2)
                 document.getElementById("red_ucost" + gen.id).innerHTML =
-                    "-" + format_idec(price, game.notation) + " g red spice"
+                    "-" +
+                    format_idec(price, game.notation) +
+                    spice_unit +
+                    " red spice"
                 if (game.red_spice.cmp(price) >= 0) {
                     document.getElementById("red_ucost" + gen.id).className =
                         "red_cost"
@@ -891,7 +909,7 @@ function spice_update() {
                         game.notation
                     )
                     if (gen.id === 0) {
-                        info_str += " g yellow spice/sec"
+                        info_str += spice_unit + " yellow spice/sec"
                         if (game.prestige_bought[10] >= 1)
                             info_str +=
                                 ",<br>and producing " +
@@ -949,7 +967,8 @@ function spice_update() {
                         game.yellow_spice_price[gen.id],
                         game.notation
                     ) +
-                    " g yellow spice"
+                    spice_unit +
+                    " yellow spice"
                 if (
                     game.yellow_spice.cmp(game.yellow_spice_price[gen.id]) >= 0
                 ) {
@@ -1013,7 +1032,10 @@ function spice_update() {
                     .mul(1 - 1.3 ** n.toString())
                     .div(-0.3)
                 document.getElementById("yellow_ucost" + gen.id).innerHTML =
-                    "-" + format_idec(price, game.notation) + " g yellow spice"
+                    "-" +
+                    format_idec(price, game.notation) +
+                    spice_unit +
+                    " yellow spice"
                 if (game.yellow_spice.cmp(price) >= 0) {
                     document.getElementById("yellow_ucost" + gen.id).className =
                         "yellow_cost"
@@ -1175,7 +1197,7 @@ function spice_update() {
                         game.notation
                     )
                     if (gen.id === 0) {
-                        info_str += " g green spice/sec"
+                        info_str += spice_unit + " green spice/sec"
                         if (game.prestige_bought[10] >= 1)
                             info_str +=
                                 ",<br>and producing " +
@@ -1230,7 +1252,8 @@ function spice_update() {
                 document.getElementById("green_cost" + gen.id).innerHTML =
                     "-" +
                     format_idec(game.green_spice_price[gen.id], game.notation) +
-                    " g green spice"
+                    spice_unit +
+                    " green spice"
                 if (game.green_spice.cmp(game.green_spice_price[gen.id]) >= 0) {
                     document.getElementById("green_cost" + gen.id).className =
                         "green_cost"
@@ -1292,7 +1315,10 @@ function spice_update() {
                     .mul(1 - 1.4 ** n.toString())
                     .div(-0.4)
                 document.getElementById("green_ucost" + gen.id).innerHTML =
-                    "-" + format_idec(price, game.notation) + " g green spice"
+                    "-" +
+                    format_idec(price, game.notation) +
+                    spice_unit +
+                    " green spice"
                 if (game.green_spice.cmp(price) >= 0) {
                     document.getElementById("green_ucost" + gen.id).className =
                         "green_cost"
@@ -1452,7 +1478,7 @@ function spice_update() {
                         game.notation
                     )
                     if (gen.id === 0) {
-                        info_str += " g blue spice/sec"
+                        info_str += spice_unit + " blue spice/sec"
                         if (game.prestige_bought[10] >= 1)
                             info_str +=
                                 ",<br>and producing " +
@@ -1507,7 +1533,8 @@ function spice_update() {
                 document.getElementById("blue_cost" + gen.id).innerHTML =
                     "-" +
                     format_idec(game.blue_spice_price[gen.id], game.notation) +
-                    " g blue spice"
+                    spice_unit +
+                    " blue spice"
                 if (game.blue_spice.cmp(game.blue_spice_price[gen.id]) >= 0) {
                     document.getElementById("blue_cost" + gen.id).className =
                         "blue_cost"
@@ -1565,7 +1592,10 @@ function spice_update() {
                     .mul(1 - 1.5 ** n.toString())
                     .div(-0.5)
                 document.getElementById("blue_ucost" + gen.id).innerHTML =
-                    "-" + format_idec(price, game.notation) + " g blue spice"
+                    "-" +
+                    format_idec(price, game.notation) +
+                    spice_unit +
+                    " blue spice"
                 if (game.blue_spice.cmp(price) >= 0) {
                     document.getElementById("blue_ucost" + gen.id).className =
                         "blue_cost"
@@ -1757,7 +1787,7 @@ function spice_update() {
                         game.notation
                     )
                     if (gen.id === 0) {
-                        info_str += " g pink spice/sec"
+                        info_str += spice_unit + " pink spice/sec"
                         if (game.prestige_bought[10] >= 1)
                             info_str +=
                                 ",<br>and producing " +
@@ -1838,7 +1868,8 @@ function spice_update() {
                 document.getElementById("pink_cost" + gen.id).innerHTML =
                     "-" +
                     format_idec(game.pink_spice_price[gen.id], game.notation) +
-                    " g pink spice"
+                    spice_unit +
+                    " pink spice"
                 if (game.pink_spice.cmp(game.pink_spice_price[gen.id]) >= 0) {
                     document.getElementById("pink_cost" + gen.id).className =
                         "pink_cost"
@@ -1896,7 +1927,10 @@ function spice_update() {
                     .mul(1 - 1.6 ** n.toString())
                     .div(-0.6)
                 document.getElementById("pink_ucost" + gen.id).innerHTML =
-                    "-" + format_idec(price, game.notation) + " g pink spice"
+                    "-" +
+                    format_idec(price, game.notation) +
+                    spice_unit +
+                    " pink spice"
                 if (game.pink_spice.cmp(price) >= 0) {
                     document.getElementById("pink_ucost" + gen.id).className =
                         "pink_cost"
@@ -2091,7 +2125,8 @@ function spice_update() {
         document.getElementById("red_cost_s").innerHTML =
             "-" +
             format_idec(game.red_strengthener_price, game.notation) +
-            " g red spice"
+            spice_unit +
+            " red spice"
         if (game.red_spice.cmp(game.red_strengthener_price) >= 0) {
             document.getElementById("red_cost_s").className = "red_cost"
             document.getElementById("red_buy_s").className = "spice_buy can_buy"
@@ -2236,7 +2271,8 @@ function spice_update() {
         document.getElementById("yellow_cost_s").innerHTML =
             "-" +
             format_idec(game.yellow_strengthener_price, game.notation) +
-            " g yellow spice"
+            spice_unit +
+            " yellow spice"
         if (game.yellow_spice.cmp(game.yellow_strengthener_price) >= 0) {
             document.getElementById("yellow_cost_s").className = "yellow_cost"
             document.getElementById("yellow_buy_s").className =
@@ -2382,7 +2418,8 @@ function spice_update() {
         document.getElementById("green_cost_s").innerHTML =
             "-" +
             format_idec(game.green_strengthener_price, game.notation) +
-            " g green spice"
+            spice_unit +
+            " green spice"
         if (game.green_spice.cmp(game.green_strengthener_price) >= 0) {
             document.getElementById("green_cost_s").className = "green_cost"
             document.getElementById("green_buy_s").className =
@@ -2528,7 +2565,8 @@ function spice_update() {
         document.getElementById("blue_cost_s").innerHTML =
             "-" +
             format_idec(game.blue_strengthener_price, game.notation) +
-            " g blue spice"
+            spice_unit +
+            " blue spice"
         if (game.blue_spice.cmp(game.blue_strengthener_price) >= 0) {
             document.getElementById("blue_cost_s").className = "blue_cost"
             document.getElementById("blue_buy_s").className =
@@ -2645,7 +2683,8 @@ function spice_update() {
         document.getElementById("pink_cost_s").innerHTML =
             "-" +
             format_idec(game.pink_strengthener_price, game.notation) +
-            " g pink spice"
+            spice_unit +
+            " pink spice"
         if (game.pink_spice.cmp(game.pink_strengthener_price) >= 0) {
             document.getElementById("pink_cost_s").className = "pink_cost"
             document.getElementById("pink_buy_s").className =
@@ -2809,7 +2848,7 @@ function spice_update() {
                     "Gain a spice boost"
         }
         if (
-            game.color_boosts >= 2000000 ||
+            game.color_boosts >= game.augment_start ||
             (game.collapse_challenge === 10 && game.color_boosts >= 4)
         ) {
             document.getElementById("color_shift_header").innerHTML =
@@ -3499,12 +3538,17 @@ function spice_update() {
 
 //graphics updates for prestige page
 function prestige_update() {
+    let rainbow_unit = " μg"
+    if (game.notation === 14) {
+        rainbow_unit = ""
+    }
+
     document.getElementById("rainbow_spice_num").innerHTML =
-        format_idec(game.rainbow_spice, game.notation) + " μg"
+        format_idec(game.rainbow_spice, game.notation) + rainbow_unit
     document.getElementById("rainbow_spice_num2").innerHTML =
-        format_idec(game.rainbow_spice, game.notation) + " μg"
+        format_idec(game.rainbow_spice, game.notation) + rainbow_unit
     document.getElementById("rainbow_spice_num3").innerHTML =
-        format_idec(game.rainbow_spice, game.notation) + " μg"
+        format_idec(game.rainbow_spice, game.notation) + rainbow_unit
 
     if (game.color_boosts >= 10) {
         document.getElementById("prestige_button").className =
@@ -3569,11 +3613,14 @@ function prestige_update() {
         }
 
         document.getElementById("prestige_up").innerHTML =
-            "+" + format_idec(amount, game.notation) + " μg rainbow spice"
+            "+" +
+            format_idec(amount, game.notation) +
+            rainbow_unit +
+            " rainbow spice"
         document.getElementById("prestige_req").style.color = "white"
         document.getElementById("prestige_req").innerHTML =
             format_small(game.color_boosts) + " color boosts done"
-        if (game.color_boosts >= 2000000)
+        if (game.color_boosts >= game.augment_start)
             document.getElementById("prestige_req").innerHTML =
                 format_small(game.color_boosts) + " color augments done"
         if (game.color_boosts >= 4 && game.collapse_challenge === 10)
@@ -3590,7 +3637,8 @@ function prestige_update() {
                     amount.div(game.prestige_time_played).mul(60),
                     game.notation
                 ) +
-                " μg rainbow spice/min"
+                rainbow_unit +
+                " rainbow spice/min"
 
             if (game.prestige_bought[15] >= 1) {
                 switch (game.autopr_mode) {
@@ -3602,7 +3650,8 @@ function prestige_update() {
                                     game.peak_rainbow_gain.mul(60),
                                     game.notation
                                 ) +
-                                " μg rainbow spice/min at " +
+                                rainbow_unit +
+                                " rainbow spice/min at " +
                                 format_small(
                                     game.peak_rainbow_boosts,
                                     game.notation
@@ -3615,7 +3664,8 @@ function prestige_update() {
                                     game.peak_rainbow_gain.mul(60),
                                     game.notation
                                 ) +
-                                " μg rainbow spice/min at " +
+                                rainbow_unit +
+                                " rainbow spice/min at " +
                                 format_small(
                                     game.peak_rainbow_boosts,
                                     game.notation
@@ -3629,12 +3679,14 @@ function prestige_update() {
                                 game.peak_rainbow_gain.mul(60),
                                 game.notation
                             ) +
-                            " μg rainbow spice/min at +" +
+                            rainbow_unit +
+                            " rainbow spice/min at +" +
                             format_idec(
                                 game.peak_rainbow_amount,
                                 game.notation
                             ) +
-                            " μg rainbow spice"
+                            rainbow_unit +
+                            " rainbow spice"
                         break
                     case 2:
                         if (game.peak_rainbow_time < 1)
@@ -3644,7 +3696,8 @@ function prestige_update() {
                                     game.peak_rainbow_gain.mul(60),
                                     game.notation
                                 ) +
-                                " μg rainbow spice/min at " +
+                                rainbow_unit +
+                                " rainbow spice/min at " +
                                 game.peak_rainbow_time.toFixed(2) +
                                 "s"
                         else
@@ -3654,7 +3707,8 @@ function prestige_update() {
                                     game.peak_rainbow_gain.mul(60),
                                     game.notation
                                 ) +
-                                " μg rainbow spice/min at " +
+                                rainbow_unit +
+                                " rainbow spice/min at " +
                                 format_dec(
                                     game.peak_rainbow_time,
                                     game.notation
@@ -3696,9 +3750,28 @@ function prestige_update() {
             if (game.ascend_bought[9]) {
                 document.getElementById("prestige_boosts_delta").style.display =
                     "flex"
+                document.getElementById("prestige_goal").style.display = "flex"
+                if (
+                    game.autopr_goal[0] + game.autopr_goal2[0] >=
+                    game.augment_start
+                )
+                    document.getElementById("prestige_goal_text").innerHTML =
+                        "Current Auto-Prestige Goal: " +
+                        format_small(
+                            game.autopr_goal[0] + game.autopr_goal2[0]
+                        ) +
+                        " color augments"
+                else
+                    document.getElementById("prestige_goal_text").innerHTML =
+                        "Current Auto-Prestige Goal: " +
+                        format_small(
+                            game.autopr_goal[0] + game.autopr_goal2[0]
+                        ) +
+                        " color boosts"
             } else {
                 document.getElementById("prestige_boosts_delta").style.display =
                     "none"
+                document.getElementById("prestige_goal").style.display = "none"
             }
             document.getElementById("prestige_spice_delta").style.display =
                 "none"
@@ -3711,9 +3784,19 @@ function prestige_update() {
             if (game.ascend_bought[9]) {
                 document.getElementById("prestige_spice_delta").style.display =
                     "flex"
+                document.getElementById("prestige_goal").style.display = "flex"
+                document.getElementById("prestige_goal_text").innerHTML =
+                    "Current Auto-Prestige Goal: +" +
+                    format_idec(
+                        game.autopr_goal[1].mul(game.autopr_goal2[1]),
+                        game.notation
+                    ) +
+                    rainbow_unit +
+                    " rainbow spice"
             } else {
                 document.getElementById("prestige_spice_delta").style.display =
                     "none"
+                document.getElementById("prestige_goal").style.display = "none"
             }
         } else if (game.autopr_mode === 2) {
             document.getElementById("prestige_boosts").style.display = "none"
@@ -3723,6 +3806,7 @@ function prestige_update() {
                 "none"
             document.getElementById("prestige_spice_delta").style.display =
                 "none"
+            document.getElementById("prestige_goal").style.display = "none"
         }
     } else {
         document.getElementById("prestige_auto_block").style.display = "none"
@@ -3799,12 +3883,17 @@ function prestige_update() {
             amount = amount.pow(1.15)
         }
 
-        let str = "+" + format_dec(0, game.notation) + " μg rainbow spice/sec"
+        let str =
+            "+" +
+            format_dec(0, game.notation) +
+            rainbow_unit +
+            " rainbow spice/sec"
         if (game.color_boosts >= 10) {
             str =
                 "+" +
                 format_idec(amount.div(10), game.notation) +
-                " μg rainbow spice/sec"
+                rainbow_unit +
+                " rainbow spice/sec"
         }
 
         document.getElementById("rainbow_spice_up").innerHTML = str
@@ -4218,7 +4307,10 @@ function prestige_update() {
         let button = prestige_map.get(u)
         document.getElementById("pr_desc" + u.id).innerHTML = u.desc
         document.getElementById("pr_cost" + u.id).innerHTML =
-            "-" + format_idec(u.price, game.notation) + " μg rainbow spice"
+            "-" +
+            format_idec(u.price, game.notation) +
+            rainbow_unit +
+            " rainbow spice"
 
         let bought = true
         if (game.reduce_flashing) {
@@ -4282,6 +4374,13 @@ function prestige_update() {
 
 //graphics updates for crystallized spice
 function crystal_update() {
+    let spice_unit = " g"
+    let rainbow_unit = " μg"
+    if (game.notation === 14) {
+        spice_unit = ""
+        rainbow_unit = ""
+    }
+
     let antispice_power = 1
     if (game.antispice[1].cmp(1) >= 0) {
         let antispice_amount = game.antispice[1]
@@ -4306,7 +4405,7 @@ function crystal_update() {
     }
 
     document.getElementById("crystal_spice_num").innerHTML =
-        format_idec(game.crystal_spice, game.notation) + " g"
+        format_idec(game.crystal_spice, game.notation) + spice_unit
 
     let synergy_str = ""
     if (
@@ -4379,7 +4478,8 @@ function crystal_update() {
         limit_str =
             "<br><br>You have exhausted all available resources in this realm...<br>There is no more room for your empire here<br><span class='bold'>After " +
             format_idec(game.realm_limit, game.notation) +
-            " g red spice, all spice production multipliers will be heavily reduced</span>"
+            spice_unit +
+            " red spice, all spice production multipliers will be heavily reduced</span>"
     }
 
     document.getElementById("crystal_spice_up").innerHTML =
@@ -4391,7 +4491,8 @@ function crystal_update() {
                 .mul(3),
             game.notation
         ) +
-        " g crystallized spice/sec" +
+        spice_unit +
+        " crystallized spice/sec" +
         synergy_str +
         limit_str
     if (
@@ -4408,7 +4509,8 @@ function crystal_update() {
                     .mul(3),
                 game.notation
             ) +
-            " g crystallized spice/sec" +
+            spice_unit +
+            " crystallized spice/sec" +
             synergy_str +
             limit_str +
             "<br><br>For every five crystallized spice generators bought, that generator's boost is multiplied by 2"
@@ -4509,7 +4611,9 @@ function crystal_update() {
                                     .mul(game.total_crystal_spice_boost[gen.id])
                                     .mul(3),
                                 game.notation
-                            ) + " g crystallized spice/sec"
+                            ) +
+                            spice_unit +
+                            " crystallized spice/sec"
                         if (
                             game.prestige_bought[24] >= 1 &&
                             game.ascend_challenge !== 2
@@ -4578,7 +4682,8 @@ function crystal_update() {
                         game.crystal_spice_price[gen.id],
                         game.notation
                     ) +
-                    " μg rainbow spice"
+                    rainbow_unit +
+                    " rainbow spice"
                 if (
                     game.rainbow_spice.cmp(game.crystal_spice_price[gen.id]) >=
                     0
@@ -4647,7 +4752,8 @@ function crystal_update() {
                 document.getElementById("crystal_ucost" + gen.id).innerHTML =
                     "-" +
                     format_idec(price, game.notation) +
-                    " μg rainbow spice"
+                    rainbow_unit +
+                    " rainbow spice"
                 if (game.rainbow_spice.cmp(price) >= 0) {
                     document.getElementById(
                         "crystal_ucost" + gen.id
@@ -4771,7 +4877,8 @@ function crystal_update() {
         document.getElementById("crystal_cost_s").innerHTML =
             "-" +
             format_idec(game.crystal_strengthener_price, game.notation) +
-            " μg rainbow spice"
+            rainbow_unit +
+            " rainbow spice"
         if (game.rainbow_spice.cmp(game.crystal_strengthener_price) >= 0) {
             document.getElementById("crystal_cost_s").className = "rainbow_cost"
             document.getElementById("crystal_buy_s").className =
@@ -4966,7 +5073,8 @@ function crystal_update() {
     document.getElementById("crystal_cost_i").innerHTML =
         "-" +
         format_idec(game.crystal_infusion_price, game.notation) +
-        " g crystallized spice"
+        spice_unit +
+        " crystallized spice"
     if (game.crystal_spice.cmp(game.crystal_infusion_price) >= 0) {
         document.getElementById("crystal_cost_i").className = "crystal_cost"
         document.getElementById("crystal_buy_i").className = "spice_buy can_buy"
@@ -5028,6 +5136,9 @@ function crystal_update() {
 
 //graphics updates for ascension page
 function ascension_update() {
+    let rainbow_unit = " μg"
+    if (game.notation === 14) rainbow_unit = ""
+
     let goal = Decimal.pow(2, 1024)
     if (game.ascend_challenge !== 0) {
         goal = ascension_challenge.challenges[game.ascend_challenge - 1].goal
@@ -5083,7 +5194,9 @@ function ascension_update() {
             format_idec(
                 Decimal.pow(2, 1024).pow((original_amount + 1) ** 0.125),
                 game.notation
-            ) + " μg rainbow spice for next ᚫ"
+            ) +
+            rainbow_unit +
+            " rainbow spice for next ᚫ"
         if (game.research_complete[10] >= 1 && game.collapse_challenge !== 12)
             document.getElementById("ascend_req").innerHTML =
                 format_idec(
@@ -5095,7 +5208,9 @@ function ascension_update() {
                             0.125
                     ),
                     game.notation
-                ) + " μg rainbow spice for next ᚫ"
+                ) +
+                rainbow_unit +
+                " rainbow spice for next ᚫ"
 
         if (game.resource_efficiency && game.ascend_challenge === 0) {
             document.getElementById("ascend_efficiency").style.display = "block"
@@ -5160,7 +5275,9 @@ function ascension_update() {
         document.getElementById("ascend_up").style.display = "none"
         document.getElementById("ascend_req").style.color = "grey"
         document.getElementById("ascend_req").innerHTML =
-            format_idec(goal, game.notation) + " μg rainbow spice required"
+            format_idec(goal, game.notation) +
+            rainbow_unit +
+            " rainbow spice required"
         document.getElementById("ascend_efficiency").style.display = "none"
     }
 
@@ -5887,13 +6004,15 @@ function ascension_update() {
                 c.desc +
                 "<br>Goal: <span class='rainbow_spice'>" +
                 format_infdec(c.goal, game.notation) +
-                " μg rainbow spice</span>"
+                rainbow_unit +
+                " rainbow spice</span>"
 
             if (c.id === 5 && game.collapse >= 1) {
                 info.innerHTML =
                     "Same as Challenge 1, but rune power production is disabled<br>(The unstable spice boost is also disabled)<br>Completing this Challenge is required to Collapse<br>Goal: <span class='rainbow_spice'>" +
                     format_infdec(c.goal, game.notation) +
-                    " μg rainbow spice</span>"
+                    rainbow_unit +
+                    " rainbow spice</span>"
             }
         } else {
             panel.style.display = "none"
@@ -5903,6 +6022,13 @@ function ascension_update() {
 
 //graphics updates for arcane spice
 function arcane_update() {
+    let spice_unit = " g"
+    let arcane_unit = " mg"
+    if (game.notation === 14) {
+        spice_unit = ""
+        arcane_unit = ""
+    }
+
     let antispice_power = 1
     if (game.antispice[1].cmp(1) >= 0) {
         let antispice_amount = game.antispice[1]
@@ -5927,7 +6053,7 @@ function arcane_update() {
     }
 
     document.getElementById("arcane_spice_num").innerHTML =
-        format_idec(game.arcane_spice, game.notation) + " mg"
+        format_idec(game.arcane_spice, game.notation) + arcane_unit
 
     let synergy_str = ""
     if (game.ascend_bought[22] || game.collapse >= 1) {
@@ -5991,7 +6117,8 @@ function arcane_update() {
         limit_str =
             "<br><br>You have exhausted all available resources in this realm...<br>There is no more room for your empire here<br><span class='bold'>After " +
             format_idec(game.realm_limit, game.notation) +
-            " g red spice, all spice production multipliers will be heavily reduced</span>"
+            spice_unit +
+            " red spice, all spice production multipliers will be heavily reduced</span>"
     }
 
     document.getElementById("arcane_spice_up").innerHTML =
@@ -6003,7 +6130,8 @@ function arcane_update() {
                 .mul(5),
             game.notation
         ) +
-        " mg arcane spice/sec" +
+        arcane_unit +
+        " arcane spice/sec" +
         synergy_str +
         limit_str
     if (game.arcane_spice_bought[0] >= 3n || game.collapse >= 1)
@@ -6016,7 +6144,8 @@ function arcane_update() {
                     .mul(5),
                 game.notation
             ) +
-            " mg arcane spice/sec" +
+            arcane_unit +
+            " arcane spice/sec" +
             synergy_str +
             limit_str +
             "<br><br>For every three arcane spice generators bought, that generator's boost is multiplied by 3"
@@ -6087,7 +6216,9 @@ function arcane_update() {
                                 .mul(game.total_arcane_spice_boost[gen.id])
                                 .mul(5),
                             game.notation
-                        ) + " mg arcane spice/sec"
+                        ) +
+                        arcane_unit +
+                        " arcane spice/sec"
                     if (game.ascend_bought[32] && game.ascend_challenge !== 2) {
                         info_str +=
                             ",<br>and producing " +
@@ -6526,7 +6657,8 @@ function arcane_update() {
     document.getElementById("arcane_cost_n").innerHTML =
         "-" +
         format_idec(game.arcane_enchantment_price, game.notation) +
-        " mg arcane spice"
+        arcane_unit +
+        " arcane spice"
     if (game.arcane_spice.cmp(game.arcane_enchantment_price) >= 0) {
         document.getElementById("arcane_cost_n").className = "arcane_cost"
         document.getElementById("arcane_buy_n").className = "spice_buy can_buy"
@@ -6933,6 +7065,13 @@ function collapse_update() {
             "atomic_button co_locked"
     }
 
+    let spice_unit = " g"
+    let rainbow_unit = " μg"
+    if (game.notation === 14) {
+        spice_unit = ""
+        rainbow_unit = ""
+    }
+
     if (game.collider_tab === 0) {
         if (game.research_complete[17] >= 1) {
             document.getElementById("collider_portion").style.display = "flex"
@@ -7054,7 +7193,8 @@ function collapse_update() {
             format_num(Math.round(game.atomic_efficiency * 100), 0) +
             "%<br>Red spice input: <span class='red_spice'>" +
             format_inum(game.antitotal_spice[1], game.notation) +
-            " g red spice</span><br>" +
+            spice_unit +
+            " red spice</span><br>" +
             yield_str +
             "<br><br>Total atomic spice used: <span class='atomic_spice'>" +
             format_inum(game.spent_atomic_spice[1], game.notation) +
@@ -7104,7 +7244,8 @@ function collapse_update() {
             format_num(Math.round(game.atomic_efficiency * 100), 0) +
             "%<br>Yellow spice input: <span class='yellow_spice'>" +
             format_inum(game.antitotal_spice[2], game.notation) +
-            " g yellow spice</span><br>" +
+            spice_unit +
+            " yellow spice</span><br>" +
             yield_str +
             "<br><br>Total atomic spice used: <span class='atomic_spice'>" +
             format_inum(game.spent_atomic_spice[2], game.notation) +
@@ -7154,7 +7295,8 @@ function collapse_update() {
             format_num(Math.round(game.atomic_efficiency * 100), 0) +
             "%<br>Green spice input: <span class='green_spice'>" +
             format_inum(game.antitotal_spice[3], game.notation) +
-            " g green spice</span><br>" +
+            spice_unit +
+            " green spice</span><br>" +
             yield_str +
             "<br><br>Total atomic spice used: <span class='atomic_spice'>" +
             format_inum(game.spent_atomic_spice[3], game.notation) +
@@ -7204,7 +7346,8 @@ function collapse_update() {
             format_num(Math.round(game.atomic_efficiency * 100), 0) +
             "%<br>Blue spice input: <span class='blue_spice'>" +
             format_inum(game.antitotal_spice[4], game.notation) +
-            " g blue spice</span><br>" +
+            spice_unit +
+            " blue spice</span><br>" +
             yield_str +
             "<br><br>Total atomic spice used: <span class='atomic_spice'>" +
             format_inum(game.spent_atomic_spice[4], game.notation) +
@@ -7254,7 +7397,8 @@ function collapse_update() {
             format_num(Math.round(game.atomic_efficiency * 100), 0) +
             "%<br>Pink spice input: <span class='pink_spice'>" +
             format_inum(game.antitotal_spice[5], game.notation) +
-            " g pink spice</span><br>" +
+            spice_unit +
+            " pink spice</span><br>" +
             yield_str +
             "<br><br>Total atomic spice used: <span class='atomic_spice'>" +
             format_inum(game.spent_atomic_spice[5], game.notation) +
@@ -7274,16 +7418,20 @@ function collapse_update() {
 
         let rainbow_amount =
             (game.antitotal_spice[6].log(10) - 11300000) / 900000
-        if (rainbow_amount < 0) rainbow_amount = 0
+        if (rainbow_amount > 0.5)
+            rainbow_amount = ((rainbow_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+        else rainbow_amount = 0.5
         if (rainbow_amount > 24) rainbow_amount = 24
 
         let atomic_amount =
             (game.spent_atomic_spice[6]
                 .add(game.atomic_spice.mul(game.atomic_portion))
                 .log(10) -
-                31320) /
-            1620
-        if (atomic_amount < 0) atomic_amount = 0
+                30976) /
+            2048
+        if (atomic_amount > 0.5)
+            atomic_amount = ((atomic_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
+        else atomic_amount = 0.5
         if (atomic_amount > 24) atomic_amount = 24
 
         let amount =
@@ -7309,7 +7457,8 @@ function collapse_update() {
             ) +
             " atomic spice</span><br>Rainbow spice input: <span class='rainbow_spice'>" +
             format_inum(game.antitotal_spice[6], game.notation) +
-            " μg rainbow spice</span><br>" +
+            rainbow_unit +
+            " rainbow spice</span><br>" +
             yield_str +
             "<br><br>Total atomic spice used: <span class='atomic_spice'>" +
             format_inum(game.spent_atomic_spice[6], game.notation) +
@@ -7336,14 +7485,14 @@ function collapse_update() {
     )
     document.getElementById("unstable_boost").innerHTML =
         "Your unstable spice is decaying away with a half-life of " +
-        format_time_long(game.halflife, 0, true) +
+        format_time_long(game.halflife, game.notation, 1, true) +
         ",<br>the resulting energy is boosting all normal spice production " +
         format_idec(game.unstable_boost, game.notation) +
         "x"
     if (game.collapse_complete[1] >= 1)
         document.getElementById("unstable_boost").innerHTML =
             "Your unstable spice is decaying away with a half-life of " +
-            format_time_long(game.halflife, 0, true) +
+            format_time_long(game.halflife, game.notation, 1, true) +
             ",<br>the resulting energy is boosting all normal spice production " +
             format_idec(game.unstable_boost, game.notation) +
             "x,<br>and boosting crystallized spice production " +
@@ -7356,7 +7505,7 @@ function collapse_update() {
     else if (game.research_complete[9] >= 1)
         document.getElementById("unstable_boost").innerHTML =
             "Your unstable spice is decaying away with a half-life of " +
-            format_time_long(game.halflife, 0, true) +
+            format_time_long(game.halflife, game.notation, 1, true) +
             ",<br>the resulting energy is boosting all normal spice production " +
             format_idec(game.unstable_boost, game.notation) +
             "x,<br>and boosting crystallized spice production " +
@@ -7367,7 +7516,7 @@ function collapse_update() {
     else if (game.research_complete[2] >= 1)
         document.getElementById("unstable_boost").innerHTML =
             "Your unstable spice is decaying away with a half-life of " +
-            format_time_long(game.halflife) +
+            format_time_long(game.halflife, game.notation) +
             ",<br>the resulting energy is boosting all normal spice production " +
             format_idec(game.unstable_boost, game.notation) +
             "x,<br>and boosting crystallized spice production " +
@@ -7376,14 +7525,14 @@ function collapse_update() {
     if (game.collapse_challenge === 8)
         document.getElementById("unstable_boost").innerHTML =
             "Your unstable spice is decaying away with a half-life of " +
-            format_time_long(game.halflife, 0, true) +
+            format_time_long(game.halflife, game.notation, 1, true) +
             ",<br>and has created " +
             format_inum(game.free_deity, game.notation) +
             " sixth generators of all types"
     if (game.collapse_challenge === 12)
         document.getElementById("unstable_boost").innerHTML =
             "Your unstable spice is decaying away with a half-life of " +
-            format_time_long(game.halflife, 0, true) +
+            format_time_long(game.halflife, game.notation, 1, true) +
             ",<br>the resulting energy is boosting all normal spice production " +
             format_idec(game.unstable_boost, game.notation) +
             "x,<br>and has produced " +
@@ -8840,7 +8989,7 @@ function research_update() {
                     "The half-life of unstable spice becomes " +
                     format_dec(33 * antispice_halflife) +
                     "% shorter<br>Current unstable spice half-life: " +
-                    format_time_long(game.halflife, 0, true)
+                    format_time_long(game.halflife, game.notation, 1, true)
                 if (game.collapse_challenge === 12)
                     r.desc =
                         "The half-life of unstable spice becomes " +
@@ -9341,7 +9490,7 @@ function research_update() {
                 " / " +
                 format_num(goal, game.notation) +
                 "<br>Estimated time to completion: " +
-                format_time_long((goal - game.data[r]) / rate) +
+                format_time_long((goal - game.data[r]) / rate, game.notation) +
                 times_researched
         } else {
             document.getElementById("research_info").innerHTML =
@@ -10118,63 +10267,88 @@ function antispice_update() {
 
 //graphics updates for statistics page
 function stats_update() {
+    let spice_unit = " g"
+    let rainbow_unit = " μg"
+    let arcane_unit = " mg"
+    if (game.notation === 14) {
+        spice_unit = ""
+        rainbow_unit = ""
+        arcane_unit = ""
+    }
+
     let stats_str =
         "You have " +
         format_idec(game.red_spice, game.notation) +
-        " g red spice."
+        spice_unit +
+        " red spice."
 
     if (game.color_boosts === 1)
         stats_str =
             "You have " +
             format_idec(game.red_spice, game.notation) +
-            " g red spice,<br>and " +
+            spice_unit +
+            " red spice,<br>and " +
             format_idec(game.yellow_spice, game.notation) +
-            " g yellow spice."
+            spice_unit +
+            " yellow spice."
     else if (game.color_boosts === 2)
         stats_str =
             "You have " +
             format_idec(game.red_spice, game.notation) +
-            " g red spice,<br>" +
+            spice_unit +
+            " red spice,<br>" +
             format_idec(game.yellow_spice, game.notation) +
-            " g yellow spice,<br>and " +
+            spice_unit +
+            " yellow spice,<br>and " +
             format_idec(game.green_spice, game.notation) +
-            " g green spice."
+            spice_unit +
+            " green spice."
     else if (game.color_boosts === 3)
         stats_str =
             "You have " +
             format_idec(game.red_spice, game.notation) +
-            " g red spice,<br>" +
+            spice_unit +
+            " red spice,<br>" +
             format_idec(game.yellow_spice, game.notation) +
-            " g yellow spice,<br>" +
+            spice_unit +
+            " yellow spice,<br>" +
             format_idec(game.green_spice, game.notation) +
-            " g green spice,<br>and " +
+            spice_unit +
+            " green spice,<br>and " +
             format_idec(game.blue_spice, game.notation) +
-            " g blue spice."
+            spice_unit +
+            " blue spice."
     else if (game.color_boosts >= 4)
         stats_str =
             "You have " +
             format_idec(game.red_spice, game.notation) +
-            " g red spice,<br>" +
+            spice_unit +
+            " red spice,<br>" +
             format_idec(game.yellow_spice, game.notation) +
-            " g yellow spice,<br>" +
+            spice_unit +
+            " yellow spice,<br>" +
             format_idec(game.green_spice, game.notation) +
-            " g green spice,<br>" +
+            spice_unit +
+            " green spice,<br>" +
             format_idec(game.blue_spice, game.notation) +
-            " g blue spice,<br>and " +
+            spice_unit +
+            " blue spice,<br>and " +
             format_idec(game.pink_spice, game.notation) +
-            " g pink spice."
+            spice_unit +
+            " pink spice."
 
     stats_str +=
         "<br><br>You have accumulated a total of " +
         format_idec(game.total_spice, game.notation) +
-        " g spice."
+        spice_unit +
+        " spice."
 
     if (game.collapse_challenge === 10 && game.color_boosts >= 4)
         stats_str +=
             "<br>You have done " +
             format_small(game.color_boosts) +
             " color augments."
-    else if (game.color_boosts >= 2000000)
+    else if (game.color_boosts >= game.augment_start)
         stats_str +=
             "<br>You have done " +
             format_small(game.color_boosts) +
@@ -10203,13 +10377,15 @@ function stats_update() {
         stats_str +=
             "<br>You have " +
             format_idec(game.rainbow_spice, game.notation) +
-            " μg rainbow spice."
+            rainbow_unit +
+            " rainbow spice."
 
         if (game.prestige_bought[12] >= 1)
             stats_str +=
                 "<br>You have " +
                 format_idec(game.crystal_spice, game.notation) +
-                " g crystallized spice."
+                spice_unit +
+                " crystallized spice."
 
         if (game.gamespeed !== 1) {
             if (game.collapse_challenge === 9)
@@ -10218,13 +10394,18 @@ function stats_update() {
                     format_time_long(
                         game.prestige_time_played,
                         game.notation,
+                        game.gamespeed,
                         true
                     ) +
                     " in this Prestige (game time)."
             else
                 stats_str +=
                     "<br><br>You have spent " +
-                    format_time_long(game.prestige_time_played, game.notation) +
+                    format_time_long(
+                        game.prestige_time_played,
+                        game.notation,
+                        game.gamespeed
+                    ) +
                     " in this Prestige (game time)."
 
             stats_str +=
@@ -10261,7 +10442,8 @@ function stats_update() {
                 stats_str +=
                     "<br>You have " +
                     format_idec(game.arcane_spice, game.notation) +
-                    " mg arcane spice."
+                    arcane_unit +
+                    " arcane spice."
 
             if (game.gamespeed !== 1) {
                 if (game.collapse_challenge === 9)
@@ -10270,6 +10452,7 @@ function stats_update() {
                         format_time_long(
                             game.ascend_time_played,
                             game.notation,
+                            game.gamespeed,
                             true
                         ) +
                         " in this Ascension (game time)."
@@ -10278,7 +10461,8 @@ function stats_update() {
                         "<br><br>You have spent " +
                         format_time_long(
                             game.ascend_time_played,
-                            game.notation
+                            game.notation,
+                            game.gamespeed
                         ) +
                         " in this Ascension (game time)."
 
@@ -10316,7 +10500,8 @@ function stats_update() {
         stats_str +=
             "<br>You have accumulated a total of " +
             format_idec(game.collapse_spice, game.notation) +
-            " g spice in this Collapse."
+            spice_unit +
+            " spice in this Collapse."
 
         if (game.gamespeed !== 1) {
             if (game.collapse_challenge === 9)
@@ -10325,13 +10510,18 @@ function stats_update() {
                     format_time_long(
                         game.collapse_time_played,
                         game.notation,
+                        game.gamespeed,
                         true
                     ) +
                     " in this Collapse (game time)."
             else
                 stats_str +=
                     "<br><br>You have spent " +
-                    format_time_long(game.collapse_time_played, game.notation) +
+                    format_time_long(
+                        game.collapse_time_played,
+                        game.notation,
+                        game.gamespeed
+                    ) +
                     " in this Collapse (game time)."
 
             stats_str +=
@@ -10349,7 +10539,11 @@ function stats_update() {
         if (game.gamespeed > 1)
             stats_str +=
                 "<br><br><br>You have played for a total of " +
-                format_time_long(game.total_time_played, game.notation) +
+                format_time_long(
+                    game.total_time_played,
+                    game.notation,
+                    game.gamespeed
+                ) +
                 " (game time).<br>The game is currently running " +
                 format_num(game.gamespeed, game.notation) +
                 "x faster.<br><br>You have played for a total of " +
@@ -10358,7 +10552,11 @@ function stats_update() {
         else
             stats_str +=
                 "<br><br><br>You have played for a total of " +
-                format_time_long(game.total_time_played, game.notation) +
+                format_time_long(
+                    game.total_time_played,
+                    game.notation,
+                    game.gamespeed
+                ) +
                 " (game time).<br>The game is currently running " +
                 format_num(1 / game.gamespeed, game.notation) +
                 "x slower.<br><br>You have played for a total of " +
@@ -10390,6 +10588,25 @@ function stats_update() {
                     game.prestige_time_history[i]
                 )
             )
+            stats_str +=
+                "<br>#" +
+                (i + 1) +
+                " took " +
+                format_time(game.prestige_time_history[i], game.notation, true)
+            if (game.prestige_real_time_history[i] !== -1)
+                stats_str +=
+                    " (" +
+                    format_time(
+                        game.prestige_real_time_history[i],
+                        game.notation,
+                        true
+                    ) +
+                    " real time)"
+            stats_str +=
+                " and gave " +
+                format_idec(game.prestige_amount_history[i], game.notation) +
+                rainbow_unit +
+                " rainbow spice."
             if (
                 game.prestige_amount_history[i]
                     .div(game.prestige_time_history[i])
@@ -10397,42 +10614,26 @@ function stats_update() {
                     .cmp(1) >= 0
             )
                 stats_str +=
-                    "<br>#" +
-                    (i + 1) +
-                    " took " +
-                    format_time(game.prestige_time_history[i], 0, true) +
-                    " and gave " +
-                    format_idec(
-                        game.prestige_amount_history[i],
-                        game.notation
-                    ) +
-                    " μg rainbow spice. +" +
+                    " +" +
                     format_idec(
                         game.prestige_amount_history[i]
                             .div(game.prestige_time_history[i])
                             .mul(60),
                         game.notation
                     ) +
-                    " μg rainbow spice/min"
+                    rainbow_unit +
+                    " rainbow spice/min"
             else
                 stats_str +=
-                    "<br>#" +
-                    (i + 1) +
-                    " took " +
-                    format_time(game.prestige_time_history[i], 0, true) +
-                    " and gave " +
-                    format_idec(
-                        game.prestige_amount_history[i],
-                        game.notation
-                    ) +
-                    " μg rainbow spice. +" +
+                    " +" +
                     format_idec(
                         game.prestige_amount_history[i]
                             .div(game.prestige_time_history[i])
                             .mul(3600),
                         game.notation
                     ) +
-                    " μg rainbow spice/hour"
+                    rainbow_unit +
+                    " rainbow spice/hour"
         }
     }
 
@@ -10442,12 +10643,14 @@ function stats_update() {
             stats_str +=
                 "<br><br>Average rainbow spice gain: +" +
                 format_idec(average.mul(60), game.notation) +
-                " μg rainbow spice/min"
+                rainbow_unit +
+                " rainbow spice/min"
         else
             stats_str +=
                 "<br><br>Average rainbow spice gain: +" +
                 format_idec(average.mul(3600), game.notation) +
-                " μg rainbow spice/hour"
+                rainbow_unit +
+                " rainbow spice/hour"
     } else {
         stats_str += "<br><br>Average rainbow spice gain: undefined"
     }
@@ -10485,19 +10688,35 @@ function stats_update() {
             entries++
             average +=
                 game.ascend_amount_history[i] / game.ascend_time_history[i]
+            stats_str += "<br>#" + (i + 1)
+            if (game.ascend_challenge_history[i] !== -1)
+                stats_str +=
+                    " was in Challenge " +
+                    game.ascend_challenge_history[i] +
+                    ","
+            stats_str +=
+                " took " +
+                format_time(game.ascend_time_history[i], game.notation, true)
+            if (game.ascend_real_time_history[i] !== 1)
+                stats_str +=
+                    " (" +
+                    format_time(
+                        game.ascend_real_time_history[i],
+                        game.notation,
+                        true
+                    ) +
+                    " real time)"
+            stats_str +=
+                " and gave " +
+                format_num(game.ascend_amount_history[i], game.notation) +
+                " ᚫ."
             if (
                 (game.ascend_amount_history[i] * 60) /
                     game.ascend_time_history[i] >=
                 1
             )
                 stats_str +=
-                    "<br>#" +
-                    (i + 1) +
-                    " took " +
-                    format_time(game.ascend_time_history[i], 0, true) +
-                    " and gave " +
-                    format_num(game.ascend_amount_history[i], game.notation) +
-                    " ᚫ. +" +
+                    " +" +
                     format_dec(
                         (game.ascend_amount_history[i] * 60) /
                             game.ascend_time_history[i],
@@ -10506,13 +10725,7 @@ function stats_update() {
                     " ᚫ/min"
             else
                 stats_str +=
-                    "<br>#" +
-                    (i + 1) +
-                    " took " +
-                    format_time(game.ascend_time_history[i], 0, true) +
-                    " and gave " +
-                    format_num(game.ascend_amount_history[i], game.notation) +
-                    " ᚫ. +" +
+                    " +" +
                     format_dec(
                         (game.ascend_amount_history[i] * 3600) /
                             game.ascend_time_history[i],
@@ -10570,22 +10783,35 @@ function stats_update() {
                     game.collapse_time_history[i]
                 )
             )
+            stats_str += "<br>#" + (i + 1)
+            if (game.collapse_challenge_history[i] !== -1)
+                stats_str +=
+                    " was in Challenge " +
+                    game.collapse_challenge_history[i] +
+                    ","
+            stats_str +=
+                " took " +
+                format_time(game.collapse_time_history[i], game.notation, true)
+            if (game.collapse_real_time_history[i] !== -1)
+                stats_str +=
+                    " (" +
+                    format_time(
+                        game.collapse_real_time_history[i],
+                        game.notation,
+                        true
+                    ) +
+                    " real time)"
+            stats_str +=
+                " and gave " +
+                format_inum(game.collapse_amount_history[i], game.notation) +
+                " atomic spice."
             if (
                 game.collapse_amount_history[i]
                     .mul(60 / game.collapse_time_history[i])
                     .cmp(1) >= 0
             )
                 stats_str +=
-                    "<br>#" +
-                    (i + 1) +
-                    " took " +
-                    format_time(game.collapse_time_history[i], 0, true) +
-                    " and gave " +
-                    format_inum(
-                        game.collapse_amount_history[i],
-                        game.notation
-                    ) +
-                    " atomic spice. +" +
+                    " +" +
                     format_idec(
                         game.collapse_amount_history[i].mul(
                             60 / game.collapse_time_history[i]
@@ -10595,16 +10821,7 @@ function stats_update() {
                     " atomic spice/min"
             else
                 stats_str +=
-                    "<br>#" +
-                    (i + 1) +
-                    " took " +
-                    format_time(game.collapse_time_history[i], 0, true) +
-                    " and gave " +
-                    format_inum(
-                        game.collapse_amount_history[i],
-                        game.notation
-                    ) +
-                    " atomic spice. +" +
+                    " +" +
                     format_idec(
                         game.collapse_amount_history[i].mul(
                             3600 / game.collapse_time_history[i]
@@ -10621,12 +10838,12 @@ function stats_update() {
             stats_str +=
                 "<br><br>Average atomic spice gain: +" +
                 format_idec(average.mul(60), game.notation) +
-                " atomic/min"
+                " atomic spice/min"
         else
             stats_str +=
                 "<br><br>Average atomic spice gain: +" +
                 format_idec(average.mul(3600), game.notation) +
-                " atomic/hour"
+                " atomic spice/hour"
     } else {
         stats_str += "<br><br>Average atomic spice gain: undefined"
     }
