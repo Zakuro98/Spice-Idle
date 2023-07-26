@@ -2353,11 +2353,13 @@ function format_cancer3(num, type) {
             return negative + cancer_alphabet3[1004]
         } else if (num < 1000) {
             if (type === "decimal") {
+                let integer = Math.floor(num)
+                if ((num * 1000) % 1000 >= 999.5) integer++
                 return (
                     negative +
-                    cancer_alphabet3[Math.floor(num)] +
+                    cancer_alphabet3[integer] +
                     cancer_alphabet3[1000] +
-                    cancer_alphabet3[Math.floor(num * 1000) % 1000]
+                    cancer_alphabet3[Math.round(num * 1000) % 1000]
                 )
             } else {
                 return negative + cancer_alphabet3[Math.floor(num)]
@@ -2372,11 +2374,13 @@ function format_cancer3(num, type) {
         } else {
             let exponent = Math.floor(Math.log10(num))
             let mantissa = 10 ** (Math.log10(num) - exponent)
+            let integer = Math.floor(mantissa)
+            if ((mantissa * 1000) % 1000 >= 999.5) integer++
             return (
                 negative +
-                cancer_alphabet3[Math.floor(mantissa)] +
+                cancer_alphabet3[integer] +
                 cancer_alphabet3[1000] +
-                cancer_alphabet3[Math.floor(mantissa * 1000) % 1000] +
+                cancer_alphabet3[Math.round(mantissa * 1000) % 1000] +
                 cancer_alphabet3[1002] +
                 format_cancer3(exponent, "number")
             )
@@ -2391,11 +2395,13 @@ function format_cancer3(num, type) {
             return negative + cancer_alphabet3[1004]
         } else if (num.cmp(1000) === -1) {
             if (type === "decimal") {
+                let integer = num.floor().toNumber()
+                if (num.mul(1000).toNumber() % 1000 >= 999.5) integer++
                 return (
                     negative +
-                    cancer_alphabet3[num.floor().toNumber()] +
+                    cancer_alphabet3[integer] +
                     cancer_alphabet3[1000] +
-                    cancer_alphabet3[num.mul(1000).floor().toNumber() % 1000]
+                    cancer_alphabet3[num.mul(1000).round().toNumber() % 1000]
                 )
             } else {
                 return negative + cancer_alphabet3[num.floor().toNumber()]
@@ -2408,11 +2414,13 @@ function format_cancer3(num, type) {
                 cancer_alphabet3[num.floor().toNumber() % 1000]
             )
         } else {
+            let integer = Math.floor(num.mantissa)
+            if ((num.mantissa * 1000) % 1000 >= 999.5) integer++
             return (
                 negative +
-                cancer_alphabet3[Math.floor(num.mantissa)] +
+                cancer_alphabet3[integer] +
                 cancer_alphabet3[1000] +
-                cancer_alphabet3[Math.floor(num.mantissa * 1000) % 1000] +
+                cancer_alphabet3[Math.round(num.mantissa * 1000) % 1000] +
                 cancer_alphabet3[1002] +
                 format_cancer3(num.exponent, "number")
             )
