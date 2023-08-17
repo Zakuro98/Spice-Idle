@@ -4990,7 +4990,7 @@ function hotkey_tick() {
 
 //saving the game
 function save() {
-    game.version = "1.6.4"
+    game.version = "1.6.5"
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
         game.prestige_price[u.id] = u.price
@@ -5570,9 +5570,14 @@ function load(savegame) {
             game.collapse_real_time_history = new Array(10).fill(-1)
             game.collapse_challenge_history = new Array(10).fill(-1)
         }
+
+        if ((major === 6 && minor < 5) || major < 6) {
+            if (game.prestige_price[13] !== Decimal.pow(2, 63))
+                game.prestige_price[13] = Decimal.pow(2, 63)
+        }
     }
 
-    game.version = "1.6.4"
+    game.version = "1.6.5"
 
     game.realm_limit = new Decimal(game.realm_limit)
 
