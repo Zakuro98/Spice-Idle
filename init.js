@@ -6,7 +6,7 @@ BigInt.prototype.toJSON = function () {
 
 //initializing game variables
 let game = {
-    version: "1.6.4",
+    version: "1.6.5",
 
     tickspeed: 100,
     gamespeed: 1,
@@ -1100,7 +1100,7 @@ new prestige_upgrade("Unlocks crystallized spice", new Decimal(2).pow(56), 1)
 //[13]
 new prestige_upgrade(
     "Unlocks automation for crystal infusions",
-    new Decimal(2).pow(66),
+    new Decimal(2).pow(63),
     1
 )
 //[14]
