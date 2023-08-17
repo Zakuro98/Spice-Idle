@@ -3716,6 +3716,12 @@ function prestige_update() {
                                 "s"
                         break
                 }
+            } else {
+                efficiency_str +=
+                    "<br>Peak: +" +
+                    format_idec(game.peak_rainbow_gain.mul(60), game.notation) +
+                    rainbow_unit +
+                    " rainbow spice/min"
             }
 
             document.getElementById("prestige_efficiency").innerHTML =
@@ -3731,7 +3737,29 @@ function prestige_update() {
         document.getElementById("prestige_req").style.color = "grey"
         document.getElementById("prestige_req").innerHTML =
             "10 color boosts required"
-        document.getElementById("prestige_efficiency").style.display = "none"
+
+        if (game.resource_efficiency) {
+            document.getElementById("prestige_efficiency").style.display =
+                "block"
+
+            let efficiency_str =
+                "Currently: +" +
+                format_dec(0, game.notation) +
+                rainbow_unit +
+                " rainbow spice/min"
+
+            efficiency_str +=
+                "<br>Peak: +" +
+                format_dec(0, game.notation) +
+                rainbow_unit +
+                " rainbow spice/min"
+
+            document.getElementById("prestige_efficiency").innerHTML =
+                efficiency_str
+        } else {
+            document.getElementById("prestige_efficiency").style.display =
+                "none"
+        }
     }
 
     if (game.prestige_bought[12] >= 1) {
@@ -5262,6 +5290,11 @@ function ascension_update() {
                                 "s"
                         break
                 }
+            } else {
+                efficiency_str +=
+                    "<br>Peak: +" +
+                    format_dec(game.peak_ansuz_gain * 60, game.notation) +
+                    " ᚫ/min"
             }
 
             document.getElementById("ascend_efficiency").innerHTML =
@@ -5278,7 +5311,21 @@ function ascension_update() {
             format_idec(goal, game.notation) +
             rainbow_unit +
             " rainbow spice required"
-        document.getElementById("ascend_efficiency").style.display = "none"
+
+        if (game.resource_efficiency) {
+            document.getElementById("ascend_efficiency").style.display = "block"
+
+            let efficiency_str =
+                "Currently: +" + format_dec(0, game.notation) + " ᚫ/min"
+
+            efficiency_str +=
+                "<br>Peak: +" + format_dec(0, game.notation) + " ᚫ/min"
+
+            document.getElementById("ascend_efficiency").innerHTML =
+                efficiency_str
+        } else {
+            document.getElementById("ascend_efficiency").style.display = "none"
+        }
     }
 
     document.getElementById("ansuz_num").innerHTML =
@@ -7004,6 +7051,11 @@ function collapse_update() {
                                 "s"
                         break
                 }
+            } else {
+                efficiency_str +=
+                    "<br>Peak: +" +
+                    format_idec(game.peak_atomic_gain.mul(60), game.notation) +
+                    " atomic spice/min"
             }
 
             document.getElementById("collapse_efficiency").innerHTML =
@@ -7036,7 +7088,26 @@ function collapse_update() {
                 "Challenge 6 required"
         }
 
-        document.getElementById("collapse_efficiency").style.display = "none"
+        if (game.resource_efficiency) {
+            document.getElementById("collapse_efficiency").style.display =
+                "block"
+
+            let efficiency_str =
+                "Currently: +" +
+                format_dec(0, game.notation) +
+                " atomic spice/min"
+
+            efficiency_str +=
+                "<br>Peak: +" +
+                format_dec(0, game.notation) +
+                " atomic spice/min"
+
+            document.getElementById("collapse_efficiency").innerHTML =
+                efficiency_str
+        } else {
+            document.getElementById("collapse_efficiency").style.display =
+                "none"
+        }
     }
 
     document.getElementById("atomic_spice_num").innerHTML = format_inum(
@@ -10697,7 +10768,7 @@ function stats_update() {
             stats_str +=
                 " took " +
                 format_time(game.ascend_time_history[i], game.notation, true)
-            if (game.ascend_real_time_history[i] !== 1)
+            if (game.ascend_real_time_history[i] !== -1)
                 stats_str +=
                     " (" +
                     format_time(
