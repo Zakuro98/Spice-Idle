@@ -4504,12 +4504,10 @@ function switch_key(eventcode, state) {
     if (eventcode.startsWith("Digit")) {
         // is it a "Digit" key, between 1 and 6? change its state to 'state'
         if (
-            parseInt(
-                eventcode.substring(5) >= 1 &&
-                    parseInt(eventcode.substring(5) <= 6)
-            )
+            parseInt(eventcode.substring(5)) >= 1 &&
+            parseInt(eventcode.substring(5)) <= 6
         ) {
-            key.digit[parseInt(eventcode.substring(5))] = state
+            key.digit[parseInt(eventcode.substring(5)) - 1] = state
         }
     } else if (eventcode.startsWith("Key")) {
         // a "Key"-key? and in a list? change its state to 'state'
