@@ -2285,8 +2285,11 @@ function max_all(color) {
             budget = Math.floor(budget2 / generators)
             for (let i = 5; i >= 0; i--) {
                 let temp_budget = budget
-                if (game.arcane_spice_bought[i] === 0n)
+                if (game.arcane_spice_bought[i] === 0n) {
+                    let old_budget = temp_budget
                     temp_budget = buy_gen("arcane", i, temp_budget)
+                    budget2 = Math.max(budget2 + temp_budget - old_budget, 0)
+                }
                 let m = BigInt(
                     Math.floor(
                         Math.log10(
@@ -2308,6 +2311,7 @@ function max_all(color) {
                     )
                     game.ansuz = Math.max(game.ansuz - price, 0)
                     temp_budget = Math.max(temp_budget - price, 0)
+                    budget2 = Math.max(budget2 - price, 0)
                     game.arcane_spice_price[i] *= 1.1 ** m.toString()
                     game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(
                         m.toString()
