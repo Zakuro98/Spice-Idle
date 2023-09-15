@@ -2350,7 +2350,7 @@ function max_all(color) {
                             -0.1
                     )
                     game.ansuz = Math.max(game.ansuz - price, 0)
-                    temp_budget = Math.max(temp_budget - price, 0)
+                    budget2 = Math.max(budget2 - price, 0)
                     game.arcane_spice_price[i] *= 1.1 ** m.toString()
                     game.arcane_spice_gen[i] = game.arcane_spice_gen[i].add(
                         m.toString()
