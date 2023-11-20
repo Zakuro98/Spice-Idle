@@ -6,7 +6,7 @@ BigInt.prototype.toJSON = function () {
 
 //initializing game variables
 let game = {
-    version: "1.6.5",
+    version: "1.7.0",
 
     tickspeed: 100,
     gamespeed: 1,
@@ -40,9 +40,9 @@ let game = {
         new Decimal(5),
         new Decimal(150),
         new Decimal(30000),
-        new Decimal(4.5 * 10 ** 8),
-        new Decimal(6 * 10 ** 13),
-        new Decimal(9 * 10 ** 20),
+        new Decimal(4.5e8),
+        new Decimal(6e13),
+        new Decimal(9e20),
     ],
     red_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     red_spice_boost: [
@@ -79,9 +79,9 @@ let game = {
         new Decimal(5),
         new Decimal(250),
         new Decimal(60000),
-        new Decimal(2 * 10 ** 9),
-        new Decimal(3 * 10 ** 14),
-        new Decimal(5.5 * 10 ** 21),
+        new Decimal(2e9),
+        new Decimal(3e14),
+        new Decimal(5.5e21),
     ],
     yellow_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     yellow_spice_boost: [
@@ -118,9 +118,9 @@ let game = {
         new Decimal(5),
         new Decimal(350),
         new Decimal(100000),
-        new Decimal(7 * 10 ** 9),
-        new Decimal(1.5 * 10 ** 15),
-        new Decimal(3 * 10 ** 22),
+        new Decimal(7e9),
+        new Decimal(1.5e15),
+        new Decimal(3e22),
     ],
     green_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     green_spice_boost: [
@@ -157,9 +157,9 @@ let game = {
         new Decimal(5),
         new Decimal(500),
         new Decimal(250000),
-        new Decimal(3 * 10 ** 10),
-        new Decimal(7.5 * 10 ** 15),
-        new Decimal(2 * 10 ** 23),
+        new Decimal(3e10),
+        new Decimal(7.5e15),
+        new Decimal(2e23),
     ],
     blue_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     blue_spice_boost: [
@@ -180,7 +180,7 @@ let game = {
     ],
 
     blue_strengthener: 0,
-    blue_strengthener_price: new Decimal(2.5 * 10 ** 7),
+    blue_strengthener_price: new Decimal(2.5e7),
 
     pink_spice: new Decimal(5),
     highest_pink_spice: new Decimal(5),
@@ -196,9 +196,9 @@ let game = {
         new Decimal(5),
         new Decimal(750),
         new Decimal(500000),
-        new Decimal(10 ** 11),
-        new Decimal(4 * 10 ** 16),
-        new Decimal(10 ** 22),
+        new Decimal(1e11),
+        new Decimal(4e16),
+        new Decimal(1e24),
     ],
     pink_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     pink_spice_boost: [
@@ -219,7 +219,7 @@ let game = {
     ],
 
     pink_strengthener: 0,
-    pink_strengthener_price: new Decimal(8 * 10 ** 7),
+    pink_strengthener_price: new Decimal(8e7),
 
     total_spice: new Decimal(5),
     collapse_spice: new Decimal(5),
@@ -290,21 +290,23 @@ let game = {
     autopr_goal2: [0, new Decimal(1)],
 
     ascend: 0,
-    ansuz: 0,
-    rune: new Array(3).fill(0),
-    rune_power: new Array(3).fill(0),
-    total_rune_power: 0,
+    ansuz: new Decimal(0),
+    rune: [new Decimal(0), new Decimal(0), new Decimal(0)],
+    rune_power: [new Decimal(0), new Decimal(0), new Decimal(0)],
+    total_rune_power: new Decimal(0),
     rune_boost: [new Decimal(1), new Decimal(1), new Decimal(1)],
     distribute_unlocked: false,
     half_distribute_unlocked: false,
 
     ascend_bought: new Array(35).fill(false),
-    autoup_toggle: false,
+    autoup_toggle: [false, false],
     autocr_toggle: false,
 
     autoas_toggle: false,
     autoas_mode: 0,
-    autoas_goal: [1, 30],
+    autoas_goal: [new Decimal(1), 30],
+    autoas_delta: new Decimal(5),
+    autoas_goal2: new Decimal(1),
 
     ascend_amount_history: new Array(10).fill(-1),
     ascend_time_history: new Array(10).fill(-1),
@@ -327,12 +329,12 @@ let game = {
         new Decimal(0),
     ],
     arcane_spice_price: [
-        20000,
-        100000,
-        600000,
-        3.5 * 10 ** 7,
-        3 * 10 ** 9,
-        4 * 10 ** 11,
+        new Decimal(531441),
+        Decimal.pow(3, 16),
+        Decimal.pow(3, 20),
+        Decimal.pow(3, 36),
+        Decimal.pow(3, 73),
+        Decimal.pow(3, 110),
     ],
     arcane_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     arcane_spice_boost: [
@@ -355,7 +357,7 @@ let game = {
     arcane_max_unlocked: false,
 
     arcane_strengthener: 0,
-    arcane_strengthener_price: 5000000,
+    arcane_strengthener_price: Decimal.pow(3, 24),
 
     arcane_enchantment: 0n,
     free_enchantment: 0n,
@@ -369,9 +371,10 @@ let game = {
     unstable_spice: new Decimal(0),
     total_unstable_spice: new Decimal(0),
     decayed_spice: new Decimal(0),
+    decay_time: 0,
     unstable_boost: new Decimal(1),
 
-    halflife: 300,
+    halflife: 1800,
     atomic_efficiency: 0.6,
     atomic_portion: 1,
 
@@ -385,18 +388,19 @@ let game = {
     research_view: 0,
     research_select: 0,
     research_pause: true,
-    research_complete: new Array(38).fill(0),
-    data: new Array(38).fill(0),
+    research_complete: new Array(40).fill(0),
+    data: new Array(40).fill(0),
     data_boosts: 0,
 
     autods_toggle: false,
-    autods_portion: [0.5, 0, 0, 0, 0],
-    autods_budget: [0, 0, 0],
+    autods_portion: 0.5,
+    autods_budget: new Decimal(0),
+
+    autoar_toggle: false,
 
     autoco_toggle: false,
     autoco_mode: 0,
-    autoco_goal: [new Decimal(10 ** 50), 120],
-    autoco_stop: [new Decimal(10 ** 25), 60],
+    autoco_goal: [new Decimal(1e50), 120, 10],
 
     autosc_toggle: false,
 
@@ -406,7 +410,7 @@ let game = {
     pending_goal: new Decimal(1),
 
     free_deity: new Decimal(0),
-    augment_start: 2000000,
+    augment_start: 2097152,
 
     collider_tab: 0,
     antispice: [
@@ -441,7 +445,7 @@ let game = {
     antispice_order: new Array(8).fill(0),
 
     limit_active: false,
-    realm_limit: new Decimal("3.3383819898588070e+154271828182845904"),
+    realm_limit: new Decimal("1.7193341424918277e+4022718281828459045"),
     red_limit: [
         new Decimal(0),
         new Decimal(0),
@@ -504,8 +508,8 @@ let game = {
     peak_rainbow_amount: new Decimal(0),
     peak_rainbow_time: 0,
 
-    peak_ansuz_gain: 0,
-    peak_ansuz_amount: 0,
+    peak_ansuz_gain: new Decimal(0),
+    peak_ansuz_amount: new Decimal(0),
     peak_ansuz_time: 0,
 
     peak_atomic_gain: new Decimal(0),
@@ -574,13 +578,10 @@ function format_small(num, not) {
     } else if (not === 17) {
         return format_cancer3(num, "number")
     } else {
-        if ((not === 2 && num >= 10 ** 9) || (not === 12 && num >= 10 ** 36)) {
+        if ((not === 2 && num >= 1e9) || (not === 12 && num >= 1e36)) {
             let mantissa = num / 10 ** Math.floor(Math.log10(num))
             return mantissa.toFixed(6) + "e" + Math.floor(Math.log10(num))
-        } else if (
-            (not === 3 && num >= 10 ** 9) ||
-            (not === 13 && num >= 10 ** 36)
-        ) {
+        } else if ((not === 3 && num >= 1e9) || (not === 13 && num >= 1e36)) {
             let exponent = Math.floor(Math.log10(num) / 3) * 3
             let mantissa = num / 10 ** exponent
             if (mantissa < 10) {
@@ -591,8 +592,8 @@ function format_small(num, not) {
                 return mantissa.toFixed(4) + "e" + exponent
             }
         } else if (
-            (not === 4 && num >= 10 ** 9) ||
-            ((not === 12 || not === 13) && num >= 10 ** 9 && num < 10 ** 36)
+            (not === 4 && num >= 1e9) ||
+            ((not === 12 || not === 13) && num >= 1e9 && num < 1e36)
         ) {
             const single_array_cond = [
                 "",
@@ -653,9 +654,9 @@ function format_small(num, not) {
             }
 
             return lead_str + " " + one_str + ten_str
-        } else if (not === 5 && num >= 10 ** 9) {
+        } else if (not === 5 && num >= 1e9) {
             return "e" + Math.log10(num).toFixed(6)
-        } else if (not === 6 && num >= 10 ** 9) {
+        } else if (not === 6 && num >= 1e9) {
             const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             let order = Math.floor(Math.log10(num) / 3) - 1
             let lead = num / 10 ** (3 * order + 3)
@@ -689,7 +690,7 @@ function format_small(num, not) {
             }
 
             return output
-        } else if (not === 7 && num >= 10 ** 9) {
+        } else if (not === 7 && num >= 1e9) {
             const cancer_alphabet =
                 "😠🎂🎄💀🍆🐱🌈💯🍦🎃💋😂🌙⛔🐙💩❓😡🙈👍🌂✌😩❌🪀⚡"
             let order = Math.floor(Math.log10(num) / 3) - 1
@@ -724,11 +725,10 @@ function format_small(num, not) {
             }
 
             return output
-        } else if (not === 9 && num >= 10 ** 9) {
-            let exponent =
-                Math.log(num) / Math.log(1.7976931348622053 * 10 ** 308)
+        } else if (not === 9 && num >= 1e9) {
+            let exponent = Math.log(num) / Math.log(1.7976931348622053e308)
             return exponent.toFixed(6) + "∞"
-        } else if (not === 16 && num >= 10 ** 9) {
+        } else if (not === 16 && num >= 1e9) {
             return format_cancer2(num, 6)
         } else {
             return format_num(num, 0)
@@ -943,51 +943,51 @@ class spice_gen {
 new spice_gen("red", 0, new Decimal(5), "harvester", "harvesters")
 new spice_gen("red", 1, new Decimal(150), "machine", "machines")
 new spice_gen("red", 2, new Decimal(30000), "factory", "factories")
-new spice_gen("red", 3, new Decimal(4.5 * 10 ** 8), "agency", "agencies")
-new spice_gen("red", 4, new Decimal(6 * 10 ** 13), "planet", "planets")
-new spice_gen("red", 5, new Decimal(9 * 10 ** 20), "galaxy", "galaxies")
+new spice_gen("red", 3, new Decimal(4.5e8), "corporation", "corporations")
+new spice_gen("red", 4, new Decimal(6e13), "planet", "planets")
+new spice_gen("red", 5, new Decimal(9e20), "galaxy", "galaxies")
 //yellow
 new spice_gen("yellow", 0, new Decimal(5), "harvester", "harvesters")
 new spice_gen("yellow", 1, new Decimal(250), "machine", "machines")
 new spice_gen("yellow", 2, new Decimal(60000), "factory", "factories")
-new spice_gen("yellow", 3, new Decimal(2 * 10 ** 9), "agency", "agencies")
-new spice_gen("yellow", 4, new Decimal(3 * 10 ** 14), "planet", "planets")
-new spice_gen("yellow", 5, new Decimal(5.5 * 10 ** 21), "galaxy", "galaxies")
+new spice_gen("yellow", 3, new Decimal(2e9), "corporation", "corporations")
+new spice_gen("yellow", 4, new Decimal(3e14), "planet", "planets")
+new spice_gen("yellow", 5, new Decimal(5.5e21), "galaxy", "galaxies")
 //green
 new spice_gen("green", 0, new Decimal(5), "harvester", "harvesters")
 new spice_gen("green", 1, new Decimal(350), "machine", "machines")
 new spice_gen("green", 2, new Decimal(100000), "factory", "factories")
-new spice_gen("green", 3, new Decimal(7 * 10 ** 9), "agency", "agencies")
-new spice_gen("green", 4, new Decimal(1.5 * 10 ** 15), "planet", "planets")
-new spice_gen("green", 5, new Decimal(3 * 10 ** 22), "galaxy", "galaxies")
+new spice_gen("green", 3, new Decimal(7e9), "corporation", "corporations")
+new spice_gen("green", 4, new Decimal(1.5e15), "planet", "planets")
+new spice_gen("green", 5, new Decimal(3e22), "galaxy", "galaxies")
 //blue
 new spice_gen("blue", 0, new Decimal(5), "harvester", "harvesters")
 new spice_gen("blue", 1, new Decimal(500), "machine", "machines")
 new spice_gen("blue", 2, new Decimal(250000), "factory", "factories")
-new spice_gen("blue", 3, new Decimal(3 * 10 ** 10), "agency", "agencies")
-new spice_gen("blue", 4, new Decimal(7.5 * 10 ** 15), "planet", "planets")
-new spice_gen("blue", 5, new Decimal(2 * 10 ** 23), "galaxy", "galaxies")
+new spice_gen("blue", 3, new Decimal(3e10), "corporation", "corporations")
+new spice_gen("blue", 4, new Decimal(7.5e15), "planet", "planets")
+new spice_gen("blue", 5, new Decimal(2e23), "galaxy", "galaxies")
 //pink
 new spice_gen("pink", 0, new Decimal(5), "harvester", "harvesters")
 new spice_gen("pink", 1, new Decimal(750), "machine", "machines")
 new spice_gen("pink", 2, new Decimal(500000), "factory", "factories")
-new spice_gen("pink", 3, new Decimal(10 ** 11), "agency", "agencies")
-new spice_gen("pink", 4, new Decimal(4 * 10 ** 16), "planet", "planets")
-new spice_gen("pink", 5, new Decimal(10 ** 24), "galaxy", "galaxies")
+new spice_gen("pink", 3, new Decimal(1e11), "corporation", "corporations")
+new spice_gen("pink", 4, new Decimal(4e16), "planet", "planets")
+new spice_gen("pink", 5, new Decimal(1e24), "galaxy", "galaxies")
 //crystal
 new spice_gen("crystal", 0, Decimal.pow(2, 56), "furnace", "furnaces")
 new spice_gen("crystal", 1, Decimal.pow(2, 62), "refinery", "refineries")
-new spice_gen("crystal", 2, Decimal.pow(2, 68), "headquarters", "headquarters")
-new spice_gen("crystal", 3, Decimal.pow(2, 84), "industry", "industries")
-new spice_gen("crystal", 4, Decimal.pow(2, 100), "empire", "empires")
-new spice_gen("crystal", 5, Decimal.pow(2, 124), "singularity", "singularities")
+new spice_gen("crystal", 2, Decimal.pow(2, 68), "division", "divisions")
+new spice_gen("crystal", 3, Decimal.pow(2, 84), "corporation", "corporations")
+new spice_gen("crystal", 4, Decimal.pow(2, 100), "planet", "planets")
+new spice_gen("crystal", 5, Decimal.pow(2, 124), "galaxy", "galaxies")
 //arcane
-new spice_gen("arcane", 0, 20000, "glyph", "glyphs")
-new spice_gen("arcane", 1, 100000, "spellbook", "spellbooks")
-new spice_gen("arcane", 2, 600000, "wizard", "wizards")
-new spice_gen("arcane", 3, 3.5 * 10 ** 7, "shrine", "shrines")
-new spice_gen("arcane", 4, 3 * 10 ** 9, "cult", "cults")
-new spice_gen("arcane", 5, 4 * 10 ** 11, "deity", "deities")
+new spice_gen("arcane", 0, new Decimal(531441), "glyph", "glyphs")
+new spice_gen("arcane", 1, Decimal.pow(3, 16), "spellbook", "spellbooks")
+new spice_gen("arcane", 2, Decimal.pow(3, 20), "wizard", "wizards")
+new spice_gen("arcane", 3, Decimal.pow(3, 36), "shrine", "shrines")
+new spice_gen("arcane", 4, Decimal.pow(3, 73), "cult", "cults")
+new spice_gen("arcane", 5, Decimal.pow(3, 110), "deity", "deities")
 //done initializing spice generators
 
 //prestige upgrade class
@@ -1169,18 +1169,6 @@ new prestige_upgrade(
 new prestige_upgrade("Unlocks Ascension", new Decimal(2).pow(1024), 1)
 //done initializing prestige upgrades
 
-//setting up lines between ascension upgrades
-function get_offset(element) {
-    let rect = element.getBoundingClientRect()
-    let page = document.getElementById("ascension_upgrade_panel")
-    return {
-        left: rect.left + window.pageXOffset,
-        top: rect.top + window.pageYOffset,
-        width: rect.width || element.offsetWidth,
-        height: rect.height || element.offsetHeight,
-    }
-}
-
 //ascension upgrade class
 class ascension_upgrade {
     static upgrades = []
@@ -1292,8 +1280,8 @@ class ascension_upgrade {
 //initializing ascension upgrades
 //[0]
 new ascension_upgrade(
-    "The boost from red spice amount is 50% stronger",
-    1,
+    "The boost from red spice amount is 2x stronger",
+    new Decimal(1),
     undefined,
     undefined,
     "0em",
@@ -1303,7 +1291,7 @@ new ascension_upgrade(
 //[1]
 new ascension_upgrade(
     "The boost from Times Prestiged stat is stronger",
-    3,
+    new Decimal(3),
     0,
     undefined,
     "0em",
@@ -1313,7 +1301,7 @@ new ascension_upgrade(
 //[2]
 new ascension_upgrade(
     "Increase boost from strengtheners/boosts<br>(2.00x -> 4.00x)",
-    6,
+    new Decimal(6),
     1,
     undefined,
     "0em",
@@ -1323,7 +1311,7 @@ new ascension_upgrade(
 //[3]
 new ascension_upgrade(
     "Quality of life Prestige upgrades are not reset by Ascension",
-    10,
+    new Decimal(10),
     2,
     undefined,
     "0em",
@@ -1333,7 +1321,7 @@ new ascension_upgrade(
 //[4]
 new ascension_upgrade(
     "Crystallized spice generator multipliers are stronger",
-    24,
+    new Decimal(21),
     3,
     undefined,
     "10em",
@@ -1342,8 +1330,8 @@ new ascension_upgrade(
 )
 //[5]
 new ascension_upgrade(
-    "You get twice as many free crystal infusions",
-    100,
+    "The free crystal infusions upgrade is uncapped",
+    new Decimal(78),
     4,
     undefined,
     "10em",
@@ -1353,7 +1341,7 @@ new ascension_upgrade(
 //[6]
 new ascension_upgrade(
     "Crystal infusions boost crystallized spice production 1.12x",
-    300,
+    new Decimal(210),
     5,
     undefined,
     "10em",
@@ -1362,8 +1350,8 @@ new ascension_upgrade(
 )
 //[7]
 new ascension_upgrade(
-    "Crystal infusions are 10% stronger",
-    800,
+    "Crystal infusions are 25% stronger",
+    new Decimal(1378),
     6,
     undefined,
     "20em",
@@ -1373,7 +1361,7 @@ new ascension_upgrade(
 //[8]
 new ascension_upgrade(
     "Unlocks automation for Prestige upgrades",
-    15,
+    new Decimal(15),
     3,
     undefined,
     "-10em",
@@ -1383,7 +1371,7 @@ new ascension_upgrade(
 //[9]
 new ascension_upgrade(
     "Unlocks more options for Prestige automation",
-    30,
+    new Decimal(28),
     8,
     undefined,
     "-10em",
@@ -1393,7 +1381,7 @@ new ascension_upgrade(
 //[10]
 new ascension_upgrade(
     "Unlocks automation for crystallized spice",
-    60,
+    new Decimal(45),
     9,
     undefined,
     "-10em",
@@ -1403,7 +1391,7 @@ new ascension_upgrade(
 //[11]
 new ascension_upgrade(
     "Strengtheners are 2x stronger",
-    500,
+    new Decimal(666),
     10,
     undefined,
     "-20em",
@@ -1413,7 +1401,7 @@ new ascension_upgrade(
 //[12]
 new ascension_upgrade(
     "Unlocks automation for Ascension",
-    1000,
+    new Decimal(3240),
     6,
     10,
     "0em",
@@ -1423,7 +1411,7 @@ new ascension_upgrade(
 //[13]
 new ascension_upgrade(
     "Pink spice boosts crystallized spice by its amount",
-    5000,
+    new Decimal(29646),
     12,
     undefined,
     "0em",
@@ -1433,7 +1421,7 @@ new ascension_upgrade(
 //[14]
 new ascension_upgrade(
     "Increase boost from strengtheners/boosts<br>(4.00x -> 6.00x)",
-    30000,
+    new Decimal(169071),
     13,
     undefined,
     "0em",
@@ -1443,7 +1431,7 @@ new ascension_upgrade(
 //[15]
 new ascension_upgrade(
     "Times Ascended stat boosts rainbow spice gains<br>(Currently: 1.00x)",
-    140000,
+    new Decimal(508536),
     14,
     undefined,
     "0em",
@@ -1453,7 +1441,7 @@ new ascension_upgrade(
 //[16]
 new ascension_upgrade(
     "Unlocks Challenge 1",
-    500000,
+    new Decimal(7336365),
     15,
     undefined,
     "0em",
@@ -1463,7 +1451,7 @@ new ascension_upgrade(
 //[17]
 new ascension_upgrade(
     "Unlocks automation for arcane enchantments",
-    1000000,
+    new Decimal(66027286),
     16,
     undefined,
     "-10em",
@@ -1473,7 +1461,7 @@ new ascension_upgrade(
 //[18]
 new ascension_upgrade(
     "Red spice boosts crystallized spice by its amount",
-    3 * 10 ** 7,
+    new Decimal(9.007199321849856e15),
     17,
     undefined,
     "-10em",
@@ -1483,7 +1471,7 @@ new ascension_upgrade(
 //[19]
 new ascension_upgrade(
     "Arcane spice is boosted based on unused Ansuz runes<br>(Currently: 1.00x)",
-    2.5 * 10 ** 11,
+    new Decimal(2.0858168697697163e64),
     18,
     undefined,
     "-10em",
@@ -1493,7 +1481,7 @@ new ascension_upgrade(
 //[20]
 new ascension_upgrade(
     "Unlocks Challenge 2",
-    10 ** 8,
+    new Decimal(1.3358218289289167e21),
     18,
     undefined,
     "-30em",
@@ -1503,7 +1491,7 @@ new ascension_upgrade(
 //[21]
 new ascension_upgrade(
     "You gain 1x more Times Prestiged stat<br>(based on color boosts)",
-    5000000,
+    new Decimal(55616627886),
     16,
     undefined,
     "10em",
@@ -1513,7 +1501,7 @@ new ascension_upgrade(
 //[22]
 new ascension_upgrade(
     "Arcane spice boosts crystallized spice by its amount",
-    10 ** 9,
+    new Decimal(4.137798775129687e30),
     21,
     undefined,
     "10em",
@@ -1523,7 +1511,7 @@ new ascension_upgrade(
 //[23]
 new ascension_upgrade(
     "Times Prestiged stat is no longer reset by Ascension",
-    10 ** 10,
+    new Decimal(8.265338067592353e39),
     22,
     undefined,
     "10em",
@@ -1533,7 +1521,7 @@ new ascension_upgrade(
 //[24]
 new ascension_upgrade(
     "Unlocks Challenge 3",
-    5 * 10 ** 10,
+    new Decimal(2.1468841175406798e48),
     22,
     undefined,
     "30em",
@@ -1543,7 +1531,7 @@ new ascension_upgrade(
 //[25]
 new ascension_upgrade(
     "You gain 10% of your pending rainbow spice every second",
-    10 ** 12,
+    new Decimal(9.080499396228733e80),
     19,
     23,
     "0em",
@@ -1552,8 +1540,8 @@ new ascension_upgrade(
 )
 //[26]
 new ascension_upgrade(
-    "Boosts from rune power are 2x stronger",
-    10 ** 13,
+    "Boosts from rune power are 50% stronger",
+    new Decimal(3.9793885882016265e98),
     25,
     undefined,
     "0em",
@@ -1563,7 +1551,7 @@ new ascension_upgrade(
 //[27]
 new ascension_upgrade(
     "Unlocks Challenge 4",
-    3 * 10 ** 14,
+    new Decimal(6.445853992274074e132),
     26,
     undefined,
     "-10em",
@@ -1573,7 +1561,7 @@ new ascension_upgrade(
 //[28]
 new ascension_upgrade(
     "Unlocks Challenge 5",
-    10 ** 17,
+    new Decimal(3.8710489717794272e256),
     26,
     undefined,
     "10em",
@@ -1582,8 +1570,8 @@ new ascension_upgrade(
 )
 //[29]
 new ascension_upgrade(
-    "Arcane enchantments also boost arcane spice production 1.34x",
-    6 * 10 ** 15,
+    "Arcane enchantments also boost arcane spice production 1.08x",
+    new Decimal(1.7353473718952628e180),
     27,
     undefined,
     "-20em",
@@ -1593,7 +1581,7 @@ new ascension_upgrade(
 //[30]
 new ascension_upgrade(
     "Red spice boosts arcane spice by its amount",
-    10 ** 18,
+    Decimal.pow(10, 385).mul(4.3167666593814529),
     28,
     undefined,
     "20em",
@@ -1603,7 +1591,7 @@ new ascension_upgrade(
 //[31]
 new ascension_upgrade(
     "Arcane spice boosts itself by its amount",
-    3 * 10 ** 19,
+    Decimal.pow(10, 501).mul(7.5039392714382114),
     27,
     28,
     "0em",
@@ -1612,8 +1600,8 @@ new ascension_upgrade(
 )
 //[32]
 new ascension_upgrade(
-    "Arcane spice glyphs produce crystallized spice singularities",
-    5 * 10 ** 20,
+    "Arcane spice glyphs produce crystallized spice galaxies",
+    Decimal.pow(10, 727).mul(4.4308334327402763),
     31,
     undefined,
     "0em",
@@ -1622,8 +1610,8 @@ new ascension_upgrade(
 )
 //[33]
 new ascension_upgrade(
-    "Boosts from rune power are 8x stronger",
-    10 ** 22,
+    "Boosts from rune power are now 3x stronger",
+    Decimal.pow(10, 987).mul(2.424227028858335),
     32,
     undefined,
     "0em",
@@ -1633,7 +1621,7 @@ new ascension_upgrade(
 //[34]
 new ascension_upgrade(
     "Unlocks Challenge 6",
-    10 ** 24,
+    Decimal.pow(10, 1233).mul(1.0443888814131805),
     33,
     undefined,
     "0em",
@@ -1706,38 +1694,38 @@ class ascension_challenge {
 //initializing ascension challenges
 //challenge 1
 new ascension_challenge(
-    "All spice production boosts from upgrades are disabled<br>Reward: Unlock arcane spice",
-    Decimal.pow(10, 540),
+    "Crystal infusions cannot be purchased<br>Reward: Unlock arcane spice",
+    Decimal.pow(10, 500),
     16
 )
 //challenge 2
 new ascension_challenge(
     "Crystallized & arcane spice production is disabled<br>Reward: Crystallized spice multipliers are even stronger",
-    Decimal.pow(10, 1100),
+    Decimal.pow(10, 800),
     20
 )
 //challenge 3
 new ascension_challenge(
-    "Color boost requirements scale 10x harder<br>Reward: Strengtheners and infusions are even stronger",
-    Decimal.pow(10, 700),
+    "Color boost requirements scale 10x harder<br>Reward: Strengtheners are 3x stronger, infusions are 20% stronger,<br>and strengthener price scaling 3x -> 2x",
+    Decimal.pow(10, 800),
     24
 )
 //challenge 4
 new ascension_challenge(
-    "Generators 4-6 don't produce anything<br>Reward: Multipliers for generators 4-6 are slightly stronger",
-    Decimal.pow(10, 4650),
+    "4th, 5th, and 6th generators don't produce anything<br>Reward: 4th generators are 3% stronger, 5th generators are 6%<br>stronger, and 6th generators are 10% stronger",
+    Decimal.pow(10, 6200),
     27
 )
 //challenge 5
 new ascension_challenge(
-    "Normal/crystallized spice production stops after 1 second,<br>arcane enchantments do nothing except refresh production<br>Reward: Boosts from rune power are 4x stronger",
-    Decimal.pow(10, 14000),
+    "Normal/crystallized spice production stops after 1 second,<br>arcane enchantments do nothing except refresh production<br>Reward: Boosts from rune power are now 2x stronger",
+    Decimal.pow(10, 19850),
     28
 )
 //challenge 6
 new ascension_challenge(
-    "Same as Challenge 1, but rune power production is disabled<br>Reward: Unlock Collapse",
-    Decimal.pow(10, 1450),
+    "All spice production boosts from Prestige and Ascension upgrades<br>are disabled, and rune power production is disabled<br>Reward: Unlock Collapse",
+    Decimal.pow(10, 6360),
     34
 )
 //done initializing ascension challenges
@@ -1755,7 +1743,7 @@ class research {
     factor
     factor2
 
-    //upgrade constructor
+    //research constructor
     constructor(desc, req, repeat, special, data, unit, factor, factor2) {
         this.desc = desc
         this.id = research.researches.length
@@ -1777,7 +1765,7 @@ class research {
             research_view(this.id + 1)
         })
 
-        //attaching research to ascension challenges page
+        //attaching research to available researches list
         research_map.set(this, button)
         document.getElementById("research_available").appendChild(button)
 
@@ -1789,14 +1777,14 @@ class research {
             research_view(this.id + 1)
         })
 
-        //attaching research to ascension challenges page
+        //attaching research to completed researches list
         research_map2.set(this, button)
         document.getElementById("research_completed").appendChild(button)
     }
 }
 
 //initializing collapse researches
-//research 0
+//[0] #1
 new research(
     "The half-life of unstable spice becomes 33% shorter<br>Current unstable spice half-life: 10 minutes",
     undefined,
@@ -1807,7 +1795,7 @@ new research(
     1.5,
     2
 )
-//research 1
+//[1] #2
 new research(
     "Quality of life Ascension upgrades are no longer reset by Collapse",
     undefined,
@@ -1815,17 +1803,17 @@ new research(
     false,
     1000
 )
-//research 2
+//[2] #3
 new research(
     "Unstable spice decay now also boosts crystallized spice production",
-    1,
+    0,
     false,
     false,
     6000
 )
-//research 3
+//[3] #4
 new research(
-    "Rune power is produced 5x faster<br>Current rune power production boost: 1x",
+    "The rune power production exponent is increased by 0.100<br>Current rune power production exponent: 2.00",
     2,
     true,
     false,
@@ -1834,31 +1822,25 @@ new research(
     1.75,
     2.5
 )
-//research 4
-new research(
-    "Unlocks the Distributor, which can automate Ascension upgrades",
-    2,
-    false,
-    false,
-    4000
-)
-//research 5
+//[4] #5
+new research("Unlocks automation for Ascension upgrades", 2, false, false, 4000)
+//[5] #6
 new research(
     "Atomic spice gains are additionally boosted by total rune power produced<br>Current boost: 1.00x",
-    4,
+    3,
     false,
     true,
     20000
 )
-//research 6
+//[6] #7
 new research(
-    "Unlocks automation for runes and arcane spice in the Distributor",
+    "Unlocks the Distributor, which automates rune distribution",
     5,
     false,
     false,
     8000
 )
-//research 7
+//[7] #8
 new research(
     "Atomic spice conversion is 10% more efficient<br>Current atomic spice efficiency: 60%",
     5,
@@ -1869,167 +1851,171 @@ new research(
     3,
     5
 )
-//research 8
+//[8] #9
+new research(
+    "Unlocks a delta option for RUNES mode of Ascension automation",
+    6,
+    false,
+    false,
+    16000
+)
+//[9] #10
 new research(
     "Ascension Challenges are automatically completed when they are unlocked",
-    6,
+    7,
     false,
     false,
     50000
 )
-//research 9
+//[10] #11
 new research(
     "Unstable spice decay now also boosts arcane spice production",
-    6,
+    7,
     false,
     false,
     100000
 )
-//research 10
+//[11] #12
+new research("Unlocks automation for arcane spice", 9, false, false, 32000)
+//[12] #13
 new research(
     "Ansuz rune gains from Ascension are boosted by Times Collapsed statistic<br>Current boost: 1.00x",
-    8,
+    9,
     false,
     true,
     200000
 )
-//research 11
+//[13] #14
 new research(
     "You get 1 free arcane enchantment for every 10 arcane enchantments you have",
-    9,
+    10,
     false,
     true,
     400000
 )
-//research 12
+//[14] #15
 new research(
-    "Rune power boosts are an extra 50% stronger (for up to 12x)",
-    10,
+    "Boosts from rune power are now 5x stronger",
+    12,
     false,
     false,
     900000
 )
-//research 13
+//[15] #16
 new research(
-    "You get 200 free arcane enchantments for every arcane strengthener you have",
-    11,
+    "You get 10 free arcane enchantments for every arcane strengthener you have",
+    13,
     false,
     true,
     2000000
 )
-//research 14
+//[16] #17
 new research(
-    "Unstable spice boosts are 50% stronger when unstable spice is completely decayed",
-    11,
+    "Unstable spice boosts are 20% stronger when unstable spice is completely decayed",
+    13,
     false,
     false,
     5000000
 )
-//research 15
-new research("Unlocks automation for Collapse", 14, false, false, 15000000)
-//research 16
+//[17] #18
+new research("Unlocks automation for Collapse", 16, false, false, 15000000)
+//[18] #19
 new research(
     "Times Prestiged and Times Ascended statistics are no longer reset by Collapse",
-    15,
+    17,
     false,
     false,
-    2.5 * 10 ** 8
+    60000000
 )
-//research 17
+//[19] #20
 new research(
     "Unspent atomic spice makes the unstable spice decay boost stronger<br>The boost is currently 0.00% stronger",
-    16,
+    18,
     false,
     true,
-    4 * 10 ** 9
+    3e8
 )
-//research 18
-new research("Unlocks Challenge 7", 17, false, false, 10 ** 11)
-//research 19
-new research("Unlocks antispice", -701, false, false, 2.5 * 10 ** 11)
-//research 20
-new research("Unlocks Challenge 8", -701, false, false, 6.25 * 10 ** 11)
-//research 21
-new research("Unlocks red antispice", -801, false, false, 10 ** 12)
-//research 22
+//[20] #21
+new research("Unlocks Challenge 7", 19, false, false, 1.8e9)
+//[21] #22
+new research("Unlocks antispice", -701, false, false, 9e9)
+//[22] #23
+new research("Unlocks Challenge 8", -702, false, false, 3.6e10)
+//[23] #24
+new research("Unlocks red antispice", -801, false, false, 1.08e11)
+//[24] #25
 new research(
-    "You gain 888x more atomic spice for every Collapse challenge completion<br>Current boost: 1.00x",
+    "You gain 46,656x more atomic spice for every Collapse challenge completion<br>Current boost: 1.00x",
     -703,
     false,
     true,
-    1.75 * 10 ** 13
+    2.25e12
 )
-//research 23
-new research("Unlocks Challenge 9", -803, false, false, 5 * 10 ** 15)
-//research 24
-new research("Unlocks yellow antispice", -901, false, false, 3 * 10 ** 16)
-//research 25
+//[25] #26
+new research("Unlocks Challenge 9", -803, false, false, 8e13)
+//[26] #27
+new research("Unlocks yellow antispice", -901, false, false, 5e14)
+//[27] #28
 new research(
     "You get 50 free arcane enchantments for every Collapse (up to 50% of your bought arcane enchantments)",
     -805,
     false,
     true,
-    6 * 10 ** 19
+    8.5e17
 )
-//research 26
-new research("Unlocks Challenge 10", -904, false, false, 4 * 10 ** 20)
-//research 27
-new research("Unlocks green antispice", -1001, false, false, 10 ** 21)
-//research 28
+//[28] #29
+new research("Unlocks Challenge 10", -904, false, false, 2.5e19)
+//[29] #30
+new research("Unlocks green antispice", -1001, false, false, 1e20)
+//[30] #31
+new research("Unlocks Spice Collider automation", -30, false, false, 1.25e24)
+//[31] #32
 new research(
     "Collapse Challenges can be completed in bulk",
     -907,
     false,
     false,
-    2.8 * 10 ** 24
+    8e25
 )
-//research 29
-new research("Unlocks Challenge 11", -1005, false, false, 5.4 * 10 ** 26)
-//research 30
-new research("Unlocks blue antispice", -1101, false, false, 7 * 10 ** 27)
-//research 31
+//[32] #33
+new research("Unlocks Challenge 11", -1005, false, false, 1e27)
+//[33] #34
+new research("Unlocks blue antispice", -1101, false, false, 2.8e28)
+//[34] #35
 new research(
     "You gain 50% more rainbow spice after color augments begin",
     -1009,
     false,
     false,
-    8.6 * 10 ** 33
+    7.2e35
 )
-//research 32
-new research("Unlocks Challenge 12", -1106, false, false, 1.68 * 10 ** 35)
-//research 33
-new research("Unlocks pink antispice", -1201, false, false, 6.8 * 10 ** 35)
-//research 34
+//[35] #36
+new research("Unlocks Challenge 12", -1106, false, false, 1.72e39)
+//[36] #37
+new research("Unlocks pink antispice", -1201, false, false, 4.21e40)
+//[37] #38
 new research(
-    "Unlocks Spice Collider automation",
-    -1203,
-    false,
-    false,
-    3.6 * 10 ** 42
-)
-//research 35
-new research(
-    "Rune power boosts are an extra 2x stronger (for up to 24x)",
+    "Boosts from rune power are now 5x stronger",
     -1111,
     false,
     false,
-    Math.floor(10 ** 44)
+    Math.floor(((1 + 5 ** 0.5) / 2) * 1e47)
 )
-//research 36
+//[38] #39
 new research(
     "You gain 1x more Times Ascended stat on Ascension,<br>and you gain 1x more Times Collapsed stat on Collapse<br>(Based on Collapse challenge completions)",
-    -1205,
+    -1204,
     false,
     true,
-    Math.floor(((1 + 5 ** 0.5) / 2) * 10 ** 50)
+    Math.floor(Math.PI * 1e49)
 )
-//research 37
+//[40] #40
 new research(
     "Unlocks rainbow antispice",
     -1208,
     false,
     false,
-    Math.floor(Math.E * 10 ** 57)
+    Math.floor(Math.E * 1e58)
 )
 //done initializing collapse researches
 
@@ -2042,57 +2028,17 @@ class collapse_challenge {
     superscaling
     goal
     delta
-    scaling1
-    delta2
-    scaling2
-    delta3
-    scaling3
-    delta4
-    scaling4
-    delta5
-    scaling5
-    delta6
-    scaling6
-    delta7
+    scaling
 
     //upgrade constructor
-    constructor(
-        desc,
-        unlock,
-        superscaling,
-        goal,
-        delta,
-        scaling1,
-        delta2,
-        scaling2,
-        delta3,
-        scaling3,
-        delta4,
-        scaling4,
-        delta5,
-        scaling5,
-        delta6,
-        scaling6,
-        delta7
-    ) {
+    constructor(desc, unlock, superscaling, goal, delta, scaling) {
         this.desc = desc
         this.id = collapse_challenge.challenges.length
         this.unlock = unlock
         this.superscaling = superscaling
         this.goal = goal
         this.delta = delta
-        this.scaling1 = scaling1
-        this.delta2 = delta2
-        this.scaling2 = scaling2
-        this.delta3 = delta3
-        this.scaling3 = scaling3
-        this.delta4 = delta4
-        this.scaling4 = scaling4
-        this.delta5 = delta5
-        this.scaling5 = scaling5
-        this.delta6 = delta6
-        this.scaling6 = scaling6
-        this.delta7 = delta7
+        this.scaling = scaling
 
         collapse_challenge.challenges.push(this)
 
@@ -2145,104 +2091,342 @@ class collapse_challenge {
 //challenge 7
 new collapse_challenge(
     "Challenges 1, 3, 4, & 5 simultaneously<br>Reward: Normal spice multipliers are 2.5% stronger<br>Next research unlock in 1 completion",
-    18,
-    35,
-    Decimal.pow(10, 25),
-    Decimal.pow(10, 17),
-    5,
-    Decimal.pow(10, 21),
-    14,
-    Decimal.pow(10, 27),
-    21,
-    Decimal.pow(10, 39),
-    -27,
-    Decimal.pow(10, 76),
-    32,
-    Decimal.pow(10, 64),
-    -35,
-    Decimal.pow(10, 32)
+    20,
+    36,
+    Decimal.pow(10, 29),
+    [
+        Decimal.pow(10, 19),
+        Decimal.pow(10, 29),
+        Decimal.pow(10, 43),
+        Decimal.pow(10, 57),
+        Decimal.pow(10, 88),
+    ],
+    [5, 8, -13, 18]
 )
 //challenge 8
 new collapse_challenge(
     "Unstable spice decay gives no boost, it instead produces sixth generators<br>Reward: Unstable spice decay now also produces arcane spice deities<br>Next research unlock in 1 completion",
-    20,
-    29,
-    Decimal.pow(10, 78),
-    Decimal.pow(10, 87),
-    3,
-    Decimal.pow(10, 124),
-    7,
-    Decimal.pow(10, 152),
-    11,
-    Decimal.pow(10, 208),
-    15,
-    Decimal.pow(10, 256),
-    -19,
-    Decimal.pow(10, 432),
-    -24,
-    Decimal.pow(10, 512)
+    22,
+    31,
+    Decimal.pow(10, 25),
+    [
+        Decimal.pow(10, 37),
+        Decimal.pow(10, 61),
+        Decimal.pow(10, 107),
+        Decimal.pow(10, 154),
+        Decimal.pow(10, 188),
+        Decimal.pow(10, 222),
+        Decimal.pow(10, 384),
+    ],
+    [3, 6, -10, 14, 18, 25]
 )
 //challenge 9
 new collapse_challenge(
-    "The game runs 99,999x slower, reach the goal in 999 microseconds or less<br>Reward: The game runs 2x faster<br>Next research unlock in 1 completion",
-    23,
-    24,
-    Decimal.pow(10, 235),
-    Decimal.pow(10, 205),
-    4,
-    Decimal.pow(10, 250),
-    8,
-    Decimal.pow(10, 350),
-    12,
-    Decimal.pow(10, 400),
-    -16,
-    Decimal.pow(10, 650)
+    "The game runs 100,000x slower, reach the goal in 500 microseconds or less<br>Reward: The game runs 2x faster<br>Next research unlock in 1 completion",
+    25,
+    26,
+    Decimal.pow(10, 115),
+    [
+        Decimal.pow(10, 95),
+        Decimal.pow(10, 125),
+        Decimal.pow(10, 175),
+        Decimal.pow(10, 215),
+        Decimal.pow(10, 375),
+        Decimal.pow(10, 555),
+    ],
+    [4, -7, 10, 14, 20]
 )
 //challenge 10
 new collapse_challenge(
-    "Color augment scaling is much stronger, and color augments begin at 4 color boosts<br>Ascension upgrade prices are also reduced<br>Reward: Color augments begin at 4,000,000 color boosts<br>Next research unlock in 1 completion",
-    26,
-    21,
-    Decimal.pow(10, 1475),
-    Decimal.pow(10, 225),
-    -5,
-    Decimal.pow(10, 375),
-    10,
-    Decimal.pow(10, 450),
-    -13,
-    Decimal.pow(10, 700)
+    "Color augment scaling is much stronger, and color augments begin at 4 color boosts<br>Ascension upgrade prices are also reduced<br>Reward: Color augments begin at 4,194,304 color boosts<br>Next research unlock in 1 completion",
+    28,
+    22,
+    Decimal.pow(10, 1150),
+    [
+        Decimal.pow(10, 275),
+        Decimal.pow(10, 425),
+        Decimal.pow(10, 550),
+        Decimal.pow(10, 625),
+        Decimal.pow(10, 750),
+    ],
+    [-5, -9, 12, 15]
 )
 //challenge 11
 new collapse_challenge(
     "Ascension is disabled, but Challenge 6 is not required to Collapse<br>Reward: You gain 1% of your pending Ansuz runes every second<br>Next research unlock in 1 completion",
-    29,
+    32,
     18,
-    Decimal.pow(10, 1460),
-    Decimal.pow(10, 140),
-    6,
-    Decimal.pow(10, 180),
-    -11,
-    Decimal.pow(10, 260),
-    -14,
-    Decimal.pow(10, 360)
+    Decimal.pow(10, 1750),
+    [Decimal.pow(10, 250), Decimal.pow(10, 300), Decimal.pow(10, 400)],
+    [6, 11]
 )
 //challenge 12
 new collapse_challenge(
-    "Same as Challenge 6, but all research boosts are disabled, and red, yellow, green, & blue spice production is disabled, and the unstable spice boost is not disabled<br>Reward: You gain data 2x faster while researching<br>Next research unlock in 1 completion",
-    32,
-    9,
-    Decimal.pow(10, 250),
-    Decimal.pow(10, 90),
-    -2,
-    Decimal.pow(10, 80),
-    -4,
-    Decimal.pow(10, 70),
-    -6,
-    Decimal.pow(10, 60),
-    -7,
-    Decimal.pow(10, 50)
+    "Same as Challenge 6, but all research boosts are disabled, and red, yellow, green, & blue spice production is disabled<br>Reward: You gain data 2x faster while researching<br>Next research unlock in 1 completion",
+    35,
+    7,
+    Decimal.pow(10, 580),
+    [
+        Decimal.pow(10, 240),
+        Decimal.pow(10, 180),
+        Decimal.pow(10, 150),
+        Decimal.pow(10, 130),
+        Decimal.pow(10, 120),
+        Decimal.pow(10, 60),
+    ],
+    [-2, -3, -4, -5, -7]
 )
 //done initializing collapse challenges
+
+//collapse challenge scaling handling
+function get_collapse_goal(challenge, pending) {
+    let c = collapse_challenge.challenges[challenge]
+    let completions = game.collapse_complete[challenge] + pending
+    let temp_goal = c.goal.mul(c.delta[0].pow(completions))
+
+    if (c.scaling !== undefined) {
+        let step_count = c.scaling.length
+        let extra = new Array(step_count).fill(1)
+
+        let superstep = c.goal.mul(c.delta[0].pow(Math.abs(c.scaling[0]) - 1))
+        let superdelta = c.delta[0]
+
+        let step = c.goal
+        for (let i = 0; i < step_count; i++) {
+            if (c.scaling[i] < 0) extra[i] = 0
+            if (i === 0)
+                step = step.mul(c.delta[i].pow(Math.abs(c.scaling[i]) - 1))
+            else
+                step = step.mul(
+                    c.delta[i].pow(
+                        Math.abs(c.scaling[i]) -
+                            Math.abs(c.scaling[i - 1]) +
+                            extra[i - 1]
+                    )
+                )
+            if (completions >= Math.abs(c.scaling[i]))
+                temp_goal = step.mul(
+                    c.delta[i + 1].pow(
+                        completions - Math.abs(c.scaling[i]) + extra[i] + 1
+                    )
+                )
+
+            superstep = step.mul(
+                c.delta[i + 1].pow(
+                    c.superscaling - Math.abs(c.scaling[i]) + extra[i]
+                )
+            )
+            superdelta = c.delta[i + 1]
+        }
+
+        if (completions >= c.superscaling) {
+            temp_goal = superstep.mul(
+                superdelta.pow(
+                    ((completions - c.superscaling + 2) *
+                        (completions - c.superscaling + 3)) /
+                        2 -
+                        1
+                )
+            )
+        }
+    }
+
+    return temp_goal
+}
+
+//factorial
+let f = []
+function factorial(n) {
+    if (n == 0 || n == 1) return 1
+    if (f[n] > 0) return f[n]
+    return (f[n] = factorial(n - 1) * n)
+}
+
+//antispice boost scaling
+function get_antispice_amount(type, raw) {
+    let antispice_amount = new Decimal(0)
+    if (raw) {
+        switch (type) {
+            case "pure":
+                antispice_amount = game.antispice[0]
+                if (antispice_amount.cmp(Decimal.pow(10, 316)) >= 0)
+                    antispice_amount = antispice_amount.pow(1.8545)
+                else if (antispice_amount.cmp(Decimal.pow(10, 240)) >= 0)
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (antispice_amount.log(10) - 240) ** 1.35 + 240
+                    )
+                break
+            case "red":
+                antispice_amount = game.antispice[1]
+                if (antispice_amount.cmp(Decimal.pow(10, 269)) >= 0)
+                    antispice_amount = antispice_amount.pow(2.2205)
+                else if (antispice_amount.cmp(Decimal.pow(10, 182)) >= 0)
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (antispice_amount.log(10) - 182) ** 1.35 + 182
+                    )
+                break
+            case "yellow":
+                antispice_amount = game.antispice[2]
+                if (antispice_amount.cmp(Decimal.pow(10, 173)) >= 0)
+                    antispice_amount = antispice_amount.pow(2.292)
+                else if (antispice_amount.cmp(Decimal.pow(10, 120)) >= 0)
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (antispice_amount.log(10) - 120) ** 1.35 * 1.3 + 120
+                    )
+                break
+            case "green":
+                antispice_amount = game.antispice[3]
+                if (antispice_amount.cmp(Decimal.pow(10, 112)) >= 0)
+                    antispice_amount = antispice_amount.pow(2.3083)
+                else if (antispice_amount.cmp(Decimal.pow(10, 79)) >= 0)
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (antispice_amount.log(10) - 79) ** 1.35 * 1.6 + 79
+                    )
+                break
+            case "blue":
+                antispice_amount = game.antispice[4]
+                if (antispice_amount.cmp(Decimal.pow(10, 63)) >= 0)
+                    antispice_amount = antispice_amount.pow(2.4037)
+                else if (antispice_amount.cmp(Decimal.pow(10, 43)) >= 0)
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (antispice_amount.log(10) - 43) ** 1.35 * 1.9 + 43
+                    )
+                break
+            case "pink":
+                antispice_amount = game.antispice[5]
+                if (antispice_amount.cmp(Decimal.pow(10, 24)) >= 0)
+                    antispice_amount = antispice_amount.pow(2.5498)
+                else if (antispice_amount.cmp(50) >= 0)
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (antispice_amount.log(10) - Math.log10(50)) ** 1.35 *
+                            0.9 +
+                            Math.log10(50)
+                    )
+                break
+            case "crystal":
+                antispice_amount = game.antispice[5]
+                if (antispice_amount.cmp(Decimal.pow(10, 24)) >= 0)
+                    antispice_amount = antispice_amount.pow(3.927)
+                else if (antispice_amount.cmp(50) >= 0)
+                    antispice_amount = Decimal.pow(
+                        10,
+                        (antispice_amount.log(10) - Math.log10(50)) ** 1.35 *
+                            1.4 +
+                            Math.log10(50)
+                    )
+                break
+        }
+    } else {
+        switch (type) {
+            case "pure":
+                antispice_amount = game.antispice[0]
+                if (antispice_amount.cmp(Decimal.pow(10, 53)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 53))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 53))
+                if (antispice_amount.cmp(Decimal.pow(10, 78)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 78))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 78))
+                if (antispice_amount.cmp(Decimal.pow(10, 113)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 113))
+                        .pow(0.85)
+                        .mul(Decimal.pow(10, 113))
+                break
+            case "red":
+                antispice_amount = game.antispice[1]
+                if (antispice_amount.cmp(Decimal.pow(10, 39)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 39))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 39))
+                if (antispice_amount.cmp(Decimal.pow(10, 60)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 60))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 60))
+                if (antispice_amount.cmp(Decimal.pow(10, 86)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 86))
+                        .pow(0.85)
+                        .mul(Decimal.pow(10, 86))
+                break
+            case "yellow":
+                antispice_amount = game.antispice[2]
+                if (antispice_amount.cmp(Decimal.pow(10, 24)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 24))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 24))
+                if (antispice_amount.cmp(Decimal.pow(10, 38)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 38))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 38))
+                if (antispice_amount.cmp(Decimal.pow(10, 55)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 55))
+                        .pow(0.85)
+                        .mul(Decimal.pow(10, 55))
+                break
+            case "green":
+                antispice_amount = game.antispice[3]
+                if (antispice_amount.cmp(Decimal.pow(10, 12)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 12))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 12))
+                if (antispice_amount.cmp(Decimal.pow(10, 22)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 22))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 22))
+                if (antispice_amount.cmp(Decimal.pow(10, 34)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 34))
+                        .pow(0.85)
+                        .mul(Decimal.pow(10, 34))
+                break
+            case "blue":
+                antispice_amount = game.antispice[4]
+                if (antispice_amount.cmp(200) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(200)
+                        .pow(0.5)
+                        .mul(200)
+                if (antispice_amount.cmp(Decimal.pow(10, 23)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 23))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 23))
+                break
+            case "pink":
+                antispice_amount = game.antispice[5]
+                if (antispice_amount.cmp(Decimal.pow(10, 17)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 17))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 17))
+                if (antispice_amount.cmp(Decimal.pow(10, 24)) >= 0)
+                    antispice_amount = antispice_amount
+                        .div(Decimal.pow(10, 24))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, 24))
+                break
+        }
+    }
+
+    return antispice_amount
+}
 
 //antispice perk class
 class antispice_perk {
@@ -2282,25 +2466,25 @@ class antispice_perk {
 
 //initializing antispice perks
 //[0]
-new antispice_perk("Repeatable researches are 11% stronger", 0)
+new antispice_perk("Repeatable researches are 15% stronger", 0)
 //[1]
 new antispice_perk("Challenge 7-12 rewards are 5% stronger", 0)
 //[2]
-new antispice_perk("You gain 15% more rainbow spice from Prestige", 0)
+new antispice_perk("You gain 10% more rainbow spice from Prestige", 0)
 //[3]
-new antispice_perk("You gain 25% more Ansuz runes from Ascension", 0)
+new antispice_perk("You gain 12.5% more Ansuz runes from Ascension", 0)
 //[4]
-new antispice_perk("Color boosts and strengtheners are 30% stronger", 0)
+new antispice_perk("Color boosts and strengtheners are 17.5% stronger", 0)
 //[5]
 new antispice_perk(
-    "Crystal infusions and arcane enchantments are 5.4% stronger",
+    "Crystal infusions and arcane enchantments are 6% stronger",
     0
 )
 //[6]
-new antispice_perk("ALL spice production multipliers are 1.2% stronger", 0)
+new antispice_perk("ALL spice production multipliers are 1% stronger", 0)
 //[7]
 new antispice_perk(
-    "The game speed multiplier is 50% stronger outside of Challenge 9",
+    "The game speed multiplier is 25% stronger outside of Challenge 9",
     0
 )
 //[8]
