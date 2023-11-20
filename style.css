@@ -10,6 +10,7 @@ body {
     font-weight: normal;
     margin: 0em;
     padding: 0em;
+    height: 100vh;
     --mobile: 0;
 }
 
@@ -47,6 +48,19 @@ main {
     font-size: 2em;
     border: none;
     flex: 1;
+    cursor: default;
+}
+
+.savebank_tab {
+    background: #151116;
+    padding: 0.75em;
+    font-family: "Fira Code";
+    font-size: 2em;
+    border: none;
+    width: 100%;
+    flex: 0;
+    margin-top: 0em;
+    margin-bottom: 0em;
     cursor: default;
 }
 
@@ -504,7 +518,7 @@ main {
     color: var(--rainbow_spice2);
     text-shadow: 0 0 0.2em var(--rainbow_spice);
     border: 1px solid var(--rainbow_spice2);
-    box-shadow: 0 0 0.3em var(--rainbow_spice), 0 0 0.3em var(--rainbow_spice) inset;
+    box-shadow: 0 0 0.3em var(--rainbow_spice), 0 0 0.6em var(--rainbow_spice) inset;
     cursor: pointer;
 }
 
@@ -529,7 +543,7 @@ main {
     color: var(--rainbow_spice2);
     text-shadow: 0 0 0.5em var(--rainbow_spice);
     border: 1px solid var(--rainbow_spice2);
-    box-shadow: 0 0 0.5em var(--rainbow_spice), 0 0 0.5em var(--rainbow_spice) inset;
+    box-shadow: 0 0 0.5em var(--rainbow_spice), 0 0 1.8em var(--rainbow_spice) inset;
     cursor: pointer;
 }
 
@@ -633,13 +647,13 @@ main {
     cursor: pointer;
 }
 
-#prestige_boosts, #prestige_spice, #prestige_time, #prestige_boosts_delta, #prestige_spice_delta, #ascend_runes, #ascend_time, #collapse_spice, #collapse_spice2, #collapse_time, #collapse_time2 {
+#prestige_boosts, #prestige_spice, #prestige_time, #prestige_boosts_delta, #prestige_spice_delta, #ascend_runes, #ascend_time, #ascend_runes_delta, #collapse_spice, #collapse_time, #collapse_decay {
     display: flex;
     justify-content: right;
     margin-top: 0.25em;
 }
 
-#prestige_goal {
+#prestige_goal, #ascend_goal {
     display: flex;
     justify-content: right;
     margin-top: 0.3em;
@@ -966,7 +980,7 @@ main {
 .distributor_text {
     color: white;
     font-size: 1.25em;
-    margin: 0em 0.5em 0em 1.5em;
+    margin: 0em 0.5em 0em 0em;
 }
 
 .distributor_error {
@@ -993,17 +1007,18 @@ main {
     display: flex;
     margin-top: 0.1em;
     margin-bottom: 0.6em;
-}
-
-.distributor_block2 {
-    display: flex;
-    margin-top: 0.1em;
-    margin-bottom: 0.6em;
     margin-left: 1.5em;
 }
 
+#distribute_auto_toggle {
+    margin-top: 0.1em;
+    margin-bottom: 0.6em;
+    margin-left: 1.35em;
+}
+
 #collider_portion {
-    margin-left: 0em;
+    margin-left: 1.85em;
+    margin-bottom: 1.35em;
 }
 
 .distributor_input {
@@ -2359,6 +2374,11 @@ main {
     margin-bottom: 0.5em;
 }
 
+#classic_info {
+    display: none;
+    margin-top: 1.3em;
+}
+
 .link {
     color: #ff3dd8;
     cursor: pointer;
@@ -2394,10 +2414,101 @@ main {
     margin-bottom: 0em;
 }
 
+.change_details {
+    font-family: "Fira Code";
+    color: #aaaaaa;
+    font-size: 1em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    cursor: pointer;
+}
+
+.change_details:hover {
+    color: white;
+}
+
 .change_major {
     font-family: "Fira Code";
     color: #ff3dd8;
     font-size: 1.4em;
     margin-top: 0em;
     margin-bottom: 0em;
+}
+
+.savebank_header {
+    background: black;
+    padding: 1em;
+    border: none;
+    width: calc(100% - 2em);
+}
+
+.savebank_title {
+    font-family: "Fira Code";
+    font-size: 2.857em;
+    font-weight: bold;
+    color: #ff3dd8;
+    margin: 0em;
+    text-align: center;
+}
+
+.savebank_main {
+    display: flex;
+    margin: 0px;
+    height: calc(100% - 5.75em);
+}
+
+.savebank_pages {
+    display: flex;
+    flex-direction: column;
+    width: 15em;
+    flex: 0 0 15em;
+}
+
+.savebank_padding {
+    background: #151116;
+    height: 100%;
+    flex: 1;
+}
+
+.savebank_list {
+    width: 100%;
+    flex: 1;
+}
+
+.savebank_files {
+    display: none;
+    height: 100%;
+    overflow-y: auto;
+}
+
+#spices_files {
+    display: block;
+}
+
+.savebank_panel {
+    padding-left: 2em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    border-bottom: 1px solid white;
+    width: calc(100% - 2em);
+}
+
+.savebank_panel_connect {
+    padding-left: 2em;
+    padding-top: 2em;
+    width: calc(100% - 2em);
+}
+
+.savebank_panel_last {
+    padding-left: 2em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    width: calc(100% - 2em);
+}
+
+.savebank_info {
+    color: white;
+    font-size: 1.25em;
+    margin-top: 0em;
+    margin-bottom: 0.5em;
 }
