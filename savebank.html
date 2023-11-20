@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Spice Idle Savebank</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div class="savebank_header">
+            <p class="savebank_title">
+                SAVEBANK
+            </p>
+        </div>
+
+        <main class="savebank_main">
+            <div class="savebank_pages">
+                <button id="savebank_spices" class="savebank_tab selected" onclick="goto_page(0)">
+                    SPICES
+                </button>
+                <button id="savebank_prestige" class="savebank_tab unlocked" onclick="goto_page(1)">
+                    PRESTIGE
+                </button>
+                <button id="savebank_ascension" class="savebank_tab unlocked" onclick="goto_page(2)">
+                    ASCENSION
+                </button>
+                <button id="savebank_collapse" class="savebank_tab unlocked" onclick="goto_page(3)">
+                    COLLAPSE
+                </button>
+                <div class="savebank_padding"></div>
+            </div>
+            <div class="savebank_list">
+                <div id="spices_files" class="savebank_files"></div>
+                <div id="prestige_files" class="savebank_files"></div>
+                <div id="ascension_files" class="savebank_files"></div>
+                <div id="collapse_files" class="savebank_files"></div>
+            </div>
+        </main>
+        <script src="format.js" charset="utf-8" type="text/javascript"></script>
+        <script src="archive.js" charset="utf-8" type="text/javascript"></script>
+        <script src="savebank.js" charset="utf-8" type="text/javascript"></script>
+    </body>
+</html>
