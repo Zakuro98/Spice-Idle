@@ -42,7 +42,7 @@ function format_num(num, not, nospace) {
         output = num.toString()
         if (num >= 1000) {
             let digits = output.length
-            if (num < 10 ** 21) {
+            if (num < 1e21) {
                 for (let i = digits - 3; i > 0; i -= 3) {
                     output = output.substr(0, i) + "," + output.substr(i)
                 }
@@ -55,7 +55,7 @@ function format_num(num, not, nospace) {
         output = num.toString()
         if (num >= 1000) {
             let digits = output.length
-            if (num < 10 ** 21) {
+            if (num < 1e21) {
                 for (let i = digits - 3; i > 0; i -= 3) {
                     output = output.substr(0, i) + "," + output.substr(i)
                 }
@@ -295,8 +295,7 @@ function format_num(num, not, nospace) {
                 }
                 break
             case 9:
-                let exponent4 =
-                    Math.log(num) / Math.log(1.7976931348622053 * 10 ** 308)
+                let exponent4 = Math.log(num) / Math.log(1.7976931348622053e308)
                 output = exponent4.toFixed(3) + "∞"
                 break
             case 16:
@@ -489,7 +488,7 @@ function format_num(num, not, nospace) {
         output2 = output.replaceAll(")", "</span>")
         output = output2
     }
-    if ((not === 12 || not === 13) && num < 10 ** 36 && num >= cutoff) {
+    if ((not === 12 || not === 13) && num < 1e36 && num >= cutoff) {
         const single_array_cond = [
             "",
             "M",
@@ -566,8 +565,8 @@ function format_num(num, not, nospace) {
             }
         }
     }
-    if (num >= 1.7976931348622053 * 10 ** 308 && not !== 9) {
-        output = "∞"
+    if (num >= 1.7976931348622053e308 && not !== 9) {
+        output = "Infinity"
     }
     if (negative) {
         output = "-" + output
@@ -601,7 +600,7 @@ function format_inf(num, not, enot) {
         num = Decimal.pow(10, expn + 1)
 
     let output = ""
-    if (num.cmp(10 ** 21) === -1) {
+    if (num.cmp(1e21) === -1) {
         let temp_num = num.toNumber()
         output = Math.floor(temp_num).toString()
         if (temp_num >= 1000) {
@@ -927,8 +926,8 @@ function format_inf(num, not, enot) {
                     }
                 }
 
-                if (order >= 10 ** 12) {
-                    let ordert = Math.floor(order / 10 ** 12)
+                if (order >= 1e12) {
+                    let ordert = Math.floor(order / 1e12)
                     one_str = ""
                     one_mod = ""
                     ten_str = ""
@@ -996,8 +995,8 @@ function format_inf(num, not, enot) {
                     }
                 }
 
-                if (order >= 10 ** 15) {
-                    let orderqa = Math.floor(order / 10 ** 15)
+                if (order >= 1e15) {
+                    let orderqa = Math.floor(order / 1e15)
                     one_str = ""
                     one_mod = ""
                     ten_str = ""
@@ -1243,8 +1242,8 @@ function format_inf(num, not, enot) {
                         billion_str2 += "-"
                 }
 
-                if (order2 >= 10 ** 12) {
-                    let order2t = Math.floor(order2 / 10 ** 12)
+                if (order2 >= 1e12) {
+                    let order2t = Math.floor(order2 / 1e12)
                     one_str2 = ""
                     ten_str2 = ""
                     hundred_str2 = ""
@@ -1265,8 +1264,8 @@ function format_inf(num, not, enot) {
                         trillion_str2 += "-"
                 }
 
-                if (order2 >= 10 ** 15) {
-                    let order2qa = Math.floor(order2 / 10 ** 15)
+                if (order2 >= 1e15) {
+                    let order2qa = Math.floor(order2 / 1e15)
                     one_str2 = ""
                     ten_str2 = ""
                     hundred_str2 = ""
@@ -1397,7 +1396,7 @@ function format_inf(num, not, enot) {
                 }
                 break
             case 9:
-                let exponent4 = num.log(1.7976931348622053 * 10 ** 308)
+                let exponent4 = num.log(1.7976931348622053e308)
                 output = exponent4.toFixed(3) + "∞"
 
                 if (enot === 0 || exponent4 < cutoff) {
@@ -1722,11 +1721,8 @@ function format_inf(num, not, enot) {
             }
         }
     }
-    if (
-        num.cmp(Decimal.pow(10, 1.7976931348622053 * 10 ** 308)) >= 0 &&
-        not !== 9
-    ) {
-        output = "∞"
+    if (num.cmp(Decimal.pow(10, 1.7976931348622053e308)) >= 0 && not !== 9) {
+        output = "Infinity"
     }
     if (negative) {
         output = "-" + output
@@ -1870,8 +1866,10 @@ function format_time(input, not, precise) {
     let output = undefined
     if (time < 1) {
         if (precise) {
-            if (time < 10 ** -6) {
-                output = format_dec(time * 10 ** 9, not) + "ns"
+            if (time < 1e-9) {
+                output = format_dec(time * 1e12, not) + "ps"
+            } else if (time < 1e-6) {
+                output = format_dec(time * 1e9, not) + "ns"
             } else if (time < 0.001) {
                 output = format_dec(time * 1000000, not) + "μs"
             } else {
@@ -1949,8 +1947,10 @@ function format_time_long(input, not, speed, precise) {
     let output = undefined
     if (time < 1 && speed < 480) {
         if (precise) {
-            if (time < 10 ** -6) {
-                output = format_dec(time * 10 ** 9, not) + " nanoseconds"
+            if (time < 1e-9) {
+                output = format_dec(time * 1e12, not) + " picoseconds"
+            } else if (time < 1e-6) {
+                output = format_dec(time * 1e9, not) + " nanoseconds"
             } else if (time < 0.001) {
                 output = format_dec(time * 1000000, not) + " microseconds"
             } else {
