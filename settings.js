@@ -478,10 +478,10 @@ function goto_subtab(id) {
                 break
         }
     } else if (game.tab === 2) {
-        game.subtab[3] = id
-
         switch (id) {
             case 0:
+                game.subtab[3] = id
+
                 document.getElementById("ascension_page").style.display =
                     "block"
                 document.getElementById("ascension_page2").style.display =
@@ -507,6 +507,8 @@ function goto_subtab(id) {
                         "subtab locked"
                 break
             case 1:
+                game.subtab[3] = id
+
                 document.getElementById("ascension_page2").style.display =
                     "block"
                 document.getElementById("ascension_page").style.display = "none"
@@ -532,6 +534,8 @@ function goto_subtab(id) {
                 break
             case 2:
                 if (game.ascend_bought[16]) {
+                    game.subtab[3] = id
+
                     document.getElementById("challenges_page").style.display =
                         "block"
                     document.getElementById("ascension_page").style.display =
@@ -557,6 +561,8 @@ function goto_subtab(id) {
                 break
             case 3:
                 if (game.ascend_complete[0] && game.ascend_bought[16]) {
+                    game.subtab[3] = id
+
                     document.getElementById("arcane_page").style.display =
                         "block"
                     document.getElementById("ascension_page").style.display =
@@ -584,10 +590,10 @@ function goto_subtab(id) {
                 break
         }
     } else if (game.tab === 3) {
-        game.subtab[4] = id
-
         switch (id) {
             case 0:
+                game.subtab[4] = id
+
                 document.getElementById("collapse_page").style.display = "block"
                 document.getElementById("research_page").style.display = "none"
                 document.getElementById("challenges_page2").style.display =
@@ -598,13 +604,13 @@ function goto_subtab(id) {
                     "subtab selected"
                 document.getElementById("research").className =
                     "subtab unlocked"
-                if (game.research_complete[18] >= 1)
+                if (game.research_complete[20] >= 1)
                     document.getElementById("collapse_challenges").className =
                         "subtab unlocked"
                 else
                     document.getElementById("collapse_challenges").className =
                         "subtab locked"
-                if (game.research_complete[19] >= 1)
+                if (game.research_complete[21] >= 1)
                     document.getElementById("antispice").className =
                         "subtab unlocked"
                 else
@@ -612,6 +618,8 @@ function goto_subtab(id) {
                         "subtab locked"
                 break
             case 1:
+                game.subtab[4] = id
+
                 document.getElementById("research_page").style.display = "block"
                 document.getElementById("collapse_page").style.display = "none"
                 document.getElementById("challenges_page2").style.display =
@@ -622,13 +630,13 @@ function goto_subtab(id) {
                     "subtab selected"
                 document.getElementById("spice_collider").className =
                     "subtab unlocked"
-                if (game.research_complete[18] >= 1)
+                if (game.research_complete[20] >= 1)
                     document.getElementById("collapse_challenges").className =
                         "subtab unlocked"
                 else
                     document.getElementById("collapse_challenges").className =
                         "subtab locked"
-                if (game.research_complete[19] >= 1)
+                if (game.research_complete[21] >= 1)
                     document.getElementById("antispice").className =
                         "subtab unlocked"
                 else
@@ -636,7 +644,9 @@ function goto_subtab(id) {
                         "subtab locked"
                 break
             case 2:
-                if (game.research_complete[18] >= 1) {
+                if (game.research_complete[20] >= 1) {
+                    game.subtab[4] = id
+
                     document.getElementById("challenges_page2").style.display =
                         "block"
                     document.getElementById("collapse_page").style.display =
@@ -652,7 +662,7 @@ function goto_subtab(id) {
                         "subtab unlocked"
                     document.getElementById("research").className =
                         "subtab unlocked"
-                    if (game.research_complete[19] >= 1)
+                    if (game.research_complete[21] >= 1)
                         document.getElementById("antispice").className =
                             "subtab unlocked"
                     else
@@ -661,7 +671,9 @@ function goto_subtab(id) {
                 }
                 break
             case 3:
-                if (game.research_complete[19] >= 1) {
+                if (game.research_complete[21] >= 1) {
+                    game.subtab[4] = id
+
                     document.getElementById("antispice_page").style.display =
                         "block"
                     document.getElementById("collapse_page").style.display =
@@ -677,7 +689,7 @@ function goto_subtab(id) {
                         "subtab unlocked"
                     document.getElementById("research").className =
                         "subtab unlocked"
-                    if (game.research_complete[18] >= 1)
+                    if (game.research_complete[20] >= 1)
                         document.getElementById(
                             "collapse_challenges"
                         ).className = "subtab unlocked"
@@ -689,20 +701,21 @@ function goto_subtab(id) {
                 break
         }
     } else if (game.tab === 5) {
-        game.subtab[2] = id
-
-        document.getElementById("statistics_page").style.display = "none"
-        document.getElementById("prestige_statistics_page").style.display =
-            "none"
-        document.getElementById("ascension_statistics_page").style.display =
-            "none"
-        document.getElementById("collapse_statistics_page").style.display =
-            "none"
-
         switch (id) {
             case 0:
+                game.subtab[2] = id
+
                 document.getElementById("statistics_page").style.display =
                     "block"
+                document.getElementById(
+                    "prestige_statistics_page"
+                ).style.display = "none"
+                document.getElementById(
+                    "ascension_statistics_page"
+                ).style.display = "none"
+                document.getElementById(
+                    "collapse_statistics_page"
+                ).style.display = "none"
 
                 document.getElementById("statistics_subtab").className =
                     "subtab selected"
@@ -722,9 +735,19 @@ function goto_subtab(id) {
                         "subtab locked"
                 break
             case 1:
+                game.subtab[2] = id
+
                 document.getElementById(
                     "prestige_statistics_page"
                 ).style.display = "block"
+                document.getElementById("statistics_page").style.display =
+                    "none"
+                document.getElementById(
+                    "ascension_statistics_page"
+                ).style.display = "none"
+                document.getElementById(
+                    "collapse_statistics_page"
+                ).style.display = "none"
 
                 document.getElementById("past_prestiges").className =
                     "subtab selected"
@@ -745,9 +768,19 @@ function goto_subtab(id) {
                 break
             case 2:
                 if (game.ascend >= 1 || game.collapse >= 1) {
+                    game.subtab[2] = id
+
                     document.getElementById(
                         "ascension_statistics_page"
                     ).style.display = "block"
+                    document.getElementById("statistics_page").style.display =
+                        "none"
+                    document.getElementById(
+                        "prestige_statistics_page"
+                    ).style.display = "none"
+                    document.getElementById(
+                        "collapse_statistics_page"
+                    ).style.display = "none"
 
                     document.getElementById("past_ascensions").className =
                         "subtab selected"
@@ -765,9 +798,19 @@ function goto_subtab(id) {
                 break
             case 3:
                 if (game.collapse >= 1) {
+                    game.subtab[2] = id
+
                     document.getElementById(
                         "collapse_statistics_page"
                     ).style.display = "block"
+                    document.getElementById("statistics_page").style.display =
+                        "none"
+                    document.getElementById(
+                        "prestige_statistics_page"
+                    ).style.display = "none"
+                    document.getElementById(
+                        "ascension_statistics_page"
+                    ).style.display = "none"
 
                     document.getElementById("past_collapses").className =
                         "subtab selected"
@@ -857,6 +900,9 @@ function notation(not) {
         case 17:
             document.getElementById("notation").innerHTML =
                 "Notation<br>🎀 ℭ𝓪ℕＣє𝐑 (ֆ𝓉αムᴇ 🥉) 🎀"
+            break
+        case 18:
+            document.getElementById("notation").innerHTML = "Notation<br>♋🎬💀"
             break
     }
 }
