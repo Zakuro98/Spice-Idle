@@ -2436,6 +2436,10 @@ main {
     margin-bottom: 0em;
 }
 
+.savebank_body {
+    height: 100vh;
+}
+
 .savebank_header {
     background: black;
     padding: 1em;
@@ -2455,6 +2459,7 @@ main {
 .savebank_main {
     display: flex;
     margin: 0px;
+    padding: 0px;
     height: calc(100% - 5.75em);
 }
 
