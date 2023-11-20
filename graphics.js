@@ -73,35 +73,21 @@ function spice_update() {
 
     let antispice_power = 1
     if (game.antispice[1].cmp(1) >= 0) {
-        let antispice_amount = game.antispice[1]
-        if (antispice_amount.cmp(Decimal.pow(10, 39)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 39))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 39))
-        if (antispice_amount.cmp(Decimal.pow(10, 54.5)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 54.5))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 54.5))
-        if (antispice_amount.cmp(Decimal.pow(10, 121)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 121))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 121))
-        antispice_power = 1 + antispice_amount.log(10) ** (2 / 3) * 0.015
+        antispice_power =
+            1 + get_antispice_amount("red").log(10) ** (2 / 3) * 0.015
         if (game.collapse_challenge !== 0)
-            antispice_power = 1 + antispice_amount.log(10) ** (2 / 3) * 0.0075
+            antispice_power =
+                1 + get_antispice_amount("red").log(10) ** (2 / 3) * 0.0075
     }
 
     document.getElementById("red_spice_num").innerHTML =
         format_idec(game.red_spice, game.notation) + spice_unit
 
     let effective_red_spice = game.highest_red_spice
-    if (game.highest_red_spice.cmp(Decimal.pow(10, 10 ** 12)) >= 0)
+    if (game.highest_red_spice.cmp(Decimal.pow(10, 1e12)) >= 0)
         effective_red_spice = Decimal.pow(
             10,
-            10 ** 12 * (game.highest_red_spice.log(10) / 10 ** 12) ** 0.5
+            1e12 * (game.highest_red_spice.log(10) / 1e12) ** 0.5
         )
 
     let synergy_str = ""
@@ -124,7 +110,7 @@ function spice_update() {
                 format_idec(
                     Decimal.max(
                         effective_red_spice
-                            .pow(0.0075)
+                            .pow(0.01)
                             .add(1)
                             .pow(antispice_power),
                         1
@@ -135,9 +121,7 @@ function spice_update() {
         }
 
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             game.prestige_bought[11] === 0
         ) {
@@ -149,9 +133,7 @@ function spice_update() {
     }
     if (game.ascend_bought[18] || game.collapse >= 1) {
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             !game.ascend_bought[18]
         ) {
@@ -165,7 +147,7 @@ function spice_update() {
                 format_idec(
                     Decimal.max(
                         effective_red_spice
-                            .pow(0.00004)
+                            .pow(0.00005)
                             .add(1)
                             .pow(antispice_power),
                         1
@@ -178,7 +160,6 @@ function spice_update() {
     if (game.ascend_bought[30] || game.collapse >= 1) {
         if (
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             !game.ascend_bought[30]
         ) {
@@ -192,7 +173,7 @@ function spice_update() {
                 format_idec(
                     Decimal.max(
                         effective_red_spice
-                            .pow(0.00000025)
+                            .pow(0.0000000825)
                             .add(1)
                             .pow(antispice_power),
                         1
@@ -266,9 +247,7 @@ function spice_update() {
             "x"
 
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             game.prestige_bought[8] === 0
         ) {
@@ -335,9 +314,7 @@ function spice_update() {
             "x"
 
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             game.prestige_bought[8] === 0
         ) {
@@ -404,9 +381,7 @@ function spice_update() {
             "x"
 
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             game.prestige_bought[8] === 0
         ) {
@@ -471,9 +446,7 @@ function spice_update() {
             "x"
 
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             game.prestige_bought[8] === 0
         ) {
@@ -485,9 +458,7 @@ function spice_update() {
     }
     if (game.ascend_bought[13] || game.collapse >= 1) {
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             !game.ascend_bought[13]
         ) {
@@ -497,16 +468,12 @@ function spice_update() {
                 "x"
         } else {
             let effective_pink_spice = game.highest_pink_spice
-            if (
-                game.highest_pink_spice.cmp(Decimal.pow(10, 2.5 * 10 ** 11)) >=
-                0
-            )
+            if (game.highest_pink_spice.cmp(Decimal.pow(10, 2.5e11)) >= 0)
                 effective_pink_spice = Decimal.pow(
                     10,
                     2.5 *
-                        10 ** 11 *
-                        (game.highest_pink_spice.log(10) / (2.5 * 10 ** 11)) **
-                            0.5
+                        1e11 *
+                        (game.highest_pink_spice.log(10) / 2.5e11) ** 0.5
                 )
 
             synergy_str +=
@@ -514,7 +481,7 @@ function spice_update() {
                 format_idec(
                     Decimal.max(
                         effective_pink_spice
-                            .pow(0.00008)
+                            .pow(0.00016)
                             .add(1)
                             .pow(antispice_power),
                         1
@@ -2008,28 +1975,14 @@ function spice_update() {
 
     let antispice_boosts = 1
     if (game.antispice[2].cmp(1) >= 0) {
-        let antispice_amount = game.antispice[2]
-        if (antispice_amount.cmp(Decimal.pow(10, 14)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 14))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 14))
-        if (antispice_amount.cmp(Decimal.pow(10, 19.5)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 19.5))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 19.5))
-        if (antispice_amount.cmp(Decimal.pow(10, 42.25)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 42.25))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 42.25))
-        antispice_boosts = 1 + antispice_amount.log(10) ** (2 / 3) * 180
+        antispice_boosts =
+            1 + get_antispice_amount("yellow").log(10) ** (2 / 3) * 40
         if (game.collapse_challenge !== 0)
-            antispice_boosts = 1 + antispice_amount.log(10) ** (2 / 3) * 90
+            antispice_boosts =
+                1 + get_antispice_amount("yellow").log(10) ** (2 / 3) * 20
     }
 
-    if (game.antispice_bought[4]) antispice_boosts *= 1.3
+    if (game.antispice_bought[4]) antispice_boosts *= 1.175
 
     if (
         game.red_spice_gen[2].cmp(10) >= 0 ||
@@ -2080,26 +2033,26 @@ function spice_update() {
                     game.notation
                 ) +
                 "x"
-        if (
-            game.ascend_challenge === 1 ||
-            game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
-            game.collapse_challenge === 12
-        )
+        if (game.ascend_challenge === 6 || game.collapse_challenge === 12)
             "You have " +
                 format_small(game.red_strengthener) +
                 " red spice strengtheners,<br>boosting all red spice generators " +
                 format_idec(
-                    Decimal.pow(2, game.red_strengthener).pow(antispice_boosts),
+                    Decimal.pow(
+                        2,
+                        game.red_strengthener *
+                            (1 +
+                                2 *
+                                    game.ascend_complete[2] *
+                                    game.ascend_bought[24])
+                    ).pow(antispice_boosts),
                     game.notation
                 ) +
                 "x"
         if (
             game.prestige_bought[5] >= 1 &&
             game.color_boosts >= 1 &&
-            game.ascend_challenge !== 1 &&
             game.ascend_challenge !== 6 &&
-            game.collapse_challenge !== 7 &&
             game.collapse_challenge !== 12
         )
             s_str +=
@@ -2223,19 +2176,20 @@ function spice_update() {
                     game.notation
                 ) +
                 "x"
-        if (
-            game.ascend_challenge === 1 ||
-            game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
-            game.collapse_challenge === 12
-        )
+        if (game.ascend_challenge === 6 || game.collapse_challenge === 12)
             s_str =
                 "You have " +
                 format_small(game.yellow_strengthener) +
                 " yellow spice strengtheners,<br>boosting all red & yellow spice generators " +
                 format_idec(
                     new Decimal(2)
-                        .pow(game.yellow_strengthener)
+                        .pow(
+                            game.yellow_strengthener *
+                                (1 +
+                                    2 *
+                                        game.ascend_complete[2] *
+                                        game.ascend_bought[24])
+                        )
                         .pow(antispice_boosts),
                     game.notation
                 ) +
@@ -2243,9 +2197,7 @@ function spice_update() {
         if (
             game.prestige_bought[5] >= 1 &&
             game.color_boosts >= 2 &&
-            game.ascend_challenge !== 1 &&
             game.ascend_challenge !== 6 &&
-            game.collapse_challenge !== 7 &&
             game.collapse_challenge !== 12
         )
             s_str +=
@@ -2370,19 +2322,20 @@ function spice_update() {
                     game.notation
                 ) +
                 "x"
-        if (
-            game.ascend_challenge === 1 ||
-            game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
-            game.collapse_challenge === 12
-        )
+        if (game.ascend_challenge === 6 || game.collapse_challenge === 12)
             s_str =
                 "You have " +
                 format_small(game.green_strengthener) +
                 " green spice strengtheners,<br>boosting all red, yellow & green spice generators " +
                 format_idec(
                     new Decimal(2)
-                        .pow(game.green_strengthener)
+                        .pow(
+                            game.green_strengthener *
+                                (1 +
+                                    2 *
+                                        game.ascend_complete[2] *
+                                        game.ascend_bought[24])
+                        )
                         .pow(antispice_boosts),
                     game.notation
                 ) +
@@ -2390,9 +2343,7 @@ function spice_update() {
         if (
             game.prestige_bought[5] >= 1 &&
             game.color_boosts >= 3 &&
-            game.ascend_challenge !== 1 &&
             game.ascend_challenge !== 6 &&
-            game.collapse_challenge !== 7 &&
             game.collapse_challenge !== 12
         )
             s_str +=
@@ -2517,19 +2468,20 @@ function spice_update() {
                     game.notation
                 ) +
                 "x"
-        if (
-            game.ascend_challenge === 1 ||
-            game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
-            game.collapse_challenge === 12
-        )
+        if (game.ascend_challenge === 6 || game.collapse_challenge === 12)
             s_str =
                 "You have " +
                 format_small(game.blue_strengthener) +
                 " blue spice strengtheners,<br>boosting all red, yellow, green & blue spice generators " +
                 format_idec(
                     new Decimal(2)
-                        .pow(game.blue_strengthener)
+                        .pow(
+                            game.blue_strengthener *
+                                (1 +
+                                    2 *
+                                        game.ascend_complete[2] *
+                                        game.ascend_bought[24])
+                        )
                         .pow(antispice_boosts),
                     game.notation
                 ) +
@@ -2537,9 +2489,7 @@ function spice_update() {
         if (
             game.prestige_bought[5] >= 1 &&
             game.color_boosts >= 4 &&
-            game.ascend_challenge !== 1 &&
             game.ascend_challenge !== 6 &&
-            game.collapse_challenge !== 7 &&
             game.collapse_challenge !== 12
         )
             s_str +=
@@ -2663,19 +2613,20 @@ function spice_update() {
                     game.notation
                 ) +
                 "x"
-        if (
-            game.ascend_challenge === 1 ||
-            game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
-            game.collapse_challenge === 12
-        )
+        if (game.ascend_challenge === 6 || game.collapse_challenge === 12)
             document.getElementById("pink_info_s").innerHTML =
                 "You have " +
                 format_small(game.pink_strengthener) +
                 " pink spice strengtheners,<br>boosting ALL spice generators " +
                 format_idec(
                     new Decimal(2)
-                        .pow(game.pink_strengthener)
+                        .pow(
+                            game.pink_strengthener *
+                                (1 +
+                                    2 *
+                                        game.ascend_complete[2] *
+                                        game.ascend_bought[24])
+                        )
                         .pow(antispice_boosts),
                     game.notation
                 ) +
@@ -2774,12 +2725,7 @@ function spice_update() {
                         game.notation
                     ) +
                     "x"
-            if (
-                game.ascend_challenge === 1 ||
-                game.ascend_challenge === 6 ||
-                game.collapse_challenge === 7 ||
-                game.collapse_challenge === 12
-            )
+            if (game.ascend_challenge === 6 || game.collapse_challenge === 12)
                 document.getElementById("color_shift_info").innerHTML =
                     "You have " +
                     format_small(game.color_boosts) +
@@ -2796,27 +2742,15 @@ function spice_update() {
         } else {
             document.getElementById("color_shift_header").innerHTML =
                 "Color Boost"
-            document.getElementById("color_shift_info").innerHTML =
-                "You have " +
-                format_small(game.color_boosts) +
-                " color boosts,<br>boosting ALL spice generators " +
-                format_idec(
-                    new Decimal(
-                        2 +
-                            0.2 * game.prestige_bought[2] +
-                            2 * (game.ascend_bought[2] + game.ascend_bought[14])
-                    ).pow((game.color_boosts * 2 - 4) * antispice_boosts),
-                    game.notation
-                ) +
-                "x"
-            if (game.prestige_bought[18] >= 1)
+            if (game.color_boosts >= 5) {
                 document.getElementById("color_shift_info").innerHTML =
                     "You have " +
                     format_small(game.color_boosts) +
                     " color boosts,<br>boosting ALL spice generators " +
                     format_idec(
                         new Decimal(
-                            6 +
+                            2 +
+                                0.2 * game.prestige_bought[2] +
                                 2 *
                                     (game.ascend_bought[2] +
                                         game.ascend_bought[14])
@@ -2824,23 +2758,87 @@ function spice_update() {
                         game.notation
                     ) +
                     "x"
-            if (
-                game.ascend_challenge === 1 ||
-                game.ascend_challenge === 6 ||
-                game.collapse_challenge === 7 ||
-                game.collapse_challenge === 12
-            )
+                if (game.prestige_bought[18] >= 1)
+                    document.getElementById("color_shift_info").innerHTML =
+                        "You have " +
+                        format_small(game.color_boosts) +
+                        " color boosts,<br>boosting ALL spice generators " +
+                        format_idec(
+                            new Decimal(
+                                6 +
+                                    2 *
+                                        (game.ascend_bought[2] +
+                                            game.ascend_bought[14])
+                            ).pow(
+                                (game.color_boosts * 2 - 4) * antispice_boosts
+                            ),
+                            game.notation
+                        ) +
+                        "x"
+                if (
+                    game.ascend_challenge === 6 ||
+                    game.collapse_challenge === 12
+                )
+                    document.getElementById("color_shift_info").innerHTML =
+                        "You have " +
+                        format_small(game.color_boosts) +
+                        " color boosts,<br>boosting ALL spice generators " +
+                        format_idec(
+                            new Decimal(2).pow(
+                                (game.color_boosts * 2 - 4) * antispice_boosts
+                            ),
+                            game.notation
+                        ) +
+                        "x"
+            } else {
                 document.getElementById("color_shift_info").innerHTML =
                     "You have " +
                     format_small(game.color_boosts) +
-                    " color boosts,<br>boosting ALL spice generators " +
+                    " color shifts,<br>boosting ALL spice generators " +
                     format_idec(
-                        new Decimal(2).pow(
-                            (game.color_boosts * 2 - 4) * antispice_boosts
-                        ),
+                        new Decimal(
+                            2 +
+                                0.2 * game.prestige_bought[2] +
+                                2 *
+                                    (game.ascend_bought[2] +
+                                        game.ascend_bought[14])
+                        ).pow((game.color_boosts * 2 - 4) * antispice_boosts),
                         game.notation
                     ) +
                     "x"
+                if (game.prestige_bought[18] >= 1)
+                    document.getElementById("color_shift_info").innerHTML =
+                        "You have " +
+                        format_small(game.color_boosts) +
+                        " color shifts,<br>boosting ALL spice generators " +
+                        format_idec(
+                            new Decimal(
+                                6 +
+                                    2 *
+                                        (game.ascend_bought[2] +
+                                            game.ascend_bought[14])
+                            ).pow(
+                                (game.color_boosts * 2 - 4) * antispice_boosts
+                            ),
+                            game.notation
+                        ) +
+                        "x"
+                if (
+                    game.ascend_challenge === 6 ||
+                    game.collapse_challenge === 12
+                )
+                    document.getElementById("color_shift_info").innerHTML =
+                        "You have " +
+                        format_small(game.color_boosts) +
+                        " color shifts,<br>boosting ALL spice generators " +
+                        format_idec(
+                            new Decimal(2).pow(
+                                (game.color_boosts * 2 - 4) * antispice_boosts
+                            ),
+                            game.notation
+                        ) +
+                        "x"
+            }
             document.getElementById("color_shift_button").innerHTML =
                 "Reset for a spice boost"
             if (game.prestige_bought[22] >= 1)
@@ -2867,7 +2865,9 @@ function spice_update() {
                     ).pow((game.color_boosts * 2 - 4) * antispice_boosts),
                     game.notation
                 ) +
-                "x<br><br>Color augment scaling is significantly harsher than color boost scaling"
+                "x<br><br>After " +
+                format_small(game.augment_start) +
+                " color boosts, color augments begin with much harsher scaling"
             if (game.prestige_bought[18] >= 1)
                 document.getElementById("color_shift_info").innerHTML =
                     "You have " +
@@ -2882,13 +2882,10 @@ function spice_update() {
                         ).pow((game.color_boosts * 2 - 4) * antispice_boosts),
                         game.notation
                     ) +
-                    "x<br><br>Color augment scaling is significantly harsher than color boost scaling"
-            if (
-                game.ascend_challenge === 1 ||
-                game.ascend_challenge === 6 ||
-                game.collapse_challenge === 7 ||
-                game.collapse_challenge === 12
-            )
+                    "x<br><br>After " +
+                    format_small(game.augment_start) +
+                    " color boosts, color augments begin with much harsher scaling"
+            if (game.ascend_challenge === 6 || game.collapse_challenge === 12)
                 document.getElementById("color_shift_info").innerHTML =
                     "You have " +
                     format_small(game.color_boosts) +
@@ -2899,7 +2896,9 @@ function spice_update() {
                         ),
                         game.notation
                     ) +
-                    "x<br><br>Color augment scaling is significantly harsher than color boost scaling"
+                    "x<br><br>After " +
+                    format_small(game.augment_start) +
+                    " color boosts, color augments begin with much harsher scaling"
             document.getElementById("color_shift_button").innerHTML =
                 "Reset for a spice boost"
             if (game.prestige_bought[22] >= 1)
@@ -2923,7 +2922,9 @@ function spice_update() {
                         ).pow(game.color_boosts * antispice_boosts),
                         game.notation
                     ) +
-                    "x<br><br>You have not yet reached Color augments"
+                    "x<br><br>After " +
+                    format_small(game.augment_start) +
+                    " color boosts, color augments begin with much harsher scaling"
                 if (game.prestige_bought[18] >= 1)
                     document.getElementById("color_shift_info").innerHTML =
                         "You have " +
@@ -2938,11 +2939,11 @@ function spice_update() {
                             ).pow(game.color_boosts * antispice_boosts),
                             game.notation
                         ) +
-                        "x<br><br>You have not yet reached Color augments"
+                        "x<br><br>After " +
+                        format_small(game.augment_start) +
+                        " color boosts, color augments begin with much harsher scaling"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     document.getElementById("color_shift_info").innerHTML =
@@ -2955,7 +2956,9 @@ function spice_update() {
                             ),
                             game.notation
                         ) +
-                        "x<br><br>You have not yet reached Color augments"
+                        "x<br><br>After " +
+                        format_small(game.augment_start) +
+                        " color boosts, color augments begin with much harsher scaling"
                 document.getElementById("color_shift_button").innerHTML =
                     "Reset for a new spice color"
             } else {
@@ -2975,7 +2978,9 @@ function spice_update() {
                         ).pow((game.color_boosts * 2 - 4) * antispice_boosts),
                         game.notation
                     ) +
-                    "x<br><br>You have not yet reached Color augments"
+                    "x<br><br>After " +
+                    format_small(game.augment_start) +
+                    " color boosts, color augments begin with much harsher scaling"
                 if (game.prestige_bought[18] >= 1)
                     document.getElementById("color_shift_info").innerHTML =
                         "You have " +
@@ -2992,11 +2997,11 @@ function spice_update() {
                             ),
                             game.notation
                         ) +
-                        "x<br><br>You have not yet reached Color augments"
+                        "x<br><br>After " +
+                        format_small(game.augment_start) +
+                        " color boosts, color augments begin with much harsher scaling"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     document.getElementById("color_shift_info").innerHTML =
@@ -3009,7 +3014,9 @@ function spice_update() {
                             ),
                             game.notation
                         ) +
-                        "x<br><br>You have not yet reached Color augments"
+                        "x<br><br>After " +
+                        format_small(game.augment_start) +
+                        " color boosts, color augments begin with much harsher scaling"
                 document.getElementById("color_shift_button").innerHTML =
                     "Reset for a spice boost"
                 if (game.prestige_bought[22] >= 1)
@@ -3018,14 +3025,25 @@ function spice_update() {
             }
         }
         if (
-            game.color_boosts >= 6 &&
+            game.color_boosts >= 4 &&
             game.color_boosts < 10 &&
             game.prestige === 0 &&
-            game.ascend === 0
-        )
+            game.ascend === 0 &&
+            game.collapse === 0
+        ) {
             document.getElementById("color_shift_unlock").style.display =
                 "block"
-        else
+            if (game.color_boosts === 9)
+                document.getElementById("color_shift_unlock").innerHTML =
+                    "Color boost " +
+                    format_small(1) +
+                    " time to unlock Prestige"
+            else
+                document.getElementById("color_shift_unlock").innerHTML =
+                    "Color boost " +
+                    format_small(10 - game.color_boosts) +
+                    " times to unlock Prestige"
+        } else
             document.getElementById("color_shift_unlock").style.display = "none"
         switch (game.color_boosts) {
             case 0:
@@ -3066,7 +3084,7 @@ function spice_update() {
                             ) +
                             " pink spice galaxies"
                     } else {
-                        let amount = game.augment_start * 2500 - 79737500
+                        let amount = game.augment_start * 4000 - 2676738000
                         if (game.color_boosts <= 8)
                             document.getElementById(
                                 "color_shift_req"
@@ -3139,7 +3157,7 @@ function spice_update() {
                                     (game.color_boosts * 500 - 982500) * scaling
                                 ) +
                                 " pink spice galaxies"
-                        else if (game.color_boosts <= 50003)
+                        else if (game.color_boosts <= 80003)
                             document.getElementById(
                                 "color_shift_req"
                             ).innerHTML =
@@ -3149,13 +3167,33 @@ function spice_update() {
                                         scaling
                                 ) +
                                 " pink spice galaxies"
+                        else if (game.color_boosts <= 132003)
+                            document.getElementById(
+                                "color_shift_req"
+                            ).innerHTML =
+                                "Requires " +
+                                format_small(
+                                    (game.color_boosts * 1500 - 44734500) *
+                                        scaling
+                                ) +
+                                " pink spice galaxies"
+                        else if (game.color_boosts <= 1666667)
+                            document.getElementById(
+                                "color_shift_req"
+                            ).innerHTML =
+                                "Requires " +
+                                format_small(
+                                    (game.color_boosts * 2500 - 176737500) *
+                                        scaling
+                                ) +
+                                " pink spice galaxies"
                         else if (game.color_boosts <= game.augment_start)
                             document.getElementById(
                                 "color_shift_req"
                             ).innerHTML =
                                 "Requires " +
                                 format_small(
-                                    (game.color_boosts * 2500 - 79737500) *
+                                    (game.color_boosts * 4000 - 2676738000) *
                                         scaling
                                 ) +
                                 " pink spice galaxies"
@@ -3167,13 +3205,13 @@ function spice_update() {
                                 format_small(
                                     (((game.color_boosts -
                                         game.augment_start +
-                                        2500) *
+                                        4000) *
                                         (game.color_boosts -
                                             game.augment_start +
-                                            2501)) /
+                                            4001)) /
                                         2 +
                                         amount -
-                                        3126250) *
+                                        8002000) *
                                         scaling
                                 ) +
                                 " pink spice galaxies"
@@ -3191,7 +3229,7 @@ function spice_update() {
                             ) +
                             " pink spice galaxies"
                     } else {
-                        let amount = game.augment_start * 2500 - 79737500
+                        let amount = game.augment_start * 4000 - 2676738000
                         if (game.color_boosts <= 8)
                             document.getElementById(
                                 "color_shift_req"
@@ -3264,7 +3302,7 @@ function spice_update() {
                                     (game.color_boosts * 500 - 982500) * scaling
                                 ) +
                                 " bought pink spice galaxies"
-                        else if (game.color_boosts <= 50003)
+                        else if (game.color_boosts <= 80003)
                             document.getElementById(
                                 "color_shift_req"
                             ).innerHTML =
@@ -3274,13 +3312,33 @@ function spice_update() {
                                         scaling
                                 ) +
                                 " bought pink spice galaxies"
+                        else if (game.color_boosts <= 132003)
+                            document.getElementById(
+                                "color_shift_req"
+                            ).innerHTML =
+                                "Requires " +
+                                format_small(
+                                    (game.color_boosts * 1500 - 44734500) *
+                                        scaling
+                                ) +
+                                " bought pink spice galaxies"
+                        else if (game.color_boosts <= 1666667)
+                            document.getElementById(
+                                "color_shift_req"
+                            ).innerHTML =
+                                "Requires " +
+                                format_small(
+                                    (game.color_boosts * 2500 - 176737500) *
+                                        scaling
+                                ) +
+                                " bought pink spice galaxies"
                         else if (game.color_boosts <= game.augment_start)
                             document.getElementById(
                                 "color_shift_req"
                             ).innerHTML =
                                 "Requires " +
                                 format_small(
-                                    (game.color_boosts * 2500 - 79737500) *
+                                    (game.color_boosts * 4000 - 2676738000) *
                                         scaling
                                 ) +
                                 " bought pink spice galaxies"
@@ -3292,13 +3350,13 @@ function spice_update() {
                                 format_small(
                                     (((game.color_boosts -
                                         game.augment_start +
-                                        2500) *
+                                        4000) *
                                         (game.color_boosts -
                                             game.augment_start +
-                                            2501)) /
+                                            4001)) /
                                         2 +
                                         amount -
-                                        3126250) *
+                                        8002000) *
                                         scaling
                                 ) +
                                 " bought pink spice galaxies"
@@ -3384,27 +3442,39 @@ function spice_update() {
                         (game.color_boosts * 500 - 982500) * scaling
                     )
                         can_boost = true
-                } else if (game.color_boosts <= 50003) {
+                } else if (game.color_boosts <= 80003) {
                     if (
                         game.pink_spice_bought[5] >=
                         (game.color_boosts * 1000 - 4733000) * scaling
                     )
                         can_boost = true
+                } else if (game.color_boosts <= 132003) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 1500 - 44734500) * scaling
+                    )
+                        can_boost = true
+                } else if (game.color_boosts <= 1666667) {
+                    if (
+                        game.pink_spice_bought[5] >=
+                        (game.color_boosts * 2500 - 176737500) * scaling
+                    )
+                        can_boost = true
                 } else if (game.color_boosts <= game.augment_start) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 2500 - 79737500) * scaling
+                        (game.color_boosts * 4000 - 2676738000) * scaling
                     )
                         can_boost = true
                 } else {
-                    let amount = game.augment_start * 2500 - 79737500
+                    let amount = game.augment_start * 4000 - 2676738000
                     if (
                         game.pink_spice_bought[5] >=
-                        (((game.color_boosts - game.augment_start + 2500) *
-                            (game.color_boosts - game.augment_start + 2501)) /
+                        (((game.color_boosts - game.augment_start + 4000) *
+                            (game.color_boosts - game.augment_start + 4001)) /
                             2 +
                             amount -
-                            3126250) *
+                            8002000) *
                             scaling
                     )
                         can_boost = true
@@ -3559,7 +3629,7 @@ function prestige_update() {
         if (game.color_boosts <= 16)
             amount = new Decimal(2).pow((game.color_boosts - 10) / 3)
         else amount = new Decimal(2).pow((game.color_boosts - 8) / 4)
-        if (game.research_complete[31] >= 1 && game.collapse_challenge !== 12) {
+        if (game.research_complete[34] >= 1 && game.collapse_challenge !== 12) {
             if (game.color_boosts >= game.augment_start) {
                 let augment_amount = new Decimal(2).pow(
                     (game.augment_start - 8) / 4
@@ -3569,9 +3639,7 @@ function prestige_update() {
         }
         if (
             game.ascend_bought[15] &&
-            game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6 &&
-            game.collapse_challenge !== 7 &&
+            game.ascend_challenge === 0 &&
             game.collapse_challenge !== 12
         ) {
             if (game.ascend < 10240)
@@ -3583,33 +3651,19 @@ function prestige_update() {
         }
 
         if (game.antispice[4].cmp(1) >= 0) {
-            let antispice_amount = game.antispice[4]
-            if (antispice_amount.cmp(new Decimal(20000)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(new Decimal(20000))
-                    .pow(0.5)
-                    .mul(new Decimal(20000))
-            if (
-                antispice_amount.cmp(Decimal.pow(10, 11).mul(2 * 5 ** 0.5)) >= 0
-            )
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
-
             if (game.collapse_challenge !== 0) {
                 amount = amount.pow(
-                    1 + antispice_amount.log(10) ** 0.75 * 0.0325
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03
                 )
             } else {
                 amount = amount.pow(
-                    1 + antispice_amount.log(10) ** 0.75 * 0.065
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06
                 )
             }
         }
 
         if (game.antispice_bought[2]) {
-            amount = amount.pow(1.15)
+            amount = amount.pow(1.1)
         }
 
         document.getElementById("prestige_up").innerHTML =
@@ -3857,7 +3911,7 @@ function prestige_update() {
         if (game.color_boosts <= 16)
             amount = new Decimal(2).pow((game.color_boosts - 10) / 3)
         else amount = new Decimal(2).pow((game.color_boosts - 8) / 4)
-        if (game.research_complete[31] >= 1 && game.collapse_challenge !== 12) {
+        if (game.research_complete[34] >= 1 && game.collapse_challenge !== 12) {
             if (game.color_boosts >= game.augment_start) {
                 let augment_amount = new Decimal(2).pow(
                     (game.augment_start - 8) / 4
@@ -3867,9 +3921,7 @@ function prestige_update() {
         }
         if (
             game.ascend_bought[15] &&
-            game.ascend_challenge !== 1 &&
-            game.ascend_challenge !== 6 &&
-            game.collapse_challenge !== 7 &&
+            game.ascend_challenge === 0 &&
             game.collapse_challenge !== 12
         ) {
             if (game.ascend >= 10240) {
@@ -3882,33 +3934,19 @@ function prestige_update() {
         }
 
         if (game.antispice[4].cmp(1) >= 0) {
-            let antispice_amount = game.antispice[4]
-            if (antispice_amount.cmp(new Decimal(20000)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(new Decimal(20000))
-                    .pow(0.5)
-                    .mul(new Decimal(20000))
-            if (
-                antispice_amount.cmp(Decimal.pow(10, 11).mul(2 * 5 ** 0.5)) >= 0
-            )
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
-
             if (game.collapse_challenge !== 0) {
                 amount = amount.pow(
-                    1 + antispice_amount.log(10) ** 0.75 * 0.0325
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03
                 )
             } else {
                 amount = amount.pow(
-                    1 + antispice_amount.log(10) ** 0.75 * 0.065
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06
                 )
             }
         }
 
         if (game.antispice_bought[2]) {
-            amount = amount.pow(1.15)
+            amount = amount.pow(1.1)
         }
 
         let str =
@@ -3963,7 +4001,7 @@ function prestige_update() {
                                 "Times Prestiged stat boosts all spice production<br>(Currently: " +
                                 format_idec(
                                     Decimal.pow(
-                                        10 ** 25,
+                                        1e25,
                                         10 * (game.prestige - 914447) ** 0.25 +
                                             829.5
                                     ),
@@ -3975,7 +4013,7 @@ function prestige_update() {
                                 "Times Prestiged stat boosts all spice production<br>(Currently: " +
                                 format_idec(
                                     Decimal.pow(
-                                        10 ** 25,
+                                        1e25,
                                         game.prestige **
                                             (0.5 + 40 / (game.prestige + 80))
                                     ),
@@ -3998,9 +4036,7 @@ function prestige_update() {
                         format_num(1, game.notation) +
                         "x)"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4026,9 +4062,7 @@ function prestige_update() {
                         format_dec(5, game.notation) +
                         "x)"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4036,9 +4070,7 @@ function prestige_update() {
                 break
             case 3:
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 ) {
                     switch (game.prestige_bought[u.id]) {
@@ -4115,9 +4147,7 @@ function prestige_update() {
                         format_dec(2, 0) +
                         "x)"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4132,9 +4162,7 @@ function prestige_update() {
                     ) +
                     "x)"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4144,9 +4172,7 @@ function prestige_update() {
                 u.desc =
                     "All spices boost the previous color based on that spice's amount"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4197,9 +4223,7 @@ function prestige_update() {
             case 11:
                 u.desc = "Red spice boosts every other color by its amount"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4208,9 +4232,7 @@ function prestige_update() {
             case 14:
                 u.desc = "Crystallized spice boosts pink spice by its amount"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4220,9 +4242,7 @@ function prestige_update() {
                 u.desc =
                     "Crystallized spice also boosts other colors by its amount"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4237,9 +4257,7 @@ function prestige_update() {
                     ) +
                     "x)"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4263,9 +4281,7 @@ function prestige_update() {
                         break
                 }
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4275,44 +4291,79 @@ function prestige_update() {
                 u.desc =
                     "Crystal infusions also boost crystallized spice production 1.08x"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
                         "Crystal infusions also boost crystallized spice production 1.08x<br>(Disabled)"
                 break
             case 20:
-                if (game.prestige_bought[u.id] < u.max)
+                if (game.prestige_bought[u.id] < 5)
                     u.desc =
                         "You get " +
-                        format_small(
-                            (12 + 12 * game.prestige_bought[u.id]) *
-                                (1 + game.ascend_bought[5])
-                        ) +
+                        format_small(12 + 12 * game.prestige_bought[u.id]) +
                         " free crystal infusions"
-                else
-                    u.desc =
-                        "You get " +
-                        format_small(144 * (1 + game.ascend_bought[5])) +
-                        " free crystal infusions"
+                else if (game.ascend_bought[5]) {
+                    if (game.prestige_bought[u.id] < u.max)
+                        u.desc =
+                            "You get " +
+                            format_small(
+                                game.prestige_bought[u.id] ** 2 +
+                                    5 * game.prestige_bought[u.id] +
+                                    24
+                            ) +
+                            " free crystal infusions"
+                    else
+                        u.desc =
+                            "You get " +
+                            format_small(
+                                2 * game.prestige_bought[u.id] ** 2 -
+                                    18 * game.prestige_bought[u.id] +
+                                    156
+                            ) +
+                            " free crystal infusions"
+                } else {
+                    if (game.prestige_bought[u.id] < u.max)
+                        u.desc =
+                            "You get " +
+                            format_small(
+                                game.prestige_bought[u.id] ** 2 +
+                                    5 * game.prestige_bought[u.id] +
+                                    24
+                            ) +
+                            " free crystal infusions"
+                    else
+                        u.desc =
+                            "You get " +
+                            format_small(200) +
+                            " free crystal infusions"
+                }
                 break
             case 21:
+                let exponent =
+                    1 /
+                        (9 *
+                            (1 +
+                                Math.E **
+                                    (Math.log10(
+                                        game.rainbow_spice.div(
+                                            Decimal.pow(2, 466)
+                                        )
+                                    ) /
+                                        8))) +
+                    11 / 9
                 u.desc =
                     "Crystallized spice production is boosted by unspent rainbow spice<br>(Currently: " +
                     format_idec(
                         game.rainbow_spice
                             .div(Decimal.pow(2, 292.5))
-                            .pow(4 / 3)
+                            .pow(exponent)
                             .add(1),
                         game.notation
                     ) +
                     "x)"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4322,9 +4373,7 @@ function prestige_update() {
                 u.desc =
                     "Crystallized spice furnace multipliers are raised to the 1.25 power"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -4342,12 +4391,20 @@ function prestige_update() {
 
         let bought = true
         if (game.reduce_flashing) {
-            if (game.prestige_bought[u.id] < u.max) u.unbought++
+            if (
+                game.prestige_bought[u.id] < u.max ||
+                (u.id === 20 && game.ascend_bought[5])
+            )
+                u.unbought++
             else u.unbought = 0
             if (u.unbought >= game.tickspeed / 2) bought = false
         } else {
             u.unbought = 0
-            if (game.prestige_bought[u.id] < u.max) bought = false
+            if (
+                game.prestige_bought[u.id] < u.max ||
+                (u.id === 20 && game.ascend_bought[5])
+            )
+                bought = false
         }
 
         if (u.id === 25) {
@@ -4411,25 +4468,11 @@ function crystal_update() {
 
     let antispice_power = 1
     if (game.antispice[1].cmp(1) >= 0) {
-        let antispice_amount = game.antispice[1]
-        if (antispice_amount.cmp(Decimal.pow(10, 39)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 39))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 39))
-        if (antispice_amount.cmp(Decimal.pow(10, 54.5)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 54.5))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 54.5))
-        if (antispice_amount.cmp(Decimal.pow(10, 121)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 121))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 121))
-        antispice_power = 1 + antispice_amount.log(10) ** (2 / 3) * 0.015
+        antispice_power =
+            1 + get_antispice_amount("red").log(10) ** (2 / 3) * 0.015
         if (game.collapse_challenge !== 0)
-            antispice_power = 1 + antispice_amount.log(10) ** (2 / 3) * 0.0075
+            antispice_power =
+                1 + get_antispice_amount("red").log(10) ** (2 / 3) * 0.0075
     }
 
     document.getElementById("crystal_spice_num").innerHTML =
@@ -4456,9 +4499,7 @@ function crystal_update() {
             "x"
 
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             game.prestige_bought[14] === 0
         ) {
@@ -4474,9 +4515,7 @@ function crystal_update() {
         game.collapse >= 1
     ) {
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             game.prestige_bought[16] === 0
         ) {
@@ -4866,28 +4905,14 @@ function crystal_update() {
     ) {
         let antispice_boosts = 1
         if (game.antispice[2].cmp(1) >= 0) {
-            let antispice_amount = game.antispice[2]
-            if (antispice_amount.cmp(Decimal.pow(10, 14)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 14))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 14))
-            if (antispice_amount.cmp(Decimal.pow(10, 19.5)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 19.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 19.5))
-            if (antispice_amount.cmp(Decimal.pow(10, 42.25)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 42.25))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 42.25))
-            antispice_boosts = 1 + antispice_amount.log(10) ** (2 / 3) * 180
+            antispice_boosts =
+                1 + get_antispice_amount("yellow").log(10) ** (2 / 3) * 40
             if (game.collapse_challenge !== 0)
-                antispice_boosts = 1 + antispice_amount.log(10) ** (2 / 3) * 90
+                antispice_boosts =
+                    1 + get_antispice_amount("yellow").log(10) ** (2 / 3) * 20
         }
 
-        if (game.antispice_bought[4]) antispice_boosts *= 1.3
+        if (game.antispice_bought[4]) antispice_boosts *= 1.175
 
         document.getElementById("crystal_gen_s").style.display = "block"
 
@@ -4953,71 +4978,62 @@ function crystal_update() {
 
     let antispice_infusions = 1
     if (game.antispice[3].cmp(1) >= 0) {
-        let antispice_amount = game.antispice[3]
-        if (antispice_amount.cmp(Decimal.pow(10, 6)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 6))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 6))
-        if (antispice_amount.cmp(Decimal.pow(10, 8)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 8))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 8))
-        if (antispice_amount.cmp(Decimal.pow(10, 17.5)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 17.5))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 17.5))
-
-        antispice_infusions = 1 + antispice_amount.log(10) ** 0.5 * 0.2
+        antispice_infusions =
+            1 + get_antispice_amount("green").log(10) ** 0.5 * 0.15
         if (game.collapse_challenge !== 0)
-            antispice_infusions = 1 + antispice_amount.log(10) ** 0.5 * 0.1
+            antispice_infusions =
+                1 + get_antispice_amount("green").log(10) ** 0.5 * 0.075
     }
 
-    if (game.antispice_bought[5]) antispice_infusions *= 1.054
+    if (game.antispice_bought[5]) antispice_infusions *= 1.06
 
     let s_str =
         "You have " + format_small(game.crystal_infusion) + " crystal infusions"
-    if (game.prestige_bought[20] >= 1)
-        s_str +=
-            " (+" +
-            format_small(
-                game.prestige_bought[20] * 12 * (1 + game.ascend_bought[5])
-            ) +
-            " free)"
-    if (
-        game.ascend_complete[2] &&
-        game.ascend_bought[24] &&
-        game.ascend_challenge !== 1 &&
-        game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7 &&
-        game.collapse_challenge !== 12
-    ) {
-        s_str +=
-            ",<br>boosting all normal spice generators " +
-            format_idec(
-                Decimal.pow(
-                    5,
-                    (
-                        game.crystal_infusion +
-                        BigInt(
-                            game.prestige_bought[20] *
-                                12 *
-                                (1 + game.ascend_bought[5])
-                        )
-                    ).toString() *
-                        32 *
-                        antispice_infusions
-                ),
-                game.notation
-            ) +
-            "x"
+    let free_infusions = game.prestige_bought[20] * 12
+    if (game.prestige_bought[20] >= 6)
+        free_infusions =
+            game.prestige_bought[20] ** 2 + 3 * game.prestige_bought[20] + 20
+    if (game.prestige_bought[20] >= 13)
+        free_infusions =
+            2 * game.prestige_bought[20] ** 2 -
+            22 * game.prestige_bought[20] +
+            176
+    if (free_infusions > 0)
+        s_str += " (+" + format_small(free_infusions) + " free)"
+    if (game.ascend_complete[2] && game.ascend_bought[24]) {
+        if (game.ascend_challenge === 6 || game.collapse_challenge === 12)
+            s_str +=
+                ",<br>boosting all normal spice generators " +
+                format_idec(
+                    Decimal.pow(
+                        5,
+                        (
+                            game.crystal_infusion + BigInt(free_infusions)
+                        ).toString() *
+                            19.2 *
+                            antispice_infusions
+                    ),
+                    game.notation
+                ) +
+                "x"
+        else
+            s_str +=
+                ",<br>boosting all normal spice generators " +
+                format_idec(
+                    Decimal.pow(
+                        5,
+                        (
+                            game.crystal_infusion + BigInt(free_infusions)
+                        ).toString() *
+                            24 *
+                            antispice_infusions
+                    ),
+                    game.notation
+                ) +
+                "x"
     } else if (
         game.ascend_bought[7] &&
-        game.ascend_challenge !== 1 &&
         game.ascend_challenge !== 6 &&
-        game.collapse_challenge !== 7 &&
         game.collapse_challenge !== 12
     ) {
         s_str +=
@@ -5026,14 +5042,9 @@ function crystal_update() {
                 Decimal.pow(
                     5,
                     (
-                        game.crystal_infusion +
-                        BigInt(
-                            game.prestige_bought[20] *
-                                12 *
-                                (1 + game.ascend_bought[5])
-                        )
+                        game.crystal_infusion + BigInt(free_infusions)
                     ).toString() *
-                        17.6 *
+                        20 *
                         antispice_infusions
                 ),
                 game.notation
@@ -5046,12 +5057,7 @@ function crystal_update() {
                 Decimal.pow(
                     5,
                     (
-                        game.crystal_infusion +
-                        BigInt(
-                            game.prestige_bought[20] *
-                                12 *
-                                (1 + game.ascend_bought[5])
-                        )
+                        game.crystal_infusion + BigInt(free_infusions)
                     ).toString() *
                         16 *
                         antispice_infusions
@@ -5066,9 +5072,7 @@ function crystal_update() {
         game.collapse >= 1
     ) {
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             game.prestige_bought[19] === 0
         ) {
@@ -5083,12 +5087,7 @@ function crystal_update() {
                     Decimal.pow(
                         1.08 + 0.04 * game.ascend_bought[6],
                         (
-                            game.crystal_infusion +
-                            BigInt(
-                                game.prestige_bought[20] *
-                                    12 *
-                                    (1 + game.ascend_bought[5])
-                            )
+                            game.crystal_infusion + BigInt(free_infusions)
                         ).toString() * antispice_infusions
                     ),
                     game.notation
@@ -5103,7 +5102,14 @@ function crystal_update() {
         format_idec(game.crystal_infusion_price, game.notation) +
         spice_unit +
         " crystallized spice"
-    if (game.crystal_spice.cmp(game.crystal_infusion_price) >= 0) {
+    if (game.ascend_challenge === 1 || game.collapse_challenge === 7)
+        document.getElementById("crystal_cost_i").innerHTML =
+            "-Infinity " + spice_unit + " crystallized spice"
+    if (
+        game.crystal_spice.cmp(game.crystal_infusion_price) >= 0 &&
+        game.ascend_challenge !== 1 &&
+        game.collapse_challenge !== 7
+    ) {
         document.getElementById("crystal_cost_i").className = "crystal_cost"
         document.getElementById("crystal_buy_i").className = "spice_buy can_buy"
     } else {
@@ -5176,77 +5182,77 @@ function ascension_update() {
         document.getElementById("ascend_button").className =
             "ascend_button a_unlocked"
         document.getElementById("ascend_up").style.display = "block"
-        let amount = Math.floor(
-            (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8
-        )
-        if (game.research_complete[10] >= 1 && game.collapse_challenge !== 12)
-            amount = Math.floor(
-                (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8 *
-                    (Math.log2((game.collapse + 25) / 25) ** 2 * 6.27 + 1)
-            )
+        let amount = game.rainbow_spice.pow(1 / 128).div(256)
+        let original_amount = amount.floor()
 
-        let original_amount = amount
+        if (game.research_complete[12] >= 1 && game.collapse_challenge !== 12) {
+            if (game.collapse <= 1224) {
+                amount = amount.mul(
+                    Decimal.pow(7.27e27, (game.collapse / 10) ** 0.5)
+                )
+            } else {
+                amount = amount.mul(
+                    Decimal.pow(
+                        7.27e27,
+                        (game.collapse - 1013.3) ** 0.25 + 7.2535
+                    )
+                )
+            }
+        }
+
+        let reward_scaling = 1
+        if (game.antispice_bought[1]) reward_scaling = 1.05
+        if (game.collapse_complete[4] >= 2 && game.collapse_challenge !== 11) {
+            amount = amount.mul(
+                Decimal.pow(
+                    3,
+                    ((
+                        game.arcane_enchantment + game.free_enchantment
+                    ).toString() **
+                        0.5 *
+                        game.collapse_complete[4] *
+                        reward_scaling) /
+                        9
+                )
+            )
+        }
 
         if (game.antispice[4].cmp(1) >= 0) {
-            let antispice_amount = game.antispice[4]
-            if (antispice_amount.cmp(new Decimal(20000)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(new Decimal(20000))
-                    .pow(0.5)
-                    .mul(new Decimal(20000))
-            if (
-                antispice_amount.cmp(Decimal.pow(10, 11).mul(2 * 5 ** 0.5)) >= 0
-            )
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
-
             if (game.collapse_challenge !== 0) {
-                amount =
-                    amount ** (1 + antispice_amount.log(10) ** 0.75 * 0.0325)
+                amount = amount.pow(
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03
+                )
             } else {
-                amount =
-                    amount ** (1 + antispice_amount.log(10) ** 0.75 * 0.065)
+                amount = amount.pow(
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06
+                )
             }
         }
 
         if (game.antispice_bought[3]) {
-            amount = amount ** 1.25
+            amount = amount.pow(1.125)
         }
 
         document.getElementById("ascend_up").innerHTML =
-            "+" + format_num(Math.floor(amount), game.notation) + " ᚫ"
+            "+" + format_inum(amount.floor(), game.notation) + " ᚫ"
         document.getElementById("ascend_req").style.color = "white"
         document.getElementById("ascend_req").innerHTML =
             format_idec(
-                Decimal.pow(2, 1024).pow((original_amount + 1) ** 0.125),
+                Decimal.pow(2, 1024).mul(
+                    Decimal.pow(original_amount.add(1), 128)
+                ),
                 game.notation
             ) +
             rainbow_unit +
             " rainbow spice for next ᚫ"
-        if (game.research_complete[10] >= 1 && game.collapse_challenge !== 12)
-            document.getElementById("ascend_req").innerHTML =
-                format_idec(
-                    Decimal.pow(2, 1024).pow(
-                        (original_amount /
-                            (Math.log2((game.collapse + 25) / 25) ** 2 * 6.27 +
-                                1) +
-                            1) **
-                            0.125
-                    ),
-                    game.notation
-                ) +
-                rainbow_unit +
-                " rainbow spice for next ᚫ"
 
         if (game.resource_efficiency && game.ascend_challenge === 0) {
             document.getElementById("ascend_efficiency").style.display = "block"
 
             let efficiency_str =
                 "Currently: +" +
-                format_dec(
-                    (amount / game.ascend_time_played) * 60,
+                format_idec(
+                    amount.div(game.ascend_time_played).mul(60),
                     game.notation
                 ) +
                 " ᚫ/min"
@@ -5256,20 +5262,20 @@ function ascension_update() {
                     case 0:
                         efficiency_str +=
                             "<br>Peak: +" +
-                            format_dec(
-                                game.peak_ansuz_gain * 60,
+                            format_idec(
+                                game.peak_ansuz_gain.mul(60),
                                 game.notation
                             ) +
                             " ᚫ/min at +" +
-                            format_num(game.peak_ansuz_amount, game.notation) +
+                            format_inum(game.peak_ansuz_amount, game.notation) +
                             " ᚫ"
                         break
                     case 1:
                         if (game.peak_ansuz_time < 1)
                             efficiency_str +=
                                 "<br>Peak: +" +
-                                format_dec(
-                                    game.peak_ansuz_gain * 60,
+                                format_idec(
+                                    game.peak_ansuz_gain.mul(60),
                                     game.notation
                                 ) +
                                 " ᚫ/min at " +
@@ -5278,8 +5284,8 @@ function ascension_update() {
                         else
                             efficiency_str +=
                                 "<br>Peak: +" +
-                                format_dec(
-                                    game.peak_ansuz_gain * 60,
+                                format_idec(
+                                    game.peak_ansuz_gain.mul(60),
                                     game.notation
                                 ) +
                                 " ᚫ/min at " +
@@ -5293,7 +5299,7 @@ function ascension_update() {
             } else {
                 efficiency_str +=
                     "<br>Peak: +" +
-                    format_dec(game.peak_ansuz_gain * 60, game.notation) +
+                    format_idec(game.peak_ansuz_gain.mul(60), game.notation) +
                     " ᚫ/min"
             }
 
@@ -5329,92 +5335,188 @@ function ascension_update() {
     }
 
     document.getElementById("ansuz_num").innerHTML =
-        format_num(game.ansuz, game.notation) + " ᚫ"
+        format_inum(game.ansuz, game.notation) + " ᚫ"
 
     let rune_speed = 1
+    let rune_exp = 2
     if (game.research_complete[3] >= 1 && game.collapse_challenge !== 12) {
-        if (game.research_complete[3] >= 12)
-            rune_speed = 2099520 * 2 ** (game.research_complete[3] - 12)
-        else if (game.research_complete[3] >= 4)
-            rune_speed = 320 * 3 ** (game.research_complete[3] - 4)
-        else if (game.research_complete[3] >= 1)
-            rune_speed = 5 * 4 ** (game.research_complete[3] - 1)
-        else rune_speed = 5
+        rune_exp = 2 + 0.1 * game.research_complete[3]
 
         if (game.antispice_bought[0])
-            rune_speed *= 1.11 ** game.research_complete[3]
+            rune_exp = 2 + 0.1 * 1.15 * game.research_complete[3]
     }
     if (game.ascend_challenge === 6 || game.collapse_challenge === 12)
         rune_speed = 0
 
-    document.getElementById("jera_text").innerHTML =
-        "You have " +
-        format_num(game.rune[0], game.notation) +
-        " ᛡ, producing " +
-        format_num(game.rune[0] * rune_speed, game.notation) +
-        " ᛡ power/sec<br>You have " +
-        format_num(Math.floor(game.rune_power[0]), game.notation) +
-        " ᛡ power, boosting red spice production " +
-        format_idec(game.rune_boost[0], game.notation) +
-        "x"
-    document.getElementById("raido_text").innerHTML =
-        "You have " +
-        format_num(game.rune[1], game.notation) +
-        " ᚱ, producing " +
-        format_num(game.rune[1] * rune_speed, game.notation) +
-        " ᚱ power/sec<br>You have " +
-        format_num(Math.floor(game.rune_power[1]), game.notation) +
-        " ᚱ power, boosting yellow, green, & blue spice production " +
-        format_idec(game.rune_boost[1], game.notation) +
-        "x"
-    document.getElementById("othala_text").innerHTML =
-        "You have " +
-        format_num(game.rune[2], game.notation) +
-        " ᛟ, producing " +
-        format_num(game.rune[2] * rune_speed, game.notation) +
-        " ᛟ power/sec<br>You have " +
-        format_num(Math.floor(game.rune_power[2]), game.notation) +
-        " ᛟ power, boosting pink spice production " +
-        format_idec(game.rune_boost[2], game.notation) +
-        "x"
+    if (game.rune[0].cmp(0) === 0 && game.ascend >= 1) {
+        if (game.rune_power[0].cmp(250) >= 0) {
+            document.getElementById("jera_text").innerHTML =
+                "You have " +
+                format_num(0, game.notation) +
+                " ᛡ, producing " +
+                format_idec(
+                    Decimal.pow(0.5, game.rune_power[0].div(250)).mul(
+                        0.4 * rune_speed
+                    ),
+                    game.notation
+                ) +
+                " ᛡ power/sec<br>You have " +
+                format_inum(game.rune_power[0].floor(), game.notation) +
+                " ᛡ power, boosting red spice production " +
+                format_idec(game.rune_boost[0], game.notation) +
+                "x"
+        } else {
+            document.getElementById("jera_text").innerHTML =
+                "You have " +
+                format_num(0, game.notation) +
+                " ᛡ, producing " +
+                format_dec(0.2 * rune_speed, game.notation) +
+                " ᛡ power/sec<br>You have " +
+                format_inum(game.rune_power[0].floor(), game.notation) +
+                " ᛡ power, boosting red spice production " +
+                format_idec(game.rune_boost[0], game.notation) +
+                "x"
+        }
+    } else {
+        document.getElementById("jera_text").innerHTML =
+            "You have " +
+            format_inum(game.rune[0], game.notation) +
+            " ᛡ, producing " +
+            format_idec(
+                game.rune[0].pow(rune_exp).mul(rune_speed),
+                game.notation
+            ) +
+            " ᛡ power/sec<br>You have " +
+            format_inum(game.rune_power[0].floor(), game.notation) +
+            " ᛡ power, boosting red spice production " +
+            format_idec(game.rune_boost[0], game.notation) +
+            "x"
+    }
+    if (game.rune[1].cmp(0) === 0 && game.ascend >= 1) {
+        if (game.rune_power[1].cmp(250) >= 0) {
+            document.getElementById("raido_text").innerHTML =
+                "You have " +
+                format_num(0, game.notation) +
+                " ᚱ, producing " +
+                format_idec(
+                    Decimal.pow(0.5, game.rune_power[1].div(250)).mul(
+                        0.4 * rune_speed
+                    ),
+                    game.notation
+                ) +
+                " ᚱ power/sec<br>You have " +
+                format_inum(game.rune_power[1].floor(), game.notation) +
+                " ᚱ power, boosting yellow, green, & blue spice production " +
+                format_idec(game.rune_boost[1], game.notation) +
+                "x"
+        } else {
+            document.getElementById("raido_text").innerHTML =
+                "You have " +
+                format_num(0, game.notation) +
+                " ᚱ, producing " +
+                format_dec(0.2 * rune_speed, game.notation) +
+                " ᚱ power/sec<br>You have " +
+                format_inum(game.rune_power[1].floor(), game.notation) +
+                " ᚱ power, boosting yellow, green, & blue spice production " +
+                format_idec(game.rune_boost[1], game.notation) +
+                "x"
+        }
+    } else {
+        document.getElementById("raido_text").innerHTML =
+            "You have " +
+            format_inum(game.rune[1], game.notation) +
+            " ᚱ, producing " +
+            format_idec(
+                game.rune[1].pow(rune_exp).mul(rune_speed),
+                game.notation
+            ) +
+            " ᚱ power/sec<br>You have " +
+            format_inum(game.rune_power[1].floor(), game.notation) +
+            " ᚱ power, boosting yellow, green, & blue spice production " +
+            format_idec(game.rune_boost[1], game.notation) +
+            "x"
+    }
+    if (game.rune[2].cmp(0) === 0 && game.ascend >= 1) {
+        if (game.rune_power[2].cmp(250) >= 0) {
+            document.getElementById("othala_text").innerHTML =
+                "You have " +
+                format_num(0, game.notation) +
+                " ᛟ, producing " +
+                format_idec(
+                    Decimal.pow(0.5, game.rune_power[2].div(250)).mul(
+                        0.4 * rune_speed
+                    ),
+                    game.notation
+                ) +
+                " ᛟ power/sec<br>You have " +
+                format_inum(game.rune_power[2].floor(), game.notation) +
+                " ᛟ power, boosting pink spice production " +
+                format_idec(game.rune_boost[2], game.notation) +
+                "x"
+        } else {
+            document.getElementById("othala_text").innerHTML =
+                "You have " +
+                format_num(0, game.notation) +
+                " ᛟ, producing " +
+                format_dec(0.2 * rune_speed, game.notation) +
+                " ᛟ power/sec<br>You have " +
+                format_inum(game.rune_power[2].floor(), game.notation) +
+                " ᛟ power, boosting pink spice production " +
+                format_idec(game.rune_boost[2], game.notation) +
+                "x"
+        }
+    } else {
+        document.getElementById("othala_text").innerHTML =
+            "You have " +
+            format_inum(game.rune[2], game.notation) +
+            " ᛟ, producing " +
+            format_idec(
+                game.rune[2].pow(rune_exp).mul(rune_speed),
+                game.notation
+            ) +
+            " ᛟ power/sec<br>You have " +
+            format_inum(game.rune_power[2].floor(), game.notation) +
+            " ᛟ power, boosting pink spice production " +
+            format_idec(game.rune_boost[2], game.notation) +
+            "x"
+    }
+
+    if (game.rune[2].cmp(1) === -1) {
+        document.getElementById("jera_menu").style.display = "none"
+        document.getElementById("raido_menu").style.display = "none"
+    } else {
+        document.getElementById("jera_menu").style.display = "flex"
+        document.getElementById("raido_menu").style.display = "flex"
+    }
 
     if (game.distribute_unlocked) {
         document.getElementById("distribute_buttons").style.display = "flex"
-    } else {
-        document.getElementById("distribute_buttons").style.display = "none"
-    }
-
-    if (game.half_distribute_unlocked) {
-        document.getElementById("half_distribute").style.display = "block"
         document.getElementById("jera_half").style.display = "block"
         document.getElementById("raido_half").style.display = "block"
         document.getElementById("othala_half").style.display = "block"
     } else {
-        document.getElementById("half_distribute").style.display = "none"
+        document.getElementById("distribute_buttons").style.display = "none"
         document.getElementById("jera_half").style.display = "none"
         document.getElementById("raido_half").style.display = "none"
         document.getElementById("othala_half").style.display = "none"
     }
 
-    if (game.research_complete[4] >= 1) {
-        document.getElementById("distributor").style.display = "block"
+    if (game.half_distribute_unlocked) {
+        document.getElementById("half_distribute").style.display = "block"
+    } else {
+        document.getElementById("half_distribute").style.display = "none"
+    }
 
-        if (game.research_complete[6] >= 1) {
-            document.getElementById("distributor_block1").style.display = "none"
-            document.getElementById("distributor_block2").style.display =
-                "block"
-        } else {
-            document.getElementById("distributor_block1").style.display = "flex"
-            document.getElementById("distributor_block2").style.display = "none"
-        }
+    if (game.research_complete[6] >= 1) {
+        document.getElementById("distributor").style.display = "block"
     } else {
         document.getElementById("distributor").style.display = "none"
     }
 
     document.getElementById("ansuz_num2").innerHTML =
-        format_num(game.ansuz, game.notation) + " ᚫ"
+        format_inum(game.ansuz, game.notation) + " ᚫ"
     document.getElementById("ansuz_num3").innerHTML =
-        format_num(game.ansuz, game.notation) + " ᚫ"
+        format_inum(game.ansuz, game.notation) + " ᚫ"
 
     let mobile = Number(
         getComputedStyle(document.body).getPropertyValue("--mobile")
@@ -5451,62 +5553,72 @@ function ascension_update() {
         document.getElementById("arcane_spice").className = "subtab locked"
     }
 
+    if (game.research_complete[4] >= 1) {
+        document.getElementById("upgrade_auto_toggle3").style.display = "block"
+    } else {
+        document.getElementById("upgrade_auto_toggle3").style.display = "none"
+    }
+
     if (game.collapse_complete[4] >= 1) {
         document.getElementById("ansuz_up").style.display = "block"
         document.getElementById("ansuz_up2").style.display = "block"
         document.getElementById("ansuz_up3").style.display = "block"
 
-        let amount = Math.floor(
-            (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8
-        )
-        if (game.research_complete[10] >= 1 && game.collapse_challenge !== 12)
-            amount = Math.floor(
-                (game.rainbow_spice.log(Decimal.pow(2, 512)) / 2) ** 8 *
-                    (Math.log2((game.collapse + 25) / 25) ** 2 * 6.27 + 1)
-            )
+        let amount = game.rainbow_spice.pow(1 / 128).div(256)
 
-        if (game.antispice[4].cmp(1) >= 0) {
-            let antispice_amount = game.antispice[4]
-            if (antispice_amount.cmp(new Decimal(20000)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(new Decimal(20000))
-                    .pow(0.5)
-                    .mul(new Decimal(20000))
-            if (
-                antispice_amount.cmp(Decimal.pow(10, 11).mul(2 * 5 ** 0.5)) >= 0
-            )
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
-
-            if (game.collapse_challenge !== 0) {
-                amount =
-                    amount ** (1 + antispice_amount.log(10) ** 0.75 * 0.0325)
+        if (game.research_complete[12] >= 1 && game.collapse_challenge !== 12) {
+            if (game.collapse <= 1224) {
+                amount = amount.mul(
+                    Decimal.pow(7.27e27, (game.collapse / 10) ** 0.5)
+                )
             } else {
-                amount =
-                    amount ** (1 + antispice_amount.log(10) ** 0.75 * 0.065)
+                amount = amount.mul(
+                    Decimal.pow(
+                        7.27e27,
+                        (game.collapse - 1013.3) ** 0.25 + 7.2535
+                    )
+                )
             }
-        }
-
-        if (game.antispice_bought[3]) {
-            amount = amount ** 1.25
         }
 
         let reward_scaling = 1
         if (game.antispice_bought[1]) reward_scaling = 1.05
+        if (game.collapse_complete[4] >= 2 && game.collapse_challenge !== 11) {
+            amount = amount.mul(
+                Decimal.pow(
+                    3,
+                    ((
+                        game.arcane_enchantment + game.free_enchantment
+                    ).toString() **
+                        0.5 *
+                        game.collapse_complete[4] *
+                        reward_scaling) /
+                        9
+                )
+            )
+        }
+
+        if (game.antispice[4].cmp(1) >= 0) {
+            if (game.collapse_challenge !== 0) {
+                amount = amount.pow(
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03
+                )
+            } else {
+                amount = amount.pow(
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06
+                )
+            }
+        }
+
+        if (game.antispice_bought[3]) {
+            amount = amount.pow(1.125)
+        }
+
         let str = "+" + format_dec(0, game.notation) + " ᚫ/sec"
         if (game.rainbow_spice.cmp(Decimal.pow(2, 1024)) >= 0) {
             str =
                 "+" +
-                format_dec(
-                    (amount *
-                        game.collapse_complete[4] *
-                        (game.collapse_complete[4] + 1) *
-                        reward_scaling) /
-                        200,
-                    game.notation
-                ) +
+                format_idec(amount.floor().mul(0.01), game.notation) +
                 " ᚫ/sec"
         }
 
@@ -5524,25 +5636,21 @@ function ascension_update() {
             case 0:
                 u.desc =
                     "The boost from red spice amount is " +
-                    format_small(50) +
-                    "% stronger"
+                    format_small(2) +
+                    "x stronger"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
                         "The boost from red spice amount is " +
-                        format_small(50) +
-                        "% stronger<br>(Disabled)"
+                        format_small(2) +
+                        "x stronger<br>(Disabled)"
                 break
             case 1:
                 u.desc = "The boost from Times Prestiged stat is stronger"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5570,9 +5678,7 @@ function ascension_update() {
                         ) +
                         "x)"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5581,9 +5687,7 @@ function ascension_update() {
             case 4:
                 u.desc = "Crystallized spice generator multipliers are stronger"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5595,9 +5699,7 @@ function ascension_update() {
                     format_dec(1.12) +
                     "x"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5607,24 +5709,20 @@ function ascension_update() {
                 break
             case 7:
                 u.desc =
-                    "Crystal infusions are " + format_small(10) + "% stronger"
+                    "Crystal infusions are " + format_small(25) + "% stronger"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
                         "Crystal infusions are " +
-                        format_small(10) +
+                        format_small(25) +
                         "% stronger<br>(Disabled)"
                 break
             case 11:
                 u.desc = "Strengtheners are " + format_small(2) + "x stronger"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5640,9 +5738,7 @@ function ascension_update() {
             case 13:
                 u.desc = "Pink spice boosts crystallized spice by its amount"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5670,9 +5766,7 @@ function ascension_update() {
                         ) +
                         "x)"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5699,9 +5793,7 @@ function ascension_update() {
                         ) +
                         "x)"
                 if (
-                    game.ascend_challenge === 1 ||
-                    game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
+                    game.ascend_challenge !== 0 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5710,46 +5802,67 @@ function ascension_update() {
             case 18:
                 u.desc = "Red spice boosts crystallized spice by its amount"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
                         "Red spice boosts crystallized spice by its amount<br>(Disabled)"
                 break
             case 19:
-                if (game.ansuz >= 2.5 * 10 ** 11) {
-                    u.desc =
-                        "Arcane spice is boosted based on unused Ansuz runes<br>(Currently: " +
-                        format_idec(
-                            Decimal.pow(
-                                game.ansuz / (2.5 * 10 ** 11),
-                                2 +
-                                    5 *
-                                        Math.log10(
-                                            game.ansuz / (2.5 * 10 ** 11)
-                                        )
+                let exponent = 1.5
+                if (game.ansuz.cmp(ascension_upgrade.upgrades[25].price) >= 0) {
+                    let scale =
+                        (ascension_upgrade.upgrades[26].price.log(10) -
+                            ascension_upgrade.upgrades[25].price.log(10)) /
+                        Math.PI
+                    exponent =
+                        0.25 *
+                            Math.sin(
+                                (game.ansuz.log(10) -
+                                    ascension_upgrade.upgrades[25].price.log(
+                                        10
+                                    )) /
+                                    scale -
+                                    Math.PI / 2
+                            ) +
+                        1.75
+                }
+                if (game.ansuz.cmp(ascension_upgrade.upgrades[26].price) >= 0)
+                    exponent = 2
+                if (game.ansuz.cmp(ascension_upgrade.upgrades[28].price) >= 0) {
+                    let scale =
+                        ascension_upgrade.upgrades[28].price.log(10) / Math.PI
+                    exponent =
+                        1.8 -
+                        0.2 *
+                            Math.sin(
+                                (game.ansuz.log(10) -
+                                    ascension_upgrade.upgrades[28].price.log(
+                                        10
+                                    )) /
+                                    scale -
+                                    Math.PI / 2
                             )
-                                .mul(4999)
-                                .add(1),
-                            game.notation
-                        ) +
-                        "x)"
-                } else {
-                    u.desc =
-                        "Arcane spice is boosted based on unused Ansuz runes<br>(Currently: " +
-                        format_idec(
-                            Decimal.pow(game.ansuz / (2.5 * 10 ** 11), 2)
-                                .mul(4999)
-                                .add(1),
-                            game.notation
-                        ) +
-                        "x)"
                 }
                 if (
+                    game.ansuz.cmp(
+                        ascension_upgrade.upgrades[28].price.pow(2)
+                    ) >= 0
+                )
+                    exponent = 1.6
+
+                u.desc =
+                    "Arcane spice is boosted based on unused Ansuz runes<br>(Currently: " +
+                    format_idec(
+                        game.ansuz
+                            .div(1.2379705696153568e62)
+                            .add(1)
+                            .pow(exponent),
+                        game.notation
+                    ) +
+                    "x)"
+                if (
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5764,9 +5877,7 @@ function ascension_update() {
             case 22:
                 u.desc = "Arcane spice boosts crystallized spice by its amount"
                 if (
-                    game.ascend_challenge === 1 ||
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5775,17 +5886,16 @@ function ascension_update() {
             case 26:
                 u.desc =
                     "Boosts from rune power are " +
-                    format_small(2) +
-                    "x stronger"
+                    format_small(50) +
+                    "% stronger"
                 break
             case 29:
                 u.desc =
                     "Arcane enchantments also boost arcane spice production " +
-                    format_dec(4 / 3, game.notation) +
+                    format_dec(13 / 12, game.notation) +
                     "x"
                 if (
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5797,7 +5907,6 @@ function ascension_update() {
                 u.desc = "Red spice boosts arcane spice by its amount"
                 if (
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5807,7 +5916,6 @@ function ascension_update() {
                 u.desc = "Arcane spice boosts itself by its amount"
                 if (
                     game.ascend_challenge === 6 ||
-                    game.collapse_challenge === 7 ||
                     game.collapse_challenge === 12
                 )
                     u.desc =
@@ -5815,8 +5923,8 @@ function ascension_update() {
                 break
             case 33:
                 u.desc =
-                    "Boosts from rune power are " +
-                    format_small(8) +
+                    "Boosts from rune power are now " +
+                    format_small(3) +
                     "x stronger"
                 break
         }
@@ -5827,12 +5935,12 @@ function ascension_update() {
             document.getElementById("as_desc" + u.id).innerHTML = u.desc
             document.getElementById("as_cost" + u.id).innerHTML =
                 "-" +
-                format_num(Math.ceil(u.price ** 0.5), game.notation) +
+                format_inum(u.price.pow(0.5897).ceil(), game.notation) +
                 " ᚫ"
         } else {
             document.getElementById("as_desc" + u.id).innerHTML = u.desc
             document.getElementById("as_cost" + u.id).innerHTML =
-                "-" + format_num(u.price, game.notation) + " ᚫ"
+                "-" + format_inum(u.price, game.notation) + " ᚫ"
         }
 
         let visible = true
@@ -5947,9 +6055,10 @@ function ascension_update() {
 
             if (game.collapse_challenge === 10) {
                 if (
-                    game.ansuz >= Math.ceil(u.price ** 0.5) &&
+                    game.ansuz.cmp(u.price.pow(0.5897).ceil()) >= 0 &&
                     condition1 &&
-                    condition2
+                    condition2 &&
+                    game.rune[2].cmp(1) >= 0
                 ) {
                     button.className = "ascension_upgrade a_unlocked2"
                     if (u.challenge !== 0)
@@ -5961,9 +6070,10 @@ function ascension_update() {
                 }
             } else {
                 if (
-                    game.ansuz >= Math.ceil(u.price) &&
+                    game.ansuz.cmp(u.price) >= 0 &&
                     condition1 &&
-                    condition2
+                    condition2 &&
+                    game.rune[2].cmp(1) >= 0
                 ) {
                     button.className = "ascension_upgrade a_unlocked2"
                     if (u.challenge !== 0)
@@ -6005,9 +6115,28 @@ function ascension_update() {
         if (game.autoas_mode === 0) {
             document.getElementById("ascend_runes").style.display = "flex"
             document.getElementById("ascend_time").style.display = "none"
+            if (game.research_complete[8] >= 1) {
+                document.getElementById("ascend_runes_delta").style.display =
+                    "flex"
+                document.getElementById("ascend_goal").style.display = "flex"
+                document.getElementById("ascend_goal_text").innerHTML =
+                    "Current Auto-Ascend Goal: +" +
+                    format_inum(
+                        game.autoas_goal[0].mul(game.autoas_goal2).ceil(),
+                        game.notation
+                    ) +
+                    rainbow_unit +
+                    " ᚫ"
+            } else {
+                document.getElementById("ascend_runes_delta").style.display =
+                    "none"
+                document.getElementById("ascend_goal").style.display = "none"
+            }
         } else if (game.autoas_mode === 1) {
             document.getElementById("ascend_runes").style.display = "none"
             document.getElementById("ascend_time").style.display = "flex"
+            document.getElementById("ascend_runes_delta").style.display = "none"
+            document.getElementById("ascend_goal").style.display = "none"
         }
     } else {
         document.getElementById("ascend_auto_block").style.display = "none"
@@ -6056,7 +6185,7 @@ function ascension_update() {
 
             if (c.id === 5 && game.collapse >= 1) {
                 info.innerHTML =
-                    "Same as Challenge 1, but rune power production is disabled<br>(The unstable spice boost is also disabled)<br>Completing this Challenge is required to Collapse<br>Goal: <span class='rainbow_spice'>" +
+                    "All spice production boosts from Prestige and Ascension upgrades<br>are disabled, and rune power production is disabled<br>Completing this Challenge is required to Collapse<br>Goal: <span class='rainbow_spice'>" +
                     format_infdec(c.goal, game.notation) +
                     rainbow_unit +
                     " rainbow spice</span>"
@@ -6078,25 +6207,11 @@ function arcane_update() {
 
     let antispice_power = 1
     if (game.antispice[1].cmp(1) >= 0) {
-        let antispice_amount = game.antispice[1]
-        if (antispice_amount.cmp(Decimal.pow(10, 39)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 39))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 39))
-        if (antispice_amount.cmp(Decimal.pow(10, 54.5)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 54.5))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 54.5))
-        if (antispice_amount.cmp(Decimal.pow(10, 121)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 121))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 121))
-        antispice_power = 1 + antispice_amount.log(10) ** (2 / 3) * 0.015
+        antispice_power =
+            1 + get_antispice_amount("red").log(10) ** (2 / 3) * 0.015
         if (game.collapse_challenge !== 0)
-            antispice_power = 1 + antispice_amount.log(10) ** (2 / 3) * 0.0075
+            antispice_power =
+                1 + get_antispice_amount("red").log(10) ** (2 / 3) * 0.0075
     }
 
     document.getElementById("arcane_spice_num").innerHTML =
@@ -6109,7 +6224,7 @@ function arcane_update() {
             format_idec(
                 Decimal.max(
                     game.highest_arcane_spice
-                        .pow(10)
+                        .pow(20)
                         .add(1)
                         .pow(antispice_power),
                     1
@@ -6119,9 +6234,7 @@ function arcane_update() {
             "x"
 
         if (
-            game.ascend_challenge === 1 ||
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             !game.ascend_bought[22]
         ) {
@@ -6134,7 +6247,6 @@ function arcane_update() {
     if (game.ascend_bought[31] || game.collapse >= 1) {
         if (
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             !game.ascend_bought[31]
         ) {
@@ -6270,15 +6382,15 @@ function arcane_update() {
                         info_str +=
                             ",<br>and producing " +
                             format_idec(
-                                game.arcane_spice_gen[gen.id].floor().pow(60),
+                                game.arcane_spice_gen[gen.id].floor().pow(36.5),
                                 game.notation
                             ) +
-                            " crystallized spice singularities/sec"
+                            " crystallized spice galaxies/sec"
                     } else if (game.collapse >= 1) {
                         info_str +=
                             ",<br>and producing " +
                             format_dec(0, game.notation) +
-                            " crystallized spice singularities/sec"
+                            " crystallized spice galaxies/sec"
                     }
                 } else {
                     if (gen.id === 5) {
@@ -6358,12 +6470,12 @@ function arcane_update() {
 
                 document.getElementById("arcane_cost" + gen.id).innerHTML =
                     "-" +
-                    format_num(
-                        Math.round(game.arcane_spice_price[gen.id]),
+                    format_inum(
+                        game.arcane_spice_price[gen.id].round(),
                         game.notation
                     ) +
                     " ᚫ"
-                if (game.ansuz >= game.arcane_spice_price[gen.id]) {
+                if (game.ansuz.cmp(game.arcane_spice_price[gen.id]) >= 0) {
                     document.getElementById("arcane_cost" + gen.id).className =
                         "rune_cost"
                     document.getElementById("arcane_buy" + gen.id).className =
@@ -6420,13 +6532,12 @@ function arcane_update() {
                 }
 
                 n = 3n - (game.arcane_spice_bought[gen.id] % 3n)
-                price =
-                    (game.arcane_spice_price[gen.id] *
-                        (1 - 1.1 ** n.toString())) /
-                    -0.1
+                price = game.arcane_spice_price[gen.id]
+                    .mul(1 - 3 ** n.toString())
+                    .div(-2)
                 document.getElementById("arcane_ucost" + gen.id).innerHTML =
-                    "-" + format_num(Math.round(price), game.notation) + " ᚫ"
-                if (game.ansuz >= price) {
+                    "-" + format_inum(price.round(), game.notation) + " ᚫ"
+                if (game.ansuz.cmp(price) >= 0) {
                     document.getElementById("arcane_ucost" + gen.id).className =
                         "rune_cost"
                     document.getElementById("arcane_ubuy" + gen.id).className =
@@ -6496,28 +6607,14 @@ function arcane_update() {
     if (game.arcane_unlocked[3]) {
         let antispice_boosts = 1
         if (game.antispice[2].cmp(1) >= 0) {
-            let antispice_amount = game.antispice[2]
-            if (antispice_amount.cmp(Decimal.pow(10, 14)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 14))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 14))
-            if (antispice_amount.cmp(Decimal.pow(10, 19.5)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 19.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 19.5))
-            if (antispice_amount.cmp(Decimal.pow(10, 42.25)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 42.25))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 42.25))
-            antispice_boosts = 1 + antispice_amount.log(10) ** (2 / 3) * 180
+            antispice_boosts =
+                1 + get_antispice_amount("yellow").log(10) ** (2 / 3) * 40
             if (game.collapse_challenge !== 0)
-                antispice_boosts = 1 + antispice_amount.log(10) ** (2 / 3) * 90
+                antispice_boosts =
+                    1 + get_antispice_amount("yellow").log(10) ** (2 / 3) * 20
         }
 
-        if (game.antispice_bought[4]) antispice_boosts *= 1.3
+        if (game.antispice_bought[4]) antispice_boosts *= 1.175
 
         document.getElementById("arcane_gen_s").style.display = "block"
         let s_str =
@@ -6532,13 +6629,9 @@ function arcane_update() {
                 format_small(game.arcane_strengthener) +
                 " arcane spice strengtheners,<br>boosting all arcane spice generators " +
                 format_idec(
-                    Decimal.pow(
-                        3,
-                        (game.arcane_strengthener *
-                            (game.arcane_strengthener + 1)) /
-                            2 +
-                            1
-                    ).pow(antispice_boosts),
+                    Decimal.pow(9, game.arcane_strengthener).pow(
+                        antispice_boosts
+                    ),
                     game.notation
                 ) +
                 "x"
@@ -6547,12 +6640,9 @@ function arcane_update() {
         document.getElementById("arcane_info_s").innerHTML = s_str
         document.getElementById("arcane_cost_s").innerHTML =
             "-" +
-            format_num(
-                Math.round(game.arcane_strengthener_price),
-                game.notation
-            ) +
+            format_inum(game.arcane_strengthener_price.round(), game.notation) +
             " ᚫ"
-        if (game.ansuz >= game.arcane_strengthener_price) {
+        if (game.ansuz.cmp(game.arcane_strengthener_price) >= 0) {
             document.getElementById("arcane_cost_s").className = "rune_cost"
             document.getElementById("arcane_buy_s").className =
                 "spice_buy can_buy"
@@ -6598,29 +6688,14 @@ function arcane_update() {
 
     let antispice_infusions = 1
     if (game.antispice[3].cmp(1) >= 0) {
-        let antispice_amount = game.antispice[3]
-        if (antispice_amount.cmp(Decimal.pow(10, 6)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 6))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 6))
-        if (antispice_amount.cmp(Decimal.pow(10, 8)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 8))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 8))
-        if (antispice_amount.cmp(Decimal.pow(10, 17.5)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 17.5))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 17.5))
-
-        antispice_infusions = 1 + antispice_amount.log(10) ** 0.5 * 0.2
+        antispice_infusions =
+            1 + get_antispice_amount("green").log(10) ** 0.5 * 0.15
         if (game.collapse_challenge !== 0)
-            antispice_infusions = 1 + antispice_amount.log(10) ** 0.5 * 0.1
+            antispice_infusions =
+                1 + get_antispice_amount("green").log(10) ** 0.5 * 0.075
     }
 
-    if (game.antispice_bought[5]) antispice_infusions *= 1.054
+    if (game.antispice_bought[5]) antispice_infusions *= 1.06
 
     let s_str =
         "You have " +
@@ -6629,7 +6704,7 @@ function arcane_update() {
         format_idec(
             Decimal.pow(
                 4,
-                game.arcane_enchantment.toString() * 100 * antispice_infusions
+                game.arcane_enchantment.toString() * 180 * antispice_infusions
             ),
             game.notation
         ) +
@@ -6647,7 +6722,7 @@ function arcane_update() {
                     (
                         game.arcane_enchantment + game.free_enchantment
                     ).toString() *
-                        100 *
+                        180 *
                         antispice_infusions
                 ),
                 game.notation
@@ -6658,7 +6733,6 @@ function arcane_update() {
     if (game.ascend_bought[29] || game.collapse >= 1) {
         if (
             game.ascend_challenge === 6 ||
-            game.collapse_challenge === 7 ||
             game.collapse_challenge === 12 ||
             !game.ascend_bought[29]
         ) {
@@ -6672,7 +6746,7 @@ function arcane_update() {
                     ",<br>and boosting all arcane spice generators " +
                     format_idec(
                         Decimal.pow(
-                            4 / 3,
+                            13 / 12,
                             (
                                 game.arcane_enchantment + game.free_enchantment
                             ).toString() * antispice_infusions
@@ -6685,7 +6759,7 @@ function arcane_update() {
                     ",<br>and boosting all arcane spice generators " +
                     format_idec(
                         Decimal.pow(
-                            4 / 3,
+                            13 / 12,
                             game.arcane_enchantment.toString() *
                                 antispice_infusions
                         ),
@@ -6748,213 +6822,76 @@ function arcane_update() {
 
     if (game.arcane_max_unlocked) {
         document.getElementById("arcane_max_all").style.display = "inline"
-
-        if (game.half_distribute_unlocked) {
-            document.getElementById("arcane_max_half").style.display = "inline"
-        } else {
-            document.getElementById("arcane_max_half").style.display = "none"
-        }
     } else {
         document.getElementById("arcane_max_all").style.display = "none"
-        document.getElementById("arcane_max_half").style.display = "none"
     }
 
     if (game.ascend_bought[17])
         document.getElementById("enchantment_auto").style.display = "inline"
     else document.getElementById("enchantment_auto").style.display = "none"
+
+    if (game.research_complete[11] >= 1)
+        document.getElementById("arcane_auto").style.display = "inline"
+    else document.getElementById("arcane_auto").style.display = "none"
 }
 
 //graphics updates for collapse
 function collapse_update() {
-    let collapse_amount = game.collapse_spice.pow(5 * 10 ** -10).floor()
+    let collapse_amount = game.collapse_spice.pow(7.125e-10).floor()
 
-    if (collapse_amount.cmp(Decimal.pow(10, 1800)) >= 0) {
+    if (collapse_amount.cmp(Decimal.pow(10, 670)) >= 0) {
         collapse_amount = collapse_amount
-            .div(Decimal.pow(10, 200))
-            .pow(10 / ((collapse_amount.log(10) * 0.3 - 56) ** 0.5 - 2))
-            .mul(Decimal.pow(10, 200))
+            .div(Decimal.pow(10, 130))
+            .pow(80 / ((collapse_amount.log(10) * 16 + 729) ** 0.5 + 53))
+            .mul(Decimal.pow(10, 130))
 
-        if (collapse_amount.cmp(Decimal.pow(10, 20000)) >= 0)
-            collapse_amount = Decimal.pow(
-                10,
-                20000 * (collapse_amount.log(10) / 20000) ** (2 / 3)
-            )
-    } else if (collapse_amount.cmp(Decimal.pow(10, 200)) >= 0) {
+        if (collapse_amount.cmp(Decimal.pow(10, 1400)) >= 0)
+            collapse_amount = collapse_amount
+                .div(Decimal.pow(10, 1400))
+                .pow(0.5)
+                .mul(Decimal.pow(10, 1400))
+
+        if (collapse_amount.cmp(Decimal.pow(10, 10000)) >= 0)
+            collapse_amount = collapse_amount
+                .div(Decimal.pow(10, 10000))
+                .pow(100 / ((collapse_amount.log(10) - 7500) ** 0.5 + 50))
+                .mul(Decimal.pow(10, 10000))
+    } else if (collapse_amount.cmp(Decimal.pow(10, 130)) >= 0) {
         collapse_amount = collapse_amount
-            .div(Decimal.pow(10, 200))
+            .div(Decimal.pow(10, 130))
             .pow(0.5)
-            .mul(Decimal.pow(10, 200))
+            .mul(Decimal.pow(10, 130))
     }
 
     if (game.research_complete[5] >= 1 && game.collapse_challenge === 0) {
-        let rune_amount = Decimal.pow(
-            1.2,
-            (game.total_rune_power / 10 ** 28) ** 0.2
-        ).mul(game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1)
-        if (rune_amount.cmp(Decimal.pow(10, 50)) >= 0)
-            rune_amount = Decimal.pow(
+        let rune_atomic = game.total_rune_power
+            .pow(1 / 150)
+            .div(2e18)
+            .add(1)
+        if (rune_atomic.cmp(Decimal.pow(2, 1024)) >= 0)
+            rune_atomic = Decimal.pow(
                 10,
-                rune_amount.div(Decimal.pow(10, 50)).log(10) ** 0.5 + 50
+                (rune_atomic.log(10) / Decimal.pow(2, 1024).log(10)) ** 0.5 *
+                    Decimal.pow(2, 1024).log(10)
             )
-        if (rune_amount.cmp(Decimal.pow(10, 100)) >= 0)
-            rune_amount = Decimal.pow(10, 200 - 10000 / rune_amount.log(10))
-
-        collapse_amount = collapse_amount.mul(rune_amount)
+        let a = Decimal.pow(2, 3072).log(10)
+        if (rune_atomic.cmp(Decimal.pow(2, 3072)) >= 0)
+            rune_atomic = Decimal.pow(10, 2 * a - a ** 2 / rune_atomic.log(10))
+        collapse_amount = collapse_amount.mul(rune_atomic)
     }
 
     let total_completions = 0
     for (let i = 0; i < 6; i++) {
         total_completions += game.collapse_complete[i]
     }
-    if (game.research_complete[22] >= 1 && game.collapse_challenge === 0)
+    if (game.research_complete[24] >= 1 && game.collapse_challenge === 0)
         collapse_amount = collapse_amount.mul(
-            Decimal.pow(888, total_completions)
+            Decimal.pow(46656, total_completions)
         )
 
     let goal = new Decimal(1)
     if (game.collapse_challenge !== 0) {
-        let c = collapse_challenge.challenges[game.collapse_challenge - 7]
-        let completions = game.collapse_complete[game.collapse_challenge - 7]
-
-        let temp_goal = c.goal.mul(c.delta.pow(completions))
-
-        let extra = [1, 1, 1, 1, 1, 1]
-        let superstep = c.goal.mul(c.delta.pow(Math.abs(c.scaling1) - 1))
-        let superdelta = c.delta
-        let step1 = c.goal
-        if (c.scaling1 !== undefined) {
-            if (c.scaling1 < 0) extra[0] = 0
-            step1 = step1.mul(c.delta.pow(Math.abs(c.scaling1) - 1))
-            if (completions >= Math.abs(c.scaling1))
-                temp_goal = step1.mul(
-                    c.delta2.pow(
-                        completions - Math.abs(c.scaling1) + extra[0] + 1
-                    )
-                )
-
-            superstep = step1.mul(
-                c.delta2.pow(c.superscaling - Math.abs(c.scaling1) + extra[0])
-            )
-            superdelta = c.delta2
-        }
-
-        let step2 = step1
-        if (c.scaling2 !== undefined) {
-            if (c.scaling2 < 0) extra[1] = 0
-            step2 = step2.mul(
-                c.delta2.pow(
-                    Math.abs(c.scaling2) - Math.abs(c.scaling1) + extra[0]
-                )
-            )
-            if (completions >= Math.abs(c.scaling2))
-                temp_goal = step2.mul(
-                    c.delta3.pow(
-                        completions - Math.abs(c.scaling2) + extra[1] + 1
-                    )
-                )
-
-            superstep = step2.mul(
-                c.delta3.pow(c.superscaling - Math.abs(c.scaling2) + extra[1])
-            )
-            superdelta = c.delta3
-        }
-
-        let step3 = step2
-        if (c.scaling3 !== undefined) {
-            if (c.scaling3 < 0) extra[2] = 0
-            step3 = step3.mul(
-                c.delta3.pow(
-                    Math.abs(c.scaling3) - Math.abs(c.scaling2) + extra[1]
-                )
-            )
-            if (completions >= Math.abs(c.scaling3))
-                temp_goal = step3.mul(
-                    c.delta4.pow(
-                        completions - Math.abs(c.scaling3) + extra[2] + 1
-                    )
-                )
-
-            superstep = step3.mul(
-                c.delta4.pow(c.superscaling - Math.abs(c.scaling3) + extra[2])
-            )
-            superdelta = c.delta4
-        }
-
-        let step4 = step3
-        if (c.scaling4 !== undefined) {
-            if (c.scaling4 < 0) extra[3] = 0
-            step4 = step4.mul(
-                c.delta4.pow(
-                    Math.abs(c.scaling4) - Math.abs(c.scaling3) + extra[2]
-                )
-            )
-            if (completions >= Math.abs(c.scaling4))
-                temp_goal = step4.mul(
-                    c.delta5.pow(
-                        completions - Math.abs(c.scaling4) + extra[3] + 1
-                    )
-                )
-
-            superstep = step4.mul(
-                c.delta5.pow(c.superscaling - Math.abs(c.scaling4) + extra[3])
-            )
-            superdelta = c.delta5
-        }
-
-        let step5 = step4
-        if (c.scaling5 !== undefined) {
-            if (c.scaling5 < 0) extra[4] = 0
-            step5 = step5.mul(
-                c.delta5.pow(
-                    Math.abs(c.scaling5) - Math.abs(c.scaling4) + extra[3]
-                )
-            )
-            if (completions >= Math.abs(c.scaling5))
-                temp_goal = step5.mul(
-                    c.delta6.pow(
-                        completions - Math.abs(c.scaling5) + extra[4] + 1
-                    )
-                )
-
-            superstep = step5.mul(
-                c.delta6.pow(c.superscaling - Math.abs(c.scaling5) + extra[4])
-            )
-            superdelta = c.delta6
-        }
-
-        let step6 = step5
-        if (c.scaling6 !== undefined) {
-            if (c.scaling6 < 0) extra[5] = 0
-            step6 = step6.mul(
-                c.delta6.pow(
-                    Math.abs(c.scaling6) - Math.abs(c.scaling5) + extra[4]
-                )
-            )
-            if (completions >= Math.abs(c.scaling6))
-                temp_goal = step6.mul(
-                    c.delta7.pow(
-                        completions - Math.abs(c.scaling6) + extra[5] + 1
-                    )
-                )
-
-            superstep = step6.mul(
-                c.delta7.pow(c.superscaling - Math.abs(c.scaling6) + extra[5])
-            )
-            superdelta = c.delta7
-        }
-
-        if (completions >= c.superscaling) {
-            temp_goal = superstep.mul(
-                superdelta.pow(
-                    ((completions - c.superscaling + 2) *
-                        (completions - c.superscaling + 3)) /
-                        2 -
-                        1
-                )
-            )
-        }
-
-        goal = temp_goal
+        goal = get_collapse_goal(game.collapse_challenge - 7, 0)
     }
 
     if (
@@ -6971,7 +6908,7 @@ function collapse_update() {
         document.getElementById("collapse_req").style.color = "white"
 
         if (goal.cmp(1) === 1) {
-            if (game.research_complete[28] >= 1) {
+            if (game.research_complete[31] >= 1) {
                 if (game.pending_completions === 1)
                     document.getElementById("collapse_req").innerHTML =
                         "+" +
@@ -7009,7 +6946,7 @@ function collapse_update() {
                 ) +
                 " atomic spice/min"
 
-            if (game.research_complete[15] >= 1) {
+            if (game.research_complete[17] >= 1) {
                 switch (game.autoco_mode) {
                     case 0:
                         efficiency_str +=
@@ -7049,6 +6986,42 @@ function collapse_update() {
                                     game.notation
                                 ) +
                                 "s"
+                        break
+                    case 2:
+                        if (game.unstable_spice.cmp(0.5) >= 0) {
+                            efficiency_str +=
+                                "<br>Waiting for unstable spice to completely decay"
+                        } else {
+                            let decay_peak_time =
+                                game.peak_atomic_time - game.decay_time
+                            if (decay_peak_time < 0) {
+                                efficiency_str += "<br>Waiting for peak"
+                            } else {
+                                if (decay_peak_time < 1)
+                                    efficiency_str +=
+                                        "<br>Peak: +" +
+                                        format_idec(
+                                            game.peak_atomic_gain.mul(60),
+                                            game.notation
+                                        ) +
+                                        " atomic spice/min at " +
+                                        decay_peak_time.toFixed(2) +
+                                        "s after max decayed spice"
+                                else
+                                    efficiency_str +=
+                                        "<br>Peak: +" +
+                                        format_idec(
+                                            game.peak_atomic_gain.mul(60),
+                                            game.notation
+                                        ) +
+                                        " atomic spice/min at " +
+                                        format_dec(
+                                            decay_peak_time,
+                                            game.notation
+                                        ) +
+                                        "s after max decayed spice"
+                            }
+                        }
                         break
                 }
             } else {
@@ -7144,7 +7117,7 @@ function collapse_update() {
     }
 
     if (game.collider_tab === 0) {
-        if (game.research_complete[17] >= 1) {
+        if (game.research_complete[19] >= 1) {
             document.getElementById("collider_portion").style.display = "flex"
             document.getElementById("collider_resource").innerHTML =
                 "Activating the Spice Collider will consume some atomic spice and create unstable spice"
@@ -7193,9 +7166,14 @@ function collapse_update() {
         let amount = game.atomic_spice
             .mul(game.atomic_portion)
             .add(game.spent_atomic_spice[0])
-            .pow(game.atomic_efficiency / 132)
-        if (amount.cmp(Decimal.pow(10, 420)) >= 0)
-            amount = Decimal.pow(10, (amount.log(10) / 420) ** 0.8 * 420)
+            .pow(game.atomic_efficiency / 76)
+        if (amount.cmp(Decimal.pow(10, 170)) >= 0)
+            amount = amount
+                .div(Decimal.pow(10, 170))
+                .pow(0.6)
+                .mul(Decimal.pow(10, 170))
+        if (amount.cmp(Decimal.pow(10, 515)) >= 0)
+            amount = Decimal.pow(10, (amount.log(10) / 515) ** 0.67 * 515)
         let yield_str =
             "Expected yield: <span class='pure_antispice'>+" +
             format_inum(amount.sub(game.antispice[0]).floor(), game.notation) +
@@ -7234,20 +7212,40 @@ function collapse_update() {
 
         let red_amount = Decimal.pow(
             10,
-            (game.antitotal_spice[1].log(10) / (4.2 * 10 ** 11)) ** 0.5
-        )
+            (game.antitotal_spice[1].log(10) / 1e11) ** 0.5
+        ).div(17)
+        if (red_amount.cmp(Decimal.pow(10, 2319)) >= 0)
+            red_amount = Decimal.pow(
+                10,
+                (red_amount.log(10) / 2319) ** 0.5 * 2319
+            )
 
         let atomic_amount = game.spent_atomic_spice[1]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow(game.atomic_efficiency / 320)
+            .pow(game.atomic_efficiency / 228)
+            .div(3.2)
 
         let amount = atomic_amount.mul(red_amount)
-        if (amount.cmp(Decimal.pow(10, 336)) >= 0)
-            amount = Decimal.pow(10, (amount.log(10) / 336) ** 0.8 * 336)
+        if (amount.cmp(Decimal.pow(10, 128)) >= 0)
+            amount = amount
+                .div(Decimal.pow(10, 128))
+                .pow(0.5)
+                .mul(Decimal.pow(10, 128))
+        if (amount.cmp(Decimal.pow(10, 269)) >= 0)
+            amount = amount
+                .div(Decimal.pow(10, 269))
+                .pow(0.5)
+                .mul(Decimal.pow(10, 269))
+        if (amount.cmp(Decimal.pow(10, 450)) >= 0)
+            amount = Decimal.pow(10, (amount.log(10) / 450) ** 0.5 * 450)
         let yield_str =
             "Expected yield: <span class='red_antispice'>+" +
             format_inum(amount.sub(game.antispice[1]).floor(), game.notation) +
-            " red antispice</span>"
+            " red antispice</span> (" +
+            format_idec(atomic_amount, game.notation) +
+            " x " +
+            format_idec(red_amount, game.notation) +
+            ")"
         if (amount.sub(game.antispice[1]).floor().cmp(0) === -1)
             yield_str =
                 "Expected yield: <span class='red_antispice'>+" +
@@ -7285,20 +7283,35 @@ function collapse_update() {
 
         let yellow_amount = Decimal.pow(
             10,
-            (game.antitotal_spice[2].log(10) / (1.75 * 10 ** 12)) ** 0.5
-        )
+            (game.antitotal_spice[2].log(10) / 2e11) ** 0.5
+        ).div(38.5)
+        if (yellow_amount.cmp(Decimal.pow(10, 1019)) >= 0)
+            yellow_amount = Decimal.pow(
+                10,
+                (yellow_amount.log(10) / 1019) ** 0.4 * 1019
+            )
 
         let atomic_amount = game.spent_atomic_spice[2]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow(game.atomic_efficiency / 1000)
+            .pow(game.atomic_efficiency / 304)
+            .div(54)
 
         let amount = atomic_amount.mul(yellow_amount)
-        if (amount.cmp(Decimal.pow(10, 116)) >= 0)
-            amount = Decimal.pow(10, (amount.log(10) / 116) ** 0.8 * 116)
+        if (amount.cmp(Decimal.pow(10, 87)) >= 0)
+            amount = amount
+                .div(Decimal.pow(10, 87))
+                .pow(0.55)
+                .mul(Decimal.pow(10, 87))
+        if (amount.cmp(Decimal.pow(10, 372)) >= 0)
+            amount = Decimal.pow(10, (amount.log(10) / 372) ** 0.5 * 372)
         let yield_str =
             "Expected yield: <span class='yellow_antispice'>+" +
             format_inum(amount.sub(game.antispice[2]).floor(), game.notation) +
-            " yellow antispice</span>"
+            " yellow antispice</span> (" +
+            format_idec(atomic_amount, game.notation) +
+            " x " +
+            format_idec(yellow_amount, game.notation) +
+            ")"
         if (amount.sub(game.antispice[2]).floor().cmp(0) === -1)
             yield_str =
                 "Expected yield: <span class='yellow_antispice'>+" +
@@ -7336,20 +7349,35 @@ function collapse_update() {
 
         let green_amount = Decimal.pow(
             10,
-            (game.antitotal_spice[3].log(10) / (4.5 * 10 ** 12)) ** 0.5
-        )
+            (game.antitotal_spice[3].log(10) / 3e11) ** 0.5
+        ).div(2340)
+        if (green_amount.cmp(Decimal.pow(10, 504)) >= 0)
+            green_amount = Decimal.pow(
+                10,
+                (green_amount.log(10) / 504) ** 0.75 * 504
+            )
 
         let atomic_amount = game.spent_atomic_spice[3]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow(game.atomic_efficiency / 2575)
+            .pow(game.atomic_efficiency / 380)
+            .div(108000)
 
         let amount = atomic_amount.mul(green_amount)
-        if (amount.cmp(Decimal.pow(10, 48)) >= 0)
-            amount = Decimal.pow(10, (amount.log(10) / 48) ** 0.8 * 48)
+        if (amount.cmp(Decimal.pow(10, 56)) >= 0)
+            amount = amount
+                .div(Decimal.pow(10, 56))
+                .pow(0.55)
+                .mul(Decimal.pow(10, 56))
+        if (amount.cmp(Decimal.pow(10, 225)) >= 0)
+            amount = Decimal.pow(10, (amount.log(10) / 225) ** 0.5 * 225)
         let yield_str =
             "Expected yield: <span class='green_antispice'>+" +
             format_inum(amount.sub(game.antispice[3]).floor(), game.notation) +
-            " green antispice</span>"
+            " green antispice</span> (" +
+            format_idec(atomic_amount, game.notation) +
+            " x " +
+            format_idec(green_amount, game.notation) +
+            ")"
         if (amount.sub(game.antispice[3]).floor().cmp(0) === -1)
             yield_str =
                 "Expected yield: <span class='green_antispice'>+" +
@@ -7387,20 +7415,35 @@ function collapse_update() {
 
         let blue_amount = Decimal.pow(
             10,
-            (game.antitotal_spice[4].log(10) / (3.5 * 10 ** 13)) ** 0.5
-        )
+            (game.antitotal_spice[4].log(10) / 5e11) ** 0.5
+        ).div(8.667e9)
+        if (blue_amount.cmp(Decimal.pow(10, 216)) >= 0)
+            blue_amount = Decimal.pow(
+                10,
+                (blue_amount.log(10) / 216) ** 0.8 * 216
+            )
 
         let atomic_amount = game.spent_atomic_spice[4]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow(game.atomic_efficiency / 4850)
+            .pow(game.atomic_efficiency / 494)
+            .div(5.587e15)
 
         let amount = atomic_amount.mul(blue_amount)
-        if (amount.cmp(Decimal.pow(10, 19)) >= 0)
-            amount = Decimal.pow(10, (amount.log(10) / 19) ** 0.8 * 19)
+        if (amount.cmp(Decimal.pow(10, 40)) >= 0)
+            amount = amount
+                .div(Decimal.pow(10, 40))
+                .pow(0.55)
+                .mul(Decimal.pow(10, 40))
+        if (amount.cmp(Decimal.pow(10, 125)) >= 0)
+            amount = Decimal.pow(10, (amount.log(10) / 125) ** 0.5 * 125)
         let yield_str =
             "Expected yield: <span class='blue_antispice'>+" +
             format_inum(amount.sub(game.antispice[4]).floor(), game.notation) +
-            " blue antispice</span>"
+            " blue antispice</span> (" +
+            format_idec(atomic_amount, game.notation) +
+            " x " +
+            format_idec(blue_amount, game.notation) +
+            ")"
         if (amount.sub(game.antispice[4]).floor().cmp(0) === -1)
             yield_str =
                 "Expected yield: <span class='blue_antispice'>+" +
@@ -7438,20 +7481,30 @@ function collapse_update() {
 
         let pink_amount = Decimal.pow(
             10,
-            (game.antitotal_spice[5].log(10) / (3.75 * 10 ** 13)) ** 0.5
-        )
+            (game.antitotal_spice[5].log(10) / 8e11) ** 0.5
+        ).div(2.255e9)
+        if (pink_amount.cmp(Decimal.pow(10, 70)) >= 0)
+            pink_amount = Decimal.pow(
+                10,
+                (pink_amount.log(10) / 70) ** 0.6 * 70
+            )
 
         let atomic_amount = game.spent_atomic_spice[5]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow(game.atomic_efficiency / 16500)
+            .pow(game.atomic_efficiency / 608)
+            .div(8.098e34)
 
         let amount = atomic_amount.mul(pink_amount)
-        if (amount.cmp(Decimal.pow(10, 7.5)) >= 0)
-            amount = Decimal.pow(10, (amount.log(10) / 7.5) ** 0.8 * 7.5)
+        if (amount.cmp(Decimal.pow(10, 88)) >= 0)
+            amount = Decimal.pow(10, (amount.log(10) / 88) ** 0.5 * 88)
         let yield_str =
             "Expected yield: <span class='pink_antispice'>+" +
             format_inum(amount.sub(game.antispice[5]).floor(), game.notation) +
-            " pink antispice</span>"
+            " pink antispice</span> (" +
+            format_idec(atomic_amount, game.notation) +
+            " x " +
+            format_idec(pink_amount, game.notation) +
+            ")"
         if (amount.sub(game.antispice[5]).floor().cmp(0) === -1)
             yield_str =
                 "Expected yield: <span class='pink_antispice'>+" +
@@ -7488,7 +7541,7 @@ function collapse_update() {
             "Activating the Spice Collider will consume some atomic spice and create rainbow antispice<br>Rainbow antispice gains are calculated based on total atomic spice used and total rainbow spice"
 
         let rainbow_amount =
-            (game.antitotal_spice[6].log(10) - 11300000) / 900000
+            (game.antitotal_spice[6].log(10) - 28550000) / 5400000
         if (rainbow_amount > 0.5)
             rainbow_amount = ((rainbow_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
         else rainbow_amount = 0.5
@@ -7498,8 +7551,8 @@ function collapse_update() {
             (game.spent_atomic_spice[6]
                 .add(game.atomic_spice.mul(game.atomic_portion))
                 .log(10) -
-                30976) /
-            2048
+                32768) /
+            1984
         if (atomic_amount > 0.5)
             atomic_amount = ((atomic_amount - 0.5) / 23.5) ** 1.5 * 23.5 + 0.5
         else atomic_amount = 0.5
@@ -7513,7 +7566,12 @@ function collapse_update() {
             format_num(amount, game.notation) +
             " rainbow antispice</span> (" +
             format_dec(((atomic_amount + rainbow_amount) % 1) * 100) +
-            "% to next)"
+            "% to next)" +
+            " (" +
+            format_dec(atomic_amount, game.notation) +
+            " + " +
+            format_dec(rainbow_amount, game.notation) +
+            ")"
         if (atomic_amount + rainbow_amount >= 48)
             yield_str =
                 "Expected yield: <span class='rainbow_antispice'>+" +
@@ -7544,7 +7602,7 @@ function collapse_update() {
         }
     }
 
-    if (game.research_complete[34] >= 1) {
+    if (game.research_complete[30] >= 1) {
         document.getElementById("collider_auto").style.display = "inline"
     } else {
         document.getElementById("collider_auto").style.display = "none"
@@ -7560,55 +7618,84 @@ function collapse_update() {
         ",<br>the resulting energy is boosting all normal spice production " +
         format_idec(game.unstable_boost, game.notation) +
         "x"
-    if (game.collapse_complete[1] >= 1)
+    if (game.ascend_challenge !== 0) {
         document.getElementById("unstable_boost").innerHTML =
             "Your unstable spice is decaying away with a half-life of " +
             format_time_long(game.halflife, game.notation, 1, true) +
             ",<br>the resulting energy is boosting all normal spice production " +
             format_idec(game.unstable_boost, game.notation) +
-            "x,<br>and boosting crystallized spice production " +
-            format_idec(game.unstable_boost.pow(0.009), game.notation) +
-            "x,<br>and boosting arcane spice production " +
-            format_idec(game.unstable_boost.pow(0.000012), game.notation) +
-            "x,<br>and has produced " +
-            format_inum(game.free_deity, game.notation) +
-            " arcane spice deities"
-    else if (game.research_complete[9] >= 1)
-        document.getElementById("unstable_boost").innerHTML =
-            "Your unstable spice is decaying away with a half-life of " +
-            format_time_long(game.halflife, game.notation, 1, true) +
-            ",<br>the resulting energy is boosting all normal spice production " +
-            format_idec(game.unstable_boost, game.notation) +
-            "x,<br>and boosting crystallized spice production " +
-            format_idec(game.unstable_boost.pow(0.009), game.notation) +
-            "x,<br>and boosting arcane spice production " +
-            format_idec(game.unstable_boost.pow(0.000012), game.notation) +
-            "x"
-    else if (game.research_complete[2] >= 1)
-        document.getElementById("unstable_boost").innerHTML =
-            "Your unstable spice is decaying away with a half-life of " +
-            format_time_long(game.halflife, game.notation) +
-            ",<br>the resulting energy is boosting all normal spice production " +
-            format_idec(game.unstable_boost, game.notation) +
-            "x,<br>and boosting crystallized spice production " +
-            format_idec(game.unstable_boost.pow(0.009), game.notation) +
-            "x"
-    if (game.collapse_challenge === 8)
-        document.getElementById("unstable_boost").innerHTML =
-            "Your unstable spice is decaying away with a half-life of " +
-            format_time_long(game.halflife, game.notation, 1, true) +
-            ",<br>and has created " +
-            format_inum(game.free_deity, game.notation) +
-            " sixth generators of all types"
-    if (game.collapse_challenge === 12)
-        document.getElementById("unstable_boost").innerHTML =
-            "Your unstable spice is decaying away with a half-life of " +
-            format_time_long(game.halflife, game.notation, 1, true) +
-            ",<br>the resulting energy is boosting all normal spice production " +
-            format_idec(game.unstable_boost, game.notation) +
-            "x,<br>and has produced " +
-            format_inum(game.free_deity, game.notation) +
-            " arcane spice deities"
+            "x<br><br>Your unstable spice boosts have been reduced due to being in an Ascension challenge"
+        if (game.research_complete[10] >= 1)
+            document.getElementById("unstable_boost").innerHTML =
+                "Your unstable spice is decaying away with a half-life of " +
+                format_time_long(game.halflife, game.notation, 1, true) +
+                ",<br>the resulting energy is boosting all normal spice production " +
+                format_idec(game.unstable_boost, game.notation) +
+                "x,<br>and boosting crystallized spice production " +
+                format_idec(game.unstable_boost.pow(0.015), game.notation) +
+                "x,<br>and boosting arcane spice production " +
+                format_idec(game.unstable_boost.pow(0.000012), game.notation) +
+                "x<br><br>Your unstable spice boosts have been reduced due to being in an Ascension challenge"
+        else if (game.research_complete[2] >= 1)
+            document.getElementById("unstable_boost").innerHTML =
+                "Your unstable spice is decaying away with a half-life of " +
+                format_time_long(game.halflife, game.notation) +
+                ",<br>the resulting energy is boosting all normal spice production " +
+                format_idec(game.unstable_boost, game.notation) +
+                "x,<br>and boosting crystallized spice production " +
+                format_idec(game.unstable_boost.pow(0.015), game.notation) +
+                "x<br><br>Your unstable spice boosts have been reduced due to being in an Ascension challenge"
+    } else {
+        if (game.collapse_complete[1] >= 1)
+            document.getElementById("unstable_boost").innerHTML =
+                "Your unstable spice is decaying away with a half-life of " +
+                format_time_long(game.halflife, game.notation, 1, true) +
+                ",<br>the resulting energy is boosting all normal spice production " +
+                format_idec(game.unstable_boost, game.notation) +
+                "x,<br>and boosting crystallized spice production " +
+                format_idec(game.unstable_boost.pow(0.015), game.notation) +
+                "x,<br>and boosting arcane spice production " +
+                format_idec(game.unstable_boost.pow(0.000012), game.notation) +
+                "x,<br>and has produced " +
+                format_inum(game.free_deity, game.notation) +
+                " arcane spice deities"
+        else if (game.research_complete[10] >= 1)
+            document.getElementById("unstable_boost").innerHTML =
+                "Your unstable spice is decaying away with a half-life of " +
+                format_time_long(game.halflife, game.notation, 1, true) +
+                ",<br>the resulting energy is boosting all normal spice production " +
+                format_idec(game.unstable_boost, game.notation) +
+                "x,<br>and boosting crystallized spice production " +
+                format_idec(game.unstable_boost.pow(0.015), game.notation) +
+                "x,<br>and boosting arcane spice production " +
+                format_idec(game.unstable_boost.pow(0.000012), game.notation) +
+                "x"
+        else if (game.research_complete[2] >= 1)
+            document.getElementById("unstable_boost").innerHTML =
+                "Your unstable spice is decaying away with a half-life of " +
+                format_time_long(game.halflife, game.notation) +
+                ",<br>the resulting energy is boosting all normal spice production " +
+                format_idec(game.unstable_boost, game.notation) +
+                "x,<br>and boosting crystallized spice production " +
+                format_idec(game.unstable_boost.pow(0.015), game.notation) +
+                "x"
+        if (game.collapse_challenge === 8)
+            document.getElementById("unstable_boost").innerHTML =
+                "Your unstable spice is decaying away with a half-life of " +
+                format_time_long(game.halflife, game.notation, 1, true) +
+                ",<br>and has created " +
+                format_inum(game.free_deity, game.notation) +
+                " sixth generators of all types"
+        if (game.collapse_challenge === 12)
+            document.getElementById("unstable_boost").innerHTML =
+                "Your unstable spice is decaying away with a half-life of " +
+                format_time_long(game.halflife, game.notation, 1, true) +
+                ",<br>the resulting energy is boosting all normal spice production " +
+                format_idec(game.unstable_boost, game.notation) +
+                "x,<br>and has produced " +
+                format_inum(game.free_deity, game.notation) +
+                " arcane spice deities"
+    }
     document.getElementById("decayed_spice_num").innerHTML = format_inum(
         game.decayed_spice,
         game.notation
@@ -7636,7 +7723,7 @@ function collapse_update() {
         getComputedStyle(document.body).getPropertyValue("--mobile")
     )
 
-    if (game.research_complete[15] >= 1 && game.collapse_challenge === 0) {
+    if (game.research_complete[17] >= 1 && game.collapse_challenge === 0) {
         document.getElementById("collapse_info2").style.display = "none"
         document.getElementById("collapse_auto_block").style.display = "block"
 
@@ -7645,14 +7732,16 @@ function collapse_update() {
 
         if (game.autoco_mode === 0) {
             document.getElementById("collapse_spice").style.display = "flex"
-            document.getElementById("collapse_spice2").style.display = "flex"
             document.getElementById("collapse_time").style.display = "none"
-            document.getElementById("collapse_time2").style.display = "none"
+            document.getElementById("collapse_decay").style.display = "none"
         } else if (game.autoco_mode === 1) {
             document.getElementById("collapse_spice").style.display = "none"
-            document.getElementById("collapse_spice2").style.display = "none"
             document.getElementById("collapse_time").style.display = "flex"
-            document.getElementById("collapse_time2").style.display = "flex"
+            document.getElementById("collapse_decay").style.display = "none"
+        } else if (game.autoco_mode === 2) {
+            document.getElementById("collapse_spice").style.display = "none"
+            document.getElementById("collapse_time").style.display = "none"
+            document.getElementById("collapse_decay").style.display = "flex"
         }
 
         document.getElementById("collapse_tabs").style.display = "flex"
@@ -7680,10 +7769,20 @@ function collapse_update() {
         } else {
             document.getElementById("collapse_tabs").style.display = "none"
             document.getElementById("research_unlock").style.display = "inline"
+            if (game.collapse === 4)
+                document.getElementById("research_unlock").innerHTML =
+                    "<br>Collapse " +
+                    format_small(1) +
+                    " time to unlock Research"
+            else
+                document.getElementById("research_unlock").innerHTML =
+                    "<br>Collapse " +
+                    format_small(5 - game.collapse) +
+                    " times to unlock Research"
         }
     }
 
-    if (game.research_complete[18] >= 1) {
+    if (game.research_complete[20] >= 1) {
         document.getElementById("collapse_challenges").innerHTML =
             "COLLAPSE&nbsp;CHALLENGES"
         if (mobile)
@@ -7701,7 +7800,7 @@ function collapse_update() {
             "subtab locked"
     }
 
-    if (game.research_complete[19] >= 1) {
+    if (game.research_complete[21] >= 1) {
         document.getElementById("collider_tabs").style.display = "flex"
 
         document.getElementById("antispice").innerHTML = "ANTISPICE"
@@ -7709,37 +7808,37 @@ function collapse_update() {
             document.getElementById("antispice").className = "subtab selected"
         else document.getElementById("antispice").className = "subtab unlocked"
 
-        if (game.research_complete[21] >= 1) {
+        if (game.research_complete[23] >= 1) {
             document.getElementById("collider_tab3").style.display = "block"
         } else {
             document.getElementById("collider_tab3").style.display = "none"
         }
 
-        if (game.research_complete[24] >= 1) {
+        if (game.research_complete[26] >= 1) {
             document.getElementById("collider_tab4").style.display = "block"
         } else {
             document.getElementById("collider_tab4").style.display = "none"
         }
 
-        if (game.research_complete[27] >= 1) {
+        if (game.research_complete[29] >= 1) {
             document.getElementById("collider_tab5").style.display = "block"
         } else {
             document.getElementById("collider_tab5").style.display = "none"
         }
 
-        if (game.research_complete[30] >= 1) {
+        if (game.research_complete[33] >= 1) {
             document.getElementById("collider_tab6").style.display = "block"
         } else {
             document.getElementById("collider_tab6").style.display = "none"
         }
 
-        if (game.research_complete[33] >= 1) {
+        if (game.research_complete[36] >= 1) {
             document.getElementById("collider_tab7").style.display = "block"
         } else {
             document.getElementById("collider_tab7").style.display = "none"
         }
 
-        if (game.research_complete[37] >= 1) {
+        if (game.research_complete[39] >= 1) {
             document.getElementById("collider_tab8").style.display = "block"
         } else {
             document.getElementById("collider_tab8").style.display = "none"
@@ -7803,31 +7902,53 @@ function collapse_update() {
             "none"
     }
 
-    if (total_completions > 1) {
+    if (total_completions >= 30) {
         document.getElementById("collapse_challenge_info").innerHTML =
-            "Entering a Collapse Challenge will reset your current Collapse, and disable Collapse automation in the Challenge" +
+            "Entering a Collapse Challenge will reset your current Collapse" +
             "<br>You must Collapse for the required amount of atomic spice to complete the Challenge" +
-            "<br><br>Collapse Challenge rewards do not apply in the Challenge they're from" +
+            "<br><br>Collapse automation and atomic spice multipliers are disabled in Collapse Challenges," +
+            "<br>and Collapse Challenge rewards do not apply in the Challenge they're from" +
             "<br><br>You have a total of " +
             format_small(total_completions) +
             " Collapse challenge completions."
+    } else if (total_completions > 1) {
+        document.getElementById("collapse_challenge_info").innerHTML =
+            "Entering a Collapse Challenge will reset your current Collapse" +
+            "<br>You must Collapse for the required amount of atomic spice to complete the Challenge" +
+            "<br><br>Collapse automation and atomic spice multipliers are disabled in Collapse Challenges," +
+            "<br>and Collapse Challenge rewards do not apply in the Challenge they're from" +
+            "<br><br>You have a total of " +
+            format_small(total_completions) +
+            " Collapse challenge completions." +
+            "<br>Reach " +
+            format_small(30) +
+            " total Collapse challenge completions to unlock Research #31."
     } else if (total_completions === 1) {
         document.getElementById("collapse_challenge_info").innerHTML =
-            "Entering a Collapse Challenge will reset your current Collapse, and disable Collapse automation in the Challenge" +
+            "Entering a Collapse Challenge will reset your current Collapse" +
             "<br>You must Collapse for the required amount of atomic spice to complete the Challenge" +
-            "<br><br>Collapse Challenge rewards do not apply in the Challenge they're from" +
+            "<br><br>Collapse automation and atomic spice multipliers are disabled in Collapse Challenges," +
+            "<br>and Collapse Challenge rewards do not apply in the Challenge they're from" +
             "<br><br>You have a total of " +
             format_small(1) +
-            " Collapse challenge completion."
+            " Collapse challenge completion." +
+            "<br>Reach " +
+            format_small(30) +
+            " total Collapse challenge completions to unlock Research #31."
     } else {
         document.getElementById("collapse_challenge_info").innerHTML =
-            "Entering a Collapse Challenge will reset your current Collapse, and disable Collapse automation in the Challenge" +
+            "Entering a Collapse Challenge will reset your current Collapse" +
             "<br>You must Collapse for the required amount of atomic spice to complete the Challenge" +
-            "<br><br>Collapse Challenge rewards do not apply in the Challenge they're from"
+            "<br><br>Collapse automation and atomic spice multipliers are disabled in Collapse Challenges," +
+            "<br>and Collapse Challenge rewards do not apply in the Challenge they're from"
     }
 
     let reward_scaling = 1
-    if (game.antispice_bought[1]) reward_scaling = 1.05
+    let reward_scaling9 = 1
+    if (game.antispice_bought[1]) {
+        reward_scaling = 1.05
+        reward_scaling9 = 1.0703893278913979
+    }
 
     for (const c of collapse_challenge.challenges) {
         switch (c.id) {
@@ -7847,8 +7968,8 @@ function collapse_update() {
                         "% stronger<br>Next: Normal spice multipliers are " +
                         format_dec(5 * reward_scaling, game.notation) +
                         "% stronger<br>Next research unlock in " +
-                        format_small(2) +
-                        " completions"
+                        format_small(1) +
+                        " completion"
                 } else if (game.collapse_complete[c.id] === 2) {
                     c.desc +=
                         "<br>Currently: Normal spice multipliers are " +
@@ -8013,12 +8134,12 @@ function collapse_update() {
             case 2:
                 c.desc =
                     "The game runs " +
-                    format_small(99999) +
-                    "x slower, reach the goal in 999 microseconds or less"
+                    format_small(100000) +
+                    "x slower, reach the goal in 500 microseconds or less"
                 if (game.collapse_complete[c.id] === 0) {
                     c.desc +=
                         "<br>Reward: The game runs " +
-                        format_num(2 * reward_scaling, game.notation) +
+                        format_num(2 ** reward_scaling9, game.notation) +
                         "x faster<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
@@ -8026,14 +8147,16 @@ function collapse_update() {
                     c.desc +=
                         "<br>Currently: The game runs " +
                         format_num(
-                            (2 * reward_scaling) **
-                                game.collapse_complete[c.id],
+                            2 **
+                                (game.collapse_complete[c.id] *
+                                    reward_scaling9),
                             game.notation
                         ) +
                         "x faster<br>Next: The game runs " +
                         format_num(
-                            (2 * reward_scaling) **
-                                (game.collapse_complete[c.id] + 1),
+                            2 **
+                                ((game.collapse_complete[c.id] + 1) *
+                                    reward_scaling9),
                             game.notation
                         ) +
                         "x faster<br>Next research unlock in " +
@@ -8042,9 +8165,9 @@ function collapse_update() {
                 } else if (game.collapse_complete[c.id] === 3) {
                     c.desc +=
                         "<br>Currently: The game runs " +
-                        format_num((2 * reward_scaling) ** 3, game.notation) +
+                        format_num(8 ** reward_scaling9, game.notation) +
                         "x faster<br>Next: The game runs " +
-                        format_num((2 * reward_scaling) ** 4, game.notation) +
+                        format_num(16 ** reward_scaling9, game.notation) +
                         "x faster<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
@@ -8052,14 +8175,16 @@ function collapse_update() {
                     c.desc +=
                         "<br>Currently: The game runs " +
                         format_num(
-                            (2 * reward_scaling) **
-                                game.collapse_complete[c.id],
+                            2 **
+                                (game.collapse_complete[c.id] *
+                                    reward_scaling9),
                             game.notation
                         ) +
                         "x faster<br>Next: The game runs " +
                         format_num(
-                            (2 * reward_scaling) **
-                                (game.collapse_complete[c.id] + 1),
+                            2 **
+                                ((game.collapse_complete[c.id] + 1) *
+                                    reward_scaling9),
                             game.notation
                         ) +
                         "x faster<br>Next research unlock in " +
@@ -8068,9 +8193,9 @@ function collapse_update() {
                 } else if (game.collapse_complete[c.id] === 6) {
                     c.desc +=
                         "<br>Currently: The game runs " +
-                        format_num((2 * reward_scaling) ** 6, game.notation) +
+                        format_num(64 ** reward_scaling9, game.notation) +
                         "x faster<br>Next: The game runs " +
-                        format_num((2 * reward_scaling) ** 7, game.notation) +
+                        format_num(192 ** reward_scaling9, game.notation) +
                         "x faster<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
@@ -8078,14 +8203,16 @@ function collapse_update() {
                     c.desc +=
                         "<br>Currently: The game runs " +
                         format_num(
-                            (2 * reward_scaling) **
-                                game.collapse_complete[c.id],
+                            (32 *
+                                factorial(game.collapse_complete[c.id] - 4)) **
+                                reward_scaling9,
                             game.notation
                         ) +
                         "x faster<br>Next: The game runs " +
                         format_num(
-                            (2 * reward_scaling) **
-                                (game.collapse_complete[c.id] + 1),
+                            (32 *
+                                factorial(game.collapse_complete[c.id] - 3)) **
+                                reward_scaling9,
                             game.notation
                         ) +
                         "x faster"
@@ -8099,7 +8226,7 @@ function collapse_update() {
                 if (game.collapse_complete[c.id] === 0) {
                     c.desc +=
                         "<br>Reward: Color augments begin at " +
-                        format_small(4000000 * reward_scaling) +
+                        format_small(Math.round(4194304 * reward_scaling)) +
                         " color boosts<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
@@ -8107,13 +8234,19 @@ function collapse_update() {
                     c.desc +=
                         "<br>Currently: Color augments begin at " +
                         format_small(
-                            (2000000 + 2000000 * game.collapse_complete[c.id]) *
-                                reward_scaling
+                            Math.round(
+                                (2097152 +
+                                    2097152 * game.collapse_complete[c.id]) *
+                                    reward_scaling
+                            )
                         ) +
                         " color boosts<br>Next: Color augments begin at " +
                         format_small(
-                            (4000000 + 2000000 * game.collapse_complete[c.id]) *
-                                reward_scaling
+                            Math.round(
+                                (4194304 +
+                                    2097152 * game.collapse_complete[c.id]) *
+                                    reward_scaling
+                            )
                         ) +
                         " color boosts<br>Next research unlock in " +
                         format_small(5 - game.collapse_complete[c.id]) +
@@ -8121,9 +8254,9 @@ function collapse_update() {
                 } else if (game.collapse_complete[c.id] === 4) {
                     c.desc +=
                         "<br>Currently: Color augments begin at " +
-                        format_small(10000000 * reward_scaling) +
+                        format_small(Math.round(10485760 * reward_scaling)) +
                         " color boosts<br>Next: Color augments begin at " +
-                        format_small(12000000 * reward_scaling) +
+                        format_small(Math.round(12582912 * reward_scaling)) +
                         " color boosts<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
@@ -8131,13 +8264,19 @@ function collapse_update() {
                     c.desc +=
                         "<br>Currently: Color augments begin at " +
                         format_small(
-                            (2000000 + 2000000 * game.collapse_complete[c.id]) *
-                                reward_scaling
+                            Math.round(
+                                (2097152 +
+                                    2097152 * game.collapse_complete[c.id]) *
+                                    reward_scaling
+                            )
                         ) +
                         " color boosts<br>Next: Color augments begin at " +
                         format_small(
-                            (4000000 + 2000000 * game.collapse_complete[c.id]) *
-                                reward_scaling
+                            Math.round(
+                                (4194304 +
+                                    2097152 * game.collapse_complete[c.id]) *
+                                    reward_scaling
+                            )
                         ) +
                         " color boosts<br>Next research unlock in " +
                         format_small(9 - game.collapse_complete[c.id]) +
@@ -8145,9 +8284,9 @@ function collapse_update() {
                 } else if (game.collapse_complete[c.id] === 8) {
                     c.desc +=
                         "<br>Currently: Color augments begin at " +
-                        format_small(18000000 * reward_scaling) +
+                        format_small(Math.round(18874368 * reward_scaling)) +
                         " color boosts<br>Next: Color augments begin at " +
-                        format_small(20000000 * reward_scaling) +
+                        format_small(Math.round(20971520 * reward_scaling)) +
                         " color boosts<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
@@ -8155,13 +8294,19 @@ function collapse_update() {
                     c.desc +=
                         "<br>Currently: Color augments begin at " +
                         format_small(
-                            (2000000 + 2000000 * game.collapse_complete[c.id]) *
-                                reward_scaling
+                            Math.round(
+                                (2097152 +
+                                    2097152 * game.collapse_complete[c.id]) *
+                                    reward_scaling
+                            )
                         ) +
                         " color boosts<br>Next: Color augments begin at " +
                         format_small(
-                            (4000000 + 2000000 * game.collapse_complete[c.id]) *
-                                reward_scaling
+                            Math.round(
+                                (4194304 +
+                                    2097152 * game.collapse_complete[c.id]) *
+                                    reward_scaling
+                            )
                         ) +
                         " color boosts"
                 }
@@ -8172,94 +8317,220 @@ function collapse_update() {
                 if (game.collapse_complete[c.id] === 0) {
                     c.desc +=
                         "<br>Reward: You gain " +
-                        format_dec(1 * reward_scaling, game.notation) +
+                        format_num(1, game.notation) +
                         "% of your pending Ansuz runes every second<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
+                } else if (game.collapse_complete[c.id] === 1) {
+                    c.desc +=
+                        "<br>Currently: You gain " +
+                        format_num(1, game.notation) +
+                        "% of your pending Ansuz runes every second<br>Next: You gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    2 *
+                                    reward_scaling) /
+                                    9
+                            ),
+                            game.notation
+                        ) +
+                        "x more Ansuz runes (based on arcane enchantments)<br>Next research unlock in " +
+                        format_small(5) +
+                        " completions"
                 } else if (game.collapse_complete[c.id] <= 4) {
                     c.desc +=
                         "<br>Currently: You gain " +
-                        format_dec(
-                            (game.collapse_complete[c.id] *
-                                (game.collapse_complete[c.id] + 1) *
-                                reward_scaling) /
-                                2,
+                        format_num(1, game.notation) +
+                        "% of your pending Ansuz runes every second,<br>and you gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    game.collapse_complete[c.id] *
+                                    reward_scaling) /
+                                    9
+                            ),
                             game.notation
                         ) +
-                        "% of your pending Ansuz runes every second<br>Next: You gain " +
-                        format_dec(
-                            ((game.collapse_complete[c.id] + 1) *
-                                (game.collapse_complete[c.id] + 2) *
-                                reward_scaling) /
-                                2,
+                        "x more Ansuz runes (based on arcane enchantments)<br>Next: You gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    (game.collapse_complete[c.id] + 1) *
+                                    reward_scaling) /
+                                    9
+                            ),
                             game.notation
                         ) +
-                        "% of your pending Ansuz runes every second<br>Next research unlock in " +
+                        "x more Ansuz runes (based on arcane enchantments)<br>Next research unlock in " +
                         format_small(6 - game.collapse_complete[c.id]) +
                         " completions"
                 } else if (game.collapse_complete[c.id] === 5) {
                     c.desc +=
                         "<br>Currently: You gain " +
-                        format_dec(15 * reward_scaling, game.notation) +
-                        "% of your pending Ansuz runes every second<br>Next: You gain " +
-                        format_dec(21 * reward_scaling, game.notation) +
-                        "% of your pending Ansuz runes every second<br>Next research unlock in " +
+                        format_num(1, game.notation) +
+                        "% of your pending Ansuz runes every second,<br>and you gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    5 *
+                                    reward_scaling) /
+                                    9
+                            ),
+                            game.notation
+                        ) +
+                        "x more Ansuz runes (based on arcane enchantments)<br>Next: You gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    6 *
+                                    reward_scaling) /
+                                    9
+                            ),
+                            game.notation
+                        ) +
+                        "x more Ansuz runes (based on arcane enchantments)<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
                 } else if (game.collapse_complete[c.id] <= 9) {
                     c.desc +=
                         "<br>Currently: You gain " +
-                        format_dec(
-                            (game.collapse_complete[c.id] *
-                                (game.collapse_complete[c.id] + 1) *
-                                reward_scaling) /
-                                2,
+                        format_num(1, game.notation) +
+                        "% of your pending Ansuz runes every second,<br>and you gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    game.collapse_complete[c.id] *
+                                    reward_scaling) /
+                                    9
+                            ),
                             game.notation
                         ) +
-                        "% of your pending Ansuz runes every second<br>Next: You gain " +
-                        format_dec(
-                            ((game.collapse_complete[c.id] + 1) *
-                                (game.collapse_complete[c.id] + 2) *
-                                reward_scaling) /
-                                2,
+                        "x more Ansuz runes (based on arcane enchantments)<br>Next: You gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    (game.collapse_complete[c.id] + 1) *
+                                    reward_scaling) /
+                                    9
+                            ),
                             game.notation
                         ) +
-                        "% of your pending Ansuz runes every second<br>Next research unlock in " +
+                        "x more Ansuz runes (based on arcane enchantments)<br>Next research unlock in " +
                         format_small(11 - game.collapse_complete[c.id]) +
                         " completions"
                 } else if (game.collapse_complete[c.id] === 10) {
                     c.desc +=
                         "<br>Currently: You gain " +
-                        format_dec(55 * reward_scaling, game.notation) +
-                        "% of your pending Ansuz runes every second<br>Next: You gain " +
-                        format_dec(66 * reward_scaling, game.notation) +
-                        "% of your pending Ansuz runes every second<br>Next research unlock in " +
+                        format_num(1, game.notation) +
+                        "% of your pending Ansuz runes every second,<br>and you gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    10 *
+                                    reward_scaling) /
+                                    9
+                            ),
+                            game.notation
+                        ) +
+                        "x more Ansuz runes (based on arcane enchantments)<br>Next: You gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    11 *
+                                    reward_scaling) /
+                                    9
+                            ),
+                            game.notation
+                        ) +
+                        "x more Ansuz runes (based on arcane enchantments)<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
                 } else {
                     c.desc +=
                         "<br>Currently: You gain " +
-                        format_dec(
-                            (game.collapse_complete[c.id] *
-                                (game.collapse_complete[c.id] + 1) *
-                                reward_scaling) /
-                                2,
+                        format_num(1, game.notation) +
+                        "% of your pending Ansuz runes every second,<br>and you gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    game.collapse_complete[c.id] *
+                                    reward_scaling) /
+                                    9
+                            ),
                             game.notation
                         ) +
-                        "% of your pending Ansuz runes every second<br>Next: You gain " +
-                        format_dec(
-                            ((game.collapse_complete[c.id] + 1) *
-                                (game.collapse_complete[c.id] + 2) *
-                                reward_scaling) /
-                                2,
+                        "x more Ansuz runes (based on arcane enchantments)<br>Next: You gain " +
+                        format_idec(
+                            Decimal.pow(
+                                3,
+                                ((
+                                    game.arcane_enchantment +
+                                    game.free_enchantment
+                                ).toString() **
+                                    0.5 *
+                                    (game.collapse_complete[c.id] + 1) *
+                                    reward_scaling) /
+                                    9
+                            ),
                             game.notation
                         ) +
-                        "% of your pending Ansuz runes every second"
+                        "x more Ansuz runes (based on arcane enchantments)"
                 }
                 break
             case 5:
                 c.desc =
-                    "Same as Challenge 6, but all research boosts are disabled, and red, yellow, green, & blue spice production is disabled, and the unstable spice boost is not disabled"
+                    "Same as Challenge 6, but all research boosts are disabled, and red, yellow, green, & blue spice production is disabled"
                 if (game.collapse_complete[c.id] === 0) {
                     c.desc +=
                         "<br>Reward: You gain data " +
@@ -8267,39 +8538,29 @@ function collapse_update() {
                         "x faster while researching<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
-                } else if (game.collapse_complete[c.id] === 1) {
+                } else if (game.collapse_complete[c.id] <= 2) {
                     c.desc +=
                         "<br>Currently: You gain data " +
-                        format_dec(2 * reward_scaling, game.notation) +
+                        format_dec(
+                            (2 * reward_scaling) **
+                                game.collapse_complete[c.id],
+                            game.notation
+                        ) +
                         "x faster while researching<br>Next: You gain data " +
-                        format_dec((2 * reward_scaling) ** 2, game.notation) +
+                        format_dec(
+                            (2 * reward_scaling) **
+                                (game.collapse_complete[c.id] + 1),
+                            game.notation
+                        ) +
                         "x faster while researching<br>Next research unlock in " +
-                        format_small(2) +
+                        format_small(4 - game.collapse_complete[c.id]) +
                         " completions"
-                } else if (game.collapse_complete[c.id] === 2) {
-                    c.desc +=
-                        "<br>Currently: You gain data " +
-                        format_dec((2 * reward_scaling) ** 2, game.notation) +
-                        "x faster while researching<br>Next: You gain data " +
-                        format_dec((2 * reward_scaling) ** 3, game.notation) +
-                        "x faster while researching<br>Next research unlock in " +
-                        format_small(1) +
-                        " completion"
                 } else if (game.collapse_complete[c.id] === 3) {
                     c.desc +=
                         "<br>Currently: You gain data " +
                         format_dec((2 * reward_scaling) ** 3, game.notation) +
                         "x faster while researching<br>Next: You gain data " +
                         format_dec((2 * reward_scaling) ** 4, game.notation) +
-                        "x faster while researching<br>Next research unlock in " +
-                        format_small(2) +
-                        " completions"
-                } else if (game.collapse_complete[c.id] === 4) {
-                    c.desc +=
-                        "<br>Currently: You gain data " +
-                        format_dec((2 * reward_scaling) ** 4, game.notation) +
-                        "x faster while researching<br>Next: You gain data " +
-                        format_dec((2 * reward_scaling) ** 5, game.notation) +
                         "x faster while researching<br>Next research unlock in " +
                         format_small(1) +
                         " completion"
@@ -8355,190 +8616,8 @@ function collapse_update() {
         if (game.research_complete[c.unlock] >= 1) {
             panel.style.display = "flex"
 
-            let completions = game.collapse_complete[c.id]
-
             if (game.collapse_challenge === c.id + 7) {
-                let temp_goal = c.goal.mul(c.delta.pow(completions))
-
-                let extra = [1, 1, 1, 1, 1, 1]
-                let superstep = c.goal.mul(
-                    c.delta.pow(Math.abs(c.scaling1) - 1)
-                )
-                let superdelta = c.delta
-                let step1 = c.goal
-                if (c.scaling1 !== undefined) {
-                    if (c.scaling1 < 0) extra[0] = 0
-                    step1 = step1.mul(c.delta.pow(Math.abs(c.scaling1) - 1))
-                    if (completions >= Math.abs(c.scaling1))
-                        temp_goal = step1.mul(
-                            c.delta2.pow(
-                                completions -
-                                    Math.abs(c.scaling1) +
-                                    extra[0] +
-                                    1
-                            )
-                        )
-
-                    superstep = step1.mul(
-                        c.delta2.pow(
-                            c.superscaling - Math.abs(c.scaling1) + extra[0]
-                        )
-                    )
-                    superdelta = c.delta2
-                }
-
-                let step2 = step1
-                if (c.scaling2 !== undefined) {
-                    if (c.scaling2 < 0) extra[1] = 0
-                    step2 = step2.mul(
-                        c.delta2.pow(
-                            Math.abs(c.scaling2) -
-                                Math.abs(c.scaling1) +
-                                extra[0]
-                        )
-                    )
-                    if (completions >= Math.abs(c.scaling2))
-                        temp_goal = step2.mul(
-                            c.delta3.pow(
-                                completions -
-                                    Math.abs(c.scaling2) +
-                                    extra[1] +
-                                    1
-                            )
-                        )
-
-                    superstep = step2.mul(
-                        c.delta3.pow(
-                            c.superscaling - Math.abs(c.scaling2) + extra[1]
-                        )
-                    )
-                    superdelta = c.delta3
-                }
-
-                let step3 = step2
-                if (c.scaling3 !== undefined) {
-                    if (c.scaling3 < 0) extra[2] = 0
-                    step3 = step3.mul(
-                        c.delta3.pow(
-                            Math.abs(c.scaling3) -
-                                Math.abs(c.scaling2) +
-                                extra[1]
-                        )
-                    )
-                    if (completions >= Math.abs(c.scaling3))
-                        temp_goal = step3.mul(
-                            c.delta4.pow(
-                                completions -
-                                    Math.abs(c.scaling3) +
-                                    extra[2] +
-                                    1
-                            )
-                        )
-
-                    superstep = step3.mul(
-                        c.delta4.pow(
-                            c.superscaling - Math.abs(c.scaling3) + extra[2]
-                        )
-                    )
-                    superdelta = c.delta4
-                }
-
-                let step4 = step3
-                if (c.scaling4 !== undefined) {
-                    if (c.scaling4 < 0) extra[3] = 0
-                    step4 = step4.mul(
-                        c.delta4.pow(
-                            Math.abs(c.scaling4) -
-                                Math.abs(c.scaling3) +
-                                extra[2]
-                        )
-                    )
-                    if (completions >= Math.abs(c.scaling4))
-                        temp_goal = step4.mul(
-                            c.delta5.pow(
-                                completions -
-                                    Math.abs(c.scaling4) +
-                                    extra[3] +
-                                    1
-                            )
-                        )
-
-                    superstep = step4.mul(
-                        c.delta5.pow(
-                            c.superscaling - Math.abs(c.scaling4) + extra[3]
-                        )
-                    )
-                    superdelta = c.delta5
-                }
-
-                let step5 = step4
-                if (c.scaling5 !== undefined) {
-                    if (c.scaling5 < 0) extra[4] = 0
-                    step5 = step5.mul(
-                        c.delta5.pow(
-                            Math.abs(c.scaling5) -
-                                Math.abs(c.scaling4) +
-                                extra[3]
-                        )
-                    )
-                    if (completions >= Math.abs(c.scaling5))
-                        temp_goal = step5.mul(
-                            c.delta6.pow(
-                                completions -
-                                    Math.abs(c.scaling5) +
-                                    extra[4] +
-                                    1
-                            )
-                        )
-
-                    superstep = step5.mul(
-                        c.delta6.pow(
-                            c.superscaling - Math.abs(c.scaling5) + extra[4]
-                        )
-                    )
-                    superdelta = c.delta6
-                }
-
-                let step6 = step5
-                if (c.scaling6 !== undefined) {
-                    if (c.scaling6 < 0) extra[5] = 0
-                    step6 = step6.mul(
-                        c.delta6.pow(
-                            Math.abs(c.scaling6) -
-                                Math.abs(c.scaling5) +
-                                extra[4]
-                        )
-                    )
-                    if (completions >= Math.abs(c.scaling6))
-                        temp_goal = step6.mul(
-                            c.delta7.pow(
-                                completions -
-                                    Math.abs(c.scaling6) +
-                                    extra[5] +
-                                    1
-                            )
-                        )
-
-                    superstep = step6.mul(
-                        c.delta7.pow(
-                            c.superscaling - Math.abs(c.scaling6) + extra[5]
-                        )
-                    )
-                    superdelta = c.delta7
-                }
-
-                if (completions >= c.superscaling) {
-                    temp_goal = superstep.mul(
-                        superdelta.pow(
-                            ((completions - c.superscaling + 2) *
-                                (completions - c.superscaling + 3)) /
-                                2 -
-                                1
-                        )
-                    )
-                }
-
-                if (collapse_amount.cmp(temp_goal) >= 0) {
+                if (collapse_amount.cmp(get_collapse_goal(c.id, 0)) >= 0) {
                     button.className = "co_challenge_button finished"
                     button.innerHTML = "Complete Challenge"
                 } else {
@@ -8554,414 +8633,25 @@ function collapse_update() {
                 game.pending_completions > 0 &&
                 game.collapse_challenge === c.id + 7
             ) {
-                let temp_goal = c.goal.mul(
-                    c.delta.pow(completions + game.pending_completions)
-                )
-
-                let extra = [1, 1, 1, 1, 1, 1]
-                let superstep = c.goal.mul(
-                    c.delta.pow(Math.abs(c.scaling1) - 1)
-                )
-                let superdelta = c.delta
-                let step1 = c.goal
-                if (c.scaling1 !== undefined) {
-                    if (c.scaling1 < 0) extra[0] = 0
-                    step1 = step1.mul(c.delta.pow(Math.abs(c.scaling1) - 1))
-                    if (
-                        completions + game.pending_completions >=
-                        Math.abs(c.scaling1)
-                    )
-                        temp_goal = step1.mul(
-                            c.delta2.pow(
-                                completions +
-                                    game.pending_completions -
-                                    Math.abs(c.scaling1) +
-                                    extra[0] +
-                                    1
-                            )
-                        )
-
-                    superstep = step1.mul(
-                        c.delta2.pow(
-                            c.superscaling - Math.abs(c.scaling1) + extra[0]
-                        )
-                    )
-                    superdelta = c.delta2
-                }
-
-                let step2 = step1
-                if (c.scaling2 !== undefined) {
-                    if (c.scaling2 < 0) extra[1] = 0
-                    step2 = step2.mul(
-                        c.delta2.pow(
-                            Math.abs(c.scaling2) -
-                                Math.abs(c.scaling1) +
-                                extra[0]
-                        )
-                    )
-                    if (
-                        completions + game.pending_completions >=
-                        Math.abs(c.scaling2)
-                    )
-                        temp_goal = step2.mul(
-                            c.delta3.pow(
-                                completions +
-                                    game.pending_completions -
-                                    Math.abs(c.scaling2) +
-                                    extra[1] +
-                                    1
-                            )
-                        )
-
-                    superstep = step2.mul(
-                        c.delta3.pow(
-                            c.superscaling - Math.abs(c.scaling2) + extra[1]
-                        )
-                    )
-                    superdelta = c.delta3
-                }
-
-                let step3 = step2
-                if (c.scaling3 !== undefined) {
-                    if (c.scaling3 < 0) extra[2] = 0
-                    step3 = step3.mul(
-                        c.delta3.pow(
-                            Math.abs(c.scaling3) -
-                                Math.abs(c.scaling2) +
-                                extra[1]
-                        )
-                    )
-                    if (
-                        completions + game.pending_completions >=
-                        Math.abs(c.scaling3)
-                    )
-                        temp_goal = step3.mul(
-                            c.delta4.pow(
-                                completions +
-                                    game.pending_completions -
-                                    Math.abs(c.scaling3) +
-                                    extra[2] +
-                                    1
-                            )
-                        )
-
-                    superstep = step3.mul(
-                        c.delta4.pow(
-                            c.superscaling - Math.abs(c.scaling3) + extra[2]
-                        )
-                    )
-                    superdelta = c.delta4
-                }
-
-                let step4 = step3
-                if (c.scaling4 !== undefined) {
-                    if (c.scaling4 < 0) extra[3] = 0
-                    step4 = step4.mul(
-                        c.delta4.pow(
-                            Math.abs(c.scaling4) -
-                                Math.abs(c.scaling3) +
-                                extra[2]
-                        )
-                    )
-                    if (
-                        completions + game.pending_completions >=
-                        Math.abs(c.scaling4)
-                    )
-                        temp_goal = step4.mul(
-                            c.delta5.pow(
-                                completions +
-                                    game.pending_completions -
-                                    Math.abs(c.scaling4) +
-                                    extra[3] +
-                                    1
-                            )
-                        )
-
-                    superstep = step4.mul(
-                        c.delta5.pow(
-                            c.superscaling - Math.abs(c.scaling4) + extra[3]
-                        )
-                    )
-                    superdelta = c.delta5
-                }
-
-                let step5 = step4
-                if (c.scaling5 !== undefined) {
-                    if (c.scaling5 < 0) extra[4] = 0
-                    step5 = step5.mul(
-                        c.delta5.pow(
-                            Math.abs(c.scaling5) -
-                                Math.abs(c.scaling4) +
-                                extra[3]
-                        )
-                    )
-                    if (
-                        completions + game.pending_completions >=
-                        Math.abs(c.scaling5)
-                    )
-                        temp_goal = step5.mul(
-                            c.delta6.pow(
-                                completions +
-                                    game.pending_completions -
-                                    Math.abs(c.scaling5) +
-                                    extra[4] +
-                                    1
-                            )
-                        )
-
-                    superstep = step5.mul(
-                        c.delta6.pow(
-                            c.superscaling - Math.abs(c.scaling5) + extra[4]
-                        )
-                    )
-                    superdelta = c.delta6
-                }
-
-                let step6 = step5
-                if (c.scaling6 !== undefined) {
-                    if (c.scaling6 < 0) extra[5] = 0
-                    step6 = step6.mul(
-                        c.delta6.pow(
-                            Math.abs(c.scaling6) -
-                                Math.abs(c.scaling5) +
-                                extra[4]
-                        )
-                    )
-                    if (
-                        completions + game.pending_completions >=
-                        Math.abs(c.scaling6)
-                    )
-                        temp_goal = step6.mul(
-                            c.delta7.pow(
-                                completions +
-                                    game.pending_completions -
-                                    Math.abs(c.scaling6) +
-                                    extra[5] +
-                                    1
-                            )
-                        )
-
-                    superstep = step6.mul(
-                        c.delta7.pow(
-                            c.superscaling - Math.abs(c.scaling6) + extra[5]
-                        )
-                    )
-                    superdelta = c.delta7
-                }
-
-                if (completions + game.pending_completions >= c.superscaling) {
-                    temp_goal = superstep.mul(
-                        superdelta.pow(
-                            ((completions +
-                                game.pending_completions -
-                                c.superscaling +
-                                2) *
-                                (completions +
-                                    game.pending_completions -
-                                    c.superscaling +
-                                    3)) /
-                                2 -
-                                1
-                        )
-                    )
-                }
-
                 info.innerHTML =
                     "<span class='small_text'>" +
                     c.desc +
                     "<br></span><br>Goal: <span class='atomic_spice'>+" +
-                    format_infdec(temp_goal, game.notation) +
+                    format_infdec(
+                        get_collapse_goal(c.id, game.pending_completions),
+                        game.notation
+                    ) +
                     " atomic spice</span><br>Completions: " +
                     format_small(game.collapse_complete[c.id]) +
                     " (+" +
                     format_small(game.pending_completions) +
                     " on Collapse)"
             } else {
-                let temp_goal = c.goal.mul(c.delta.pow(completions))
-
-                let extra = [1, 1, 1, 1, 1, 1]
-                let superstep = c.goal.mul(
-                    c.delta.pow(Math.abs(c.scaling1) - 1)
-                )
-                let superdelta = c.delta
-                let step1 = c.goal
-                if (c.scaling1 !== undefined) {
-                    if (c.scaling1 < 0) extra[0] = 0
-                    step1 = step1.mul(c.delta.pow(Math.abs(c.scaling1) - 1))
-                    if (completions >= Math.abs(c.scaling1))
-                        temp_goal = step1.mul(
-                            c.delta2.pow(
-                                completions -
-                                    Math.abs(c.scaling1) +
-                                    extra[0] +
-                                    1
-                            )
-                        )
-
-                    superstep = step1.mul(
-                        c.delta2.pow(
-                            c.superscaling - Math.abs(c.scaling1) + extra[0]
-                        )
-                    )
-                    superdelta = c.delta2
-                }
-
-                let step2 = step1
-                if (c.scaling2 !== undefined) {
-                    if (c.scaling2 < 0) extra[1] = 0
-                    step2 = step2.mul(
-                        c.delta2.pow(
-                            Math.abs(c.scaling2) -
-                                Math.abs(c.scaling1) +
-                                extra[0]
-                        )
-                    )
-                    if (completions >= Math.abs(c.scaling2))
-                        temp_goal = step2.mul(
-                            c.delta3.pow(
-                                completions -
-                                    Math.abs(c.scaling2) +
-                                    extra[1] +
-                                    1
-                            )
-                        )
-
-                    superstep = step2.mul(
-                        c.delta3.pow(
-                            c.superscaling - Math.abs(c.scaling2) + extra[1]
-                        )
-                    )
-                    superdelta = c.delta3
-                }
-
-                let step3 = step2
-                if (c.scaling3 !== undefined) {
-                    if (c.scaling3 < 0) extra[2] = 0
-                    step3 = step3.mul(
-                        c.delta3.pow(
-                            Math.abs(c.scaling3) -
-                                Math.abs(c.scaling2) +
-                                extra[1]
-                        )
-                    )
-                    if (completions >= Math.abs(c.scaling3))
-                        temp_goal = step3.mul(
-                            c.delta4.pow(
-                                completions -
-                                    Math.abs(c.scaling3) +
-                                    extra[2] +
-                                    1
-                            )
-                        )
-
-                    superstep = step3.mul(
-                        c.delta4.pow(
-                            c.superscaling - Math.abs(c.scaling3) + extra[2]
-                        )
-                    )
-                    superdelta = c.delta4
-                }
-
-                let step4 = step3
-                if (c.scaling4 !== undefined) {
-                    if (c.scaling4 < 0) extra[3] = 0
-                    step4 = step4.mul(
-                        c.delta4.pow(
-                            Math.abs(c.scaling4) -
-                                Math.abs(c.scaling3) +
-                                extra[2]
-                        )
-                    )
-                    if (completions >= Math.abs(c.scaling4))
-                        temp_goal = step4.mul(
-                            c.delta5.pow(
-                                completions -
-                                    Math.abs(c.scaling4) +
-                                    extra[3] +
-                                    1
-                            )
-                        )
-
-                    superstep = step4.mul(
-                        c.delta5.pow(
-                            c.superscaling - Math.abs(c.scaling4) + extra[3]
-                        )
-                    )
-                    superdelta = c.delta5
-                }
-
-                let step5 = step4
-                if (c.scaling5 !== undefined) {
-                    if (c.scaling5 < 0) extra[4] = 0
-                    step5 = step5.mul(
-                        c.delta5.pow(
-                            Math.abs(c.scaling5) -
-                                Math.abs(c.scaling4) +
-                                extra[3]
-                        )
-                    )
-                    if (completions >= Math.abs(c.scaling5))
-                        temp_goal = step5.mul(
-                            c.delta6.pow(
-                                completions -
-                                    Math.abs(c.scaling5) +
-                                    extra[4] +
-                                    1
-                            )
-                        )
-
-                    superstep = step5.mul(
-                        c.delta6.pow(
-                            c.superscaling - Math.abs(c.scaling5) + extra[4]
-                        )
-                    )
-                    superdelta = c.delta6
-                }
-
-                let step6 = step5
-                if (c.scaling6 !== undefined) {
-                    if (c.scaling6 < 0) extra[5] = 0
-                    step6 = step6.mul(
-                        c.delta6.pow(
-                            Math.abs(c.scaling6) -
-                                Math.abs(c.scaling5) +
-                                extra[4]
-                        )
-                    )
-                    if (completions >= Math.abs(c.scaling6))
-                        temp_goal = step6.mul(
-                            c.delta7.pow(
-                                completions -
-                                    Math.abs(c.scaling6) +
-                                    extra[5] +
-                                    1
-                            )
-                        )
-
-                    superstep = step6.mul(
-                        c.delta7.pow(
-                            c.superscaling - Math.abs(c.scaling6) + extra[5]
-                        )
-                    )
-                    superdelta = c.delta7
-                }
-
-                if (completions >= c.superscaling) {
-                    temp_goal = superstep.mul(
-                        superdelta.pow(
-                            ((completions - c.superscaling + 2) *
-                                (completions - c.superscaling + 3)) /
-                                2 -
-                                1
-                        )
-                    )
-                }
-
                 info.innerHTML =
                     "<span class='small_text'>" +
                     c.desc +
                     "<br></span><br>Goal: <span class='atomic_spice'>+" +
-                    format_infdec(temp_goal, game.notation) +
+                    format_infdec(get_collapse_goal(c.id, 0), game.notation) +
                     " atomic spice</span><br>Completions: " +
                     format_small(game.collapse_complete[c.id])
             }
@@ -8973,12 +8663,17 @@ function collapse_update() {
 
 //graphics updates for research
 function research_update() {
+    let total_completions = 0
+    for (let i = 0; i < 6; i++) {
+        total_completions += game.collapse_complete[i]
+    }
+
     for (const r of research.researches) {
         let button = research_map.get(r)
         let button2 = research_map2.get(r)
 
         if (game.research_complete[r.id] >= 1) {
-            if (!r.repeat || (r.id === 0 && game.research_complete[0] === 40)) {
+            if (!r.repeat) {
                 button.style.display = "none"
                 button2.style.display = "block"
 
@@ -9016,7 +8711,13 @@ function research_update() {
             if (r.req === undefined) button.style.display = "block"
             else {
                 if (r.req >= 0) {
-                    if (game.research_complete[r.req]) {
+                    if (game.research_complete[r.req] >= 1) {
+                        button.style.display = "block"
+                    } else {
+                        button.style.display = "none"
+                    }
+                } else if (r.req >= -700) {
+                    if (total_completions >= -r.req) {
                         button.style.display = "block"
                     } else {
                         button.style.display = "none"
@@ -9048,14 +8749,10 @@ function research_update() {
             }
         }
 
-        let total_completions = 0
-        for (let i = 0; i < 6; i++) {
-            total_completions += game.collapse_complete[i]
-        }
         switch (r.id) {
             case 0:
                 let antispice_halflife = 1
-                if (game.antispice_bought[0]) antispice_halflife = 1.11
+                if (game.antispice_bought[0]) antispice_halflife = 1.15
                 r.desc =
                     "The half-life of unstable spice becomes " +
                     format_dec(33 * antispice_halflife) +
@@ -9075,97 +8772,48 @@ function research_update() {
                         "Unstable spice decay now also boosts crystallized spice production<br>Disabled in Challenge 12"
                 break
             case 3:
-                let antispice_rune_power = 1
-                if (game.antispice_bought[0]) antispice_rune_power = 1.11
-                if (game.research_complete[3] === 0)
-                    r.desc =
-                        "Rune power is produced " +
-                        format_small(5 * antispice_rune_power) +
-                        "x faster<br>Current rune power production boost: " +
-                        format_small(1) +
-                        "x"
-                else if (game.research_complete[3] < 4)
-                    r.desc =
-                        "Rune power is produced " +
-                        format_small(4 * antispice_rune_power) +
-                        "x faster<br>Current rune power production boost: " +
-                        format_num(
-                            5 *
-                                4 ** (game.research_complete[3] - 1) *
-                                antispice_rune_power **
-                                    game.research_complete[3],
-                            game.notation
-                        ) +
-                        "x"
-                else if (game.research_complete[3] < 12)
-                    r.desc =
-                        "Rune power is produced " +
-                        format_small(3 * antispice_rune_power) +
-                        "x faster<br>Current rune power production boost: " +
-                        format_num(
-                            320 *
-                                3 ** (game.research_complete[3] - 4) *
-                                antispice_rune_power **
-                                    game.research_complete[3],
-                            game.notation
-                        ) +
-                        "x"
-                else
-                    r.desc =
-                        "Rune power is produced " +
-                        format_small(2 * antispice_rune_power) +
-                        "x faster<br>Current rune power production boost: " +
-                        format_num(
-                            2099520 *
-                                2 ** (game.research_complete[3] - 12) *
-                                antispice_rune_power **
-                                    game.research_complete[3],
-                            game.notation
-                        ) +
-                        "x"
+                let antispice_rune_exp = 1
+                if (game.antispice_bought[0]) antispice_rune_exp = 1.15
+                r.desc =
+                    "The rune power production exponent is increased by " +
+                    format_dec(0.1 * antispice_rune_exp, game.notation) +
+                    "<br>Current rune power production exponent: " +
+                    format_dec(
+                        2 +
+                            game.research_complete[3] *
+                                0.1 *
+                                antispice_rune_exp,
+                        game.notation
+                    )
 
                 if (game.collapse_challenge === 12) {
-                    if (game.research_complete[3] === 0)
-                        r.desc =
-                            "Rune power is produced " +
-                            format_small(5 * antispice_rune_power) +
-                            "x faster"
-                    else if (game.research_complete[3] < 4)
-                        r.desc =
-                            "Rune power is produced " +
-                            format_small(4 * antispice_rune_power) +
-                            "x faster"
-                    else if (game.research_complete[3] < 12)
-                        r.desc =
-                            "Rune power is produced " +
-                            format_small(3 * antispice_rune_power) +
-                            "x faster"
-                    else
-                        r.desc =
-                            "Rune power is produced " +
-                            format_small(2 * antispice_rune_power) +
-                            "x faster"
-                    r.desc += "<br>Disabled in Challenge 12"
+                    r.desc =
+                        "The rune power production exponent is increased by " +
+                        format_dec(0.1 * antispice_rune_exp, game.notation) +
+                        "<br>Disabled in Challenge 12"
                 }
                 break
             case 5:
-                let rune_amount = Decimal.pow(
-                    1.2,
-                    (game.total_rune_power / 10 ** 28) ** 0.2
-                ).mul(game.total_rune_power ** 0.5 / (5 * 10 ** 12) + 1)
-                if (rune_amount.cmp(Decimal.pow(10, 50)) >= 0)
-                    rune_amount = Decimal.pow(
+                let rune_atomic = game.total_rune_power
+                    .pow(1 / 150)
+                    .div(2e18)
+                    .add(1)
+                if (rune_atomic.cmp(Decimal.pow(2, 1024)) >= 0)
+                    rune_atomic = Decimal.pow(
                         10,
-                        rune_amount.div(Decimal.pow(10, 50)).log(10) ** 0.5 + 50
+                        (rune_atomic.log(10) / Decimal.pow(2, 1024).log(10)) **
+                            0.5 *
+                            Decimal.pow(2, 1024).log(10)
                     )
-                if (rune_amount.cmp(Decimal.pow(10, 100)) >= 0)
-                    rune_amount = Decimal.pow(
+                let a = Decimal.pow(2, 3072).log(10)
+                if (rune_atomic.cmp(Decimal.pow(2, 3072)) >= 0)
+                    rune_atomic = Decimal.pow(
                         10,
-                        200 - 10000 / rune_amount.log(10)
+                        2 * a - a ** 2 / rune_atomic.log(10)
                     )
                 r.desc =
                     "Atomic spice gains are additionally boosted by total rune power produced<br>Current boost: " +
-                    format_idec(rune_amount, game.notation) +
+                    format_idec(rune_atomic, game.notation) +
                     "x"
                 if (game.collapse_challenge !== 0) {
                     r.desc =
@@ -9174,7 +8822,7 @@ function research_update() {
                 break
             case 7:
                 let antispice_efficiency = 1
-                if (game.antispice_bought[0]) antispice_efficiency = 1.11
+                if (game.antispice_bought[0]) antispice_efficiency = 1.15
                 if (game.research_complete[7] < 4)
                     r.desc =
                         "Atomic spice conversion is " +
@@ -9190,26 +8838,38 @@ function research_update() {
                         format_small(Math.round(game.atomic_efficiency * 100)) +
                         "%"
                 break
-            case 9:
+            case 10:
                 r.desc =
                     "Unstable spice decay now also boosts arcane spice production"
                 if (game.collapse_challenge === 12)
                     r.desc =
                         "Unstable spice decay now also boosts arcane spice production<br>Disabled in Challenge 12"
                 break
-            case 10:
-                r.desc =
-                    "Ansuz rune gains from Ascension are boosted by Times Collapsed stat<br>Current boost: " +
-                    format_dec(
-                        Math.log2((game.collapse + 25) / 25) ** 2 * 6.27 + 1,
-                        game.notation
-                    ) +
-                    "x"
+            case 12:
+                if (game.collapse <= 1224)
+                    r.desc =
+                        "Ansuz rune gains from Ascension are boosted by Times Collapsed stat<br>Current boost: " +
+                        format_idec(
+                            Decimal.pow(7.27e27, (game.collapse / 10) ** 0.5),
+                            game.notation
+                        ) +
+                        "x"
+                else
+                    r.desc =
+                        "Ansuz rune gains from Ascension are boosted by Times Collapsed stat<br>Current boost: " +
+                        format_idec(
+                            Decimal.pow(
+                                7.27e27,
+                                (game.collapse - 1013.3) ** 0.25 + 7.2535
+                            ),
+                            game.notation
+                        ) +
+                        "x"
                 if (game.collapse_challenge === 12)
                     r.desc =
                         "Ansuz rune gains from Ascension are boosted by Times Collapsed stat<br>Disabled in Challenge 12"
                 break
-            case 11:
+            case 13:
                 r.desc =
                     "You get " +
                     format_small(1) +
@@ -9233,52 +8893,52 @@ function research_update() {
                         format_small(10) +
                         " arcane enchantments you have<br>Disabled in Challenge 12"
                 break
-            case 12:
+            case 14:
                 r.desc =
-                    "Rune power boosts are an extra 50% stronger (for up to " +
-                    format_small(12) +
-                    "x)"
+                    "Boosts from rune power are now " +
+                    format_small(5) +
+                    "x stronger"
                 if (game.collapse_challenge === 12)
                     r.desc =
-                        "Rune power boosts are an extra 50% stronger (for up to " +
-                        format_small(12) +
-                        "x)<br>Disabled in Challenge 12"
+                        "Boosts from rune power are now " +
+                        format_small(5) +
+                        "x stronger<br>Disabled in Challenge 12"
                 break
-            case 13:
+            case 15:
                 r.desc =
                     "You get " +
-                    format_small(200) +
+                    format_small(10) +
                     " free arcane enchantments for every arcane strengthener you have<br>Currently: +" +
-                    format_small(game.arcane_strengthener * 200) +
+                    format_small(game.arcane_strengthener * 10) +
                     " free arcane enchantments"
                 if (game.collapse_challenge === 7)
                     r.desc =
                         "You get " +
-                        format_small(200) +
+                        format_small(10) +
                         " free arcane enchantments for every arcane strengthener you have<br>No effect in Challenge 7"
                 if (game.collapse_challenge === 12)
                     r.desc =
                         "You get " +
-                        format_small(200) +
+                        format_small(10) +
                         " free arcane enchantments for every arcane strengthener you have<br>Disabled in Challenge 12"
                 break
-            case 14:
+            case 16:
                 r.desc =
-                    "Unstable spice boosts are 50% stronger when unstable spice is completely decayed"
+                    "Unstable spice boosts are 20% stronger when unstable spice is completely decayed"
                 if (game.collapse_challenge === 12)
                     r.desc =
-                        "Unstable spice boosts are 50% stronger when unstable spice is completely decayed<br>Disabled in Challenge 12"
+                        "Unstable spice boosts are 20% stronger when unstable spice is completely decayed<br>Disabled in Challenge 12"
                 break
-            case 15:
+            case 17:
                 r.desc = "Unlocks automation for Collapse"
                 if (game.collapse_challenge !== 0) {
                     r.desc =
                         "Unlocks automation for Collapse<br>Disabled in Collapse Challenges"
                 }
                 break
-            case 17:
+            case 19:
                 if (game.atomic_spice.cmp(1) >= 0) {
-                    let amount = game.atomic_spice.log(10) * 0.06666
+                    let amount = game.atomic_spice.log(10) * 0.08888
 
                     if (amount > 100) {
                         amount = (amount - 100) / 300 + 2
@@ -9303,24 +8963,24 @@ function research_update() {
                     r.desc =
                         "Unspent atomic spice makes the unstable spice decay boost stronger<br>Disabled in Challenge 12"
                 break
-            case 22:
+            case 24:
                 r.desc =
                     "You gain " +
-                    format_small(888) +
+                    format_small(46656) +
                     "x more atomic spice for every Collapse challenge completion<br>Current boost: " +
                     format_idec(
-                        Decimal.pow(888, total_completions),
+                        Decimal.pow(46656, total_completions),
                         game.notation
                     ) +
                     "x"
                 if (game.collapse_challenge !== 0) {
                     r.desc =
                         "You gain " +
-                        format_small(888) +
+                        format_small(46656) +
                         "x more atomic spice for every Collapse challenge completion<br>Disabled in Collapse Challenges"
                 }
                 break
-            case 25:
+            case 27:
                 r.desc =
                     "You get " +
                     format_small(50) +
@@ -9328,40 +8988,25 @@ function research_update() {
                     format_small(50) +
                     "% of your bought arcane enchantments)"
                 if (game.collapse >= 100000) {
-                    if (
-                        -5000 *
-                            5 ** 0.5 *
-                            ((game.collapse - 87501) ** 0.5 -
-                                (game.collapse - 87500) ** 0.5) <
-                        2
-                    ) {
-                        r.desc =
-                            "You get about " +
-                            format_small(1) +
-                            " free arcane enchantment for every Collapse<br>(up to " +
-                            format_small(50) +
-                            "% of your bought arcane enchantments)"
-                    } else {
-                        r.desc =
-                            "You get about " +
-                            format_small(
-                                Math.floor(
-                                    -5000 *
-                                        5 ** 0.5 *
-                                        ((game.collapse - 87501) ** 0.5 -
-                                            (game.collapse - 87500) ** 0.5)
-                                )
-                            ) +
-                            " free arcane enchantments for every Collapse (up to " +
-                            format_small(50) +
-                            "% of your bought arcane enchantments)"
-                    }
+                    r.desc =
+                        "You get about " +
+                        format_small(
+                            Math.floor(
+                                -5000 *
+                                    5 ** 0.5 *
+                                    ((game.collapse - 87501) ** 0.5 -
+                                        (game.collapse - 87500) ** 0.5)
+                            )
+                        ) +
+                        " free arcane enchantments for every Collapse (up to " +
+                        format_small(50) +
+                        "% of your bought arcane enchantments)"
                 }
-                if (game.collapse >= 31337500) {
+                if (game.collapse >= 1337500) {
                     r.desc =
                         "You get " +
-                        format_small(1) +
-                        " free arcane enchantment for every Collapse (up to " +
+                        format_small(5) +
+                        " free arcane enchantments for every Collapse (up to " +
                         format_small(50) +
                         "% of your bought arcane enchantments)"
                 }
@@ -9379,8 +9024,8 @@ function research_update() {
                                     3750000
                             )
                         )
-                    if (game.collapse >= 31337500)
-                        collapse_free = BigInt(game.collapse) + 34912500n
+                    if (game.collapse >= 1337500)
+                        collapse_free = BigInt(game.collapse) * 5n + 9562500n
                     r.desc +=
                         "<br>Currently: +" +
                         format_small(collapse_free) +
@@ -9392,27 +9037,29 @@ function research_update() {
                             " free arcane enchantments"
                 }
                 break
-            case 31:
+            case 34:
                 r.desc =
                     "You gain 50% more rainbow spice after color augments begin"
                 if (game.collapse_challenge === 12)
                     r.desc =
                         "You gain 50% more rainbow spice after color augments begin<br>Disabled in Challenge 12"
                 break
-            case 35:
+            case 37:
                 r.desc =
-                    "Rune power boosts are an extra 2x stronger (for up to " +
-                    format_small(24) +
-                    "x)"
+                    "Boosts from rune power are now " +
+                    format_small(50) +
+                    "x stronger"
                 if (game.collapse_challenge === 12)
                     r.desc =
-                        "Rune power boosts are an extra 2x stronger (for up to " +
-                        format_small(24) +
-                        "x)<br>Disabled in Challenge 12"
+                        "Boosts from rune power are now " +
+                        format_small(50) +
+                        "x stronger<br>Disabled in Challenge 12"
                 break
-            case 36:
+            case 38:
+                let prestige_amount =
+                    1 + (1.05 ** (total_completions - 55)) ** 0.5
                 let ascension_amount =
-                    1 + (1.05 ** (total_completions - 55)) ** 2.7
+                    1 + (1.05 ** (total_completions - 55)) ** 2
                 if (ascension_amount >= 10000)
                     ascension_amount = (ascension_amount / 10000) ** 0.5 * 10000
                 let collapse_amount = 1 + 1.05 ** (total_completions - 55)
@@ -9420,6 +9067,8 @@ function research_update() {
                     collapse_amount = (collapse_amount / 100) ** 0.5 * 100
                 r.desc =
                     "You gain " +
+                    format_small(Math.floor(prestige_amount)) +
+                    "x more Times Prestiged stat on Prestige,<br>you gain " +
                     format_small(Math.floor(ascension_amount)) +
                     "x more Times Ascended stat on Ascension,<br>and you gain " +
                     format_small(Math.floor(collapse_amount)) +
@@ -9475,56 +9124,57 @@ function research_update() {
                             research.researches[r].unit
                     ) * research.researches[r].unit
 
-                if (r === 7 && game.research_complete[r] >= 8) {
+                if (r === 7 && game.research_complete[r] >= 7) {
                     goal =
                         Math.ceil(
                             (research.researches[r].data *
                                 research.researches[r].factor ** 3 *
                                 research.researches[r].factor2 **
                                     (4 +
-                                        ((game.research_complete[r] - 7) *
-                                            (game.research_complete[r] - 6)) /
+                                        ((game.research_complete[r] - 6) *
+                                            (game.research_complete[r] - 5)) /
                                             2)) /
                                 research.researches[r].unit
                         ) * research.researches[r].unit
                 }
 
-                if (r === 0 && game.research_complete[r] >= 27) {
+                if (r === 0 && game.research_complete[r] >= 21) {
                     goal =
                         Math.ceil(
                             (research.researches[r].data *
                                 research.researches[r].factor ** 3 *
                                 research.researches[r].factor2 **
-                                    (game.research_complete[r] * 3 - 53)) /
+                                    (game.research_complete[r] * 3 - 41)) /
                                 research.researches[r].unit
                         ) * research.researches[r].unit
                 }
-                if (r === 0 && game.research_complete[r] === 40) {
-                    goal =
-                        Math.ceil(
-                            (research.researches[r].data *
-                                research.researches[r].factor ** 3 *
-                                research.researches[r].factor2 ** 64) /
-                                research.researches[r].unit
-                        ) * research.researches[r].unit
-                }
-                if (r === 3 && game.research_complete[r] >= 19) {
+                if (r === 0 && game.research_complete[r] >= 30) {
                     goal =
                         Math.ceil(
                             (research.researches[r].data *
                                 research.researches[r].factor ** 3 *
                                 research.researches[r].factor2 **
-                                    (game.research_complete[r] * 3 - 37)) /
+                                    (game.research_complete[r] * 9 - 215)) /
                                 research.researches[r].unit
                         ) * research.researches[r].unit
                 }
-                if (r === 3 && game.research_complete[r] >= 57) {
+                if (r === 3 && game.research_complete[r] >= 15) {
                     goal =
                         Math.ceil(
                             (research.researches[r].data *
                                 research.researches[r].factor ** 3 *
                                 research.researches[r].factor2 **
-                                    (game.research_complete[r] * 7.5 - 289)) /
+                                    (game.research_complete[r] * 3 - 29)) /
+                                research.researches[r].unit
+                        ) * research.researches[r].unit
+                }
+                if (r === 3 && game.research_complete[r] >= 55) {
+                    goal =
+                        Math.ceil(
+                            (research.researches[r].data *
+                                research.researches[r].factor ** 3 *
+                                research.researches[r].factor2 **
+                                    (game.research_complete[r] * 7.5 - 272)) /
                                 research.researches[r].unit
                         ) * research.researches[r].unit
                 }
@@ -9539,19 +9189,10 @@ function research_update() {
             research.researches[game.research_view - 1].repeat > 0 &&
             game.research_complete[game.research_view - 1] >= 1
         ) {
-            if (game.research_view === 1 && game.research_complete[0] === 40) {
-                times_researched =
-                    "<br><br>This research has been researched a maximum of " +
-                    format_small(40) +
-                    " times"
-            } else {
-                times_researched =
-                    "<br><br>This research has been researched " +
-                    format_small(
-                        game.research_complete[game.research_view - 1]
-                    ) +
-                    " times"
-            }
+            times_researched =
+                "<br><br>This research has been researched " +
+                format_small(game.research_complete[game.research_view - 1]) +
+                " times"
         }
         if (game.research_select === game.research_view) {
             document.getElementById("research_info").innerHTML =
@@ -9594,9 +9235,8 @@ function research_update() {
                 document.getElementById("research_progress").className = "r_off"
 
                 if (
-                    (game.research_complete[r] === 1 &&
-                        !research.researches[r].repeat) ||
-                    (r === 0 && game.research_complete[0] === 40)
+                    game.research_complete[r] === 1 &&
+                    !research.researches[r].repeat
                 ) {
                     document.getElementById("research_toggle").className =
                         "research_toggle r_done"
@@ -9620,21 +9260,6 @@ function research_update() {
 
                     document.getElementById("research_progress").className =
                         "r_off"
-
-                    if (r === 0 && game.research_complete[0] === 40) {
-                        document.getElementById("research_toggle").className =
-                            "research_toggle r_done"
-                        document.getElementById("research_toggle").innerHTML =
-                            "Research&nbsp;Completed"
-
-                        document.getElementById(
-                            "research_progress"
-                        ).style.display = "none"
-                        document.getElementById("research_back").style.display =
-                            "none"
-                        document.getElementById("research_toggle").style.width =
-                            "100%"
-                    }
                 } else {
                     if (game.research_complete[r] === 1) {
                         document.getElementById("research_toggle").className =
@@ -9676,9 +9301,8 @@ function research_update() {
                 document.getElementById("research_progress").className = "r_off"
 
                 if (
-                    (game.research_complete[r] === 1 &&
-                        !research.researches[r].repeat) ||
-                    (r === 0 && game.research_complete[0] === 40)
+                    game.research_complete[r] === 1 &&
+                    !research.researches[r].repeat
                 ) {
                     document.getElementById("research_toggle").style.display =
                         "block"
@@ -9715,7 +9339,7 @@ function research_update() {
                     game.data_boosts + Math.PI / 2,
                     game.data_boosts ** ((game.data_boosts + 1) ** 0.09)
                 )
-                    .mul(16384)
+                    .mul(4096)
                     .round(),
                 game.notation
             ) +
@@ -9726,7 +9350,7 @@ function research_update() {
                     game.data_boosts + Math.PI / 2,
                     game.data_boosts ** ((game.data_boosts + 1) ** 0.09)
                 )
-                    .mul(16384)
+                    .mul(4096)
                     .round()
             ) >= 0
         ) {
@@ -9760,38 +9384,24 @@ function antispice_update() {
             format_dec(0, game.notation) +
             "% stronger"
     else {
-        let antispice_amount = game.antispice[0]
-        if (antispice_amount.cmp(Decimal.pow(10, 54)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 54))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 54))
-        if (antispice_amount.cmp(Decimal.pow(10, 77)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 77))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 77))
-        if (antispice_amount.cmp(Decimal.pow(10, 157)) >= 0)
-            antispice_amount = antispice_amount
-                .div(Decimal.pow(10, 157))
-                .pow(0.5)
-                .mul(Decimal.pow(10, 157))
         if (game.collapse_challenge !== 0) {
             let stronger =
                 format_dec(
-                    antispice_amount.log(10) ** (2 / 3) * 2.25,
+                    get_antispice_amount("pure").log(10) ** (2 / 3) * 2.25,
                     game.notation
                 ) + "% stronger"
-            if (antispice_amount.log(10) ** (2 / 3) * 2.25 >= 100)
+            if (get_antispice_amount("pure").log(10) ** (2 / 3) * 2.25 >= 100)
                 stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 0.0225 + 1,
+                        get_antispice_amount("pure").log(10) ** (2 / 3) *
+                            0.0225 +
+                            1,
                         game.notation
                     ) + "x stronger"
             document.getElementById("pure_antispice_boost").innerHTML =
                 "Your basic antispice is boosting arcane spice production " +
                 format_inum(
-                    Decimal.pow(antispice_amount, 26250).add(1),
+                    get_antispice_amount("pure", true).pow(7500).add(1),
                     game.notation
                 ) +
                 "x,<br>and making first generators " +
@@ -9799,19 +9409,21 @@ function antispice_update() {
         } else {
             let stronger =
                 format_dec(
-                    antispice_amount.log(10) ** (2 / 3) * 4.5,
+                    get_antispice_amount("pure").log(10) ** (2 / 3) * 4.5,
                     game.notation
                 ) + "% stronger"
-            if (antispice_amount.log(10) ** (2 / 3) * 4.5 >= 100)
+            if (get_antispice_amount("pure").log(10) ** (2 / 3) * 4.5 >= 100)
                 stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 0.045 + 1,
+                        get_antispice_amount("pure").log(10) ** (2 / 3) *
+                            0.045 +
+                            1,
                         game.notation
                     ) + "x stronger"
             document.getElementById("pure_antispice_boost").innerHTML =
                 "Your basic antispice is boosting arcane spice production " +
                 format_inum(
-                    Decimal.pow(antispice_amount, 52500).add(1),
+                    get_antispice_amount("pure", true).pow(15000).add(1),
                     game.notation
                 ) +
                 "x,<br>and making first generators " +
@@ -9819,7 +9431,7 @@ function antispice_update() {
         }
     }
 
-    if (game.research_complete[21] >= 1) {
+    if (game.research_complete[23] >= 1) {
         document.getElementById("red_antispice_block").style.display = "block"
 
         document.getElementById("red_antispice_num").innerHTML = format_inum(
@@ -9836,43 +9448,32 @@ function antispice_update() {
                 format_dec(0, game.notation) +
                 "% stronger"
         else {
-            let antispice_amount = game.antispice[1]
-            if (antispice_amount.cmp(Decimal.pow(10, 39)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 39))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 39))
-            if (antispice_amount.cmp(Decimal.pow(10, 54.5)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 54.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 54.5))
-            if (antispice_amount.cmp(Decimal.pow(10, 121)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 121))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 121))
             if (game.collapse_challenge !== 0) {
                 let stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 2.25,
+                        get_antispice_amount("red").log(10) ** (2 / 3) * 2.25,
                         game.notation
                     ) + "% stronger"
-                if (antispice_amount.log(10) ** (2 / 3) * 2.25 >= 100)
+                if (
+                    get_antispice_amount("red").log(10) ** (2 / 3) * 2.25 >=
+                    100
+                )
                     stronger =
                         format_dec(
-                            antispice_amount.log(10) ** (2 / 3) * 0.0225 + 1,
+                            get_antispice_amount("red").log(10) ** (2 / 3) *
+                                0.0225 +
+                                1,
                             game.notation
                         ) + "x stronger"
                 document.getElementById("red_antispice_boost").innerHTML =
                     "Your red antispice is boosting red spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 2.625 * 10 ** 9).add(1),
+                        get_antispice_amount("red", true).pow(1.25e9).add(1),
                         game.notation
                     ) +
                     "x,<br>improving synergy between spices by " +
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 0.75,
+                        get_antispice_amount("red").log(10) ** (2 / 3) * 0.75,
                         game.notation
                     ) +
                     "%,<br>and making second generators " +
@@ -9880,24 +9481,26 @@ function antispice_update() {
             } else {
                 let stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 4.5,
+                        get_antispice_amount("red").log(10) ** (2 / 3) * 4.5,
                         game.notation
                     ) + "% stronger"
-                if (antispice_amount.log(10) ** (2 / 3) * 4.5 >= 100)
+                if (get_antispice_amount("red").log(10) ** (2 / 3) * 4.5 >= 100)
                     stronger =
                         format_dec(
-                            antispice_amount.log(10) ** (2 / 3) * 0.045 + 1,
+                            get_antispice_amount("red").log(10) ** (2 / 3) *
+                                0.045 +
+                                1,
                             game.notation
                         ) + "x stronger"
                 document.getElementById("red_antispice_boost").innerHTML =
                     "Your red antispice is boosting red spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 5.25 * 10 ** 9).add(1),
+                        get_antispice_amount("red", true).pow(2.5e9).add(1),
                         game.notation
                     ) +
                     "x,<br>improving synergy between spices by " +
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 1.5,
+                        get_antispice_amount("red").log(10) ** (2 / 3) * 1.5,
                         game.notation
                     ) +
                     "%,<br>and making second generators " +
@@ -9908,7 +9511,7 @@ function antispice_update() {
         document.getElementById("red_antispice_block").style.display = "none"
     }
 
-    if (game.research_complete[24] >= 1) {
+    if (game.research_complete[26] >= 1) {
         document.getElementById("yellow_antispice_block").style.display =
             "block"
 
@@ -9926,43 +9529,37 @@ function antispice_update() {
                 format_dec(0, game.notation) +
                 "% stronger"
         else {
-            let antispice_amount = game.antispice[2]
-            if (antispice_amount.cmp(Decimal.pow(10, 14)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 14))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 14))
-            if (antispice_amount.cmp(Decimal.pow(10, 19.5)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 19.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 19.5))
-            if (antispice_amount.cmp(Decimal.pow(10, 42.25)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 42.25))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 42.25))
             if (game.collapse_challenge !== 0) {
                 let stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 2.25,
+                        get_antispice_amount("yellow").log(10) ** (2 / 3) *
+                            2.25,
                         game.notation
                     ) + "% stronger"
-                if (antispice_amount.log(10) ** (2 / 3) * 2.25 >= 100)
+                if (
+                    get_antispice_amount("yellow").log(10) ** (2 / 3) * 2.25 >=
+                    100
+                )
                     stronger =
                         format_dec(
-                            antispice_amount.log(10) ** (2 / 3) * 0.0225 + 1,
+                            get_antispice_amount("yellow").log(10) ** (2 / 3) *
+                                0.0225 +
+                                1,
                             game.notation
                         ) + "x stronger"
                 document.getElementById("yellow_antispice_boost").innerHTML =
                     "Your yellow antispice is boosting yellow spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 3.375 * 10 ** 9).add(1),
+                        get_antispice_amount("yellow", true)
+                            .pow(1.125e9)
+                            .mul(Decimal.pow(10, 3.5e9))
+                            .add(1),
                         game.notation
                     ) +
                     "x,<br>making color boosts and ALL strengtheners " +
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 90 + 1,
+                        get_antispice_amount("yellow").log(10) ** (2 / 3) * 20 +
+                            1,
                         game.notation
                     ) +
                     "x stronger,<br>and making third generators " +
@@ -9970,24 +9567,33 @@ function antispice_update() {
             } else {
                 let stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 4.5,
+                        get_antispice_amount("yellow").log(10) ** (2 / 3) * 4.5,
                         game.notation
                     ) + "% stronger"
-                if (antispice_amount.log(10) ** (2 / 3) * 4.5 >= 100)
+                if (
+                    get_antispice_amount("yellow").log(10) ** (2 / 3) * 4.5 >=
+                    100
+                )
                     stronger =
                         format_dec(
-                            antispice_amount.log(10) ** (2 / 3) * 0.045 + 1,
+                            get_antispice_amount("yellow").log(10) ** (2 / 3) *
+                                0.045 +
+                                1,
                             game.notation
                         ) + "x stronger"
                 document.getElementById("yellow_antispice_boost").innerHTML =
                     "Your yellow antispice is boosting yellow spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 6.75 * 10 ** 9).add(1),
+                        get_antispice_amount("yellow", true)
+                            .pow(2.25e9)
+                            .mul(Decimal.pow(10, 7e9))
+                            .add(1),
                         game.notation
                     ) +
                     "x,<br>making color boosts and ALL strengtheners " +
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 180 + 1,
+                        get_antispice_amount("yellow").log(10) ** (2 / 3) * 40 +
+                            1,
                         game.notation
                     ) +
                     "x stronger,<br>and making third generators " +
@@ -9998,7 +9604,7 @@ function antispice_update() {
         document.getElementById("yellow_antispice_block").style.display = "none"
     }
 
-    if (game.research_complete[27] >= 1) {
+    if (game.research_complete[29] >= 1) {
         document.getElementById("green_antispice_block").style.display = "block"
 
         document.getElementById("green_antispice_num").innerHTML = format_inum(
@@ -10015,71 +9621,91 @@ function antispice_update() {
                 format_dec(0, game.notation) +
                 "% stronger"
         else {
-            let antispice_amount = game.antispice[3]
-            if (antispice_amount.cmp(Decimal.pow(10, 6)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 6))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 6))
-            if (antispice_amount.cmp(Decimal.pow(10, 8)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 8))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 8))
-            if (antispice_amount.cmp(Decimal.pow(10, 17.5)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 17.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 17.5))
             if (game.collapse_challenge !== 0) {
                 let stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 2.25,
+                        get_antispice_amount("green").log(10) ** (2 / 3) * 2.25,
                         game.notation
                     ) + "% stronger"
-                if (antispice_amount.log(10) ** (2 / 3) * 2.25 >= 100)
+                if (
+                    get_antispice_amount("green").log(10) ** (2 / 3) * 2.25 >=
+                    100
+                )
                     stronger =
                         format_dec(
-                            antispice_amount.log(10) ** (2 / 3) * 0.0225 + 1,
+                            get_antispice_amount("green").log(10) ** (2 / 3) *
+                                0.0225 +
+                                1,
+                            game.notation
+                        ) + "x stronger"
+                let stronger2 =
+                    format_dec(
+                        get_antispice_amount("green").log(10) ** 0.5 * 7.5,
+                        game.notation
+                    ) + "% stronger"
+                if (get_antispice_amount("green").log(10) ** 0.5 * 7.5 >= 100)
+                    stronger2 =
+                        format_dec(
+                            get_antispice_amount("green").log(10) ** 0.5 *
+                                0.075 +
+                                1,
                             game.notation
                         ) + "x stronger"
                 document.getElementById("green_antispice_boost").innerHTML =
                     "Your green antispice is boosting green spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 4.5 * 10 ** 9).add(1),
+                        get_antispice_amount("green", true)
+                            .pow(1.05e9)
+                            .mul(Decimal.pow(10, 1e10))
+                            .add(1),
                         game.notation
                     ) +
                     "x,<br>making crystal infusions and arcane enchantments " +
-                    format_dec(
-                        antispice_amount.log(10) ** 0.5 * 10,
-                        game.notation
-                    ) +
-                    "% stronger,<br>and making fourth generators " +
+                    stronger2 +
+                    ",<br>and making fourth generators " +
                     stronger
             } else {
                 let stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 4.5,
+                        get_antispice_amount("green").log(10) ** (2 / 3) * 4.5,
                         game.notation
                     ) + "% stronger"
-                if (antispice_amount.log(10) ** (2 / 3) * 4.5 >= 100)
+                if (
+                    get_antispice_amount("green").log(10) ** (2 / 3) * 4.5 >=
+                    100
+                )
                     stronger =
                         format_dec(
-                            antispice_amount.log(10) ** (2 / 3) * 0.045 + 1,
+                            get_antispice_amount("green").log(10) ** (2 / 3) *
+                                0.045 +
+                                1,
+                            game.notation
+                        ) + "x stronger"
+                let stronger2 =
+                    format_dec(
+                        get_antispice_amount("green").log(10) ** 0.5 * 15,
+                        game.notation
+                    ) + "% stronger"
+                if (get_antispice_amount("green").log(10) ** 0.5 * 15 >= 100)
+                    stronger2 =
+                        format_dec(
+                            get_antispice_amount("green").log(10) ** 0.5 *
+                                0.15 +
+                                1,
                             game.notation
                         ) + "x stronger"
                 document.getElementById("green_antispice_boost").innerHTML =
                     "Your green antispice is boosting green spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 9 * 10 ** 9).add(1),
+                        get_antispice_amount("green", true)
+                            .pow(2.1e9)
+                            .mul(Decimal.pow(10, 2e10))
+                            .add(1),
                         game.notation
                     ) +
                     "x,<br>making crystal infusions and arcane enchantments " +
-                    format_dec(
-                        antispice_amount.log(10) ** 0.5 * 20,
-                        game.notation
-                    ) +
-                    "% stronger,<br>and making fourth generators " +
+                    stronger2 +
+                    ",<br>and making fourth generators " +
                     stronger
             }
         }
@@ -10087,7 +9713,7 @@ function antispice_update() {
         document.getElementById("green_antispice_block").style.display = "none"
     }
 
-    if (game.research_complete[30] >= 1) {
+    if (game.research_complete[33] >= 1) {
         document.getElementById("blue_antispice_block").style.display = "block"
 
         document.getElementById("blue_antispice_num").innerHTML = format_inum(
@@ -10104,68 +9730,93 @@ function antispice_update() {
                 format_dec(0, game.notation) +
                 "% stronger"
         else {
-            let antispice_amount = game.antispice[4]
-            if (antispice_amount.cmp(new Decimal(20000)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(new Decimal(20000))
-                    .pow(0.5)
-                    .mul(new Decimal(20000))
-            if (
-                antispice_amount.cmp(Decimal.pow(10, 11).mul(2 * 5 ** 0.5)) >= 0
-            )
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 11).mul(2 * 5 ** 0.5))
             if (game.collapse_challenge !== 0) {
                 let stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 2.25,
+                        get_antispice_amount("blue").log(10) ** (2 / 3) * 2.25,
                         game.notation
                     ) + "% stronger"
-                if (antispice_amount.log(10) ** (2 / 3) * 2.25 >= 100)
+                if (
+                    get_antispice_amount("blue").log(10) ** (2 / 3) * 2.25 >=
+                    100
+                )
                     stronger =
                         format_dec(
-                            antispice_amount.log(10) ** (2 / 3) * 0.0225 + 1,
+                            get_antispice_amount("blue").log(10) ** (2 / 3) *
+                                0.0225 +
+                                1,
                             game.notation
                         ) + "x stronger"
+                let increasing =
+                    format_dec(
+                        get_antispice_amount("blue").log(10) ** 0.75 * 3,
+                        game.notation
+                    ) + "%"
+                if (get_antispice_amount("blue").log(10) ** 0.75 * 3 >= 100)
+                    increasing =
+                        " a factor of " +
+                        format_dec(
+                            get_antispice_amount("blue").log(10) ** 0.75 *
+                                0.03 +
+                                1,
+                            game.notation
+                        ) +
+                        "x"
                 document.getElementById("blue_antispice_boost").innerHTML =
                     "Your blue antispice is boosting blue spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 6 * 10 ** 9).add(1),
+                        Decimal.pow(get_antispice_amount("blue", true), 1e9)
+                            .mul(Decimal.pow(10, 3.75e10))
+                            .add(1),
                         game.notation
                     ) +
                     "x,<br>increasing Prestige and Ascension gains by " +
-                    format_dec(
-                        antispice_amount.log(10) ** 0.75 * 3.25,
-                        game.notation
-                    ) +
-                    "%,<br>and making fifth generators " +
+                    increasing +
+                    ",<br>and making fifth generators " +
                     stronger
             } else {
                 let stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 4.5,
+                        get_antispice_amount("blue").log(10) ** (2 / 3) * 4.5,
                         game.notation
                     ) + "% stronger"
-                if (antispice_amount.log(10) ** (2 / 3) * 4.5 >= 100)
+                if (
+                    get_antispice_amount("blue").log(10) ** (2 / 3) * 4.5 >=
+                    100
+                )
                     stronger =
                         format_dec(
-                            antispice_amount.log(10) ** (2 / 3) * 0.045 + 1,
+                            get_antispice_amount("blue").log(10) ** (2 / 3) *
+                                0.045 +
+                                1,
                             game.notation
                         ) + "x stronger"
+                let increasing =
+                    format_dec(
+                        get_antispice_amount("blue").log(10) ** 0.75 * 6,
+                        game.notation
+                    ) + "%"
+                if (get_antispice_amount("blue").log(10) ** 0.75 * 6 >= 100)
+                    increasing =
+                        " a factor of " +
+                        format_dec(
+                            get_antispice_amount("blue").log(10) ** 0.75 *
+                                0.06 +
+                                1,
+                            game.notation
+                        ) +
+                        "x"
                 document.getElementById("blue_antispice_boost").innerHTML =
                     "Your blue antispice is boosting blue spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 1.2 * 10 ** 10).add(1),
+                        Decimal.pow(get_antispice_amount("blue", true), 2e9)
+                            .mul(Decimal.pow(10, 7.5e10))
+                            .add(1),
                         game.notation
                     ) +
                     "x,<br>increasing Prestige and Ascension gains by " +
-                    format_dec(
-                        antispice_amount.log(10) ** 0.75 * 6.5,
-                        game.notation
-                    ) +
-                    "%,<br>and making fifth generators " +
+                    increasing +
+                    ",<br>and making fifth generators " +
                     stronger
             }
         }
@@ -10173,7 +9824,7 @@ function antispice_update() {
         document.getElementById("blue_antispice_block").style.display = "none"
     }
 
-    if (game.research_complete[33] >= 1) {
+    if (game.research_complete[36] >= 1) {
         document.getElementById("pink_antispice_block").style.display = "block"
 
         document.getElementById("pink_antispice_num").innerHTML = format_inum(
@@ -10190,33 +9841,39 @@ function antispice_update() {
                 format_dec(0, game.notation) +
                 "% stronger"
         else {
-            let antispice_amount = game.antispice[5]
-            if (antispice_amount.cmp(Decimal.pow(10, 7.5)) >= 0)
-                antispice_amount = antispice_amount
-                    .div(Decimal.pow(10, 7.5))
-                    .pow(0.5)
-                    .mul(Decimal.pow(10, 7.5))
             if (game.collapse_challenge !== 0) {
                 let stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 2.25,
+                        get_antispice_amount("pink").log(10) ** (2 / 3) * 2.25,
                         game.notation
                     ) + "% stronger"
-                if (antispice_amount.log(10) ** (2 / 3) * 2.25 >= 100)
+                if (
+                    get_antispice_amount("pink").log(10) ** (2 / 3) * 2.25 >=
+                    100
+                )
                     stronger =
                         format_dec(
-                            antispice_amount.log(10) ** (2 / 3) * 0.0225 + 1,
+                            get_antispice_amount("pink").log(10) ** (2 / 3) *
+                                0.0225 +
+                                1,
                             game.notation
                         ) + "x stronger"
                 document.getElementById("pink_antispice_boost").innerHTML =
                     "Your pink antispice is boosting pink spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 9 * 10 ** 9).add(1),
+                        Decimal.pow(get_antispice_amount("pink", true), 1e9)
+                            .mul(Decimal.pow(10, 6e10))
+                            .add(1),
                         game.notation
                     ) +
                     "x,<br>boosting crystallized spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 4.5 * 10 ** 8).add(1),
+                        Decimal.pow(
+                            get_antispice_amount("crystal", true),
+                            2.5e7
+                        )
+                            .mul(Decimal.pow(10, 1e9))
+                            .add(1),
                         game.notation
                     ) +
                     "x,<br>and making sixth generators " +
@@ -10224,24 +9881,33 @@ function antispice_update() {
             } else {
                 let stronger =
                     format_dec(
-                        antispice_amount.log(10) ** (2 / 3) * 4.5,
+                        get_antispice_amount("pink").log(10) ** (2 / 3) * 4.5,
                         game.notation
                     ) + "% stronger"
-                if (antispice_amount.log(10) ** (2 / 3) * 4.5 >= 100)
+                if (
+                    get_antispice_amount("pink").log(10) ** (2 / 3) * 4.5 >=
+                    100
+                )
                     stronger =
                         format_dec(
-                            antispice_amount.log(10) ** (2 / 3) * 0.045 + 1,
+                            get_antispice_amount("pink").log(10) ** (2 / 3) *
+                                0.045 +
+                                1,
                             game.notation
                         ) + "x stronger"
                 document.getElementById("pink_antispice_boost").innerHTML =
                     "Your pink antispice is boosting pink spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 1.8 * 10 ** 10).add(1),
+                        Decimal.pow(get_antispice_amount("pink", true), 2e9)
+                            .mul(Decimal.pow(10, 1.2e11))
+                            .add(1),
                         game.notation
                     ) +
                     "x,<br>boosting crystallized spice production " +
                     format_inum(
-                        Decimal.pow(antispice_amount, 9 * 10 ** 8).add(1),
+                        Decimal.pow(get_antispice_amount("crystal", true), 5e7)
+                            .mul(Decimal.pow(10, 2e9))
+                            .add(1),
                         game.notation
                     ) +
                     "x,<br>and making sixth generators " +
@@ -10252,7 +9918,7 @@ function antispice_update() {
         document.getElementById("pink_antispice_block").style.display = "none"
     }
 
-    if (game.research_complete[37] >= 1) {
+    if (game.research_complete[39] >= 1) {
         document.getElementById("rainbow_antispice_block").style.display =
             "block"
 
@@ -10502,11 +10168,11 @@ function stats_update() {
 
         if (game.collapse_challenge !== 11) {
             stats_str +=
-                "<br>You have " + format_num(game.ansuz, game.notation) + " ᚫ."
+                "<br>You have " + format_inum(game.ansuz, game.notation) + " ᚫ."
 
             stats_str +=
                 "<br>You have produced a total of " +
-                format_num(Math.floor(game.total_rune_power), game.notation) +
+                format_inum(game.total_rune_power.floor(), game.notation) +
                 " rune power."
 
             if (game.ascend_complete[0] && game.ascend_bought[16])
@@ -10629,7 +10295,7 @@ function stats_update() {
                     game.gamespeed
                 ) +
                 " (game time).<br>The game is currently running " +
-                format_num(1 / game.gamespeed, game.notation) +
+                format_dec(1 / game.gamespeed, game.notation) +
                 "x slower.<br><br>You have played for a total of " +
                 format_time_long(game.real_time_played[0], game.notation) +
                 " (real time)."
@@ -10750,15 +10416,16 @@ function stats_update() {
 
     stats_str = "Last 10 Ascensions:"
     entries = 0
-    average = 0
+    average = new Decimal(0)
 
     for (let i = 0; i < 10; i++) {
         if (game.ascend_time_history[i] === -1) {
             stats_str += "<br>#" + (i + 1) + " (no data)"
         } else {
             entries++
-            average +=
-                game.ascend_amount_history[i] / game.ascend_time_history[i]
+            average = average.add(
+                game.ascend_amount_history[i].div(game.ascend_time_history[i])
+            )
             stats_str += "<br>#" + (i + 1)
             if (game.ascend_challenge_history[i] !== -1)
                 stats_str +=
@@ -10779,27 +10446,30 @@ function stats_update() {
                     " real time)"
             stats_str +=
                 " and gave " +
-                format_num(game.ascend_amount_history[i], game.notation) +
+                format_inum(game.ascend_amount_history[i], game.notation) +
                 " ᚫ."
             if (
-                (game.ascend_amount_history[i] * 60) /
-                    game.ascend_time_history[i] >=
-                1
+                game.ascend_amount_history[i]
+                    .mul(60)
+                    .div(game.ascend_time_history[i])
+                    .cmp(1) >= 0
             )
                 stats_str +=
                     " +" +
-                    format_dec(
-                        (game.ascend_amount_history[i] * 60) /
-                            game.ascend_time_history[i],
+                    format_idec(
+                        game.ascend_amount_history[i]
+                            .mul(60)
+                            .div(game.ascend_time_history[i]),
                         game.notation
                     ) +
                     " ᚫ/min"
             else
                 stats_str +=
                     " +" +
-                    format_dec(
-                        (game.ascend_amount_history[i] * 3600) /
-                            game.ascend_time_history[i],
+                    format_idec(
+                        game.ascend_amount_history[i]
+                            .mul(3600)
+                            .div(game.ascend_time_history[i]),
                         game.notation
                     ) +
                     " ᚫ/hour"
@@ -10807,16 +10477,16 @@ function stats_update() {
     }
 
     if (entries > 0) {
-        average /= entries
+        average = average.div(entries)
         if (average * 60 >= 1)
             stats_str +=
                 "<br><br>Average Ansuz rune gain: +" +
-                format_dec(average * 60, game.notation) +
+                format_idec(average.mul(60), game.notation) +
                 " ᚫ/min"
         else
             stats_str +=
                 "<br><br>Average Ansuz rune gain: +" +
-                format_dec(average * 3600, game.notation) +
+                format_idec(average.mul(3600), game.notation) +
                 " ᚫ/hour"
     } else {
         stats_str += "<br><br>Average Ansuz rune gain: undefined"
