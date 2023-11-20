@@ -2349,7 +2349,7 @@ function format_cancer3(num, type) {
             negative = cancer_alphabet3[1003]
         }
 
-        if (num >= 1.7976931348622053 * 10 ** 308) {
+        if (num >= 1.7976931348622053e308) {
             return negative + cancer_alphabet3[1004]
         } else if (num < 1000) {
             if (type === "decimal") {
@@ -2391,7 +2391,7 @@ function format_cancer3(num, type) {
             negative = cancer_alphabet3[1003]
         }
 
-        if (num.cmp(Decimal.pow(10, 1.7976931348622053 * 10 ** 308)) >= 0) {
+        if (num.cmp(Decimal.pow(10, 1.7976931348622053e308)) >= 0) {
             return negative + cancer_alphabet3[1004]
         } else if (num.cmp(1000) === -1) {
             if (type === "decimal") {
@@ -2433,8 +2433,8 @@ function format_time_cancer(input, precise) {
     let output = undefined
     if (time < 1) {
         if (precise) {
-            if (time < 10 ** -6) {
-                output = format_dec(time * 10 ** 9, 17) + cancer_alphabet3[1006]
+            if (time < 1e-6) {
+                output = format_dec(time * 1e9, 17) + cancer_alphabet3[1006]
             } else if (time < 0.001) {
                 output = format_dec(time * 1000000, 17) + cancer_alphabet3[1007]
             } else {
