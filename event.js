@@ -3634,8 +3634,11 @@ function activate_collider() {
                     .div(Decimal.pow(10, 269))
                     .pow(0.5)
                     .mul(Decimal.pow(10, 269))
-            if (amount.cmp(Decimal.pow(10, 450)) >= 0)
-                amount = Decimal.pow(10, (amount.log(10) / 450) ** 0.5 * 450)
+            if (pending_amount.cmp(Decimal.pow(10, 450)) >= 0)
+                pending_amount = Decimal.pow(
+                    10,
+                    (pending_amount.log(10) / 450) ** 0.5 * 450
+                )
             if (pending_amount.sub(game.antispice[1]).floor().cmp(1) >= 0)
                 can_collide = true
             break
@@ -3650,8 +3653,11 @@ function activate_collider() {
                     .div(Decimal.pow(10, 87))
                     .pow(0.55)
                     .mul(Decimal.pow(10, 87))
-            if (amount.cmp(Decimal.pow(10, 372)) >= 0)
-                amount = Decimal.pow(10, (amount.log(10) / 372) ** 0.5 * 372)
+            if (pending_amount.cmp(Decimal.pow(10, 372)) >= 0)
+                pending_amount = Decimal.pow(
+                    10,
+                    (pending_amount.log(10) / 372) ** 0.5 * 372
+                )
             if (pending_amount.sub(game.antispice[2]).floor().cmp(1) >= 0)
                 can_collide = true
             break
@@ -3666,8 +3672,11 @@ function activate_collider() {
                     .div(Decimal.pow(10, 56))
                     .pow(0.55)
                     .mul(Decimal.pow(10, 56))
-            if (amount.cmp(Decimal.pow(10, 225)) >= 0)
-                amount = Decimal.pow(10, (amount.log(10) / 225) ** 0.5 * 225)
+            if (pending_amount.cmp(Decimal.pow(10, 225)) >= 0)
+                pending_amount = Decimal.pow(
+                    10,
+                    (pending_amount.log(10) / 225) ** 0.5 * 225
+                )
             if (pending_amount.sub(game.antispice[3]).floor().cmp(1) >= 0)
                 can_collide = true
             break
@@ -3682,8 +3691,11 @@ function activate_collider() {
                     .div(Decimal.pow(10, 40))
                     .pow(0.55)
                     .mul(Decimal.pow(10, 40))
-            if (amount.cmp(Decimal.pow(10, 125)) >= 0)
-                amount = Decimal.pow(10, (amount.log(10) / 125) ** 0.5 * 125)
+            if (pending_amount.cmp(Decimal.pow(10, 125)) >= 0)
+                pending_amount = Decimal.pow(
+                    10,
+                    (pending_amount.log(10) / 125) ** 0.5 * 125
+                )
             if (pending_amount.sub(game.antispice[4]).floor().cmp(1) >= 0)
                 can_collide = true
             break
@@ -3693,8 +3705,11 @@ function activate_collider() {
                 .pow(game.atomic_efficiency / 608)
                 .div(8.098e34)
                 .mul(pink_amount)
-            if (amount.cmp(Decimal.pow(10, 88)) >= 0)
-                amount = Decimal.pow(10, (amount.log(10) / 88) ** 0.5 * 88)
+            if (pending_amount.cmp(Decimal.pow(10, 88)) >= 0)
+                pending_amount = Decimal.pow(
+                    10,
+                    (pending_amount.log(10) / 88) ** 0.5 * 88
+                )
             if (pending_amount.sub(game.antispice[5]).floor().cmp(1) >= 0)
                 can_collide = true
             break
