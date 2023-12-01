@@ -8617,7 +8617,10 @@ function collapse_update() {
             panel.style.display = "flex"
 
             if (game.collapse_challenge === c.id + 7) {
-                if (collapse_amount.cmp(get_collapse_goal(c.id, 0)) >= 0) {
+                if (
+                    collapse_amount.cmp(get_collapse_goal(c.id, 0)) >= 0 &&
+                    (game.ascend_complete[5] || game.collapse_challenge === 11)
+                ) {
                     button.className = "co_challenge_button finished"
                     button.innerHTML = "Complete Challenge"
                 } else {
