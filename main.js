@@ -27,6 +27,7 @@ function tick() {
     game.collapse_time_played += 1 / delta_time
 
     game.ascend_challenge_timer += 1 / (delta_time * game.gamespeed)
+    game.atomic_timer += 1 / (delta_time * game.gamespeed)
 
     for (let i = 0; i < 4; i++) {
         game.real_time_played[i] += 1 / (delta_time * game.gamespeed)
@@ -37,251 +38,6 @@ function tick() {
             "You have been in Challenge 9 for longer than 500 microseconds, so you will now exit."
         )
         exit_collapse_challenge()
-    }
-
-    document.documentElement.style.setProperty(
-        "--rainbow_spice",
-        "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,50%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_spice2",
-        "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,65%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--ascension",
-        "hsl(" +
-            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-            ",100%,50%)"
-    )
-    document.documentElement.style.setProperty(
-        "--ascension2",
-        "hsl(" +
-            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-            ",100%,60%)"
-    )
-    document.documentElement.style.setProperty(
-        "--ascension3",
-        "hsl(" +
-            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-            ",80%,10%)"
-    )
-    document.documentElement.style.setProperty(
-        "--ascension4",
-        "hsl(" +
-            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-            ",80%,20%)"
-    )
-    document.documentElement.style.setProperty(
-        "--ascension5",
-        "hsl(" +
-            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-            ",90%,30%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--arcane_spice",
-        "hsl(" +
-            (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
-            "," +
-            (15 * Math.sin(game.real_time_played[0]) + 85) +
-            "%," +
-            (5 * Math.sin(game.real_time_played[0]) + 55) +
-            "%)"
-    )
-    document.documentElement.style.setProperty(
-        "--arcane_spice2",
-        "hsl(" +
-            (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
-            "," +
-            (9 * Math.sin(game.real_time_played[0]) + 91) +
-            "%," +
-            (7 * Math.sin(game.real_time_played[0]) + 48) +
-            "%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--collapse",
-        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",100%,40%)"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse2",
-        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",100%,50%)"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse3",
-        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 92) + ",100%,60%)"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse4",
-        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",80%,10%)"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse5",
-        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 92) + ",80%,20%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--collapse6",
-        25 * Math.sin(game.real_time_played[0]) - 25 + "deg"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse7",
-        -10 * Math.sin(game.real_time_played[0]) + 110 + "%"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse8",
-        10 * Math.sin(game.real_time_played[0]) + 90 + "%"
-    )
-
-    document.documentElement.style.setProperty(
-        "--unstable_spice",
-        "hsl(" +
-            (18 * Math.sin(game.real_time_played[0] * 3) + 16) +
-            ",100%,40%)"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice2",
-        "hsl(" +
-            (18 * Math.sin(game.real_time_played[0] * 3) + 16) +
-            ",100%,50%)"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice3",
-        "hsl(" +
-            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
-            ",100%,60%)"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice7",
-        "hsl(" +
-            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
-            ",100%,16%)"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice8",
-        "hsl(" +
-            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
-            ",100%,10%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--unstable_spice4",
-        16 * Math.sin(game.real_time_played[0] * 3) + 16 + "deg"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice5",
-        50 * Math.sin(game.real_time_played[0] * 3) + 150 + "%"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice6",
-        -10 * Math.sin(game.real_time_played[0] * 3) + 90 + "%"
-    )
-
-    document.documentElement.style.setProperty(
-        "--decayed_spice",
-        "hsl(300," + (6 * Math.sin(game.real_time_played[0]) + 16) + "%,50%)"
-    )
-    document.documentElement.style.setProperty(
-        "--decayed_spice2",
-        "hsl(300," + (6 * Math.sin(game.real_time_played[0]) + 16) + "%,40%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,60%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice2",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,40%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice3",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,12%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice4",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,16%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice5",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,8%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice6",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,4%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice7",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,24%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice8",
-        ((game.real_time_played[0] * 36 + 180) % 360) + "deg"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice9",
-        -60 *
-            Math.cos(
-                (((game.real_time_played[0] * 36 + 280) % 360) * Math.PI) / 180
-            ) +
-            160 +
-            "%"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice10",
-        10 *
-            Math.cos(
-                (((game.real_time_played[0] * 36 + 280) % 360) * Math.PI) / 180
-            ) +
-            90 +
-            "%"
-    )
-
-    if (game.high_visibility) {
-        document.documentElement.style.setProperty(
-            "--rainbow_spice2",
-            "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,75%)"
-        )
-        document.documentElement.style.setProperty(
-            "--ascension",
-            "hsl(" +
-                (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-                ",100%,65%)"
-        )
-        document.documentElement.style.setProperty(
-            "--ascension2",
-            "hsl(" +
-                (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-                ",100%,75%)"
-        )
-        document.documentElement.style.setProperty(
-            "--arcane_spice",
-            "hsl(" +
-                (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
-                "," +
-                (15 * Math.sin(game.real_time_played[0]) + 85) +
-                "%,75%)"
-        )
-        document.documentElement.style.setProperty(
-            "--collapse3",
-            "hsl(" +
-                (30 * Math.sin(game.real_time_played[0]) + 92) +
-                ",100%,75%)"
-        )
-        document.documentElement.style.setProperty(
-            "--unstable_spice3",
-            "hsl(" +
-                (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
-                ",100%,75%)"
-        )
-        document.documentElement.style.setProperty(
-            "--decayed_spice",
-            "hsl(300," +
-                (8 * Math.sin(game.real_time_played[0]) + 32) +
-                "%,75%)"
-        )
     }
 
     if (game.autocb_toggle && game.prestige_bought[7] >= 1) color_boost()
@@ -1830,6 +1586,7 @@ function tick() {
         !game.limit_active
     ) {
         game.limit_active = true
+        if (!entry_unlocked[19]) entry_unlock(19)
 
         for (let i = 0; i < 6; i++) {
             game.red_limit[i] = game.total_red_spice_boost[i]
@@ -2934,6 +2691,10 @@ function tick() {
                 game.research_complete[r] = 1
                 game.research_pause = true
                 game.research_select = 0
+
+                if (r === 16) {
+                    if (!entry_unlocked[17]) entry_unlock(17)
+                }
             }
         } else {
             let goal = 0
@@ -3018,6 +2779,10 @@ function tick() {
                 game.research_pause = true
                 game.research_select = 0
                 game.data[r] = 0
+
+                if (r === 7) {
+                    if (!entry_unlocked[16]) entry_unlock(16)
+                }
             }
         }
     }
@@ -3042,6 +2807,12 @@ function tick() {
     if (game.atomic_portion === NaN) game.atomic_portion = 1
     if (game.atomic_portion < 0.01) game.atomic_portion = 0.01
     if (game.atomic_portion > 1) game.atomic_portion = 1
+
+    game.atomic_timing = Number(
+        document.getElementById("collider_input2").value
+    )
+    if (game.atomic_portion === NaN) game.atomic_portion = 1
+    if (game.atomic_portion < 0.5) game.atomic_portion = 0.5
 
     game.augment_start = Math.round(
         (2097152 + 2097152 * game.collapse_complete[3]) * reward_scaling
@@ -4130,8 +3901,9 @@ function switch_key(eventcode, state) {
         }
     }
 
-    if (eventcode === "ShiftLeft" || eventcode === "ShiftRight")
+    if (eventcode === "ShiftLeft" || eventcode === "ShiftRight") {
         key.shift = state
+    }
 }
 document.body.addEventListener("keydown", function (event) {
     let active_element = document.activeElement
@@ -4598,7 +4370,7 @@ function hotkey_tick() {
 
 //saving the game
 function save() {
-    game.version = "1.7.0"
+    game.version = "1.7.1"
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
         game.prestige_price[u.id] = u.price
@@ -4680,7 +4452,46 @@ function load(savegame) {
         game = savegame
     }
 
-    game.version = "1.7.0"
+    let ver_index = edition * 10000 + major * 100 + minor
+
+    if (ver_index < 10701) {
+        game.entry_hidden = new Array(23).fill(false)
+        game.compendium_new = false
+        game.arcane_spice_price[5] = new Decimal(
+            game.arcane_spice_price[5]
+        ).div(27)
+        game.antispice_confirm = true
+        if (game.color_boosts >= game.augment_start || game.collapse >= 1) {
+            game.augment_reached = true
+        } else {
+            game.augment_reached = false
+        }
+        game.atomic_timing = 1
+        game.atomic_timer = 0
+        game.statistics_unit = [0, 0, 0]
+        game.statistics_time = 0
+        game.prestige_stat_history = new Array(10).fill(-1)
+        game.ascend_stat_history = new Array(10).fill(-1)
+        game.collapse_stat_history = new Array(10).fill(-1)
+        for (let i = 0; i < 10; i++) {
+            if (game.prestige_time_history[i] !== -1)
+                game.prestige_stat_history[i] = 1
+            if (game.ascend_time_history[i] !== -1)
+                game.ascend_stat_history[i] = 1
+            if (game.collapse_time_history[i] !== -1)
+                game.collapse_stat_history[i] = 1
+        }
+        game.realm_limit = new Decimal(
+            "1.7193341424918277e+4052718281828459045"
+        )
+        if (game.limit_active) {
+            game.limit_active = false
+            if (game.collapse_challenge !== 0) exit_collapse_challenge()
+            else collapse(true)
+        }
+    }
+
+    game.version = "1.7.1"
 
     game.red_spice = new Decimal(game.red_spice)
     game.highest_red_spice = new Decimal(game.highest_red_spice)
@@ -4906,6 +4717,8 @@ function load(savegame) {
     confirmations("collapse", true)
     confirmations("challenge")
     confirmations("challenge")
+    confirmations("antispice")
+    confirmations("antispice")
     exponent_notation(game.exponent_notation)
     high_visibility()
     high_visibility()
@@ -4916,6 +4729,9 @@ function load(savegame) {
     resource_efficiency()
     reduce_flashing()
     reduce_flashing()
+
+    statistics_time()
+    statistics_time()
 
     document.getElementById("p_boosts_input").value = game.autopr_goal[0]
     document.getElementById("p_boosts_input2").value = game.autopr_delta[0]
@@ -4931,6 +4747,49 @@ function load(savegame) {
     document.getElementById("co_time_input").value = game.autoco_goal[1]
     document.getElementById("co_decay_input").value = game.autoco_goal[2]
     document.getElementById("collider_input").value = game.atomic_portion * 100
+    document.getElementById("collider_input2").value = game.atomic_timing
+
+    for (let i = 0; i < 5; i++) {
+        if (
+            game.color_boosts >= i + 1 ||
+            game.prestige >= 1 ||
+            game.ascend >= 1 ||
+            game.collapse >= 1
+        )
+            entry_unlocked[i] = true
+    }
+    if (game.prestige >= 1 || game.ascend >= 1 || game.collapse >= 1)
+        entry_unlocked[5] = true
+    if (
+        game.rainbow_spice.cmp(65536) >= 0 ||
+        game.ascend >= 1 ||
+        game.collapse >= 1
+    )
+        entry_unlocked[6] = true
+    if (game.prestige_bought[12] >= 1) entry_unlocked[7] = true
+    if (game.crystal_infusion >= 100 || game.ascend >= 1 || game.collapse >= 1)
+        entry_unlocked[8] = true
+    if (game.ascend >= 1 || game.collapse >= 1) entry_unlocked[9] = true
+    if (game.ascend_bought[12] || game.collapse >= 1) entry_unlocked[10] = true
+    if (game.ascend_complete[0] || game.collapse >= 1) entry_unlocked[11] = true
+    if (game.arcane_spice_bought[5] >= 1 || game.collapse >= 1)
+        entry_unlocked[12] = true
+    if (game.color_boosts >= 2097152 || game.collapse >= 1)
+        entry_unlocked[13] = true
+    if (game.collapse >= 1) entry_unlocked[14] = true
+    if (game.collapse >= 5) entry_unlocked[15] = true
+    if (game.research_complete[7] >= 1) entry_unlocked[16] = true
+    if (game.research_complete[16] >= 1) entry_unlocked[17] = true
+    if (game.collapse_complete[0] >= 1) entry_unlocked[18] = true
+    if (game.limit_active) entry_unlocked[19] = true
+
+    for (i = 0; i < compendium.entries.length; i++) {
+        entry_toggle(compendium.entries[i], game.entry_hidden[i])
+    }
+
+    if (game.compendium_new) {
+        document.getElementById("compendium").className = "tab notice"
+    }
 }
 
 //load the game when opened
@@ -4981,16 +4840,265 @@ function tick_loop() {
     let end_time = Date.now()
     let total_time = end_time - start_time
     if (total_time < 0) total_time = 0
-    if (total_time < 1000 / game.tickspeed) {
-        window.setTimeout(tick_loop, 1000 / game.tickspeed - total_time)
-    } else {
-        tick_loop()
-    }
+    window.setTimeout(
+        tick_loop,
+        1000 / game.tickspeed - (total_time % (1000 / game.tickspeed))
+    )
 }
 
 //setting up the graphics loop
 function graphics_loop() {
     let start_time = Date.now()
+
+    document.documentElement.style.setProperty(
+        "--rainbow_spice",
+        "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,50%)"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_spice2",
+        "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,65%)"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_spice3",
+        "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",50%,50%)"
+    )
+
+    document.documentElement.style.setProperty(
+        "--ascension",
+        "hsl(" +
+            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
+            ",100%,50%)"
+    )
+    document.documentElement.style.setProperty(
+        "--ascension2",
+        "hsl(" +
+            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
+            ",100%,60%)"
+    )
+    document.documentElement.style.setProperty(
+        "--ascension3",
+        "hsl(" +
+            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
+            ",80%,10%)"
+    )
+    document.documentElement.style.setProperty(
+        "--ascension4",
+        "hsl(" +
+            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
+            ",80%,20%)"
+    )
+    document.documentElement.style.setProperty(
+        "--ascension5",
+        "hsl(" +
+            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
+            ",90%,30%)"
+    )
+
+    document.documentElement.style.setProperty(
+        "--arcane_spice",
+        "hsl(" +
+            (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
+            "," +
+            (15 * Math.sin(game.real_time_played[0]) + 85) +
+            "%," +
+            (5 * Math.sin(game.real_time_played[0]) + 55) +
+            "%)"
+    )
+    document.documentElement.style.setProperty(
+        "--arcane_spice2",
+        "hsl(" +
+            (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
+            "," +
+            (9 * Math.sin(game.real_time_played[0]) + 91) +
+            "%," +
+            (7 * Math.sin(game.real_time_played[0]) + 48) +
+            "%)"
+    )
+
+    document.documentElement.style.setProperty(
+        "--collapse",
+        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",100%,40%)"
+    )
+    document.documentElement.style.setProperty(
+        "--collapse2",
+        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",100%,50%)"
+    )
+    document.documentElement.style.setProperty(
+        "--collapse3",
+        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 92) + ",100%,60%)"
+    )
+    document.documentElement.style.setProperty(
+        "--collapse4",
+        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",80%,10%)"
+    )
+    document.documentElement.style.setProperty(
+        "--collapse5",
+        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 92) + ",80%,20%)"
+    )
+
+    document.documentElement.style.setProperty(
+        "--collapse6",
+        25 * Math.sin(game.real_time_played[0]) - 25 + "deg"
+    )
+    document.documentElement.style.setProperty(
+        "--collapse7",
+        -10 * Math.sin(game.real_time_played[0]) + 110 + "%"
+    )
+    document.documentElement.style.setProperty(
+        "--collapse8",
+        10 * Math.sin(game.real_time_played[0]) + 90 + "%"
+    )
+
+    document.documentElement.style.setProperty(
+        "--unstable_spice",
+        "hsl(" +
+            (18 * Math.sin(game.real_time_played[0] * 3) + 16) +
+            ",100%,40%)"
+    )
+    document.documentElement.style.setProperty(
+        "--unstable_spice2",
+        "hsl(" +
+            (18 * Math.sin(game.real_time_played[0] * 3) + 16) +
+            ",100%,50%)"
+    )
+    document.documentElement.style.setProperty(
+        "--unstable_spice3",
+        "hsl(" +
+            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
+            ",100%,60%)"
+    )
+    document.documentElement.style.setProperty(
+        "--unstable_spice7",
+        "hsl(" +
+            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
+            ",100%,16%)"
+    )
+    document.documentElement.style.setProperty(
+        "--unstable_spice8",
+        "hsl(" +
+            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
+            ",100%,10%)"
+    )
+
+    document.documentElement.style.setProperty(
+        "--unstable_spice4",
+        16 * Math.sin(game.real_time_played[0] * 3) + 16 + "deg"
+    )
+    document.documentElement.style.setProperty(
+        "--unstable_spice5",
+        50 * Math.sin(game.real_time_played[0] * 3) + 150 + "%"
+    )
+    document.documentElement.style.setProperty(
+        "--unstable_spice6",
+        -10 * Math.sin(game.real_time_played[0] * 3) + 90 + "%"
+    )
+
+    document.documentElement.style.setProperty(
+        "--decayed_spice",
+        "hsl(300," + (6 * Math.sin(game.real_time_played[0]) + 16) + "%,50%)"
+    )
+    document.documentElement.style.setProperty(
+        "--decayed_spice2",
+        "hsl(300," + (6 * Math.sin(game.real_time_played[0]) + 16) + "%,40%)"
+    )
+
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice",
+        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,60%)"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice2",
+        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,40%)"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice3",
+        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,12%)"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice4",
+        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,16%)"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice5",
+        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,8%)"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice6",
+        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,4%)"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice7",
+        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,24%)"
+    )
+
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice8",
+        ((game.real_time_played[0] * 36 + 180) % 360) + "deg"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice9",
+        -60 *
+            Math.cos(
+                (((game.real_time_played[0] * 36 + 280) % 360) * Math.PI) / 180
+            ) +
+            160 +
+            "%"
+    )
+    document.documentElement.style.setProperty(
+        "--rainbow_antispice10",
+        10 *
+            Math.cos(
+                (((game.real_time_played[0] * 36 + 280) % 360) * Math.PI) / 180
+            ) +
+            90 +
+            "%"
+    )
+
+    if (game.high_visibility) {
+        document.documentElement.style.setProperty(
+            "--rainbow_spice2",
+            "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,75%)"
+        )
+        document.documentElement.style.setProperty(
+            "--ascension",
+            "hsl(" +
+                (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
+                ",100%,65%)"
+        )
+        document.documentElement.style.setProperty(
+            "--ascension2",
+            "hsl(" +
+                (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
+                ",100%,75%)"
+        )
+        document.documentElement.style.setProperty(
+            "--arcane_spice",
+            "hsl(" +
+                (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
+                "," +
+                (15 * Math.sin(game.real_time_played[0]) + 85) +
+                "%,75%)"
+        )
+        document.documentElement.style.setProperty(
+            "--collapse3",
+            "hsl(" +
+                (30 * Math.sin(game.real_time_played[0]) + 92) +
+                ",100%,75%)"
+        )
+        document.documentElement.style.setProperty(
+            "--unstable_spice3",
+            "hsl(" +
+                (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
+                ",100%,75%)"
+        )
+        document.documentElement.style.setProperty(
+            "--decayed_spice",
+            "hsl(300," +
+                (8 * Math.sin(game.real_time_played[0]) + 32) +
+                "%,75%)"
+        )
+    }
+
     tabs_update()
     if (game.tab === 0) spice_update()
     if (game.tab === 1) {
@@ -5008,15 +5116,15 @@ function graphics_loop() {
     }
     if (game.tab === 5) stats_update()
     if (game.tab === 6) settings_update()
+    if (game.tab === 7) compendium_update()
 
     let end_time = Date.now()
     let total_time = end_time - start_time
     if (total_time < 0) total_time = 0
-    if (total_time < game.refresh_rate) {
-        window.setTimeout(graphics_loop, game.refresh_rate - total_time)
-    } else {
-        graphics_loop()
-    }
+    window.setTimeout(
+        graphics_loop,
+        game.refresh_rate - (total_time % game.refresh_rate)
+    )
 }
 
 tick_loop()
