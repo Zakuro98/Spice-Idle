@@ -105,6 +105,17 @@ main {
     font-weight: bold;
 }
 
+.notice {
+    color: var(--rainbow_spice3);
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.notice:hover {
+    color: var(--rainbow_spice2);
+    font-weight: normal;
+}
+
 #color_shift {
     margin-top: 1em;
     margin-bottom: 1.5em;
@@ -119,7 +130,7 @@ main {
     display: inline;
 }
 
-#statistics_page, #yellow_page, #green_page, #blue_page, #pink_page, #prestige_page, #crystal_page, #crystal_page2, #ascension_page, #ascension_page2, #challenges_page, #collapse_page, #settings_page {
+#statistics_page, #yellow_page, #green_page, #blue_page, #pink_page, #prestige_page, #crystal_page, #crystal_page2, #ascension_page, #ascension_page2, #challenges_page, #collapse_page, #compendium_page, #settings_page {
     display: none;
 }
 
@@ -501,6 +512,11 @@ main {
 
 .bold {
     font-weight: bold;
+}
+
+.big {
+    font-weight: bold;
+    font-size: 6em;
 }
 
 .rainbow_spice {
@@ -1022,9 +1038,19 @@ main {
     margin-bottom: 1.35em;
 }
 
+#collider_timing {
+    margin-left: 1.85em;
+    margin-top: -0.65em;
+    margin-bottom: 1.35em;
+}
+
 .distributor_input {
     font-size: 0.9em;
     width: 3.2em;
+}
+
+#collider_input2 {
+    width: 5em;
 }
 
 @media (pointer: coarse) {
@@ -2292,6 +2318,60 @@ main {
     }
 }
 
+#statistics_buttons {
+    display: none;
+}
+
+.statistics_button {
+    font-size: 1.25em;
+}
+
+#compendium_page {
+    margin-top: 3em;
+}
+
+.compendium_entry {
+    margin-top: 1em;
+    margin-bottom: 0em;
+    text-align: center;
+}
+
+.compendium_title {
+    font-size: 3em;
+    font-weight: 700;
+    margin-top: 0em;
+    margin-bottom: 0.25em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.compendium_hidden {
+    font-weight: 400;
+}
+
+.compendium_default {
+    color: white;
+}
+
+.compendium_body {
+    display: block;
+    font-size: 1.333em;
+    color: white;
+    width: 40em;
+    text-align: justify;
+    text-align-last: center;
+    margin-top: 0em;
+    margin-bottom: 2em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (pointer: coarse) {
+    .compendium_body {
+        width: 100%;
+    }
+}
+
 .settings_block {
     display: flex;
     flex-direction: row;
@@ -2335,7 +2415,7 @@ main {
     background-color: #421d49;
 }
 
-.settings_button:active {
+.settings_button.can_modify:active {
     background-color: #571c66;
 }
 
@@ -2517,4 +2597,8 @@ main {
     font-size: 1.25em;
     margin-top: 0em;
     margin-bottom: 0.5em;
+}
+
+.savebank_button {
+    cursor: pointer;
 }
