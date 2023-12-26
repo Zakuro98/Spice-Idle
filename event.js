@@ -163,6 +163,10 @@ function buy_gen(color, id) {
                     arcane_bought.toString()
                 )
 
+                if (id === 5) {
+                    if (!entry_unlocked[12]) entry_unlock(12)
+                }
+
                 game.autods_budget = new Decimal(0)
             }
             break
@@ -386,6 +390,10 @@ function buy_until10(color, id, budget) {
                     arcane_bought.toString()
                 )
 
+                if (id === 5) {
+                    if (!entry_unlocked[12]) entry_unlock(12)
+                }
+
                 game.autods_budget = new Decimal(0)
             }
             break
@@ -518,7 +526,7 @@ function buy_strengthener(color) {
         case "arcane":
             if (game.ansuz.cmp(game.arcane_strengthener_price) >= 0) {
                 game.ansuz = Decimal.max(
-                    game.ansuz - Math.round(game.arcane_strengthener_price),
+                    game.ansuz.sub(Math.round(game.arcane_strengthener_price)),
                     0
                 )
                 game.arcane_strengthener_price =
@@ -2143,6 +2151,10 @@ function max_all(color) {
                         arcane_bought.toString()
                     )
 
+                    if (i === 5) {
+                        if (!entry_unlocked[12]) entry_unlock(12)
+                    }
+
                     game.autods_budget = new Decimal(0)
                 }
             }
@@ -2457,35 +2469,55 @@ function buy_prestige_upgrade(id, max) {
     if (max) {
         if (id === 20) {
             if (game.ascend_bought[5]) {
-                while (
+                if (
                     game.rainbow_spice.cmp(
                         prestige_upgrade.upgrades[id].price
                     ) >= 0
                 ) {
-                    game.rainbow_spice = Decimal.max(
-                        game.rainbow_spice.sub(
-                            prestige_upgrade.upgrades[id].price
-                        ),
-                        0
-                    )
-                    game.prestige_bought[id]++
-
                     if (
                         game.prestige_bought[id] <
                         prestige_upgrade.upgrades[id].max
-                    )
-                        prestige_upgrade.upgrades[id].price =
-                            prestige_upgrade.upgrades[id].price.mul(
-                                Decimal.pow(2, 8 + game.prestige_bought[id] * 8)
+                    ) {
+                        while (
+                            game.rainbow_spice.cmp(
+                                prestige_upgrade.upgrades[id].price
+                            ) >= 0
+                        ) {
+                            game.rainbow_spice = Decimal.max(
+                                game.rainbow_spice.sub(
+                                    prestige_upgrade.upgrades[id].price
+                                ),
+                                0
                             )
-                    else
-                        prestige_upgrade.upgrades[id].price =
-                            prestige_upgrade.upgrades[id].price.mul(
-                                Decimal.pow(
-                                    2,
-                                    16 * game.prestige_bought[id] - 80
+                            game.prestige_bought[id]++
+
+                            prestige_upgrade.upgrades[id].price =
+                                prestige_upgrade.upgrades[id].price.mul(
+                                    Decimal.pow(
+                                        2,
+                                        8 + game.prestige_bought[id] * 8
+                                    )
                                 )
-                            )
+                        }
+                    } else {
+                        let n = Math.floor(
+                            5.5 +
+                                (game.rainbow_spice.ln() - 492 * Math.log(2)) **
+                                    0.5 /
+                                    (2 * (2 * Math.log(2)) ** 0.5)
+                        )
+                        let price = Decimal.pow(2, 8 * n ** 2 - 88 * n + 734)
+
+                        game.rainbow_spice = Decimal.max(
+                            game.rainbow_spice.sub(price),
+                            0
+                        )
+                        game.prestige_bought[id] = n
+
+                        prestige_upgrade.upgrades[id].price = price.mul(
+                            Decimal.pow(2, 16 * game.prestige_bought[id] - 80)
+                        )
+                    }
                 }
             } else {
                 while (
@@ -2723,6 +2755,9 @@ function buy_prestige_upgrade(id, max) {
                             prestige_upgrade.upgrades[id].price =
                                 prestige_upgrade.upgrades[id].price.mul(1024)
                             break
+                        case 12:
+                            if (!entry_unlocked[7]) entry_unlock(7)
+                            break
                     }
             }
         }
@@ -2762,6 +2797,8 @@ function buy_infusion() {
         game.crystal_infusion += 1n
 
         if (game.crystal_spice.cmp(0) < 0) game.crystal_spice = new Decimal(0)
+
+        if (!entry_unlocked[8] && game.crystal_infusion >= 100n) entry_unlock(8)
     }
 }
 
@@ -3079,7 +3116,7 @@ function buy_ascension_upgrade(id) {
         !game.ascend_bought[id] &&
         condition1 &&
         condition2 &&
-        game.rune[2].cmp(1) >= 0
+        (game.rune[2].cmp(1) >= 0 || game.collapse >= 1)
     ) {
         if (game.collapse_challenge === 10) {
             if (
@@ -3104,9 +3141,16 @@ function buy_ascension_upgrade(id) {
                     0
                 )
                 game.ascend_bought[id] = true
-                if (id === 16 && game.collapse === 0) {
-                    confirmations("challenge")
-                    confirmations("challenge")
+
+                if (id === 12) {
+                    if (!entry_unlocked[10]) entry_unlock(10)
+                }
+
+                if (id === 16) {
+                    if (game.collapse === 0) {
+                        confirmations("challenge")
+                        confirmations("challenge")
+                    }
                 }
 
                 game.autods_budget = new Decimal(0)
@@ -4876,11 +4920,18 @@ function refund_antispice_perks() {
         game.antispice[6] < game.total_rainbow_antispice &&
         !game.antispice_bought[8]
     ) {
-        if (
-            confirm(
-                "Are you sure you want to refund all antispice perks? You will Collapse!"
-            )
-        ) {
+        let antispice_ready = false
+        if (!game.antispice_confirm) antispice_ready = true
+        else {
+            if (
+                confirm(
+                    "Are you sure you want to refund all antispice perks? You will Collapse!"
+                )
+            ) {
+                antispice_ready = true
+            }
+        }
+        if (antispice_ready) {
             for (let i = 0; i < 8; i++) {
                 if (game.antispice_bought[i])
                     game.antispice[6] += game.antispice_order[i]
