@@ -320,6 +320,16 @@ function color_boost(override) {
             game.pink_strengthener = 0
 
             game.color_boosts++
+
+            if (game.color_boosts <= 5) {
+                if (!entry_unlocked[game.color_boosts - 1])
+                    entry_unlock(game.color_boosts - 1)
+            }
+
+            if (game.color_boosts >= game.augment_start) {
+                if (!entry_unlocked[13]) entry_unlock(13)
+                game.augment_reached = true
+            }
         } else {
             if (game.color_boosts >= 4) {
                 if (game.collapse_challenge === 10) {
@@ -449,6 +459,11 @@ function color_boost(override) {
             } else {
                 game.color_boosts++
             }
+
+            if (game.color_boosts >= game.augment_start) {
+                if (!entry_unlocked[13]) entry_unlock(13)
+                game.augment_reached = true
+            }
         }
     }
 }
@@ -456,26 +471,25 @@ function color_boost(override) {
 //code for prestiging
 function prestige(override) {
     if (game.color_boosts >= 10 || override) {
-        if (!override) {
-            let total_completions = 0
-            for (let i = 0; i < 6; i++) {
-                total_completions += game.collapse_complete[i]
-            }
-
-            if (game.research_complete[38] >= 1) {
-                let prestige_amount =
-                    1 + (1.05 ** (total_completions - 55)) ** 0.5
-                if (game.ascend_bought[21])
-                    game.prestige +=
-                        (Math.floor(game.color_boosts / 50) + 1) *
-                        Math.floor(prestige_amount)
-                else game.prestige += Math.floor(prestige_amount)
-            } else {
-                game.prestige++
-                if (game.ascend_bought[21])
-                    game.prestige += Math.floor(game.color_boosts / 50)
-            }
+        let total_completions = 0
+        for (let i = 0; i < 6; i++) {
+            total_completions += game.collapse_complete[i]
         }
+
+        let prestige_stat = 1
+        if (game.ascend_bought[21]) {
+            prestige_stat *= Math.floor(game.color_boosts / 50)
+        }
+        if (game.research_complete[38] >= 1) {
+            prestige_stat *= Math.floor(
+                1 + (1.05 ** (total_completions - 55)) ** 0.5
+            )
+        }
+        if (!override) {
+            game.prestige += prestige_stat
+            if (!entry_unlocked[5]) entry_unlock(5)
+        }
+
         let amount = new Decimal(0)
         if (game.color_boosts <= 16)
             amount = new Decimal(2).pow((game.color_boosts - 10) / 3)
@@ -525,12 +539,14 @@ function prestige(override) {
             game.prestige_time_history[i + 1] = game.prestige_time_history[i]
             game.prestige_real_time_history[i + 1] =
                 game.prestige_real_time_history[i]
+            game.prestige_stat_history[i + 1] = game.prestige_stat_history[i]
         }
         game.prestige_amount_history[0] = amount
         game.prestige_time_history[0] = game.prestige_time_played
         if (game.real_time_played[1] !== game.prestige_time_played)
             game.prestige_real_time_history[0] = game.real_time_played[1]
         else game.prestige_real_time_history[0] = -1
+        game.prestige_stat_history[0] = prestige_stat
 
         game.prestige_time_played = 0
         game.real_time_played[1] = 0
@@ -539,6 +555,9 @@ function prestige(override) {
         game.peak_rainbow_amount = new Decimal(0)
         game.peak_rainbow_boosts = 0
         game.peak_rainbow_time = 0
+
+        if (!entry_unlocked[6] && game.rainbow_spice.cmp(65536) >= 0)
+            entry_unlock(6)
 
         if (game.ascend_bought[9] && !override) {
             if (game.autopr_mode === 0) {
@@ -592,20 +611,22 @@ function ascend(override, challenge) {
         }
 
         if (ascend_ready) {
-            if (!override) {
-                let total_completions = 0
-                for (let i = 0; i < 6; i++) {
-                    total_completions += game.collapse_complete[i]
-                }
+            let total_completions = 0
+            for (let i = 0; i < 6; i++) {
+                total_completions += game.collapse_complete[i]
+            }
 
-                if (game.research_complete[38] >= 1) {
-                    let ascension_amount =
-                        1 + (1.05 ** (total_completions - 55)) ** 2
-                    if (ascension_amount >= 10000)
-                        ascension_amount =
-                            (ascension_amount / 10000) ** 0.5 * 10000
-                    game.ascend += Math.floor(ascension_amount)
-                } else game.ascend++
+            let ascension_stat = 1
+            if (game.research_complete[38] >= 1) {
+                let ascension_amount =
+                    1 + (1.05 ** (total_completions - 55)) ** 2
+                if (ascension_amount >= 10000)
+                    ascension_amount = (ascension_amount / 10000) ** 0.5 * 10000
+                ascension_stat *= Math.floor(ascension_amount)
+            }
+            if (!override) {
+                game.ascend += ascension_stat
+                if (!entry_unlocked[9]) entry_unlock(9)
             }
 
             let amount = game.rainbow_spice.pow(1 / 128).div(256)
@@ -680,6 +701,7 @@ function ascend(override, challenge) {
                     game.ascend_real_time_history[i]
                 game.ascend_challenge_history[i + 1] =
                     game.ascend_challenge_history[i]
+                game.ascend_stat_history[i + 1] = game.ascend_stat_history[i]
             }
             game.ascend_amount_history[0] = amount.floor()
             game.ascend_time_history[0] = game.ascend_time_played
@@ -691,6 +713,7 @@ function ascend(override, challenge) {
             else if (challenge !== undefined)
                 game.ascend_challenge_history[0] = challenge
             else game.ascend_challenge_history[0] = -1
+            game.ascend_stat_history[0] = ascension_stat
 
             game.ascend_time_played = 0
             game.real_time_played[2] = 0
@@ -701,6 +724,8 @@ function ascend(override, challenge) {
             game.peak_ansuz_time = 0
 
             if (game.ascend_challenge !== 0) {
+                if (!entry_unlocked[11] && game.ascend_challenge === 1)
+                    entry_unlock(11)
                 game.ascend_complete[game.ascend_challenge - 1] = true
                 game.ascend_challenge = 0
             }
@@ -1016,13 +1041,22 @@ function collapse(override, challenge) {
         }
 
         if (collapse_ready) {
+            let collapse_stat = 1
+            if (game.research_complete[38] >= 1) {
+                let collapse_amount = 1 + 1.05 ** (total_completions - 55)
+                if (collapse_amount > 100)
+                    collapse_amount = (collapse_amount / 100) ** 0.5 * 100
+                collapse_stat *= Math.floor(collapse_amount)
+            }
+
             if (!override) {
-                if (game.research_complete[38] >= 1) {
-                    let collapse_amount = 1 + 1.05 ** (total_completions - 55)
-                    if (collapse_amount > 100)
-                        collapse_amount = (collapse_amount / 100) ** 0.5 * 100
-                    game.collapse += Math.floor(collapse_amount)
-                } else game.collapse++
+                game.collapse += collapse_stat
+
+                if (!entry_unlocked[14]) entry_unlock(14)
+
+                if (game.collapse >= 5) {
+                    if (!entry_unlocked[15]) entry_unlock(15)
+                }
             }
             game.atomic_spice = game.atomic_spice.add(amount)
 
@@ -1037,6 +1071,8 @@ function collapse(override, challenge) {
                     game.collapse_real_time_history[i]
                 game.collapse_challenge_history[i + 1] =
                     game.collapse_challenge_history[i]
+                game.collapse_stat_history[i + 1] =
+                    game.collapse_stat_history[i]
             }
             game.collapse_amount_history[0] = amount
             game.collapse_time_history[0] = game.collapse_time_played
@@ -1048,6 +1084,7 @@ function collapse(override, challenge) {
             else if (challenge !== undefined)
                 game.collapse_challenge_history[0] = challenge
             else game.collapse_challenge_history[0] = -1
+            game.collapse_stat_history[0] = collapse_stat
 
             let old_time = game.real_time_played[3]
             game.collapse_time_played = 0
@@ -1068,6 +1105,9 @@ function collapse(override, challenge) {
                     game.pending_completions = 0
                 } else game.collapse_complete[game.collapse_challenge - 7]++
                 game.collapse_challenge = 0
+
+                if (!entry_unlocked[18] && game.collapse_challenge === 7)
+                    entry_unlock(18)
             }
 
             game.ascend_challenge = 0
@@ -1110,7 +1150,7 @@ function collapse(override, challenge) {
                 Decimal.pow(3, 20),
                 Decimal.pow(3, 36),
                 Decimal.pow(3, 73),
-                Decimal.pow(3, 110),
+                Decimal.pow(3, 107),
             ]
             game.arcane_spice_gen = [
                 new Decimal(0),
@@ -1155,17 +1195,14 @@ function collapse(override, challenge) {
 
             game.global_spice_boost = new Decimal(1)
 
-            let third_condition = true
-
-            if (old_time < 0.5 && game.collider_animation)
-                third_condition = false
-
             if (
                 game.research_complete[30] >= 1 &&
                 game.autosc_toggle &&
-                third_condition
-            )
+                game.atomic_timer >= game.atomic_timing
+            ) {
                 auto_collider()
+                game.atomic_timer = 0
+            }
 
             if (game.collapse === 1) {
                 confirmations("collapse", true)
@@ -1226,7 +1263,7 @@ function collapse(override, challenge) {
                 Decimal.pow(3, 20),
                 Decimal.pow(3, 36),
                 Decimal.pow(3, 73),
-                Decimal.pow(3, 110),
+                Decimal.pow(3, 107),
             ]
             game.arcane_spice_gen = [
                 new Decimal(0),
