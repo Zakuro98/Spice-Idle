@@ -30,6 +30,9 @@
                 <button id="statistics" class="tab unlocked" onclick="goto_tab(5)">
                     STATISTICS
                 </button>
+                <button id="compendium" class="tab unlocked" onclick="goto_tab(7)">
+                    COMPENDIUM
+                </button>
                 <button id="settings" class="tab unlocked" onclick="goto_tab(6)">
                     SETTINGS
                 </button>
@@ -917,6 +920,15 @@
                             %
                         </p>
                     </div>
+                    <div id="collider_timing" class="distributor_block2">
+                        <p class="distributor_text">
+                            Minimum time between activations:
+                        </p>
+                        <input class="input distributor_input" id="collider_input2" type="number" step="0.01" value="1" min="0.5">
+                        <p class="distributor_percent">
+                            s real time
+                        </p>
+                    </div>
                     <button id="activate_collider" class="atomic_button co_unlocked" onclick="activate_collider()">
                         Activate Collider
                     </button>
@@ -1138,6 +1150,15 @@
                 </p>
             </div>
 
+            <div id="statistics_buttons" class="center_button">
+                <button id="statistics_unit" class="spice_buy statistics_button" onclick="statistics_unit()">
+                    Unit: RAINBOW SPICE
+                </button>
+                <button id="statistics_time" class="spice_buy statistics_button" onclick="statistics_time()">
+                    Time: GAME TIME
+                </button>
+            </div>
+
             <div id="prestige_statistics_page">
                 <p id="prestige_statistics_text" class="statistics_text">
                     Last 10 Prestiges:
@@ -1192,6 +1213,8 @@
                 </p>
             </div>
 
+            <div id="compendium_page"></div>
+
             <div id="settings_page">
                 <div id="save_block" class="settings_block">
                     <button id="save" class="settings_button can_modify s_big" onclick="save()">
@@ -1235,30 +1258,29 @@
                 </div>
                 <div id="settings_block3" class="settings_block">
                     <button id="resource_efficiency" class="settings_button" onclick="resource_efficiency()">
-                        Reset Layer Resource/min
-                        <br>HIDE
+                        ?????
                     </button>
                     <button id="reduce_flashing" class="settings_button" onclick="reduce_flashing()">
-                        Reduce Flashing
-                        <br>DISABLED
+                        ?????
                     </button>
                     <button id="ascend_confirm" class="settings_button" onclick="confirmations('ascend')">
-                        Ascension Confirmations
-                        <br>ENABLED
+                        ?????
                     </button>
                 </div>
                 <div id="settings_block4" class="settings_block">
                     <button id="challenge_confirm" class="settings_button" onclick="confirmations('challenge')">
-                        Challenge Confirmations
-                        <br>ENABLED
+                        ?????
                     </button>
                     <button id="collapse_confirm" class="settings_button" onclick="confirmations('collapse')">
-                        Collapse Confirmations
-                        <br>ENABLED
+                        ?????
                     </button>
                     <button id="collider_animation" class="settings_button" onclick="animations()">
-                        Collider Animations
-                        <br>ENABLED
+                        ?????
+                    </button>
+                </div>
+                <div id="settings_block5" class="settings_block">
+                    <button id="antispice_confirm" class="settings_button" onclick="confirmations('antispice')">
+                        ?????
                     </button>
                 </div>
 
@@ -1283,18 +1305,18 @@
                     <br>P: Prestige
                     <br>I: Buy crystal infusion
                     <br>A: Ascend
+                    <br>X: Exit challenge
                     <br>N: Buy arcane enchantment
                     <br>C: Collapse
-                    <br>X: Exit challenge
                 </p>
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.7.0<br>Made by Zakuro<br><br>Last updated November 20, 2023
+                Spice Idle v1.7.1<br>Made by Zakuro<br><br>Last updated December 26, 2023
             </p>
 
             <p id="classic_info" class="info">
-                Confused? Spice Idle has been updated to v1.7.0 and is no longer compatible with older versions.
+                Confused? After the v1.7.0 update of Spice Idle, the game is no longer compatible with older versions.
                 <br>You can find v1.6.5 (and your old save) on <a href="https://zakuro98.github.io/Spice-Idle-Classic/" target="_blank" class="link">Spice Idle Classic</a>.
                 <br>If you'd like to continue in the new game from about where you were, you should check out the <a href="savebank.html" target="_blank" class="link">Savebank</a>.
             </p>
