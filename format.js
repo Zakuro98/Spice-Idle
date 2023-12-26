@@ -1,25 +1,93 @@
-const notation_options = [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14]
+const notation_options = [0, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 19]
 const exponent_options = [0, 2, 3, 4]
 let random_notation = notation_options[Math.floor(Math.random() * 12)]
 let random_exponent = exponent_options[Math.floor(Math.random() * 4)]
-const notation_charlist =
-    "0123456789,.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-∞·:∴∷⁙↑+/^!?%&μ#"
-let random_charlist = notation_charlist
-    .split("")
-    .sort(function () {
-        return 0.5 - Math.random()
-    })
-    .join("")
+const regex =
+    /\p{RI}\p{RI}|\p{Emoji}(\p{EMod}|\u{FE0F}\u{20E3}?|[\u{E0020}-\u{E007E}]+\u{E007F})?(\u{200D}\p{Emoji}(\p{EMod}|\u{FE0F}\u{20E3}?|[\u{E0020}-\u{E007E}]+\u{E007F})?)*|./gsu
+let temp_charlist =
+    "0123456789,.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-∞·:∴∷⁙↑+/^!?%&μ#[]😠🎂🎄💀🍆🐱🌈💯🍦🎃💋😂🌙⛔🐙💩❓😡🙈👍🌂✌😩❌🪀⚡"
+const notation_charlist = temp_charlist.match(regex)
+let random_charlist = notation_charlist.toSorted(function () {
+    return 0.5 - Math.random()
+})
 
 function format_randomize() {
-    random_notation = notation_options[Math.floor(Math.random() * 12)]
+    random_notation = notation_options[Math.floor(Math.random() * 14)]
     random_exponent = exponent_options[Math.floor(Math.random() * 4)]
-    random_charlist = notation_charlist
-        .split("")
-        .sort(function () {
-            return 0.5 - Math.random()
-        })
-        .join("")
+    random_charlist = notation_charlist.toSorted(function () {
+        return 0.5 - Math.random()
+    })
+}
+
+function generate_string(num, dec, digits) {
+    if (digits === undefined) digits = 3
+    if (typeof num === "number") {
+        if (num < 1000000) {
+            if (num >= 100) {
+                return Math.round(num)
+            } else {
+                if (dec) {
+                    if (num < 1) {
+                        return num.toFixed(3)
+                    } else if (num < 10) {
+                        return num.toFixed(2)
+                    } else {
+                        return num.toFixed(1)
+                    }
+                } else {
+                    return num
+                }
+            }
+        } else {
+            let index = Math.floor(Math.log10(num) / 3 - 1)
+            let lead = num / 10 ** (index * 3 + 3)
+
+            if (lead < 10) {
+                return (
+                    generate_string(index, false) + ", " + lead.toFixed(digits)
+                )
+            } else if (lead < 100) {
+                return (
+                    generate_string(index, false) +
+                    ", " +
+                    lead.toFixed(digits - 1)
+                )
+            } else {
+                return (
+                    generate_string(index, false) +
+                    ", " +
+                    lead.toFixed(digits - 2)
+                )
+            }
+        }
+    } else {
+        if (num.cmp(1000000) === -1) {
+            return generate_string(num.toNumber(), dec, digits)
+        } else {
+            let index = Math.floor(num.exponent / 3 - 1)
+            let lead = num.div(Decimal.pow(10, 3 * index + 3)).toNumber()
+            if (lead === Infinity) lead = 1
+            if (lead >= 1000) lead = lead / 1000 ** (Math.log10(lead) / 3)
+
+            if (lead < 10) {
+                return (
+                    generate_string(index, false) + ", " + lead.toFixed(digits)
+                )
+            } else if (lead < 100) {
+                return (
+                    generate_string(index, false) +
+                    ", " +
+                    lead.toFixed(digits - 1)
+                )
+            } else {
+                return (
+                    generate_string(index, false) +
+                    ", " +
+                    lead.toFixed(digits - 2)
+                )
+            }
+        }
+    }
 }
 
 function format_num(num, not, nospace) {
@@ -468,14 +536,14 @@ function format_num(num, not, nospace) {
             '<span style="text-decoration:overline">',
             "("
         )
-        output = output2.replaceAll("</span>", ")")
+        let output3 = output2.replaceAll("</span>", ")").match(regex)
 
         output2 = ""
         let index = -1
-        for (let i = 0; i < output.length; i++) {
-            index = notation_charlist.indexOf(output[i])
+        for (let i = 0; i < output3.length; i++) {
+            index = notation_charlist.indexOf(output3[i])
             if (index === -1) {
-                output2 += output[i]
+                output2 += output3[i]
             } else {
                 output2 += random_charlist[index]
             }
@@ -573,6 +641,12 @@ function format_num(num, not, nospace) {
     }
     if (not === 17) {
         output = format_cancer3(num, "number")
+    }
+    if (not === 18) {
+        output = format_cancer4(num)
+    }
+    if (not === 19) {
+        output = "[" + generate_string(num, false) + "]"
     }
     if (not === 8) {
         output = "???"
@@ -1099,6 +1173,9 @@ function format_inf(num, not, enot) {
                 let mantissa2 = num
                     .div(new Decimal(10).pow(exponent2))
                     .toNumber()
+                if (mantissa2 === Infinity) mantissa2 = 1
+                if (mantissa2 >= 1000)
+                    mantissa2 = mantissa2 / 1000 ** (Math.log10(mantissa2) / 3)
                 if (mantissa2 < 10) {
                     output =
                         mantissa2.toFixed(3) +
@@ -1291,6 +1368,9 @@ function format_inf(num, not, enot) {
                 let lead2 = num
                     .div(new Decimal(10).pow(3 * order2 + 3))
                     .toNumber()
+                if (lead2 === Infinity) lead2 = 1
+                if (lead2 >= 1000)
+                    lead2 = lead2 / 1000 ** (Math.log10(lead2) / 3)
                 let lead_str2 = ""
                 if (lead2 < 10) {
                     lead_str2 = lead2.toFixed(3)
@@ -1330,6 +1410,9 @@ function format_inf(num, not, enot) {
                 let lead3 = num
                     .div(new Decimal(10).pow(3 * order3 + 3))
                     .toNumber()
+                if (lead3 === Infinity) lead3 = 1
+                if (lead3 >= 1000)
+                    lead3 = lead3 / 1000 ** (Math.log10(lead3) / 3)
                 let lead_str3 = ""
                 if (lead3 < 10) {
                     lead_str3 = lead3.toFixed(3)
@@ -1366,6 +1449,9 @@ function format_inf(num, not, enot) {
                 let lead4 = num
                     .div(new Decimal(10).pow(3 * order4 + 3))
                     .toNumber()
+                if (lead4 === Infinity) lead4 = 1
+                if (lead4 >= 1000)
+                    lead4 = lead4 / 1000 ** (Math.log10(lead4) / 3)
                 let lead_str4 = ""
                 if (lead4 < 10) {
                     lead_str4 = lead4.toFixed(3)
@@ -1597,14 +1683,14 @@ function format_inf(num, not, enot) {
             '<span style="text-decoration:overline">',
             "("
         )
-        output = output2.replaceAll("</span>", ")")
+        let output3 = output2.replaceAll("</span>", ")").match(regex)
 
         output2 = ""
         let index = -1
-        for (let i = 0; i < output.length; i++) {
-            index = notation_charlist.indexOf(output[i])
+        for (let i = 0; i < output3.length; i++) {
+            index = notation_charlist.indexOf(output3[i])
             if (index === -1) {
-                output2 += output[i]
+                output2 += output3[i]
             } else {
                 output2 += random_charlist[index]
             }
@@ -1703,6 +1789,9 @@ function format_inf(num, not, enot) {
         } else if (not === 13) {
             let exponent2 = Math.floor(num.exponent / 3) * 3
             let mantissa2 = num.div(new Decimal(10).pow(exponent2)).toNumber()
+            if (mantissa2 === Infinity) mantissa2 = 1
+            if (mantissa2 >= 1000)
+                mantissa2 = mantissa2 / 1000 ** (Math.log10(mantissa2) / 3)
             if (mantissa2 < 10) {
                 output =
                     mantissa2.toFixed(3) +
@@ -1729,6 +1818,12 @@ function format_inf(num, not, enot) {
     }
     if (not === 17) {
         output = format_cancer3(num, "number")
+    }
+    if (not === 18) {
+        output = format_cancer4(num)
+    }
+    if (not === 19) {
+        output = "[" + generate_string(num, false) + "]"
     }
     if (not === 8) {
         output = "???"
@@ -1807,14 +1902,14 @@ function format_dec(num, not) {
             '<span style="text-decoration:overline">',
             "("
         )
-        output = output2.replaceAll("</span>", ")")
+        let output3 = output2.replaceAll("</span>", ")").match(regex)
 
         output2 = ""
         let index = -1
-        for (let i = 0; i < output.length; i++) {
-            index = notation_charlist.indexOf(output[i])
+        for (let i = 0; i < output3.length; i++) {
+            index = notation_charlist.indexOf(output3[i])
             if (index === -1) {
-                output2 += output[i]
+                output2 += output3[i]
             } else {
                 output2 += random_charlist[index]
             }
@@ -1828,6 +1923,10 @@ function format_dec(num, not) {
         return output2
     } else if (not === 17) {
         return format_cancer3(num, "decimal")
+    } else if (not === 18) {
+        return format_cancer4(num)
+    } else if (not === 19) {
+        return "[" + generate_string(num, true) + "]"
     } else {
         if (num >= 100) {
             return format_num(Math.round(num), not)
@@ -1912,14 +2011,14 @@ function format_time(input, not, precise) {
             '<span style="text-decoration:overline">',
             "("
         )
-        output = output2.replaceAll("</span>", ")")
+        let output3 = output2.replaceAll("</span>", ")").match(regex)
 
         output2 = ""
         let index = -1
-        for (let i = 0; i < output.length; i++) {
-            index = notation_charlist.indexOf(output[i])
+        for (let i = 0; i < output3.length; i++) {
+            index = notation_charlist.indexOf(output3[i])
             if (index === -1) {
-                output2 += output[i]
+                output2 += output3[i]
             } else {
                 output2 += random_charlist[index]
             }
