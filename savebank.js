@@ -286,7 +286,7 @@ class save_file {
         //copy to clipboard
         let copy = document.createElement("BUTTON")
         copy.innerHTML = "Copy to Clipboard"
-        copy.className = "spice_buy"
+        copy.className = "spice_buy savebank_button"
         copy.addEventListener("click", () => {
             copy_file(this.key)
         })
@@ -294,7 +294,7 @@ class save_file {
         //overwrite localstorage
         let local = document.createElement("BUTTON")
         local.innerHTML = "Overwrite Local Save"
-        local.className = "spice_buy"
+        local.className = "spice_buy savebank_button"
         local.addEventListener("click", () => {
             overwrite_file(this.key)
         })
@@ -472,7 +472,7 @@ new save_file(
 )
 new save_file(
     "ascension",
-    "Challenge 3 completed<br>4.635e52 ᚫ in total<br>2.165e7.989e7 total spice accumulated<br>" + //e79,886,720
+    "Challenge 3 completed<br>1.704e52 ᚫ in total<br>2.165e7.989e7 total spice accumulated<br>" + //e79,886,720
         format_time_long(198867) +
         " played",
     "c3 complete"
@@ -685,10 +685,10 @@ new save_file(
 )
 new save_file(
     "collapse",
-    "End of Collapse<br>2.512e34,189 total atomic spice<br>9.038e4.057e18 total spice accumulated<br>" + //e4,056,950,918,224,931,000
-        format_time_long(1.2972000844807418e46, 2, 2.905746276052123e41) +
+    "End of Collapse<br>1.382e80,526 total atomic spice<br>1.642e4.085e18 total spice accumulated<br>" + //e4,056,950,918,224,931,000
+        format_time_long(1.2999259650624481e46, 2, 2.905746276052123e41) +
         " played (game time)<br>" +
-        format_time_long(815522) +
+        format_time_long(815616) +
         " played (real time)",
     "endgame",
     1
