@@ -1,8 +1,33 @@
 const cancer_alphabet2 = [
+    "😠",
+    "🎂",
+    "🎄",
+    "💀",
+    "🍆",
+    "🐱",
+    "🌈",
+    "💯",
+    "🍦",
+    "🎃",
+    "💋",
+    "😂",
+    "🌙",
+    "⛔",
+    "🐙",
+    "💩",
+    "❓",
+    "😡",
+    "🙈",
+    "👍",
+    "🌂",
+    "✌",
+    "😩",
+    "❌",
+    "🪀",
+    "⚡",
     "🏋️",
     "⚾️",
     "🍧",
-    "✌️",
     "😈",
     "🐄",
     "🕞",
@@ -22,7 +47,6 @@ const cancer_alphabet2 = [
     "🏪",
     "🎦",
     "🥝",
-    "🐱",
     "👿",
     "✖️",
     "👩‍🔬",
@@ -72,7 +96,6 @@ const cancer_alphabet2 = [
     "🐐",
     "🕗",
     "🎎",
-    "🎂",
     "👨‍👨‍👧‍👧",
     "👩‍💼",
     "📮",
@@ -324,7 +347,6 @@ const cancer_alphabet2 = [
     "🚊",
     "🧜‍♂️",
     "🏴‍☠️",
-    "➖",
     "👩‍⚕️",
     "🔏",
     "👭",
@@ -334,7 +356,6 @@ const cancer_alphabet2 = [
     "🐽",
     "💍",
     "📪",
-    "🎃",
     "🚩",
     "🧐",
     "🚿",
@@ -363,13 +384,11 @@ const cancer_alphabet2 = [
     "📶",
     "🙄",
     "🚤",
-    "👍",
     "😭",
     "✍️",
     "👤",
     "🍓",
     "🦊",
-    "❓",
     "🚋",
     "🌽",
     "💬",
@@ -407,7 +426,6 @@ const cancer_alphabet2 = [
     "🤖",
     "🍎",
     "🤸",
-    "😩",
     "⛎",
     "👩‍🎨",
     "☄️",
@@ -449,7 +467,6 @@ const cancer_alphabet2 = [
     "🕠",
     "🈳",
     "🐆",
-    "💀",
     "💇‍♂️",
     "⛵️",
     "🍈",
@@ -505,7 +522,6 @@ const cancer_alphabet2 = [
     "🧊",
     "🆚",
     "🔼",
-    "🙈",
     "🧱",
     "🧩",
     "🧎",
@@ -571,7 +587,6 @@ const cancer_alphabet2 = [
     "🌰",
     "🌭",
     "🦏",
-    "⚡️",
     "🧜",
     "💳",
     "🟣",
@@ -627,14 +642,12 @@ const cancer_alphabet2 = [
     "🏭",
     "🔳",
     "⬛️",
-    "😡",
     "🍸",
     "🥛",
     "⚽️",
     "👌",
     "🍌",
     "🥮",
-    "💩",
     "👨‍🚒",
     "👩‍🎤",
     "☝️",
@@ -655,7 +668,6 @@ const cancer_alphabet2 = [
     "🦹‍♂️",
     "👨‍🎤",
     "🧖",
-    "🎄",
     "✈️",
     "🎢",
     "🔃",
@@ -732,7 +744,6 @@ const cancer_alphabet2 = [
     "⏯",
     "🥴",
     "🔧",
-    "😂",
     "📺",
     "❗️",
     "🍞",
@@ -758,7 +769,6 @@ const cancer_alphabet2 = [
     "👋",
     "🧹",
     "😁",
-    "🐙",
     "🦶",
     "🦂",
     "〰️",
@@ -768,7 +778,6 @@ const cancer_alphabet2 = [
     "😔",
     "📆",
     "🎁",
-    "🌈",
     "🟪",
     "🎷",
     "🕢",
@@ -841,7 +850,6 @@ const cancer_alphabet2 = [
     "🦄",
     "👛",
     "🦠",
-    "💯",
     "🚍",
     "👨‍👨‍👦‍👦",
     "8️⃣",
@@ -895,9 +903,7 @@ const cancer_alphabet2 = [
     "🤍",
     "😳",
     "🧮",
-    "⛔️",
     "🎮",
-    "🍦",
     "🕙",
     "😉",
     "🍏",
@@ -921,7 +927,6 @@ const cancer_alphabet2 = [
     "🎱",
     "🕡",
     "🧝‍♂️",
-    "🌂",
     "👨‍👧",
     "💊",
     "🍫",
@@ -930,7 +935,6 @@ const cancer_alphabet2 = [
     "🗿",
     "💝",
     "🥱",
-    "⭕️",
     "🪒",
     "👨‍🦲",
     "🏑",
@@ -1010,7 +1014,6 @@ const cancer_alphabet2 = [
     "🤣",
     "📷",
     "😴",
-    "🍆",
     "🐶",
     "⏲",
     "👩‍🦽",
@@ -1173,7 +1176,6 @@ const cancer_alphabet2 = [
     "🤝",
     "🙅‍♂️",
     "☕️",
-    "❌",
     "🧂",
     "👩‍👩‍👦",
     "👖",
@@ -1202,7 +1204,6 @@ const cancer_alphabet2 = [
     "🍜",
     "👝",
     "🐒",
-    "🪀",
     "🏥",
     "📕",
     "👨‍🦼",
@@ -1231,14 +1232,12 @@ const cancer_alphabet2 = [
     "😓",
     "🅰️",
     "🟩",
-    "💋",
     "⏺",
     "👸",
     "✊",
     "👧",
     "😃",
     "🚓",
-    "😠",
     "🐸",
     "👒",
     "🟢",
@@ -1251,8 +1250,9 @@ const cancer_alphabet2 = [
     "📏",
     "🚉",
     "👨‍👦",
-    "🌙",
     "🧴",
+    "⭕️",
+    "➖",
 ]
 
 const cancer_alphabet3 = [
@@ -1267,8 +1267,8 @@ const cancer_alphabet3 = [
     "🎱",
     "😹",
     "🔟",
-    "📈",
-    "💎",
+    "⚽",
+    "🍩",
     "💢",
     "🍇",
     "🙋",
@@ -1284,30 +1284,30 @@ const cancer_alphabet3 = [
     "🎅",
     "🅰️",
     "⏳",
-    "👀",
+    "🔪",
     "🪐",
     "⚖️",
     "📆",
-    "🤓",
+    "👌",
     "🌜",
     "😏",
     "🎥",
     "🪀",
     "🔮",
-    "😳",
+    "🧂",
     "🔍",
     "🌡️",
     "🔥",
     "🌌",
     "☢️",
-    "🦍",
+    "🙅",
     "🍄",
     "♑️",
     "🧢",
     "🌽",
     "❄️",
     "🎯",
-    "🖕",
+    "👽",
     "🃏",
     "☄️",
     "🏌️",
@@ -1318,16 +1318,16 @@ const cancer_alphabet3 = [
     "🐛",
     "🦽",
     "🧐",
-    "🤯",
+    "⚡️",
     "🌻",
-    "👌",
+    "💎",
     "🦕",
     "🤰",
     "🍆",
-    "🧂",
+    "😳",
     "♋️",
     "🤪",
-    "🙏",
+    "👀",
     "☝️",
     "💥",
     "❤️",
@@ -1343,16 +1343,16 @@ const cancer_alphabet3 = [
     "💩",
     "🍜",
     "🦾",
-    "🙃",
+    "📉",
     "🎹",
-    "😲",
+    "🦍",
     "🤡",
     "🏋️",
-    "🥂",
+    "🖕",
     "✊",
     "🗞️",
     "🏎️",
-    "🤑",
+    "🙃",
     "📎",
     "🥇",
     "🎈",
@@ -1367,7 +1367,7 @@ const cancer_alphabet3 = [
     "🏝️",
     "🍘",
     "🤚",
-    "🏀",
+    "1️⃣",
     "🥾",
     "🦢",
     "😂",
@@ -1377,17 +1377,17 @@ const cancer_alphabet3 = [
     "🦆",
     "🥕",
     "🎧",
-    "🧚‍♂️",
-    "😗",
-    "💛",
+    "🙏",
+    "😲",
+    "🏀",
     "🦛",
     "🐏",
     "🌓",
     "🐁",
-    "👁‍🗨",
-    "⚪️",
+    "🤑",
+    "🥂",
     "🌖",
-    "👧",
+    "👁‍🗨",
     "🤨",
     "📗",
     "👏",
@@ -1395,8 +1395,8 @@ const cancer_alphabet3 = [
     "⛲️",
     "🕚",
     "🏂",
-    "💇‍♂️",
-    "🦋",
+    "💇",
+    "🛀",
     "🥱",
     "🔔",
     "🏁",
@@ -1421,7 +1421,7 @@ const cancer_alphabet3 = [
     "🎎",
     "🔊",
     "💉",
-    "◼️",
+    "📢",
     "🕜",
     "🐑",
     "💤",
@@ -1464,7 +1464,7 @@ const cancer_alphabet3 = [
     "🦝",
     "🦴",
     "⏰",
-    "🔪",
+    "💛",
     "💁‍♂️",
     "🛌",
     "🍈",
@@ -1474,11 +1474,11 @@ const cancer_alphabet3 = [
     "🧖‍♂️",
     "💷",
     "🍳",
-    "🥈",
+    "🤦‍♂️",
     "〽️",
     "📔",
     "👨‍💻",
-    "🤦‍♂️",
+    "🥈",
     "🚂",
     "🧼",
     "👟",
@@ -1495,7 +1495,7 @@ const cancer_alphabet3 = [
     "🕝",
     "👨‍🦳",
     "🔗",
-    "🔵",
+    "🧩",
     "💶",
     "🈂️",
     "🚀",
@@ -1512,12 +1512,12 @@ const cancer_alphabet3 = [
     "🥌",
     "🍼",
     "📒",
-    "🟠",
+    "🥤",
     "🥊",
     "🈸",
     "🔛",
-    "🔻",
-    "🔷",
+    "🐓",
+    "♻️",
     "🔑",
     "🏅",
     "🐠",
@@ -1527,7 +1527,7 @@ const cancer_alphabet3 = [
     "🪓",
     "💾",
     "🥚",
-    "🔹",
+    "🌾",
     "🔣",
     "😒",
     "🎄",
@@ -1555,7 +1555,7 @@ const cancer_alphabet3 = [
     "⛄️",
     "🚌",
     "👨‍👨‍👧‍👦",
-    "💵",
+    "2️⃣",
     "🎳",
     "👾",
     "💴",
@@ -1700,7 +1700,7 @@ const cancer_alphabet3 = [
     "🐦",
     "🔤",
     "🙍",
-    "🍩",
+    "😗",
     "🤦",
     "Ⓜ️",
     "🍷",
@@ -1788,7 +1788,7 @@ const cancer_alphabet3 = [
     "🕖",
     "💘",
     "🏉",
-    "◾️",
+    "🙇‍♀️",
     "🏏",
     "👩‍🦲",
     "🐐",
@@ -1804,7 +1804,7 @@ const cancer_alphabet3 = [
     "🏭",
     "📍",
     "🚷",
-    "🌜",
+    "🦷",
     "🔙",
     "🍕",
     "🥟",
@@ -1838,7 +1838,7 @@ const cancer_alphabet3 = [
     "🚔",
     "🌹",
     "🕘",
-    "🟥",
+    "✍️",
     "👩‍👩‍👦",
     "👗",
     "🐵",
@@ -1888,7 +1888,7 @@ const cancer_alphabet3 = [
     "🦜",
     "🏨",
     "😓",
-    "📉",
+    "📈",
     "👨‍❤️‍👨",
     "👺",
     "🔀",
@@ -1930,7 +1930,7 @@ const cancer_alphabet3 = [
     "🚖",
     "😷",
     "👒",
-    "🔸",
+    "👍",
     "🍫",
     "👩‍👧",
     "🥽",
@@ -1946,7 +1946,7 @@ const cancer_alphabet3 = [
     "🧧",
     "🧫",
     "🐩",
-    "🔴",
+    "🎀",
     "🐅",
     "💰",
     "💱",
@@ -2020,14 +2020,14 @@ const cancer_alphabet3 = [
     "☯️",
     "🧍‍♂️",
     "🧕",
-    "🔁",
+    "📦",
     "🔭",
     "👜",
     "🥀",
     "🍹",
     "🏒",
     "⚰️",
-    "🔺",
+    "⚠️",
     "🦈",
     "🎨",
     "👖",
@@ -2044,15 +2044,15 @@ const cancer_alphabet3 = [
     "🔃",
     "👰",
     "📊",
-    "⛔",
+    "⛔️",
     "🦁",
-    "⚽️",
-    "⬜️",
+    "🧚‍♂️",
+    "⚗️",
     "👩‍⚕️",
     "🐮",
     "🍻",
     "💓",
-    "🟧",
+    "🦨",
     "📵",
     "💧",
     "👞",
@@ -2118,9 +2118,9 @@ const cancer_alphabet3 = [
     "💺",
     "🌗",
     "📂",
-    "🔶",
+    "💅",
     "💜",
-    "🟪",
+    "🤟",
     "🛶",
     "⤴️",
     "💊",
@@ -2176,7 +2176,7 @@ const cancer_alphabet3 = [
     "😛",
     "📟",
     "🥬",
-    "🟩",
+    "🍐",
     "⛳",
     "🙍‍♂️",
     "🚇",
@@ -2217,7 +2217,7 @@ const cancer_alphabet3 = [
     "🌟",
     "🍓",
     "🧿",
-    "🟢",
+    "🦥",
     "🌑",
     "🍥",
     "🙄",
@@ -2254,14 +2254,15 @@ const cancer_alphabet3 = [
     "🍯",
     "🚴",
     "🎇",
-    "👨‍❤️‍💋‍👨",
+    "🐌",
     "9️⃣",
     "🏓",
-    "😨",
-    "👽",
+    "💵",
+    "🧮",
     "🍖",
     "🐍",
     "🤗",
+    "😨",
     "😫",
     "😩",
     "😧",
@@ -2308,6 +2309,8 @@ function format_cancer2(num, digits) {
     } else {
         let order = Math.floor(num.exponent / 3) - 1
         let lead = num.div(new Decimal(10).pow(3 * order + 3)).toNumber()
+        if (lead === Infinity) lead = 1
+        if (lead >= 1000) lead = lead / 1000 ** (Math.log10(lead) / 3)
         let lead_str = ""
         if (lead < 10) {
             lead_str = lead.toFixed(digits)
@@ -2368,21 +2371,18 @@ function format_cancer3(num, type) {
             return (
                 negative +
                 cancer_alphabet3[Math.floor(num / 1000)] +
-                cancer_alphabet3[1001] +
                 cancer_alphabet3[Math.floor(num) % 1000]
             )
         } else {
-            let exponent = Math.floor(Math.log10(num))
-            let mantissa = 10 ** (Math.log10(num) - exponent)
-            let integer = Math.floor(mantissa)
-            if ((mantissa * 1000) % 1000 >= 999.5) integer++
+            let index = Math.floor(Math.log10(num) / 3 - 1)
+            let lead = num / 10 ** (index * 3 + 3)
+            let integer = Math.floor(lead)
+            if ((lead * 1000) % 1000 >= 999.5) integer++
             return (
                 negative +
+                format_cancer3(index, "number") +
                 cancer_alphabet3[integer] +
-                cancer_alphabet3[1000] +
-                cancer_alphabet3[Math.round(mantissa * 1000) % 1000] +
-                cancer_alphabet3[1002] +
-                format_cancer3(exponent, "number")
+                cancer_alphabet3[Math.round(lead * 1000) % 1000]
             )
         }
     } else {
@@ -2410,20 +2410,65 @@ function format_cancer3(num, type) {
             return (
                 negative +
                 cancer_alphabet3[num.div(1000).floor().toNumber()] +
-                cancer_alphabet3[1001] +
                 cancer_alphabet3[num.floor().toNumber() % 1000]
             )
         } else {
-            let integer = Math.floor(num.mantissa)
+            let index = Math.floor(num.exponent / 3 - 1)
+            let lead = num.div(Decimal.pow(10, 3 * index + 3)).toNumber()
+            if (lead === Infinity) lead = 1
+            if (lead >= 1000) lead = lead / 1000 ** (Math.log10(lead) / 3)
+            let integer = Math.floor(lead)
             if ((num.mantissa * 1000) % 1000 >= 999.5) integer++
             return (
                 negative +
+                format_cancer3(index, "number") +
                 cancer_alphabet3[integer] +
-                cancer_alphabet3[1000] +
-                cancer_alphabet3[Math.round(num.mantissa * 1000) % 1000] +
-                cancer_alphabet3[1002] +
-                format_cancer3(num.exponent, "number")
+                cancer_alphabet3[Math.round(lead * 1000) % 1000]
             )
+        }
+    }
+}
+
+function format_cancer4(num) {
+    let negative = ""
+    let size = cancer_alphabet2.length
+    let max = size - 3
+    let limit = Math.log10(Decimal.pow(10, Number.MAX_VALUE).log(10))
+    if (typeof num === "number") {
+        if (num < 0) {
+            num *= -1
+            negative = cancer_alphabet2[size - 1]
+        }
+
+        if (num === 0) {
+            return cancer_alphabet2[size - 2]
+        } else {
+            let index = Math.floor(
+                (Math.log10(Math.log10(num * 10)) * max) / limit
+            )
+            if (index > 10) index = 10
+            if (index < 0) index = 0
+            if (isNaN(index)) index = 0
+
+            return negative + cancer_alphabet2[index]
+        }
+    } else {
+        if (num.cmp(0) === -1) {
+            num = num.mul(-1)
+            negative = cancer_alphabet2[size - 1]
+        }
+
+        if (num.cmp(0) === 0) {
+            return cancer_alphabet2[size - 2]
+        } else {
+            let index = Math.floor(
+                (Math.log10(num.mul(10).log(10)) * max) / limit
+            )
+            if (index > max) index = max
+            if (index < 0) index = 0
+            if (isNaN(index)) index = 0
+
+            return negative + cancer_alphabet2[index]
         }
     }
 }
@@ -2433,18 +2478,20 @@ function format_time_cancer(input, precise) {
     let output = undefined
     if (time < 1) {
         if (precise) {
-            if (time < 1e-6) {
-                output = format_dec(time * 1e9, 17) + cancer_alphabet3[1006]
+            if (time < 1e-9) {
+                output = format_dec(time * 1e12, 17) + cancer_alphabet3[1006]
+            } else if (time < 1e-6) {
+                output = format_dec(time * 1e9, 17) + cancer_alphabet3[1007]
             } else if (time < 0.001) {
-                output = format_dec(time * 1000000, 17) + cancer_alphabet3[1007]
+                output = format_dec(time * 1000000, 17) + cancer_alphabet3[1008]
             } else {
-                output = format_dec(time * 1000, 17) + cancer_alphabet3[1008]
+                output = format_dec(time * 1000, 17) + cancer_alphabet3[1009]
             }
         } else {
-            output = format_dec(time, 17) + cancer_alphabet3[1009]
+            output = format_dec(time, 17) + cancer_alphabet3[1010]
         }
     } else if (time < 60) {
-        output = format_dec(time, 17) + cancer_alphabet3[1009]
+        output = format_dec(time, 17) + cancer_alphabet3[1010]
     } else if (time < 3600) {
         output =
             format_num(Math.floor(time / 60), 17) +
@@ -2458,9 +2505,9 @@ function format_time_cancer(input, precise) {
             cancer_alphabet3[1005] +
             format_num(Math.floor(time) % 60, 17)
     } else if (time < 31536000) {
-        output = format_dec(time / 86400, 17) + cancer_alphabet3[1010]
+        output = format_dec(time / 86400, 17) + cancer_alphabet3[1011]
     } else {
-        output = format_dec(time / 31536000, 17) + cancer_alphabet3[1011]
+        output = format_dec(time / 31536000, 17) + cancer_alphabet3[1012]
     }
 
     return output
