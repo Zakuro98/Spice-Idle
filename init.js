@@ -6,7 +6,7 @@ BigInt.prototype.toJSON = function () {
 
 //initializing game variables
 let game = {
-    version: "1.7.0",
+    version: "1.7.1",
 
     tickspeed: 100,
     gamespeed: 1,
@@ -23,6 +23,10 @@ let game = {
     collider_animation: true,
     resource_efficiency: false,
     reduce_flashing: false,
+    antispice_confirm: true,
+
+    entry_hidden: new Array(23).fill(false),
+    compendium_new: false,
 
     global_spice_boost: new Decimal(1),
 
@@ -228,6 +232,8 @@ let game = {
     color_boosts: 0,
     tab: 0,
     subtab: [0, 0, 0, 0, 0],
+    statistics_unit: [0, 0, 0],
+    statistics_time: 0,
     autosp_toggle: new Array(5).fill(false),
     autocb_toggle: false,
 
@@ -239,6 +245,7 @@ let game = {
     prestige_amount_history: new Array(10).fill(-1),
     prestige_time_history: new Array(10).fill(-1),
     prestige_real_time_history: new Array(10).fill(-1),
+    prestige_stat_history: new Array(10).fill(-1),
 
     crystal_spice: new Decimal(0),
     highest_crystal_spice: new Decimal(0),
@@ -312,6 +319,7 @@ let game = {
     ascend_time_history: new Array(10).fill(-1),
     ascend_real_time_history: new Array(10).fill(-1),
     ascend_challenge_history: new Array(10).fill(-1),
+    ascend_stat_history: new Array(10).fill(-1),
 
     ascend_time_played: 0,
 
@@ -334,7 +342,7 @@ let game = {
         Decimal.pow(3, 20),
         Decimal.pow(3, 36),
         Decimal.pow(3, 73),
-        Decimal.pow(3, 110),
+        Decimal.pow(3, 107),
     ],
     arcane_spice_bought: [0n, 0n, 0n, 0n, 0n, 0n],
     arcane_spice_boost: [
@@ -377,11 +385,14 @@ let game = {
     halflife: 1800,
     atomic_efficiency: 0.6,
     atomic_portion: 1,
+    atomic_timing: 1,
+    atomic_timer: 0,
 
     collapse_amount_history: new Array(10).fill(-1),
     collapse_time_history: new Array(10).fill(-1),
     collapse_real_time_history: new Array(10).fill(-1),
     collapse_challenge_history: new Array(10).fill(-1),
+    collapse_stat_history: new Array(10).fill(-1),
 
     collapse_time_played: 0,
 
@@ -411,6 +422,7 @@ let game = {
 
     free_deity: new Decimal(0),
     augment_start: 2097152,
+    augment_reached: false,
 
     collider_tab: 0,
     antispice: [
@@ -445,7 +457,7 @@ let game = {
     antispice_order: new Array(8).fill(0),
 
     limit_active: false,
-    realm_limit: new Decimal("1.7193341424918277e+4022718281828459045"),
+    realm_limit: new Decimal("1.7193341424918277e+4052718281828459045"),
     red_limit: [
         new Decimal(0),
         new Decimal(0),
@@ -557,14 +569,14 @@ function format_small(num, not) {
             '<span style="text-decoration:overline">',
             "("
         )
-        output = output2.replaceAll("</span>", ")")
+        let output3 = output2.replaceAll("</span>", ")").match(regex)
 
         output2 = ""
         let index = -1
-        for (let i = 0; i < output.length; i++) {
-            index = notation_charlist.indexOf(output[i])
+        for (let i = 0; i < output3.length; i++) {
+            index = notation_charlist.indexOf(output3[i])
             if (index === -1) {
-                output2 += output[i]
+                output2 += output3[i]
             } else {
                 output2 += random_charlist[index]
             }
@@ -577,6 +589,8 @@ function format_small(num, not) {
         return output.replaceAll(")", "</span>")
     } else if (not === 17) {
         return format_cancer3(num, "number")
+    } else if (not === 18) {
+        return format_cancer4(num)
     } else {
         if ((not === 2 && num >= 1e9) || (not === 12 && num >= 1e36)) {
             let mantissa = num / 10 ** Math.floor(Math.log10(num))
@@ -730,6 +744,8 @@ function format_small(num, not) {
             return exponent.toFixed(6) + "∞"
         } else if (not === 16 && num >= 1e9) {
             return format_cancer2(num, 6)
+        } else if (not === 19) {
+            return "[" + generate_string(num, false, 6) + "]"
         } else {
             return format_num(num, 0)
         }
@@ -814,6 +830,7 @@ const challenge_map = new Map()
 const research_map = new Map()
 const research_map2 = new Map()
 const antispice_map = new Map()
+const compendium_map = new Map()
 
 //spice generator class
 class spice_gen {
@@ -987,7 +1004,7 @@ new spice_gen("arcane", 1, Decimal.pow(3, 16), "spellbook", "spellbooks")
 new spice_gen("arcane", 2, Decimal.pow(3, 20), "wizard", "wizards")
 new spice_gen("arcane", 3, Decimal.pow(3, 36), "shrine", "shrines")
 new spice_gen("arcane", 4, Decimal.pow(3, 73), "cult", "cults")
-new spice_gen("arcane", 5, Decimal.pow(3, 110), "deity", "deities")
+new spice_gen("arcane", 5, Decimal.pow(3, 107), "deity", "deities")
 //done initializing spice generators
 
 //prestige upgrade class
@@ -2490,3 +2507,288 @@ new antispice_perk(
 //[8]
 new antispice_perk("Unlocks Expansion", 12)
 //done initializing antispice perks
+
+//compendium entry setup
+function entry_toggle(entry, state) {
+    let element = compendium_map.get(entry)
+
+    let body = element.querySelector(".compendium_body")
+    let title = element.querySelector(".compendium_title")
+
+    if (state === undefined) {
+        if (game.entry_hidden[entry.id]) {
+            game.entry_hidden[entry.id] = false
+            body.style.display = "block"
+            title.className = "compendium_title " + entry.class_name
+        } else {
+            game.entry_hidden[entry.id] = true
+            body.style.display = "none"
+            title.className =
+                "compendium_title " + entry.class_name + " compendium_hidden"
+        }
+    } else {
+        if (state) {
+            body.style.display = "none"
+            title.className =
+                "compendium_title " + entry.class_name + " compendium_hidden"
+        } else {
+            body.style.display = "block"
+            title.className = "compendium_title " + entry.class_name
+        }
+    }
+}
+
+class compendium {
+    static entries = []
+
+    name
+    text
+    class_name
+    unlock
+
+    //entry constructor
+    constructor(name, text, class_name, unlock) {
+        this.name = name
+        this.text = text
+        this.class_name = class_name
+        this.unlock = unlock
+        this.id = compendium.entries.length
+
+        compendium.entries.push(this)
+
+        //entry name
+        let title = document.createElement("P")
+        title.innerHTML = this.name
+        title.className = "compendium_title " + this.class_name
+        title.addEventListener("click", () => {
+            entry_toggle(this)
+        })
+
+        //entry text
+        let body = document.createElement("P")
+        body.innerHTML = this.text
+        body.className = "compendium_body"
+
+        //attaching all text to the div
+        let entry = document.createElement("DIV")
+        entry.className = "compendium_entry"
+        entry.appendChild(title)
+        entry.appendChild(body)
+
+        //attaching entry to the compendium page
+        compendium_map.set(this, entry)
+        document.getElementById("compendium_page").appendChild(entry)
+    }
+}
+
+let entry_unlocked = new Array(20).fill(false)
+
+function entry_unlock(id) {
+    entry_unlocked[id] = true
+    game.compendium_new = true
+    document.getElementById("compendium").className = "tab notice"
+}
+
+//initializing compendium entries
+new compendium(
+    "THE SPICE UNIVERSE",
+    "Spices are a fundamental substance that govern almost everything that goes on in your universe. " +
+        "They are the first commodity of any civilization, and become the most integral part of their economies." +
+        "<br><br>Spice deposits can be found on just about any planet, on the surface or underground. " +
+        "They can be gathered with a Harvester, a very basic tool that even primitive civilizations can make." +
+        "<br><br>Spices can be found everywhere in this universe, and you've set it upon yourself to exploit them to conquer the universe with your spice empire.",
+    "compendium_default"
+)
+new compendium(
+    "RED SPICE",
+    "The spice native to your homeworld has a very red hue, giving it its name. " +
+        "Red spice is quite common in the universe, and most spice empires will start their journey with it." +
+        "<br><br>When subject to enough pressure, red spice can emit a significant amount of heat, making it useful for a variety of industrial and culinary applications." +
+        "<br><br>Red spice has the ordinary spicy flavor that you would expect from a spice, and as such it is an obvious choice for many dishes.",
+    "red_spice"
+)
+new compendium(
+    "YELLOW SPICE",
+    "After a breakthrough, your empire discovered not only yellow spice, but also that more spice colors are probable to exist. " +
+        "While these spice colors are unsurprisingly far less ubiquitous than red spice, it seems large spice empires have already been utilizing them before you." +
+        "<br><br>Yellow spice has an exceptional capacity for absorbing and retaining energy, making it useful as both an energy source and an efficient method of energy storage. " +
+        "Due to these properties, natural yellow spice is often found already full of energy." +
+        "<br><br>Yellow spice has a distinctive sour, almost citrusy flavor, and is now often used in sour candies and other similar foods in that niche.",
+    "yellow_spice",
+    0
+)
+new compendium(
+    "GREEN SPICE",
+    "Green spice has an incredibly nutrient-rich composition, allowing it to perform very well as a fertilizer. " +
+        "For this reason, it is now the dominant resource for your empire's agricultural practices." +
+        "<br><br>However, this nutrient-rich composition gives it a considerable earthy flavor, so it is rarely seen used as an actual spice.",
+    "green_spice",
+    1
+)
+new compendium(
+    "BLUE SPICE",
+    "Blue spice's structure causes it to favor endothermic reactions. Because of this, it has an exceptional ability to cool things. " +
+        "This has a variety of applications such as refrigeration, or as a coolant for mechanical or electrical systems." +
+        "<br><br>Similarly, it has a cool and refreshing flavor, finding its way as an ingredient in many cold beverages.",
+    "blue_spice",
+    2
+)
+new compendium(
+    "PINK SPICE",
+    "Pink spice has a surprising amount of structural integrity. " +
+        "It loves to stick together, and as such it makes for a very good adhesive. " +
+        "It is also useful as an ingredient in building materials to make them more durable." +
+        "<br><br>The flavor of pink spice is sweet and intensely fruity, making it a highly sought after ingredient for many confections and candies." +
+        "<br><br>These two properties together make pink spice the most valuable spice you've discovered by far, and it easily becomes the defining commodity in the economies of all spice empires that get their hands on it.",
+    "pink_spice",
+    3
+)
+new compendium(
+    "COLOR SHIFTS",
+    "Your empire has found a device that - when fed a large amount of spices - returns a lot of energy and data, leading your researchers to discover a new 'color' of spice. " +
+        'This event has been dubbed a "Color Shift", and your researchers predict that subsequent Color Shifts may reveal even more colors.',
+    "compendium_default",
+    0
+)
+new compendium(
+    "COLOR BOOSTS",
+    "The data from your last Color Shift led you to the discovery of pink spice, but it also seems to suggest that there are no more natural spices to discover. " +
+        "Following this realization, your empire has decided to instead focus the gathered energy on empowering the production of the five spice colors you already have in your inventory. " +
+        'This new, different usage of the Color Shift device is instead called a "Color Boost".',
+    "compendium_default",
+    4
+)
+new compendium(
+    "PRESTIGE",
+    "Each Color Boost gathers more and more energy, and with enough of it, spice fusion is possible. " +
+        "All five of your spice colors can be fused together, although without even more energy an efficient fusion isn't possible. " +
+        "As such, most of your spices will be lost in the process, but what survives will be in the form of a new spice: rainbow spice." +
+        '<br><br>This spice fusion event is known as "Prestige".',
+    "rainbow_spice",
+    5
+)
+new compendium(
+    "RAINBOW SPICE",
+    "The first type of spice produced unnaturally, rainbow spice exists as the fusion of the five natural spice colors into one spice. " +
+        "This amalgamation causes rainbow spice to be very highly reactive, even in small quantities." +
+        "<br><br>The flavor of rainbow spice is unknown, as consuming enough rainbow spice to get any sense of flavor from it would be almost instantly lethal." +
+        "<br><br>However, the explosive abilities of rainbow spice are not to be underestimated, and they have many applications if used in a controlled manner. " +
+        "The study of rainbow spice is sure to unveil many powerful tools for your empire.",
+    "rainbow_spice",
+    6
+)
+new compendium(
+    "CRYSTALLIZED SPICE",
+    "Crystallized spice is created by placing pink spice into a blast furnace, and heating it up until it melts. " +
+        "After removing it from the furnace, it will cool and crystallize into a solid form. " +
+        "The explosive properties of rainbow spice are integral to the operation of this furnace." +
+        "<br><br>This new solid form of pink spice enhances its cohesiveness even further, making crystallized spice a nearly indestructible material. " +
+        "This will be incredibly useful for just about anything your empire could build.",
+    "crystal_spice",
+    7
+)
+new compendium(
+    "CRYSTAL INFUSIONS",
+    "The device behind Color Shifts and Color Boosts can be modified to create a new device. " +
+        "This device can instead be fed with crystallized spice, and produces a much more substantial boost to the production of the ordinary spice colors. " +
+        'This third iteration of the Color Shift idea is called a "Crystal Infusion".',
+    "crystal_spice",
+    8
+)
+new compendium(
+    "ASCENSION",
+    "Your empire is now starting to rival even the largest spice empires, and your studies have led to the discovery of the ways of Ascension. " +
+        "You can now Ascend your empire to the next plane of being. " +
+        "All will be left behind, but in the process, mysterious cosmic runes manifest into existence.",
+    "runes",
+    9
+)
+new compendium(
+    "RUNES",
+    "The raw runes conjured into being by Ascension are all of the same composition, and they all bear the same glyph: the Ansuz rune. " +
+        "These Ansuz runes have no inherent abilities. " +
+        "Their purpose lies instead in serving as a vessel for transmutation into other rune types. " +
+        "These other runes continuously radiate energies of different kinds, which will greatly empower your empire moving forward." +
+        "<br><br>The material these runes are constructed out of remains a mystery, but studying them may unlock some very strong abilities for your spice empire.",
+    "runes",
+    10
+)
+new compendium(
+    "ARCANE SPICE",
+    "The material the cosmic runes are made of has finally been identified. " +
+        'It is an entirely new type of spice your researchers are calling "arcane spice". ' +
+        "You've also found a way to use the powers of the runes to channel it into being in spice form." +
+        "<br><br>Arcane spice's influence over the spacetime continuum seems to transcend the very laws of physics themselves - almost like magic - and this ability is still not well understood." +
+        "<br><br>Arcane spice has an unexpectedly strong bitter flavor, but this does not stop it from finding its niche in your culinary industry.",
+    "arcane_spice",
+    11
+)
+new compendium(
+    "ARCANE ENCHANTMENTS",
+    "Rehashing the same idea as Crystal Infusions, a similar device can be created that utilizes arcane spice's abilities to enhance the efficiency of your crystallized spice production by an enormous amount. " +
+        'This higher, more specialized variant of the Crystal Infusion has been dubbed an "Arcane Enchantment".',
+    "arcane_spice",
+    12
+)
+new compendium(
+    "COLOR AUGMENTS",
+    "Your empire has finally surpassed all other spice empires, and you should be proud of this accomplishment. " +
+        "But, you now find trouble gathering enough spices for Color Boosts, when you didn't before. " +
+        "Perhaps you're missing something...",
+    "rainbow_spice",
+    13
+)
+new compendium(
+    "COLLAPSE",
+    "Your researchers have been on the issue for awhile, and they've found that you have just enough resources to Collapse the universe. " +
+        'By dismantling the entire universe, a new entity known as "atomic spice" can be extracted. ' +
+        "The universe is then reassembled.",
+    "atomic_spice",
+    14
+)
+new compendium(
+    "ATOMIC SPICE",
+    "The discovery of atomic spice may just be the key to the continued growth of your spice empire. " +
+        "Atomic spice is the smallest, indivisible and most fundamental unit of spice. " +
+        "All spice types are ultimately made of atomic spice, arranged into different structures and formations." +
+        "<br><br>The study and mastery of atomic spice manipulation may pave the way to some interesting new means of progression.",
+    "atomic_spice",
+    15
+)
+new compendium(
+    "THE SPICE COLLIDER",
+    "Following the discovery of atomic spice, your scientists invented an enormous contraption: the Spice Collider. " +
+        "It accelerates individual units of atomic spice to incredible speeds before letting them collide, for the purpose of researching whatever may result from this event. " +
+        "The Spice Collider will allow you to gain further insights into atomic spice and the nature of all spices, and potentially even create new spices.",
+    "atomic_spice",
+    16
+)
+new compendium(
+    "UNSTABLE SPICE",
+    '"Unstable spice" is the first new spice that was created in the Spice Collider. ' +
+        'It is highly radioactive and does not want to stay in this form, thus it decays over time into its lower energy form, known as "decayed spice".' +
+        "<br><br>Unstable spice was initially thought of as a failure of the Spice Collider. " +
+        "However, your scientists soon noticed that the transformation from unstable spice into decayed spice releases an incredible amount of energy. " +
+        "This has many applications for potential weaponry, or in the energy industry. " +
+        "It may even be yet another source of power for your spice empire's growth.",
+    "unstable_spice",
+    17
+)
+new compendium(
+    "ANTISPICE",
+    'The second discovery brought by the Spice Collider: smashing units of atomic spice together sometimes creates the "opposite" of atomic spice, which is now considered as the basic form of "antispice". ' +
+        'Additionally, your researchers theorize that colliding ordinary spice types with basic antispice may create the "opposite" of those spice types.' +
+        "<br><br>Rather than negating the properties of their ordinary counterparts, the antispice variants of a spice may instead amplify their abilities, and may even cause entirely new abilities to manifest. " +
+        "The efficiency of harvest of that spice type might also be greatly increased.",
+    "pure_antispice",
+    18
+)
+new compendium(
+    "REALMS",
+    "After your empire seemingly somehow exhausted all resources in the universe, the discovery of Realms followed almost immediately. " +
+        "What you once thought was the whole universe was really just a single Realm in the incomprehensibly even more vast universe. " +
+        'The new theory is that each Realm is a separate, self-contained "bubble" in the universe, and that most civilizations inside them consider their Realm to be all there is.',
+    "rainbow_antispice",
+    19
+)
+//done initializing compendium entries
