@@ -4454,6 +4454,8 @@ function load(savegame) {
 
     let ver_index = edition * 10000 + major * 100 + minor
 
+    let realm_fix = false
+
     if (ver_index < 10701) {
         game.entry_hidden = new Array(23).fill(false)
         game.compendium_new = false
@@ -4484,11 +4486,7 @@ function load(savegame) {
         game.realm_limit = new Decimal(
             "1.7193341424918277e+4052718281828459045"
         )
-        if (game.limit_active) {
-            game.limit_active = false
-            if (game.collapse_challenge !== 0) exit_collapse_challenge()
-            else collapse(true)
-        }
+        realm_fix = true
     }
 
     game.version = "1.7.1"
@@ -4655,6 +4653,14 @@ function load(savegame) {
     game.peak_ansuz_amount = new Decimal(game.peak_ansuz_amount)
     game.peak_atomic_gain = new Decimal(game.peak_atomic_gain)
     game.peak_atomic_amount = new Decimal(game.peak_atomic_amount)
+
+    if (realm_fix) {
+        if (game.limit_active) {
+            game.limit_active = false
+            if (game.collapse_challenge !== 0) exit_collapse_challenge()
+            else collapse(true)
+        }
+    }
 
     goto_tab(game.tab)
     if (game.tab === 0) goto_subtab(game.subtab[0])
