@@ -6,7 +6,7 @@ BigInt.prototype.toJSON = function () {
 
 //initializing game variables
 let game = {
-    version: "1.7.1",
+    version: "1.7.2",
 
     tickspeed: 100,
     gamespeed: 1,
@@ -19,11 +19,13 @@ let game = {
     exponent_notation: 0,
     high_visibility: false,
     refresh_rate: 20,
+    offline_progress: true,
     collapse_confirm: true,
     collider_animation: true,
     resource_efficiency: false,
     reduce_flashing: false,
     antispice_confirm: true,
+    catchup_rate: 30,
 
     entry_hidden: new Array(23).fill(false),
     compendium_new: false,
@@ -1695,7 +1697,7 @@ class ascension_challenge {
         button.innerHTML = "Enter Challenge"
         button.className = "a_challenge_button incomplete"
         button.addEventListener("click", () => {
-            enter_ascension_challenge(this.id + 1)
+            pre_enter_ascension_challenge(this.id + 1)
         })
 
         //attaching stuff to challenge panel
@@ -2091,7 +2093,7 @@ class collapse_challenge {
         button.innerHTML = "Enter Challenge"
         button.className = "co_challenge_button outside"
         button.addEventListener("click", () => {
-            enter_collapse_challenge(this.id + 7)
+            pre_enter_collapse_challenge(this.id + 7)
         })
 
         //attaching stuff to challenge panel
