@@ -2337,9 +2337,12 @@ function auto_toggle(color, unless) {
                     document.getElementById("ascend_auto_toggle").className =
                         "spice_buy a_enabled"
                 } else {
-                    alert(
-                        "Ascension confirmations must be off to turn on Ascension automation!"
-                    )
+                    if (modal === "none") {
+                        open_modal(
+                            "alert",
+                            "Ascension confirmations must be off to turn on Ascension automation!"
+                        )
+                    }
                 }
             }
             break
@@ -2427,9 +2430,12 @@ function auto_toggle(color, unless) {
                     document.getElementById("collapse_auto_toggle").className =
                         "spice_buy a_enabled"
                 } else {
-                    alert(
-                        "Collapse confirmations must be off to turn on Collapse automation!"
-                    )
+                    if (modal === "none") {
+                        open_modal(
+                            "alert",
+                            "Collapse confirmations must be off to turn on Collapse automation!"
+                        )
+                    }
                 }
             }
             break
@@ -3170,37 +3176,42 @@ function buy_ascension_upgrade(id) {
 }
 
 //entering an ascension challenge
-function enter_ascension_challenge(id) {
+function pre_enter_ascension_challenge(id) {
     if (game.ascend_challenge === 0 && !game.ascend_complete[id - 1]) {
-        let challenge_ready = false
-        if (!game.challenge_confirm) challenge_ready = true
-        else {
-            if (
-                confirm(
+        if (game.challenge_confirm) {
+            if (modal === "none") {
+                open_modal(
+                    "confirm",
                     "Are you sure you want to enter Challenge " +
                         format_num(id, 0) +
-                        "? You will Ascend!"
+                        "? You will Ascend!",
+                    function () {
+                        enter_ascension_challenge(id)
+                    }
                 )
-            ) {
-                challenge_ready = true
             }
-        }
-
-        if (challenge_ready) {
-            ascend(true)
-            game.ascend_challenge = id
-
-            if (game.ascend_challenge === 5) game.ascend_challenge_timer = 0
+        } else {
+            enter_ascension_challenge(id)
         }
     } else {
         if (game.ascend_challenge === id) {
-            ascend()
+            pre_ascend()
         } else {
-            alert(
-                "You cannot enter an Ascension Challenge if you are already in one!"
-            )
+            if (modal === "none") {
+                open_modal(
+                    "alert",
+                    "You cannot enter an Ascension Challenge if you are already in one!"
+                )
+            }
         }
     }
+}
+
+function enter_ascension_challenge(id) {
+    ascend(true)
+    game.ascend_challenge = id
+
+    if (game.ascend_challenge === 5) game.ascend_challenge_timer = 0
 }
 
 //exiting an ascension challenge
@@ -3208,7 +3219,7 @@ function exit_ascension_challenge() {
     if (game.ascend_challenge !== 0) {
         let challenge = game.ascend_challenge
         game.ascend_challenge = 0
-        ascend(true, challenge)
+        pre_ascend(true, challenge)
     }
 }
 
@@ -4851,39 +4862,44 @@ function research_upgrade() {
 }
 
 //entering a collapse challenge
-function enter_collapse_challenge(id) {
+function pre_enter_collapse_challenge(id) {
     if (game.collapse_challenge === 0) {
-        let challenge_ready = false
-        if (!game.challenge_confirm) challenge_ready = true
-        else {
-            if (
-                confirm(
+        if (game.challenge_confirm) {
+            if (modal === "none") {
+                open_modal(
+                    "confirm",
                     "Are you sure you want to enter Challenge " +
                         format_num(id, 0) +
-                        "? You will Collapse!"
+                        "? You will Collapse!",
+                    function () {
+                        enter_collapse_challenge(id)
+                    }
                 )
-            ) {
-                challenge_ready = true
             }
-        }
-
-        if (challenge_ready) {
-            collapse(true)
-            game.collapse_challenge = id
-            game.pending_completions = 0
-
-            if (game.collapse_challenge === 7) game.ascend_challenge_timer = 0
-            if (game.collapse_challenge === 9) game.gamespeed = 1 / 99999
+        } else {
+            enter_collapse_challenge(id)
         }
     } else {
         if (game.collapse_challenge === id) {
-            collapse()
+            pre_collapse()
         } else {
-            alert(
-                "You cannot enter a Collapse Challenge if you are already in one!"
-            )
+            if (modal === "none") {
+                open_modal(
+                    "alert",
+                    "You cannot enter a Collapse Challenge if you are already in one!"
+                )
+            }
         }
     }
+}
+
+function enter_collapse_challenge(id) {
+    collapse(true)
+    game.collapse_challenge = id
+    game.pending_completions = 0
+
+    if (game.collapse_challenge === 7) game.ascend_challenge_timer = 0
+    if (game.collapse_challenge === 9) game.gamespeed = 1 / 99999
 }
 
 //exiting a collapse challenge
@@ -4891,7 +4907,7 @@ function exit_collapse_challenge() {
     if (game.collapse_challenge !== 0) {
         let challenge = game.collapse_challenge
         game.collapse_challenge = 0
-        collapse(true, challenge)
+        pre_collapse(true, challenge)
     }
 }
 
@@ -4915,37 +4931,65 @@ function buy_antispice_perk(id) {
 }
 
 //refunding antispice perks
-function refund_antispice_perks() {
+function pre_refund_antispice_perks() {
     if (
         game.antispice[6] < game.total_rainbow_antispice &&
         !game.antispice_bought[8]
     ) {
-        let antispice_ready = false
-        if (!game.antispice_confirm) antispice_ready = true
-        else {
-            if (
-                confirm(
-                    "Are you sure you want to refund all antispice perks? You will Collapse!"
+        if (game.antispice_confirm) {
+            if (modal === "none") {
+                open_modal(
+                    "confirm",
+                    "Are you sure you want to refund all antispice perks? You will Collapse!",
+                    refund_antispice_perks
                 )
-            ) {
-                antispice_ready = true
             }
-        }
-        if (antispice_ready) {
-            for (let i = 0; i < 8; i++) {
-                if (game.antispice_bought[i])
-                    game.antispice[6] += game.antispice_order[i]
-                game.antispice_bought[i] = false
-                game.antispice_order[i] = 0
-            }
-
-            collapse(true)
-
-            if (game.collapse_challenge === 9) {
-                game.gamespeed = 1 / 99999
-            } else {
-                game.gamespeed = 2 ** game.collapse_complete[2]
-            }
+        } else {
+            refund_antispice_perks()
         }
     }
+}
+
+function refund_antispice_perks() {
+    for (let i = 0; i < 8; i++) {
+        if (game.antispice_bought[i])
+            game.antispice[6] += game.antispice_order[i]
+        game.antispice_bought[i] = false
+        game.antispice_order[i] = 0
+    }
+
+    collapse(true)
+
+    if (game.collapse_challenge === 9) {
+        game.gamespeed = 1 / 99999
+    } else {
+        game.gamespeed = 2 ** game.collapse_complete[2]
+    }
+}
+
+//skipping offline ticks
+function offline_skip(type) {
+    if (type === "half") {
+        if (ticks_run < Math.floor(total_ticks / 2)) {
+            total_ticks = Math.floor(total_ticks / 2)
+            start_ms = ticks_run * 10
+            start_ticks = ticks_run
+        }
+    } else if (type === "all") {
+        ticks_run = total_ticks - game.catchup_rate
+    }
+}
+
+//leaving the title screen
+function start_game() {
+    document.getElementById("tabs_block").style.display = "block"
+    document.getElementsByTagName("main")[0].style.display = "block"
+    document.getElementById("catchup_screen").style.display = "none"
+
+    tick_time = Date.now()
+
+    tick_loop()
+    graphics_loop()
+
+    window.setTimeout(save_loop, 60000)
 }
