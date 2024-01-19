@@ -1238,10 +1238,51 @@ function high_visibility() {
         game.high_visibility = false
         document.getElementById("high_visibility").innerHTML =
             "Text Visibility<br>DEFAULT"
+
+        document
+            .querySelector(":root")
+            .style.setProperty("--rainbow_light", "65%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--ascension_light", "50%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--ascension_light2", "60%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--collapse_light", "60%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--unstable_light", "60%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--decayed_light", "50%")
     } else {
         game.high_visibility = true
         document.getElementById("high_visibility").innerHTML =
             "Text Visibility<br>HIGH"
+
+        document
+            .querySelector(":root")
+            .style.setProperty("--rainbow_light", "75%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--ascension_light", "65%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--ascension_light2", "75%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--arcane_light", "75%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--collapse_light", "75%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--unstable_light", "75%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--decayed_light", "75%")
     }
 }
 
@@ -1271,6 +1312,19 @@ function refresh_rate(ms) {
 
     document.getElementById("refresh_rate").innerHTML =
         "Refresh Rate<br>" + game.refresh_rate + " MS"
+}
+
+//toggle offline progress
+function offline() {
+    if (game.offline_progress) {
+        game.offline_progress = false
+        document.getElementById("offline").innerHTML =
+            "Offline Progress<br>DISABLED"
+    } else {
+        game.offline_progress = true
+        document.getElementById("offline").innerHTML =
+            "Offline Progress<br>ENABLED"
+    }
 }
 
 //toggle spice collider animations
