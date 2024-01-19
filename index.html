@@ -6,10 +6,58 @@
         <meta name="keywords" content="spice, idle, spice idle, incremental">
         <meta name="description" content="expand your spice empire">
         <title>Spice Idle</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Fira+Sans:wght@400;700">
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
+        <div id="catchup_screen" class="catchup_screen">
+            <div class="catchup_panel">
+                <div class="catchup_title">
+                    <p id="spice_idle" class="spice_idle red_spice">
+                        Spice Idle
+                    </p>
+                    <p class="catchup_version">
+                        v1.7.2
+                    </p>
+                </div>
+                <p id="catchup_header" class="catchup_header">
+                    Catching up on time since the game was last saved...
+                    <br>Please keep the game on-screen
+                </p>
+                <div id="offline_panel">
+                    <p id="catchup_info" class="catchup_text">
+                        0 / 0 ticks run
+                        <br>Currently running about 0 ticks/sec
+                        <br>Estimated time to completion: 0 seconds
+                    </p>
+                    <div class="catchup_back">
+                        <div id="catchup_progress" class="catchup_progress"></div>
+                    </div>
+                    <div class="catchup_set">
+                        <p id="catchup_input_text" class="catchup_text">
+                            Ticks to run at once:
+                        </p>
+                        <input class="input" id="catchup_input" type="number" value="30" min="1">
+                    </div>
+                    <div id="catchup_skips" class="center_button">
+                        <button id="catchup_half_skip" class="catchup_button" onclick="offline_skip('half')">
+                            Skip Half of Ticks
+                        </button>
+                        <button class="catchup_button" onclick="offline_skip('all')">
+                            Skip Offline Progress
+                        </button>
+                    </div>
+                </div>
+                <div id="startup_panel">
+                    <div class="center_button">
+                        <button class="startup_button" onclick="start_game()">
+                            Begin Your Empire
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="tabs_block" class="tabs_block">
             <div class="menu">
                 <button id="spices" class="tab selected" onclick="goto_tab(0)">
@@ -111,6 +159,55 @@
                 <button id="past_collapses" class="subtab locked" onclick="goto_subtab(3)">
                     LOCKED
                 </button>
+            </div>
+        </div>
+
+        <div id="modal">
+            <div class="modal_background"></div>
+            <div class="modal_center">
+                <div id="modal_alert" class="modal_panel">
+                    <p id="alert_text" class="modal_text">
+                        Alert modal text here
+                    </p>
+
+                    <div class="center_button">
+                        <button class="spice_buy modal_button_last" onclick="close_modal()">
+                            OK
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="modal_confirm" class="modal_panel">
+                    <p id="confirm_text" class="modal_text">
+                        Confirmation modal text here
+                    </p>
+
+                    <div class="center_button">
+                        <button id="confirm_yes" class="spice_buy modal_button">
+                            YES
+                        </button>
+                        <button class="spice_buy modal_button_last" onclick="close_modal()">
+                            NO
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="modal_import" class="modal_panel">
+                    <p class="modal_text">
+                        Paste your exported save code here:
+                    </p>
+
+                    <textarea class="input" id="import_input"></textarea>
+
+                    <div class="center_button">
+                        <button class="spice_buy modal_button" onclick="import_save()">
+                            IMPORT
+                        </button>
+                        <button class="spice_buy modal_button_last" onclick="close_modal()">
+                            CANCEL
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -556,7 +653,7 @@
                                     +1 ᚫ
                                 </p>
                             </div>
-                            <button id="ascend_button" class="ascend_button a_locked" onclick="ascend()">
+                            <button id="ascend_button" class="ascend_button a_locked" onclick="pre_ascend()">
                                 ASCEND!
                             </button>
                         </div>
@@ -824,7 +921,7 @@
                                     +1 atomic spice
                                 </p>
                             </div>
-                            <button id="collapse_button" class="collapse_button co_locked" onclick="collapse()">
+                            <button id="collapse_button" class="collapse_button co_locked" onclick="pre_collapse()">
                                 COLLAPSE!
                             </button>
                         </div>
@@ -1132,7 +1229,7 @@
                             Antispice Perks
                         </p>
                         <div class="center_button">
-                            <button id="refund_perks" class="atomic_button ap_unlocked2" onclick="refund_antispice_perks()">
+                            <button id="refund_perks" class="atomic_button ap_unlocked2" onclick="pre_refund_antispice_perks()">
                                 Refund Antispice Perks
                             </button>
                         </div>
@@ -1217,13 +1314,13 @@
 
             <div id="settings_page">
                 <div id="save_block" class="settings_block">
-                    <button id="save" class="settings_button can_modify s_big" onclick="save()">
+                    <button id="save" class="settings_button can_modify s_big" onclick="manual_save()">
                         SAVE
                     </button>
                     <button id="export" class="settings_button can_modify s_big" onclick="export_save()">
                         EXPORT
                     </button>
-                    <button id="import" class="settings_button can_modify s_big" onclick="import_save()">
+                    <button id="import" class="settings_button can_modify s_big" onclick="pre_import_save()">
                         IMPORT
                     </button>
                 </div>
@@ -1257,35 +1354,39 @@
                     </button>
                 </div>
                 <div id="settings_block3" class="settings_block">
+                    <button id="offline" class="settings_button can_modify" onclick="offline()">
+                        Offline Progress
+                        <br>ENABLED
+                    </button>
                     <button id="resource_efficiency" class="settings_button" onclick="resource_efficiency()">
                         ?????
                     </button>
                     <button id="reduce_flashing" class="settings_button" onclick="reduce_flashing()">
                         ?????
                     </button>
+                </div>
+                <div id="settings_block4" class="settings_block">
                     <button id="ascend_confirm" class="settings_button" onclick="confirmations('ascend')">
                         ?????
                     </button>
-                </div>
-                <div id="settings_block4" class="settings_block">
                     <button id="challenge_confirm" class="settings_button" onclick="confirmations('challenge')">
                         ?????
                     </button>
                     <button id="collapse_confirm" class="settings_button" onclick="confirmations('collapse')">
                         ?????
                     </button>
+                </div>
+                <div id="settings_block5" class="settings_block">
                     <button id="collider_animation" class="settings_button" onclick="animations()">
                         ?????
                     </button>
-                </div>
-                <div id="settings_block5" class="settings_block">
                     <button id="antispice_confirm" class="settings_button" onclick="confirmations('antispice')">
                         ?????
                     </button>
                 </div>
 
                 <div id="wipe_block" class="settings_block">
-                    <button id="wipe_save" class="settings_button can_modify s_big" onclick="delete_save()">
+                    <button id="wipe_save" class="settings_button can_modify s_big" onclick="pre_delete_save()">
                         DELETE SAVE
                     </button>
                 </div>
@@ -1312,7 +1413,7 @@
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.7.1<br>Made by Zakuro<br><br>Last updated December 26, 2023
+                Spice Idle v1.7.2<br>Made by Zakuro<br><br>Last updated January 19, 2024
             </p>
 
             <p id="classic_info" class="info">
