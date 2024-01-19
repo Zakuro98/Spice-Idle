@@ -1,5 +1,6 @@
 let tick_time = Date.now()
 let delta_time = undefined
+let pause = false
 
 //game operations run every tick
 function tick() {
@@ -34,10 +35,23 @@ function tick() {
     }
 
     if (game.collapse_time_played > 0.0005 && game.collapse_challenge === 9) {
-        alert(
-            "You have been in Challenge 9 for longer than 500 microseconds, so you will now exit."
-        )
+        if (modal === "none") {
+            open_modal(
+                "alert",
+                "You failed to complete Challenge 9 in less than 500 microseconds, so you have left the Challenge."
+            )
+        } else {
+            c9_modal = true
+        }
         exit_collapse_challenge()
+    }
+
+    if (modal === "none" && c9_modal) {
+        open_modal(
+            "alert",
+            "You failed to complete Challenge 9 in less than 500 microseconds, so you have left the Challenge."
+        )
+        c9_modal = false
     }
 
     if (game.autocb_toggle && game.prestige_bought[7] >= 1) color_boost()
@@ -3912,7 +3926,7 @@ document.body.addEventListener("keydown", function (event) {
         (active_element.type == "text" || active_element.type == "number")
     ) {
         event.stopPropagation()
-    } else {
+    } else if (modal === "none") {
         switch_key(event.code, true) // change corresponding key and or key.digit(if between 1-6)
 
         // upcoming: fast-button to change tab/subtabs
@@ -4206,7 +4220,7 @@ window.addEventListener("blur", function () {
 })
 
 function hotkey_tick() {
-    if (game.hotkeys) {
+    if (game.hotkeys && modal === "none") {
         if (key.b) color_boost()
         if (key.p) prestige()
         if (key.i) buy_infusion()
@@ -4369,8 +4383,16 @@ function hotkey_tick() {
 }
 
 //saving the game
+function manual_save() {
+    save()
+    if (modal === "none") {
+        open_modal("alert", "Manually saved the game!")
+    }
+}
+
 function save() {
-    game.version = "1.7.1"
+    game.version = "1.7.2"
+    game.save_time = Date.now()
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
         game.prestige_price[u.id] = u.price
@@ -4381,17 +4403,34 @@ function save() {
 //exporting a save file
 function export_save() {
     navigator.clipboard.writeText(btoa(JSON.stringify(game)))
+    if (modal === "none") {
+        open_modal("alert", "Exported to Clipboard!")
+    }
 }
 
 //importing a save file
+function pre_import_save() {
+    if (modal === "none") {
+        document.getElementById("import_input").value = ""
+        open_modal("import")
+        document.getElementById("import_input").focus()
+    }
+}
+
 function import_save() {
-    let input = prompt("Paste your exported save code here:")
+    let input = document.getElementById("import_input").value
+    close_modal()
+
     if (input === "cancer2" || input === "stage2") {
         notation(16)
         return
     }
     if (input === "cancer3" || input === "stage3") {
         notation(17)
+        return
+    }
+    if (input === "cancer4" || input === "stage4") {
+        notation(18)
         return
     }
 
@@ -4407,20 +4446,25 @@ function import_save() {
     if (valid_json) {
         if (JSON.parse(save_file) !== null) {
             load(JSON.parse(save_file))
+            c9_modal = false
         }
     }
 }
 
 //deleting a save
-function delete_save() {
-    if (
-        confirm(
-            "Are you sure you want to delete your save?\nThis will reset EVERYTHING!"
+function pre_delete_save() {
+    if (modal === "none") {
+        open_modal(
+            "confirm",
+            "Are you sure you want to delete your save?<br>This will reset EVERYTHING!",
+            delete_save
         )
-    ) {
-        localStorage.removeItem("new_spice_idle_save")
-        window.location.reload()
     }
+}
+
+function delete_save() {
+    localStorage.removeItem("new_spice_idle_save")
+    window.location.reload()
 }
 
 goto_tab(0)
@@ -4429,13 +4473,18 @@ goto_tab(0)
 function load(savegame) {
     if (savegame === null) return
     if (savegame.red_unlock !== undefined) {
-        alert("This save file is too powerful for this game")
+        if (modal === "none") {
+            open_modal("alert", "This save file is too powerful for this game")
+        }
         return
     }
     if (savegame.exp !== undefined && savegame.amp !== undefined) {
-        alert(
-            "You just tried to load an EXP Simulator save file into Spice Idle... Why did you think that would work?"
-        )
+        if (modal === "none") {
+            open_modal(
+                "alert",
+                "You just tried to load an EXP Simulator save file into Spice Idle... Why did you think that would work?"
+            )
+        }
         return
     }
 
@@ -4444,9 +4493,12 @@ function load(savegame) {
         .map(val => parseInt(val))
 
     if (major <= 6) {
-        alert(
-            "Pre-v1.7.0 saves cannot be loaded on this version of the game, try them in Spice Idle Classic instead"
-        )
+        if (modal === "none") {
+            open_modal(
+                "alert",
+                "Pre-v1.7.0 saves cannot be loaded on this version of the game, try them in Spice Idle Classic instead"
+            )
+        }
         return
     } else {
         game = savegame
@@ -4488,8 +4540,12 @@ function load(savegame) {
         )
         realm_fix = true
     }
+    if (ver_index < 10702) {
+        game.offline_progress = true
+        game.catchup_rate = 30
+    }
 
-    game.version = "1.7.1"
+    game.version = "1.7.2"
 
     game.red_spice = new Decimal(game.red_spice)
     game.highest_red_spice = new Decimal(game.highest_red_spice)
@@ -4729,6 +4785,8 @@ function load(savegame) {
     high_visibility()
     high_visibility()
     refresh_rate(game.refresh_rate)
+    offline()
+    offline()
     animations()
     animations()
     resource_efficiency()
@@ -4739,6 +4797,7 @@ function load(savegame) {
     statistics_time()
     statistics_time()
 
+    document.getElementById("catchup_input").value = game.catchup_rate
     document.getElementById("p_boosts_input").value = game.autopr_goal[0]
     document.getElementById("p_boosts_input2").value = game.autopr_delta[0]
     document.getElementById("p_spice_input").value = game.autopr_goal[1]
@@ -4812,298 +4871,104 @@ if (stored_save === null) {
 }
 load(stored_save)
 
+//setting up modals
+let modal = "none"
+let c9_modal = false
+
+function open_modal(type, text, onclick) {
+    modal = type
+
+    document.getElementById("modal").style.display = "block"
+    document.getElementById("modal_alert").style.display = "none"
+    document.getElementById("modal_confirm").style.display = "none"
+    document.getElementById("modal_import").style.display = "none"
+
+    switch (type) {
+        case "alert":
+            document.getElementById("modal_alert").style.display = "block"
+            document.getElementById("alert_text").innerHTML = text
+            break
+        case "confirm":
+            document.getElementById("modal_confirm").style.display = "block"
+            document.getElementById("confirm_text").innerHTML = text
+            document.getElementById("confirm_yes").onclick = function () {
+                onclick()
+                close_modal()
+            }
+            break
+        case "import":
+            document.getElementById("modal_import").style.display = "block"
+            break
+    }
+}
+
+function close_modal() {
+    modal = "none"
+    document.getElementById("modal").style.display = "none"
+}
+
 //setting up the tick loop
 function tick_loop() {
     let start_time = Date.now()
     let delta_ms = undefined
-    let delta_ticks = 1
     if (delta_time === undefined) {
         delta_time = game.tickspeed / game.gamespeed
     } else {
         if (Date.now() < tick_time) tick_time = Date.now()
-        if (Date.now() > tick_time + 3600000) tick_time = Date.now() - 3600000
 
         delta_ms = Date.now() - tick_time
         delta_time = 1000 / (delta_ms * game.gamespeed)
-        delta_ticks = Math.floor((delta_ms * game.tickspeed) / 1000)
     }
 
-    tick_time = Date.now()
+    if (delta_ms < 10000 || delta_ms === undefined) {
+        tick_time = Date.now()
 
-    if (delta_ms >= 100) {
-        if (delta_ticks > 60 * game.tickspeed) delta_ticks = 60 * game.tickspeed
-        delta_time *= delta_ticks
-        while (delta_ticks > 0) {
-            tick()
-            delta_ticks--
-        }
-    } else {
         tick()
-    }
-    hotkey_tick()
-    if (collider.enabled) collider_tick()
+        hotkey_tick()
+        if (collider.enabled) collider_tick()
 
-    let end_time = Date.now()
-    let total_time = end_time - start_time
-    if (total_time < 0) total_time = 0
-    window.setTimeout(
-        tick_loop,
-        1000 / game.tickspeed - (total_time % (1000 / game.tickspeed))
-    )
+        let end_time = Date.now()
+        let total_time = end_time - start_time
+        if (total_time < 0) total_time = 0
+        if (!pause)
+            window.setTimeout(
+                tick_loop,
+                1000 / game.tickspeed - (total_time % (1000 / game.tickspeed))
+            )
+    } else {
+        document.getElementById("catchup_screen").style.display = "flex"
+        document.getElementById("catchup_header").innerHTML =
+            "Catching up on time while the game was in the background...<br>Please keep the game on-screen"
+        document.getElementById("offline_panel").style.display = "block"
+        document.getElementById("catchup_skips").style.display = "none"
+        document.getElementById("startup_panel").style.display = "none"
+        document.getElementById("tabs_block").style.display = "none"
+        document.getElementsByTagName("main")[0].style.display = "none"
+
+        close_modal()
+
+        ticks_run = 0
+        average_time = 0
+        average_rate = game.catchup_rate * game.tickspeed
+        average_ticks = 0
+        between_time = 0
+        offline_time = Date.now()
+        start_ms = 0
+        start_ticks = 0
+
+        offline_ms = Date.now() - delta_ms
+        total_ticks = Math.floor((offline_ms * game.tickspeed) / 1000)
+        if (total_ticks >= 60000) total_ticks = 60000
+
+        after_time = Date.now()
+
+        catchup_loop("background")
+    }
 }
 
 //setting up the graphics loop
 function graphics_loop() {
     let start_time = Date.now()
-
-    document.documentElement.style.setProperty(
-        "--rainbow_spice",
-        "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,50%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_spice2",
-        "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,65%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_spice3",
-        "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",50%,50%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--ascension",
-        "hsl(" +
-            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-            ",100%,50%)"
-    )
-    document.documentElement.style.setProperty(
-        "--ascension2",
-        "hsl(" +
-            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-            ",100%,60%)"
-    )
-    document.documentElement.style.setProperty(
-        "--ascension3",
-        "hsl(" +
-            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-            ",80%,10%)"
-    )
-    document.documentElement.style.setProperty(
-        "--ascension4",
-        "hsl(" +
-            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-            ",80%,20%)"
-    )
-    document.documentElement.style.setProperty(
-        "--ascension5",
-        "hsl(" +
-            (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-            ",90%,30%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--arcane_spice",
-        "hsl(" +
-            (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
-            "," +
-            (15 * Math.sin(game.real_time_played[0]) + 85) +
-            "%," +
-            (5 * Math.sin(game.real_time_played[0]) + 55) +
-            "%)"
-    )
-    document.documentElement.style.setProperty(
-        "--arcane_spice2",
-        "hsl(" +
-            (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
-            "," +
-            (9 * Math.sin(game.real_time_played[0]) + 91) +
-            "%," +
-            (7 * Math.sin(game.real_time_played[0]) + 48) +
-            "%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--collapse",
-        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",100%,40%)"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse2",
-        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",100%,50%)"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse3",
-        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 92) + ",100%,60%)"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse4",
-        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 102) + ",80%,10%)"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse5",
-        "hsl(" + (30 * Math.sin(game.real_time_played[0]) + 92) + ",80%,20%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--collapse6",
-        25 * Math.sin(game.real_time_played[0]) - 25 + "deg"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse7",
-        -10 * Math.sin(game.real_time_played[0]) + 110 + "%"
-    )
-    document.documentElement.style.setProperty(
-        "--collapse8",
-        10 * Math.sin(game.real_time_played[0]) + 90 + "%"
-    )
-
-    document.documentElement.style.setProperty(
-        "--unstable_spice",
-        "hsl(" +
-            (18 * Math.sin(game.real_time_played[0] * 3) + 16) +
-            ",100%,40%)"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice2",
-        "hsl(" +
-            (18 * Math.sin(game.real_time_played[0] * 3) + 16) +
-            ",100%,50%)"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice3",
-        "hsl(" +
-            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
-            ",100%,60%)"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice7",
-        "hsl(" +
-            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
-            ",100%,16%)"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice8",
-        "hsl(" +
-            (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
-            ",100%,10%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--unstable_spice4",
-        16 * Math.sin(game.real_time_played[0] * 3) + 16 + "deg"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice5",
-        50 * Math.sin(game.real_time_played[0] * 3) + 150 + "%"
-    )
-    document.documentElement.style.setProperty(
-        "--unstable_spice6",
-        -10 * Math.sin(game.real_time_played[0] * 3) + 90 + "%"
-    )
-
-    document.documentElement.style.setProperty(
-        "--decayed_spice",
-        "hsl(300," + (6 * Math.sin(game.real_time_played[0]) + 16) + "%,50%)"
-    )
-    document.documentElement.style.setProperty(
-        "--decayed_spice2",
-        "hsl(300," + (6 * Math.sin(game.real_time_played[0]) + 16) + "%,40%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,60%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice2",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,40%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice3",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,12%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice4",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,16%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice5",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,8%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice6",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,4%)"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice7",
-        "hsl(" + ((game.real_time_played[0] * 36 + 180) % 360) + ",90%,24%)"
-    )
-
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice8",
-        ((game.real_time_played[0] * 36 + 180) % 360) + "deg"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice9",
-        -60 *
-            Math.cos(
-                (((game.real_time_played[0] * 36 + 280) % 360) * Math.PI) / 180
-            ) +
-            160 +
-            "%"
-    )
-    document.documentElement.style.setProperty(
-        "--rainbow_antispice10",
-        10 *
-            Math.cos(
-                (((game.real_time_played[0] * 36 + 280) % 360) * Math.PI) / 180
-            ) +
-            90 +
-            "%"
-    )
-
-    if (game.high_visibility) {
-        document.documentElement.style.setProperty(
-            "--rainbow_spice2",
-            "hsl(" + ((game.real_time_played[0] * 36) % 360) + ",100%,75%)"
-        )
-        document.documentElement.style.setProperty(
-            "--ascension",
-            "hsl(" +
-                (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-                ",100%,65%)"
-        )
-        document.documentElement.style.setProperty(
-            "--ascension2",
-            "hsl(" +
-                (25 * Math.sin(game.real_time_played[0] / 2) + 208) +
-                ",100%,75%)"
-        )
-        document.documentElement.style.setProperty(
-            "--arcane_spice",
-            "hsl(" +
-                (5 * Math.sin(game.real_time_played[0] / 5) + 273) +
-                "," +
-                (15 * Math.sin(game.real_time_played[0]) + 85) +
-                "%,75%)"
-        )
-        document.documentElement.style.setProperty(
-            "--collapse3",
-            "hsl(" +
-                (30 * Math.sin(game.real_time_played[0]) + 92) +
-                ",100%,75%)"
-        )
-        document.documentElement.style.setProperty(
-            "--unstable_spice3",
-            "hsl(" +
-                (18 * Math.sin(game.real_time_played[0] * 3) + 26) +
-                ",100%,75%)"
-        )
-        document.documentElement.style.setProperty(
-            "--decayed_spice",
-            "hsl(300," +
-                (8 * Math.sin(game.real_time_played[0]) + 32) +
-                "%,75%)"
-        )
-    }
 
     tabs_update()
     if (game.tab === 0) spice_update()
@@ -5127,16 +4992,382 @@ function graphics_loop() {
     let end_time = Date.now()
     let total_time = end_time - start_time
     if (total_time < 0) total_time = 0
-    window.setTimeout(
-        graphics_loop,
-        game.refresh_rate - (total_time % game.refresh_rate)
-    )
+    if (!pause)
+        window.setTimeout(
+            graphics_loop,
+            game.refresh_rate - (total_time % game.refresh_rate)
+        )
 }
 
-tick_loop()
-graphics_loop()
-
-//setting up the autosave loop
-let save_loop = window.setInterval(function () {
+//setting up the save loop
+function save_loop() {
     save()
-}, 60000)
+
+    if (!pause) {
+        window.setTimeout(save_loop, 60000)
+    }
+}
+
+//setting up the catch up loop
+function catchup_loop(mode) {
+    let mobile = Number(
+        getComputedStyle(document.body).getPropertyValue("--mobile")
+    )
+
+    game.catchup_rate = Number(document.getElementById("catchup_input").value)
+
+    if (game.catchup_rate > total_ticks - ticks_run) {
+        delta_time =
+            (1000 * (total_ticks - start_ticks) * game.gamespeed) /
+            (offline_ms - start_ms)
+        for (let i = 0; i < total_ticks - ticks_run; i++) {
+            tick()
+            ticks_run++
+        }
+    } else {
+        delta_time =
+            (1000 * (total_ticks - start_ticks) * game.gamespeed) /
+            (offline_ms - start_ms)
+        for (let i = 0; i < game.catchup_rate; i++) {
+            tick()
+            ticks_run++
+        }
+    }
+
+    document.getElementById("catchup_progress").style.width =
+        (ticks_run / total_ticks) * 100 + "%"
+
+    if (ticks_run > Math.floor(total_ticks / 2) && mode === "offline")
+        document.getElementById("catchup_half_skip").style.display = "none"
+
+    let total_time = Date.now() - offline_time
+    offline_time = Date.now()
+
+    average_time += total_time
+    if (average_time >= 1000) {
+        average_rate = ((ticks_run - average_ticks) * 1000) / average_time
+        average_ticks = ticks_run
+        average_time = 0
+    }
+
+    let eta = "Estimated time to completion: "
+    if (mobile) eta = "ETA: "
+
+    if (mode === "offline" && total_ticks >= 8640000)
+        document.getElementById("catchup_info").innerHTML =
+            format_num(ticks_run, 0) +
+            " / " +
+            format_num(total_ticks, 0) +
+            " ticks run (capped)<br>Currently running about " +
+            format_dec(average_rate, 0) +
+            " ticks/sec<br>" +
+            eta +
+            format_time_long((total_ticks - ticks_run) / average_rate, 0, 1)
+    else if (mode === "background" && total_ticks >= 60000)
+        document.getElementById("catchup_info").innerHTML =
+            format_num(ticks_run, 0) +
+            " / " +
+            format_num(total_ticks, 0) +
+            " ticks run (capped)<br>Currently running about " +
+            format_dec(average_rate, 0) +
+            " ticks/sec<br>" +
+            eta +
+            format_time_long((total_ticks - ticks_run) / average_rate, 0, 1)
+    else
+        document.getElementById("catchup_info").innerHTML =
+            format_num(ticks_run, 0) +
+            " / " +
+            format_num(total_ticks, 0) +
+            " ticks run<br>Currently running about " +
+            format_dec(average_rate, 0) +
+            " ticks/sec<br>" +
+            eta +
+            format_time_long((total_ticks - ticks_run) / average_rate, 0, 1)
+
+    between_time += total_time
+    while (between_time >= 1000 / game.tickspeed) {
+        delta_time = game.tickspeed / game.gamespeed
+        between_time -= 1000 / game.tickspeed
+        tick()
+    }
+
+    if (ticks_run < total_ticks) {
+        window.setTimeout(function () {
+            catchup_loop(mode)
+        }, 0)
+    } else {
+        document.getElementById("tabs_block").style.display = "block"
+        document.getElementsByTagName("main")[0].style.display = "block"
+        document.getElementById("catchup_screen").style.display = "none"
+
+        if (pause) pause = false
+
+        tick_time = Date.now() - 1000 / game.tickspeed
+
+        tick_loop()
+        graphics_loop()
+
+        window.setTimeout(save_loop, 60000)
+    }
+}
+
+let offline_ms, total_ticks
+let ticks_run = 0
+let average_time = 0
+let average_rate = game.catchup_rate * game.tickspeed
+let average_ticks = 0
+let between_time = 0
+let offline_time = Date.now()
+let start_ms = 0
+let start_ticks = 0
+
+//setting up loops and starting the game
+if (game.save_time === undefined) {
+    let mobile = Number(
+        getComputedStyle(document.body).getPropertyValue("--mobile")
+    )
+
+    document.getElementById("catchup_screen").style.display = "flex"
+    document.getElementById("startup_panel").style.display = "block"
+    document.getElementById("catchup_header").innerHTML =
+        "The universe is full of spices...<br>Use them to conquer it"
+    if (mobile)
+        document.getElementById("catchup_header").innerHTML =
+            "The universe is full of spices...<br><br>Use them to conquer it"
+    document.getElementById("offline_panel").style.display = "none"
+    document.getElementById("tabs_block").style.display = "none"
+    document.getElementsByTagName("main")[0].style.display = "none"
+
+    if (game.collapse >= 1)
+        document.getElementById("spice_idle").className =
+            "spice_idle atomic_spice"
+    else if (game.ascend_complete[0])
+        document.getElementById("spice_idle").className =
+            "spice_idle arcane_spice"
+    else if (game.ascend >= 1)
+        document.getElementById("spice_idle").className = "spice_idle runes"
+    else if (game.prestige_bought[12] >= 1)
+        document.getElementById("spice_idle").className =
+            "spice_idle crystal_spice"
+    else if (game.prestige >= 1)
+        document.getElementById("spice_idle").className =
+            "spice_idle rainbow_spice"
+    else {
+        switch (game.color_boosts) {
+            case 0:
+                document.getElementById("spice_idle").className =
+                    "spice_idle red_spice"
+                break
+            case 1:
+                document.getElementById("spice_idle").className =
+                    "spice_idle yellow_spice"
+                break
+            case 2:
+                document.getElementById("spice_idle").className =
+                    "spice_idle green_spice"
+                break
+            case 3:
+                document.getElementById("spice_idle").className =
+                    "spice_idle blue_spice"
+                break
+            default:
+                document.getElementById("spice_idle").className =
+                    "spice_idle pink_spice"
+                break
+        }
+    }
+} else if (game.offline_progress) {
+    let mobile = Number(
+        getComputedStyle(document.body).getPropertyValue("--mobile")
+    )
+
+    document.getElementById("catchup_screen").style.display = "flex"
+    document.getElementById("offline_panel").style.display = "block"
+    if (mobile)
+        document.getElementById("catchup_header").innerHTML =
+            "Catching up on time since the game was last saved...<br><br>Please keep the game on-screen"
+    document.getElementById("catchup_half_skip").style.display = "block"
+    document.getElementById("startup_panel").style.display = "none"
+    document.getElementById("tabs_block").style.display = "none"
+    document.getElementsByTagName("main")[0].style.display = "none"
+
+    if (game.collapse >= 1)
+        document.getElementById("spice_idle").className =
+            "spice_idle atomic_spice"
+    else if (game.ascend_complete[0])
+        document.getElementById("spice_idle").className =
+            "spice_idle arcane_spice"
+    else if (game.ascend >= 1)
+        document.getElementById("spice_idle").className = "spice_idle runes"
+    else if (game.prestige_bought[12] >= 1)
+        document.getElementById("spice_idle").className =
+            "spice_idle crystal_spice"
+    else if (game.prestige >= 1)
+        document.getElementById("spice_idle").className =
+            "spice_idle rainbow_spice"
+    else {
+        switch (game.color_boosts) {
+            case 0:
+                document.getElementById("spice_idle").className =
+                    "spice_idle red_spice"
+                break
+            case 1:
+                document.getElementById("spice_idle").className =
+                    "spice_idle yellow_spice"
+                break
+            case 2:
+                document.getElementById("spice_idle").className =
+                    "spice_idle green_spice"
+                break
+            case 3:
+                document.getElementById("spice_idle").className =
+                    "spice_idle blue_spice"
+                break
+            default:
+                document.getElementById("spice_idle").className =
+                    "spice_idle pink_spice"
+                break
+        }
+    }
+
+    offline_ms = Date.now() - game.save_time
+    total_ticks = Math.floor((offline_ms * game.tickspeed) / 1000)
+    if (total_ticks >= 8640000) total_ticks = 8640000
+
+    catchup_loop("offline")
+} else {
+    tick_time = Date.now()
+
+    tick_loop()
+    graphics_loop()
+
+    window.setTimeout(save_loop, 60000)
+}
+
+let pause_time
+
+let before_time
+let after_time
+
+//checking for when the game is off-screen
+window.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") {
+        if (!pause) {
+            pause = true
+            pause_time = Date.now()
+
+            before_time = game.real_time_played[0]
+
+            document.getElementById("catchup_screen").style.display = "flex"
+            document.getElementById("catchup_header").innerHTML =
+                "Waiting for the game to be visible again..."
+            document.getElementById("offline_panel").style.display = "none"
+            document.getElementById("startup_panel").style.display = "none"
+            document.getElementById("tabs_block").style.display = "none"
+            document.getElementsByTagName("main")[0].style.display = "none"
+
+            close_modal()
+
+            if (game.collapse >= 1)
+                document.getElementById("spice_idle").className =
+                    "spice_idle atomic_spice"
+            else if (game.ascend_complete[0])
+                document.getElementById("spice_idle").className =
+                    "spice_idle arcane_spice"
+            else if (game.ascend >= 1)
+                document.getElementById("spice_idle").className =
+                    "spice_idle runes"
+            else if (game.prestige_bought[12] >= 1)
+                document.getElementById("spice_idle").className =
+                    "spice_idle crystal_spice"
+            else if (game.prestige >= 1)
+                document.getElementById("spice_idle").className =
+                    "spice_idle rainbow_spice"
+            else {
+                switch (game.color_boosts) {
+                    case 0:
+                        document.getElementById("spice_idle").className =
+                            "spice_idle red_spice"
+                        break
+                    case 1:
+                        document.getElementById("spice_idle").className =
+                            "spice_idle yellow_spice"
+                        break
+                    case 2:
+                        document.getElementById("spice_idle").className =
+                            "spice_idle green_spice"
+                        break
+                    case 3:
+                        document.getElementById("spice_idle").className =
+                            "spice_idle blue_spice"
+                        break
+                    default:
+                        document.getElementById("spice_idle").className =
+                            "spice_idle pink_spice"
+                        break
+                }
+            }
+        }
+    } else if (document.visibilityState === "visible") {
+        if (pause) {
+            let mobile = Number(
+                getComputedStyle(document.body).getPropertyValue("--mobile")
+            )
+
+            document.getElementById("catchup_screen").style.display = "flex"
+            document.getElementById("catchup_header").innerHTML =
+                "Catching up on time while the game was in the background...<br>Please keep the game on-screen"
+            if (mobile) {
+                document.getElementById("catchup_header").innerHTML =
+                    "Catching up on time while the game was in the background...<br><br>Please keep the game on-screen"
+            }
+            document.getElementById("offline_panel").style.display = "block"
+            document.getElementById("catchup_skips").style.display = "none"
+
+            ticks_run = 0
+            average_time = 0
+            average_rate = game.catchup_rate * game.tickspeed
+            average_ticks = 0
+            between_time = 0
+            offline_time = Date.now()
+            start_ms = 0
+            start_ticks = 0
+
+            offline_ms = Date.now() - pause_time
+            total_ticks = Math.floor((offline_ms * game.tickspeed) / 1000)
+            if (total_ticks >= 60000) total_ticks = 60000
+
+            after_time = Date.now()
+
+            catchup_loop("background")
+        }
+    }
+})
+
+//handling animated text colors
+let time = 0
+
+let animation_time = Date.now()
+
+function animation_loop() {
+    time += (Date.now() - animation_time) / 1000
+    animation_time = Date.now()
+
+    document.querySelector(":root").style.setProperty("--time", time)
+    if (!game.high_visibility) {
+        document
+            .querySelector(":root")
+            .style.setProperty("--arcane_light", 5 * Math.sin(time) + 55 + "%")
+        document
+            .querySelector(":root")
+            .style.setProperty("--decayed_sat", 6 * Math.sin(time) + 16 + "%")
+    } else {
+        document
+            .querySelector(":root")
+            .style.setProperty("--decayed_sat", 8 * Math.sin(time) + 32 + "%")
+    }
+
+    window.setTimeout(animation_loop, 10)
+}
+
+window.setTimeout(animation_loop, 10)
