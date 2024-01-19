@@ -1,3 +1,14 @@
+:root {
+    --rainbow_light: 65%;
+    --ascension_light: 50%;
+    --ascension_light2: 60%;
+    --arcane_light: 50%;
+    --collapse_light: 60%;
+    --unstable_light: 60%;
+    --decayed_light: 50%;
+    --decayed_sat: 16%;
+}
+
 html {
     margin: 0;
     padding: 0;
@@ -18,6 +29,140 @@ body {
     body {
         font-size: 2.25vw;
         --mobile: 1;
+    }
+}
+
+.catchup_screen {
+    display: none;
+    background: black;
+    width: 100%;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.catchup_title {
+    display: flex;
+    margin-bottom: 7em;
+    justify-content: center;
+}
+
+.spice_idle {
+    font-family: "Fira Sans";
+    font-size: 6em;
+    font-weight: bold;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.catchup_version {
+    font-size: 2em;
+    color: white;
+    margin-left: 0.5em;
+    margin-top: 1.8em;
+    margin-bottom: 0em;
+}
+
+.catchup_header {
+    font-size: 2em;
+    color: white;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.catchup_text {
+    font-size: 1.5em;
+    color: white;
+    text-align: center;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.catchup_back {
+    width: 80em;
+    height: 2em;
+    background: black;
+    border: 1px solid white;
+    margin-top: 1em;
+    margin-bottom: 3em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.catchup_progress {
+    width: 0%;
+    height: 100%;
+    background: white;
+}
+
+.catchup_set {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+
+#catchup_input {
+    background: black;
+    font-size: 1em;
+    width: 4em;
+    height: 1.5em;
+    margin-left: 0.5em;
+}
+
+.catchup_button {
+    padding: 0.2em 0.4em;
+    background: black;
+    font-family: "Fira Code";
+    font-size: 1.25em;
+    font-weight: 400;
+    color: #aaaaaa;
+    border: 1px solid white;
+    margin-bottom: 0.3em;
+    margin-right: 0.3em;
+    cursor: pointer;
+}
+
+.startup_button {
+    padding: 0.2em 0.4em;
+    background: black;
+    font-family: "Fira Code";
+    font-size: 1.75em;
+    font-weight: 400;
+    color: #aaaaaa;
+    border: 1px solid white;
+    margin-bottom: 0.3em;
+    margin-right: 0.3em;
+    cursor: pointer;
+}
+
+.catchup_button:hover, .startup_button:hover {
+    color: white;
+}
+
+.catchup_button:active, .startup_button:active {
+    background: white;
+    color: black;
+}
+
+@media (pointer: coarse) {
+    .catchup_panel {
+        width: 100%;
+    }
+
+    .catchup_header, .catchup_text {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #catchup_input_text {
+        width: auto;
+        margin-left: 0em;
+        margin-right: 0em;
+    }
+
+    .catchup_back {
+        width: 80%;
     }
 }
 
@@ -106,14 +251,76 @@ main {
 }
 
 .notice {
-    color: var(--rainbow_spice3);
+    color: hsl(calc(var(--time) * 36), 50%, 50%);
     font-weight: normal;
     cursor: pointer;
 }
 
 .notice:hover {
-    color: var(--rainbow_spice2);
+    color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     font-weight: normal;
+}
+
+#modal {
+    display: none;
+}
+
+.modal_center {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+.modal_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 50%;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+}
+
+.modal_panel {
+    background: #221625;
+    border: 1px solid white;
+    box-shadow: 0 0 2em black;
+    width: 40em;
+    padding: 1.5em;
+}
+
+@media (pointer: coarse) {
+    .modal_panel {
+        width: calc(90% - 3em);
+    }
+}
+
+.modal_text {
+    font-size: 1.5em;
+    color: white;
+    text-align: center;
+    margin-top: 0em;
+}
+
+#import_input {
+    width: calc(100% - 0.5em - 2px);
+    height: 20em;
+    margin-bottom: 2em;
+    resize: none;
+}
+
+#modal_confirm, #modal_import {
+    display: none;
 }
 
 #color_shift {
@@ -295,8 +502,8 @@ main {
 }
 
 .boost {
-    color: var(--rainbow_spice2);
-    text-shadow: 0 0 0.2em var(--rainbow_spice);
+    color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 100%, 50%);
     cursor: pointer;
 }
 
@@ -315,6 +522,18 @@ main {
     font-size: 1.25em;
     color: #25dd8a;
     cursor: pointer;
+}
+
+.modal_button {
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-right: 1em;
+}
+
+.modal_button_last {
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-right: 0em;
 }
 
 #boost_auto, #infusion_auto, #enchantment_auto, #prestige_auto_toggle, #ascend_auto_toggle, #collapse_auto_toggle {
@@ -347,8 +566,8 @@ main {
 }
 
 .arcane_spice {
-    color: var(--arcane_spice);
-    text-shadow: 0em 0em 0.2em var(--arcane_spice), 0em 0em 0.5em var(--arcane_spice2)
+    color: hsl(calc(5 * sin(var(--time) / 5) + 273), calc(15% * sin(var(--time)) + 85%), var(--arcane_light));
+    text-shadow: 0em 0em 0.2em hsl(calc(5 * sin(var(--time) / 5) + 273), calc(15% * sin(var(--time)) + 85%), var(--arcane_light)), 0em 0em 0.5em hsl(calc(5 * sin(var(--time) / 5) + 273), calc(9% * sin(var(--time)) + 91%), calc(7% * sin(var(--time)) + 48%))
 }
 
 .red_cost {
@@ -377,8 +596,8 @@ main {
 }
 
 .rainbow_cost {
-    color: var(--rainbow_spice2);
-    text-shadow: 0 0 0.2em var(--rainbow_spice);
+    color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 100%, 50%);
     font-weight: 700;
 }
 
@@ -389,20 +608,20 @@ main {
 }
 
 .rune_cost {
-    color: var(--ascension2);
-    text-shadow: 0em 0em 0.2em var(--ascension);
+    color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    text-shadow: 0em 0em 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     font-weight: 700;
 }
 
 .arcane_cost {
-    color: var(--arcane_spice);
-    text-shadow: 0em 0em 0.2em var(--arcane_spice), 0em 0em 0.5em var(--arcane_spice2);
+    color: hsl(calc(5 * sin(var(--time) / 5) + 273), calc(15% * sin(var(--time)) + 85%), var(--arcane_light));
+    text-shadow: 0em 0em 0.2em hsl(calc(5 * sin(var(--time) / 5) + 273), calc(15% * sin(var(--time)) + 85%), var(--arcane_light)), 0em 0em 0.5em hsl(calc(5 * sin(var(--time) / 5) + 273), calc(9% * sin(var(--time)) + 91%), calc(7% * sin(var(--time)) + 48%));
     font-weight: 700;
 }
 
 .atomic_cost {
-    color: var(--collapse3);
-    text-shadow: 0 0 0.2em var(--collapse2), 0 0 0.5em var(--collapse);
+    color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
     font-weight: 700;
 }
 
@@ -497,6 +716,18 @@ main {
         height: 54em;
         margin-left: calc(50% - 16.2em);
     }
+
+    .reset_efficiency {
+        text-align: left;
+    }
+
+    #ascend_efficiency {
+        margin-bottom: 2.5em;
+    }
+
+    #collapse_efficiency {
+        margin-bottom: 0em;
+    }
 }
 
 .prestige_upgrade {
@@ -520,8 +751,8 @@ main {
 }
 
 .rainbow_spice {
-    color: var(--rainbow_spice2);
-    text-shadow: 0 0 0.2em var(--rainbow_spice);
+    color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 100%, 50%);
 }
 
 .p_locked {
@@ -532,60 +763,60 @@ main {
 
 .p_unlocked {
     background-color: black;
-    color: var(--rainbow_spice2);
-    text-shadow: 0 0 0.2em var(--rainbow_spice);
-    border: 1px solid var(--rainbow_spice2);
-    box-shadow: 0 0 0.3em var(--rainbow_spice), 0 0 0.6em var(--rainbow_spice) inset;
+    color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 100%, 50%);
+    border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    box-shadow: 0 0 0.3em hsl(calc(var(--time) * 36), 100%, 50%), 0 0 0.6em hsl(calc(var(--time) * 36), 100%, 50%) inset;
     cursor: pointer;
 }
 
 .p_unlocked:hover {
     background-color: black;
     color: white;
-    text-shadow: 0 0 0.2em var(--rainbow_spice);
-    border: 1px solid var(--rainbow_spice2);
-    box-shadow: 0 0 0.3em var(--rainbow_spice), 0 0 1em var(--rainbow_spice) inset;
+    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 100%, 50%);
+    border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    box-shadow: 0 0 0.3em hsl(calc(var(--time) * 36), 100%, 50%), 0 0 1em hsl(calc(var(--time) * 36), 100%, 50%) inset;
 }
 
 .p_unlocked:active {
-    background-color: var(--rainbow_spice2);
+    background-color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--rainbow_spice2);
-    box-shadow: 0 0 0.4em var(--rainbow_spice);
+    border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    box-shadow: 0 0 0.4em hsl(calc(var(--time) * 36), 100%, 50%);
 }
 
 .p_unlocked2 {
     background-color: black;
-    color: var(--rainbow_spice2);
-    text-shadow: 0 0 0.5em var(--rainbow_spice);
-    border: 1px solid var(--rainbow_spice2);
-    box-shadow: 0 0 0.5em var(--rainbow_spice), 0 0 1.8em var(--rainbow_spice) inset;
+    color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    text-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%);
+    border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%), 0 0 1.8em hsl(calc(var(--time) * 36), 100%, 50%) inset;
     cursor: pointer;
 }
 
 .p_unlocked2:hover {
     background-color: black;
     color: white;
-    text-shadow: 0 0 0.5em var(--rainbow_spice);
-    border: 1px solid var(--rainbow_spice2);
-    box-shadow: 0 0 0.5em var(--rainbow_spice), 0 0 3em var(--rainbow_spice) inset;
+    text-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%);
+    border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%), 0 0 3em hsl(calc(var(--time) * 36), 100%, 50%) inset;
 }
 
 .p_unlocked2:active {
-    background-color: var(--rainbow_spice2);
+    background-color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--rainbow_spice2);
-    box-shadow: 0 0 0.5em var(--rainbow_spice);
+    border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%);
 }
 
 .p_bought {
-    background-color: var(--rainbow_spice2);
+    background-color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--rainbow_spice2);
-    box-shadow: 0 0 0.5em var(--rainbow_spice);
+    border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
+    box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%);
 }
 
 .c_unlocked {
@@ -735,6 +966,12 @@ main {
     display: inline;
 }
 
+@media (pointer: coarse) {
+    .p_auto_text {
+        text-align: left;
+    }
+}
+
 #prestige_goal_text {
     margin-top: 0.3em;
 }
@@ -816,66 +1053,66 @@ main {
 
 .a_locked {
     background-color: black;
-    color: var(--ascension);
-    border: 1px solid var(--ascension);
+    color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
 }
 
 .a_unlocked {
-    background-color: var(--ascension3);
-    color: var(--ascension2);
-    text-shadow: 0 0 0.2em var(--ascension);
-    border: 1px solid var(--ascension2);
-    box-shadow: 0 0 0.3em var(--ascension), 0 0 1em var(--ascension) inset;
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 80%, 10%);
+    color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    text-shadow: 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    box-shadow: 0 0 0.3em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 1em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
     cursor: pointer;
 }
 
 .a_unlocked:hover {
-    background-color: var(--ascension4);
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 80%, 20%);
     color: white;
-    text-shadow: 0 0 0.1em white, 0 0 0.2em var(--ascension);
-    border: 1px solid var(--ascension2);
-    box-shadow: 0 0 0.3em var(--ascension), 0 0 1em var(--ascension) inset;
+    text-shadow: 0 0 0.1em white, 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    box-shadow: 0 0 0.3em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 1em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
 }
 
 .a_unlocked:active {
-    background-color: var(--ascension);
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--ascension);
-    box-shadow: 0 0 0.4em var(--ascension);
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
 }
 
 .a_unlocked2 {
-    background-color: var(--ascension3);
-    color: var(--ascension2);
-    text-shadow: 0 0 0.2em var(--ascension);
-    border: 1px solid var(--ascension2);
-    box-shadow: 0 0 0.6em var(--ascension), 0 0 2em var(--ascension) inset;
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 80%, 10%);
+    color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    text-shadow: 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    box-shadow: 0 0 0.6em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
     cursor: pointer;
 }
 
 .a_unlocked2:hover {
-    background-color: var(--ascension4);
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 80%, 20%);
     color: white;
-    text-shadow: 0 0 0.1em white, 0 0 0.2em var(--ascension);
-    border: 1px solid var(--ascension2);
-    box-shadow: 0 0 0.6em var(--ascension), 0 0 2em var(--ascension) inset;
+    text-shadow: 0 0 0.1em white, 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    box-shadow: 0 0 0.6em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
 }
 
 .a_unlocked2:active {
-    background-color: var(--ascension);
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--ascension);
-    box-shadow: 0 0 0.8em var(--ascension);
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    box-shadow: 0 0 0.8em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
 }
 
 .a_bought {
-    background-color: var(--ascension);
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--ascension);
-    box-shadow: 0 0 0.8em var(--ascension);
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    box-shadow: 0 0 0.8em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
 }
 
 .ac_locked {
@@ -943,8 +1180,8 @@ main {
 }
 
 .runes {
-    color: var(--ascension2);
-    text-shadow: 0 0 0.2em var(--ascension);
+    color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    text-shadow: 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
 }
 
 .rune_panel {
@@ -1142,7 +1379,7 @@ main {
 .ascension_line {
     padding: 0em;
     margin: 0em;
-    background-color: var(--ascension5);
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 90%, 30%);
     line-height: 1px;
     position: absolute;
     height: 2em;
@@ -1172,8 +1409,8 @@ main {
     width: 70em;
     padding: 1em;
     background-color: black;
-    border: 1px solid var(--ascension2);
-    box-shadow: 0 0 0.4em var(--ascension), 0 0 0.4em var(--ascension) inset;
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
     margin-top: 1em;
     margin-left: auto;
     margin-right: auto;
@@ -1190,8 +1427,8 @@ main {
 .a_challenge_header {
     font-size: 1.35em;
     font-weight: 400;
-    color: var(--ascension2);
-    text-shadow: 0 0 0.2em var(--ascension);
+    color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    text-shadow: 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     margin-top: 0em;
     margin-bottom: 0em;
 }
@@ -1211,36 +1448,36 @@ main {
 }
 
 .incomplete {
-    background-color: var(--ascension3);
-    color: var(--ascension2);
-    text-shadow: 0 0 0.2em var(--ascension);
-    border: 1px solid var(--ascension2);
-    box-shadow: 0 0 0.4em var(--ascension), 0 0 1em var(--ascension) inset;
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 80%, 10%);
+    color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    text-shadow: 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 1em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
     cursor: pointer;
 }
 
 .incomplete:hover {
-    background-color: var(--ascension4);
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 80%, 20%);
     color: white;
-    text-shadow: 0 0 0.1em white, 0 0 0.2em var(--ascension);
-    border: 1px solid var(--ascension2);
-    box-shadow: 0 0 0.4em var(--ascension), 0 0 1em var(--ascension) inset;
+    text-shadow: 0 0 0.1em white, 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
+    box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 1em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
 }
 
 .incomplete:active {
-    background-color: var(--ascension);
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--ascension);
-    box-shadow: 0 0 0.4em var(--ascension);
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
 }
 
 .inprogress {
-    background-color: var(--ascension);
+    background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--ascension);
-    box-shadow: 0 0 0.4em var(--ascension);
+    border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
+    box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
 }
 
 .finished {
@@ -1402,8 +1639,8 @@ main {
 }
 
 .atomic_spice {
-    color: var(--collapse3);
-    text-shadow: 0 0 0.2em var(--collapse2), 0 0 0.5em var(--collapse);
+    color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
 }
 
 .collapse_info2 {
@@ -1415,33 +1652,33 @@ main {
 
 .co_locked {
     background-color: black;
-    color: var(--collapse);
-    border: 1px solid var(--collapse);
+    color: hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
 }
 
 .co_unlocked {
-    background-color: var(--collapse4);
-    color: var(--collapse3);
-    text-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse);
-    border: 1px solid var(--collapse2);
-    box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse), 0 0 0.2em var(--collapse2) inset, 0 0 0.8em var(--collapse) inset;
+    background-color: hsl(calc(30 * sin(var(--time)) + 102), 80%, 10%);
+    color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%);
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset, 0 0 0.8em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%) inset;
     cursor: pointer;
 }
 
 .co_unlocked:hover {
-    background-color: var(--collapse5);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 80%, 20%);
     color: white;
-    text-shadow: 0 0 0.2em white, 0 0 0.4em var(--collapse);
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.2em var(--collapse3), 0 0 0.4em var(--collapse2), 0 0 0.2em var(--collapse3) inset, 0 0 1em var(--collapse2) inset;
+    text-shadow: 0 0 0.2em white, 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)) inset, 0 0 1em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset;
 }
 
 .co_unlocked:active {
-    background-color: var(--collapse3);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
 }
 
 .co_active {
@@ -1480,22 +1717,22 @@ main {
 }
 
 #collider_tab1 {
-    background-color: var(--unstable_spice8);
-    border: 1px solid var(--unstable_spice3);
-    color: var(--unstable_spice3);
-    box-shadow: 0 0 0.2em var(--unstable_spice) inset;
-    text-shadow: 0 0 0.2em var(--unstable_spice2), 0 0 0.5em var(--unstable_spice);
+    background-color: hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, 10%);
+    border: 1px solid hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, var(--unstable_light));
+    color: hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, var(--unstable_light));
+    box-shadow: 0 0 0.2em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 40%) inset;
+    text-shadow: 0 0 0.2em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 50%), 0 0 0.5em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 40%);
     cursor: pointer;
 }
 
 #collider_tab1:hover {
-    background-color: var(--unstable_spice7);
-    box-shadow: 0 0 0.4em var(--unstable_spice2) inset;
-    text-shadow: 0 0 0.2em var(--unstable_spice3), 0 0 0.5em var(--unstable_spice2);
+    background-color: hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, 16%);
+    box-shadow: 0 0 0.4em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 50%) inset;
+    text-shadow: 0 0 0.2em hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, var(--unstable_light)), 0 0 0.5em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 50%);
 }
 
 #collider_tab1:active, #collider_tab1.current_tab {
-    background-color: var(--unstable_spice3);
+    background-color: hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, var(--unstable_light));
     color: black;
     text-shadow: none;
     box-shadow: none;
@@ -1651,19 +1888,19 @@ main {
 
 #collider_tab8 {
     background-color: black;
-    border: 1px solid var(--rainbow_antispice);
-    color: var(--rainbow_antispice);
-    text-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.5em var(--rainbow_antispice2);
+    border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.5em hsl(calc(var(--time) * 36 + 180), 90%, 40%);
     cursor: pointer;
 }
 
 #collider_tab8:hover {
-    background-color: var(--rainbow_antispice3);
-    box-shadow: 0 0 0.4em var(--rainbow_antispice) inset;
+    background-color: hsl(calc(var(--time) * 36 + 180), 90%, 12%);
+    box-shadow: 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 60%) inset;
 }
 
 #collider_tab8:active, #collider_tab8.current_tab {
-    background-color: var(--rainbow_antispice);
+    background-color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     color: black;
     text-shadow: none;
     box-shadow: none;
@@ -1712,7 +1949,7 @@ main {
         margin-bottom: 1.5em;
     }
 
-    #collapse_auto_buttons, #collapse_spice, #collapse_spice2, #collapse_time, #collapse_time2 {
+    #collapse_auto_buttons, #collapse_spice, #collapse_time, #collapse_decay {
         justify-content: left;
     }
 
@@ -1736,11 +1973,11 @@ main {
 }
 
 #collider_view {
-    filter: hue-rotate(var(--collapse6)) brightness(var(--collapse7)) saturate(var(--collapse8)) drop-shadow(0 0 0.2em var(--collapse2)) drop-shadow(0 0 0.5em var(--collapse));
+    filter: hue-rotate(calc(25deg * sin(var(--time)) - 25deg)) brightness(calc(-10% * sin(var(--time)) + 110%)) saturate(calc(10% * sin(var(--time)) + 90%)) drop-shadow(0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%)) drop-shadow(0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%));
 }
 
 #collider_view2 {
-    filter: hue-rotate(var(--unstable_spice4)) brightness(var(--unstable_spice5)) saturate(var(--unstable_spice6)) drop-shadow(0 0 0.2em var(--unstable_spice2)) drop-shadow(0 0 0.5em var(--unstable_spice));
+    filter: hue-rotate(calc(16deg * sin(var(--time) * 3) + 16deg)) brightness(calc(50% * sin(var(--time) * 3) + 150%)) saturate(calc(-10% * sin(var(--time) * 3) + 90%)) drop-shadow(0 0 0.2em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 50%)) drop-shadow(0 0 0.5em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 40%));
 }
 
 .pure_collider {
@@ -1768,7 +2005,7 @@ main {
 }
 
 .rainbow_collider {
-    filter: hue-rotate(var(--rainbow_antispice8)) brightness(var(--rainbow_antispice9)) saturate(var(--rainbow_antispice10)) drop-shadow(0 0 0.1em var(--rainbow_antispice)) drop-shadow(0 0 0.2em var(--rainbow_antispice4)) drop-shadow(0 0 0.3em var(--rainbow_antispice5)) drop-shadow(0 0 0.4em var(--rainbow_antispice6)) drop-shadow(0 0 0.5em black);
+    filter: hue-rotate(calc(var(--time) * 36deg + 180deg)) brightness(calc(-60% * cos((var(--time) * 36 + 280) * pi / 180) + 160%)) saturate(calc(10% * cos((var(--time) * 36 + 280) * pi / 180) + 90%)) drop-shadow(0 0 0.1em hsl(calc(var(--time) * 36 + 180), 90%, 60%)) drop-shadow(0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 16%)) drop-shadow(0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 8%)) drop-shadow(0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 4%)) drop-shadow(0 0 0.5em black);
 }
 
 .collider_text {
@@ -1782,13 +2019,13 @@ main {
 }
 
 .unstable_spice {
-    color: var(--unstable_spice3);
-    text-shadow: 0 0 0.2em var(--unstable_spice2), 0 0 0.5em var(--unstable_spice);
+    color: hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, var(--unstable_light));
+    text-shadow: 0 0 0.2em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 50%), 0 0 0.5em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 40%);
 }
 
 .decayed_spice {
-    color: var(--decayed_spice);
-    text-shadow: 0 0 0.2em var(--decayed_spice2);
+    color: hsl(300, var(--decayed_sat), var(--decayed_light));
+    text-shadow: 0 0 0.2em hsl(300, calc(6% * sin(var(--time)) + 16%), 40%);
 }
 
 .pure_antispice {
@@ -1822,8 +2059,8 @@ main {
 }
 
 .rainbow_antispice {
-    color: var(--rainbow_antispice);
-    text-shadow: 0 0 0.1em var(--rainbow_antispice), 0 0 0.2em var(--rainbow_antispice4), 0 0 0.3em var(--rainbow_antispice5), 0 0 0.4em var(--rainbow_antispice6), 0 0 0.5em black;
+    color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    text-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.5em black;
 }
 
 .unstable_text {
@@ -1860,8 +2097,8 @@ main {
 
 .research_number {
     font-size: 1.5em;
-    color: var(--collapse3);
-    text-shadow: 0 0 0.2em var(--collapse2), 0 0 0.5em var(--collapse);
+    color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
     margin-top: 2em;
     margin-bottom: 0.5em;
 }
@@ -1912,7 +2149,7 @@ main {
 }
 
 .r_select {
-    border: 1px solid var(--collapse3);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
 }
 
 .r_view, .r_view:hover, .r_view:active {
@@ -1923,10 +2160,10 @@ main {
 }
 
 .r_active, .r_active:hover, .r_active:active {
-    background-color: var(--collapse3);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--collapse3);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     cursor: default;
 }
 
@@ -1967,61 +2204,61 @@ main {
 
 .r_begin {
     background-color: black;
-    color: var(--collapse3);
-    text-shadow: 0 0 0.2em var(--collapse2);
-    border: 1px solid var(--collapse2);
-    box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.2em var(--collapse2) inset;
+    color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%);
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset;
     cursor: pointer;
 }
 
 .r_begin:hover {
     background-color: black;
     color: white;
-    text-shadow: 0 0 0.2em white, 0 0 0.4em var(--collapse);
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.2em var(--collapse3), 0 0 0.6em var(--collapse3) inset;
+    text-shadow: 0 0 0.2em white, 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)), 0 0 0.6em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)) inset;
 }
 
 .r_begin:active {
-    background-color: var(--collapse3);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
 }
 
 .r_pause {
-    background-color: var(--collapse4);
-    color: var(--collapse3);
-    text-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse);
-    border: 1px solid var(--collapse2);
-    box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse), 0 0 0.2em var(--collapse2) inset, 0 0 0.8em var(--collapse) inset;
+    background-color: hsl(calc(30 * sin(var(--time)) + 102), 80%, 10%);
+    color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%);
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset, 0 0 0.8em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%) inset;
     cursor: pointer;
 }
 
 .r_pause:hover {
-    background-color: var(--collapse5);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 80%, 20%);
     color: white;
-    text-shadow: 0 0 0.2em white, 0 0 0.4em var(--collapse);
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.2em var(--collapse3), 0 0 0.4em var(--collapse2), 0 0 0.2em var(--collapse3) inset, 0 0 1em var(--collapse2) inset;
+    text-shadow: 0 0 0.2em white, 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)) inset, 0 0 1em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset;
 }
 
 .r_pause:active {
-    background-color: var(--collapse3);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
 }
 
 .r_done {
-    background-color: var(--collapse3);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     color: black;
     text-shadow: none;
     font-weight: 700;
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
     cursor: default;
 }
 
@@ -2036,12 +2273,12 @@ main {
 }
 
 .r_on {
-    background-color: var(--collapse3);
-    box-shadow: 0 0 0.3em var(--collapse2), 0 0 0.6em var(--collapse);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.3em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.6em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
 }
 
 .r_off {
-    background-color: var(--collapse);
+    background-color: hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
     box-shadow: none;
 }
 
@@ -2059,8 +2296,8 @@ main {
     width: 70em;
     padding: 1em;
     background-color: black;
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.4em var(--collapse2), 0 0 0.4em var(--collapse) inset;
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%) inset;
     margin-top: 1em;
     margin-left: auto;
     margin-right: auto;
@@ -2077,8 +2314,8 @@ main {
 .co_challenge_header {
     font-size: 1.35em;
     font-weight: 400;
-    color: var(--collapse3);
-    text-shadow: 0 0 0.2em var(--collapse2), 0 0 0.5em var(--collapse);
+    color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
     margin-top: 0em;
     margin-bottom: 0em;
 }
@@ -2103,36 +2340,36 @@ main {
 }
 
 .outside {
-    background-color: var(--collapse4);
-    color: var(--collapse3);
-    text-shadow: 0 0 0.2em var(--collapse2), 0 0 0.5em var(--collapse);
-    border: 1px solid var(--collapse2);
-    box-shadow: 0 0 0.2em var(--collapse2), 0 0 0.4em var(--collapse), 0 0 0.2em var(--collapse2) inset, 0 0 1em var(--collapse) inset;
+    background-color: hsl(calc(30 * sin(var(--time)) + 102), 80%, 10%);
+    color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%);
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset, 0 0 1em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%) inset;
     cursor: pointer;
 }
 
 .outside:hover {
-    background-color: var(--collapse5);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 80%, 20%);
     color: white;
-    text-shadow: 0 0 0.2em white, 0 0 0.5em var(--collapse);
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.2em var(--collapse3), 0 0 0.4em var(--collapse2), 0 0 0.2em var(--collapse3) inset, 0 0 1em var(--collapse2) inset;
+    text-shadow: 0 0 0.2em white, 0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)) inset, 0 0 1em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset;
 }
 
 .outside:active {
-    background-color: var(--collapse3);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.4em var(--collapse2);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%);
 }
 
 .inside {
-    background-color: var(--collapse3);
+    background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     color: black;
     text-shadow: none;
-    border: 1px solid var(--collapse3);
-    box-shadow: 0 0 0.4em var(--collapse2);
+    border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
+    box-shadow: 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%);
     cursor: default;
 }
 
@@ -2208,8 +2445,9 @@ main {
 @media (pointer: coarse) {
     #antispice_perk_block {
         width: 32.4em;
-        height: 54em;
+        height: 36em;
         margin-left: calc(50% - 16.2em);
+        margin-bottom: 11em;
     }
 }
 
@@ -2225,67 +2463,67 @@ main {
 
 .ap_locked {
     background-color: black;
-    color: var(--rainbow_antispice);
-    border: 1px solid var(--rainbow_antispice);
+    color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     cursor: default;
 }
 
 .ap_unlocked {
-    background-color: var(--rainbow_antispice5);
-    color: var(--rainbow_antispice);
-    text-shadow: 0 0 0.15em var(--rainbow_antispice), 0 0 0.3em var(--rainbow_antispice4), 0 0 0.45em var(--rainbow_antispice5), 0 0 0.6em var(--rainbow_antispice6), 0 0 0.75em black;
-    border: 1px solid var(--rainbow_antispice);
-    box-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.4em var(--rainbow_antispice4), 0 0 0.6em var(--rainbow_antispice5), 0 0 0.8em var(--rainbow_antispice6), 0 0 1em black, 0 0 1em var(--rainbow_antispice2) inset, 0 0 2.5em var(--rainbow_antispice7) inset;
+    background-color: hsl(calc(var(--time) * 36 + 180), 90%, 8%);
+    color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    text-shadow: 0 0 0.15em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.45em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.75em black;
+    border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 1em black, 0 0 1em hsl(calc(var(--time) * 36 + 180), 90%, 40%) inset, 0 0 2.5em hsl(calc(var(--time) * 36 + 180), 90%, 24%) inset;
     cursor: pointer;
 }
 
 .ap_unlocked:hover {
-    background-color: var(--rainbow_antispice4);
+    background-color: hsl(calc(var(--time) * 36 + 180), 90%, 16%);
     color: white;
-    text-shadow: 0 0 0.15em var(--rainbow_antispice), 0 0 0.3em var(--rainbow_antispice4), 0 0 0.45em var(--rainbow_antispice5), 0 0 0.6em var(--rainbow_antispice6), 0 0 0.75em black;
-    border: 1px solid var(--rainbow_antispice);
-    box-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.4em var(--rainbow_antispice4), 0 0 0.6em var(--rainbow_antispice5), 0 0 0.8em var(--rainbow_antispice6), 0 0 1em black, 0 0 2em var(--rainbow_antispice) inset, 0 0 5em var(--rainbow_antispice2) inset;
+    text-shadow: 0 0 0.15em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.45em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.75em black;
+    border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 1em black, 0 0 2em hsl(calc(var(--time) * 36 + 180), 90%, 60%) inset, 0 0 5em hsl(calc(var(--time) * 36 + 180), 90%, 40%) inset;
 }
 
 .ap_unlocked:active {
-    background-color: var(--rainbow_antispice);
+    background-color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     color: black;
     text-shadow: 0 0 0.25em black, 0 0 0.5em black;
-    border: 1px solid var(--rainbow_antispice);
-    box-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.4em var(--rainbow_antispice4), 0 0 0.6em var(--rainbow_antispice5), 0 0 0.8em var(--rainbow_antispice6), 0 0 1em black;
+    border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 1em black;
 }
 
 .ap_unlocked2 {
-    background-color: var(--rainbow_antispice5);
-    color: var(--rainbow_antispice);
-    text-shadow: 0 0 0.075em var(--rainbow_antispice), 0 0 0.15em var(--rainbow_antispice4), 0 0 0.225em var(--rainbow_antispice5), 0 0 0.3em var(--rainbow_antispice6), 0 0 0.375em black;
-    border: 1px solid var(--rainbow_antispice);
-    box-shadow: 0 0 0.1em var(--rainbow_antispice), 0 0 0.2em var(--rainbow_antispice4), 0 0 0.3em var(--rainbow_antispice5), 0 0 0.4em var(--rainbow_antispice6), 0 0 0.5em black, 0 0 0.5em var(--rainbow_antispice2) inset, 0 0 1.25em var(--rainbow_antispice7) inset;
+    background-color: hsl(calc(var(--time) * 36 + 180), 90%, 8%);
+    color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    text-shadow: 0 0 0.075em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.15em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.225em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.375em black;
+    border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    box-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.5em black, 0 0 0.5em hsl(calc(var(--time) * 36 + 180), 90%, 40%) inset, 0 0 1.25em hsl(calc(var(--time) * 36 + 180), 90%, 24%) inset;
     cursor: pointer;
 }
 
 .ap_unlocked2:hover {
-    background-color: var(--rainbow_antispice4);
+    background-color: hsl(calc(var(--time) * 36 + 180), 90%, 16%);
     color: white;
-    text-shadow: 0 0 0.075em var(--rainbow_antispice), 0 0 0.15em var(--rainbow_antispice4), 0 0 0.225em var(--rainbow_antispice5), 0 0 0.3em var(--rainbow_antispice6), 0 0 0.375em black;
-    border: 1px solid var(--rainbow_antispice);
-    box-shadow: 0 0 0.1em var(--rainbow_antispice), 0 0 0.2em var(--rainbow_antispice4), 0 0 0.3em var(--rainbow_antispice5), 0 0 0.4em var(--rainbow_antispice6), 0 0 0.5em black, 0 0 1em var(--rainbow_antispice) inset, 0 0 2.5em var(--rainbow_antispice2) inset;
+    text-shadow: 0 0 0.075em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.15em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.225em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.375em black;
+    border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    box-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.5em black, 0 0 1em hsl(calc(var(--time) * 36 + 180), 90%, 60%) inset, 0 0 2.5em hsl(calc(var(--time) * 36 + 180), 90%, 40%) inset;
 }
 
 .ap_unlocked2:active {
-    background-color: var(--rainbow_antispice);
+    background-color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     color: black;
     text-shadow: 0 0 0.125em black, 0 0 0.25em black;
-    border: 1px solid var(--rainbow_antispice);
-    box-shadow: 0 0 0.1em var(--rainbow_antispice), 0 0 0.2em var(--rainbow_antispice4), 0 0 0.3em var(--rainbow_antispice5), 0 0 0.4em var(--rainbow_antispice6), 0 0 0.5em black;
+    border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    box-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.5em black;
 }
 
 .ap_bought {
-    background-color: var(--rainbow_antispice);
+    background-color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     color: black;
     text-shadow: 0 0 0.25em black, 0 0 0.5em black;
-    border: 1px solid var(--rainbow_antispice);
-    box-shadow: 0 0 0.2em var(--rainbow_antispice), 0 0 0.4em var(--rainbow_antispice4), 0 0 0.6em var(--rainbow_antispice5), 0 0 0.8em var(--rainbow_antispice6), 0 0 1em black;
+    border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
+    box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 1em black;
     cursor: default;
 }
 
