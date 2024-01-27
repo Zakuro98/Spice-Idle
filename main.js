@@ -5100,7 +5100,20 @@ function catchup_loop(mode) {
         document.getElementsByTagName("main")[0].style.display = "block"
         document.getElementById("catchup_screen").style.display = "none"
 
-        if (pause) pause = false
+        if (pause) {
+            pause = false
+            if (offline_ms >= 86400000)
+                open_modal(
+                    "alert",
+                    "pause_time = " +
+                        pause_time +
+                        "<br>unpause_time = " +
+                        (pause_time + offline_ms) +
+                        "<br><br>If you did not leave in the game in the background for " +
+                        format_time_long(offline_ms / 1000) +
+                        ", please relay this information to Zakuro."
+                )
+        }
 
         tick_time = Date.now() - 1000 / game.tickspeed
 
