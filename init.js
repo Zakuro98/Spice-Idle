@@ -536,6 +536,8 @@ let game = {
 let key = {
     digit: [false, false, false, false, false, false],
     shift: false,
+    escape: false,
+    enter: false,
 
     s: false,
     m: false,
