@@ -1,6 +1,7 @@
 let tick_time = Date.now()
 let delta_time = undefined
 let pause = false
+let pause_time
 
 //game operations run every tick
 function tick() {
@@ -4937,6 +4938,51 @@ function close_modal() {
     document.getElementById("modal").style.display = "none"
 }
 
+//updating the colors on the title screen to fit your progress in the game :)
+function title_update() {
+    if (game.expand >= 1)
+        document.getElementById("spice_idle").className =
+            "spice_idle galactic_shards"
+    else if (game.collapse >= 1)
+        document.getElementById("spice_idle").className =
+            "spice_idle atomic_spice"
+    else if (game.ascend_complete[0])
+        document.getElementById("spice_idle").className =
+            "spice_idle arcane_spice"
+    else if (game.ascend >= 1)
+        document.getElementById("spice_idle").className = "spice_idle runes"
+    else if (game.prestige_bought[12] >= 1)
+        document.getElementById("spice_idle").className =
+            "spice_idle crystal_spice"
+    else if (game.prestige >= 1)
+        document.getElementById("spice_idle").className =
+            "spice_idle rainbow_spice"
+    else {
+        switch (game.color_boosts) {
+            case 0:
+                document.getElementById("spice_idle").className =
+                    "spice_idle red_spice"
+                break
+            case 1:
+                document.getElementById("spice_idle").className =
+                    "spice_idle yellow_spice"
+                break
+            case 2:
+                document.getElementById("spice_idle").className =
+                    "spice_idle green_spice"
+                break
+            case 3:
+                document.getElementById("spice_idle").className =
+                    "spice_idle blue_spice"
+                break
+            default:
+                document.getElementById("spice_idle").className =
+                    "spice_idle pink_spice"
+                break
+        }
+    }
+}
+
 //setting up the tick loop
 function tick_loop() {
     let start_time = Date.now()
@@ -4977,6 +5023,8 @@ function tick_loop() {
 
         close_modal()
 
+        title_update()
+
         pause = true
 
         ticks_run = 0
@@ -4985,16 +5033,16 @@ function tick_loop() {
         average_ticks = 0
         between_time = 0
         offline_time = Date.now()
-        start_ms = 0
-        start_ticks = 0
 
         offline_ms = delta_ms
         total_ticks = Math.floor((offline_ms * game.tickspeed) / 1000)
         if (total_ticks >= 60000) total_ticks = 60000
 
-        after_time = Date.now()
-
-        catchup_loop("background")
+        if (document.visibilityState === "visible") {
+            background_timeout()
+        } else if (document.visibilityState === "hidden") {
+            background_while()
+        }
     }
 }
 
@@ -5017,6 +5065,10 @@ function graphics_loop() {
         research_update()
         antispice_update()
     }
+    if (game.tab === 4) {
+        expansion_update()
+        dark_update()
+    }
     if (game.tab === 5) stats_update()
     if (game.tab === 6) settings_update()
     if (game.tab === 7) compendium_update()
@@ -5033,15 +5085,13 @@ function graphics_loop() {
 
 //setting up the save loop
 function save_loop() {
-    save()
+    if (!pause) save()
 
-    if (!pause) {
-        window.setTimeout(save_loop, 60000)
-    }
+    window.setTimeout(save_loop, 60000)
 }
 
-//setting up the catch up loop
-function catchup_loop(mode) {
+//setting up the offline catch up loop
+function catchup_loop() {
     let mobile = Number(
         getComputedStyle(document.body).getPropertyValue("--mobile")
     )
@@ -5050,16 +5100,16 @@ function catchup_loop(mode) {
 
     if (game.catchup_rate > total_ticks - ticks_run) {
         delta_time =
-            (1000 * (total_ticks - start_ticks) * game.gamespeed) /
-            (offline_ms - start_ms)
+            (1000 * (total_ticks - start_ticks)) /
+            ((offline_ms - start_ms) * game.gamespeed)
         for (let i = 0; i < total_ticks - ticks_run; i++) {
             tick()
             ticks_run++
         }
     } else {
         delta_time =
-            (1000 * (total_ticks - start_ticks) * game.gamespeed) /
-            (offline_ms - start_ms)
+            (1000 * (total_ticks - start_ticks)) /
+            ((offline_ms - start_ms) * game.gamespeed)
         for (let i = 0; i < game.catchup_rate; i++) {
             tick()
             ticks_run++
@@ -5069,7 +5119,7 @@ function catchup_loop(mode) {
     document.getElementById("catchup_progress").style.width =
         (ticks_run / total_ticks) * 100 + "%"
 
-    if (ticks_run > Math.floor(total_ticks / 2) && mode === "offline")
+    if (ticks_run > Math.floor(total_ticks / 2))
         document.getElementById("catchup_half_skip").style.display = "none"
 
     let total_time = Date.now() - offline_time
@@ -5085,17 +5135,7 @@ function catchup_loop(mode) {
     let eta = "Estimated time to completion: "
     if (mobile) eta = "ETA: "
 
-    if (mode === "offline" && total_ticks >= 8640000)
-        document.getElementById("catchup_info").innerHTML =
-            format_num(ticks_run, 0) +
-            " / " +
-            format_num(total_ticks, 0) +
-            " ticks run (capped)<br>Currently running about " +
-            format_dec(average_rate, 0) +
-            " ticks/sec<br>" +
-            eta +
-            format_time_long((total_ticks - ticks_run) / average_rate, 0, 1)
-    else if (mode === "background" && total_ticks >= 60000)
+    if (total_ticks >= 8640000)
         document.getElementById("catchup_info").innerHTML =
             format_num(ticks_run, 0) +
             " / " +
@@ -5124,9 +5164,7 @@ function catchup_loop(mode) {
     }
 
     if (ticks_run < total_ticks) {
-        window.setTimeout(function () {
-            catchup_loop(mode)
-        }, 0)
+        window.setTimeout(catchup_loop, 0)
     } else {
         document.getElementById("tabs_block").style.display = "block"
         document.getElementsByTagName("main")[0].style.display = "block"
@@ -5138,8 +5176,146 @@ function catchup_loop(mode) {
 
         tick_loop()
         graphics_loop()
+    }
+}
 
-        window.setTimeout(save_loop, 60000)
+//setting up the background progress loops
+function background_timeout() {
+    let mobile = Number(
+        getComputedStyle(document.body).getPropertyValue("--mobile")
+    )
+
+    game.catchup_rate = Number(document.getElementById("catchup_input").value)
+
+    if (game.catchup_rate > total_ticks - ticks_run) {
+        delta_time = (1000 * total_ticks) / (offline_ms * game.gamespeed)
+        for (let i = 0; i < total_ticks - ticks_run; i++) {
+            tick()
+            ticks_run++
+        }
+    } else {
+        delta_time = (1000 * total_ticks) / (offline_ms * game.gamespeed)
+        for (let i = 0; i < game.catchup_rate; i++) {
+            tick()
+            ticks_run++
+        }
+    }
+
+    document.getElementById("catchup_progress").style.width =
+        (ticks_run / total_ticks) * 100 + "%"
+
+    let total_time = Date.now() - offline_time
+    offline_time = Date.now()
+
+    average_time += total_time
+    if (average_time >= 1000) {
+        average_rate = ((ticks_run - average_ticks) * 1000) / average_time
+        average_ticks = ticks_run
+        average_time = 0
+    }
+
+    let eta = "Estimated time to completion: "
+    if (mobile) eta = "ETA: "
+
+    if (total_ticks >= 60000)
+        document.getElementById("catchup_info").innerHTML =
+            format_num(ticks_run, 0) +
+            " / " +
+            format_num(total_ticks, 0) +
+            " ticks run (capped)<br>Currently running about " +
+            format_dec(average_rate, 0) +
+            " ticks/sec<br>" +
+            eta +
+            format_time_long((total_ticks - ticks_run) / average_rate, 0, 1)
+    else
+        document.getElementById("catchup_info").innerHTML =
+            format_num(ticks_run, 0) +
+            " / " +
+            format_num(total_ticks, 0) +
+            " ticks run<br>Currently running about " +
+            format_dec(average_rate, 0) +
+            " ticks/sec<br>" +
+            eta +
+            format_time_long((total_ticks - ticks_run) / average_rate, 0, 1)
+
+    between_time += total_time
+    while (between_time >= 1000 / game.tickspeed) {
+        delta_time = game.tickspeed / game.gamespeed
+        between_time -= 1000 / game.tickspeed
+        tick()
+    }
+
+    if (ticks_run < total_ticks) {
+        if (document.visibilityState === "visible") {
+            window.setTimeout(background_timeout, 0)
+        } else {
+            background_while()
+        }
+    } else {
+        document.getElementById("tabs_block").style.display = "block"
+        document.getElementsByTagName("main")[0].style.display = "block"
+        document.getElementById("catchup_screen").style.display = "none"
+
+        if (pause) pause = false
+
+        tick_time = Date.now() - 1000 / game.tickspeed
+
+        tick_loop()
+        graphics_loop()
+    }
+}
+
+function background_while() {
+    let exited = false
+
+    while (ticks_run < total_ticks) {
+        if (game.catchup_rate > total_ticks - ticks_run) {
+            delta_time = (1000 * total_ticks) / (offline_ms * game.gamespeed)
+            for (let i = 0; i < total_ticks - ticks_run; i++) {
+                tick()
+                ticks_run++
+            }
+        } else {
+            delta_time = (1000 * total_ticks) / (offline_ms * game.gamespeed)
+            for (let i = 0; i < game.catchup_rate; i++) {
+                tick()
+                ticks_run++
+            }
+        }
+
+        let total_time = Date.now() - offline_time
+        offline_time = Date.now()
+
+        between_time += total_time
+        while (between_time >= 1000 / game.tickspeed) {
+            delta_time = game.tickspeed / game.gamespeed
+            between_time -= 1000 / game.tickspeed
+            tick()
+        }
+
+        if (document.visibilityState === "visible") {
+            exited = true
+            break
+        }
+    }
+
+    if (exited) {
+        average_time = 0
+        average_rate = game.catchup_rate * game.tickspeed
+        average_ticks = 0
+
+        background_timeout()
+    } else {
+        document.getElementById("tabs_block").style.display = "block"
+        document.getElementsByTagName("main")[0].style.display = "block"
+        document.getElementById("catchup_screen").style.display = "none"
+
+        if (pause) pause = false
+
+        tick_time = Date.now() - 1000 / game.tickspeed
+
+        tick_loop()
+        graphics_loop()
     }
 }
 
@@ -5170,44 +5346,7 @@ if (game.save_time === undefined) {
     document.getElementById("tabs_block").style.display = "none"
     document.getElementsByTagName("main")[0].style.display = "none"
 
-    if (game.collapse >= 1)
-        document.getElementById("spice_idle").className =
-            "spice_idle atomic_spice"
-    else if (game.ascend_complete[0])
-        document.getElementById("spice_idle").className =
-            "spice_idle arcane_spice"
-    else if (game.ascend >= 1)
-        document.getElementById("spice_idle").className = "spice_idle runes"
-    else if (game.prestige_bought[12] >= 1)
-        document.getElementById("spice_idle").className =
-            "spice_idle crystal_spice"
-    else if (game.prestige >= 1)
-        document.getElementById("spice_idle").className =
-            "spice_idle rainbow_spice"
-    else {
-        switch (game.color_boosts) {
-            case 0:
-                document.getElementById("spice_idle").className =
-                    "spice_idle red_spice"
-                break
-            case 1:
-                document.getElementById("spice_idle").className =
-                    "spice_idle yellow_spice"
-                break
-            case 2:
-                document.getElementById("spice_idle").className =
-                    "spice_idle green_spice"
-                break
-            case 3:
-                document.getElementById("spice_idle").className =
-                    "spice_idle blue_spice"
-                break
-            default:
-                document.getElementById("spice_idle").className =
-                    "spice_idle pink_spice"
-                break
-        }
-    }
+    title_update()
 } else if (game.offline_progress) {
     let mobile = Number(
         getComputedStyle(document.body).getPropertyValue("--mobile")
@@ -5223,158 +5362,19 @@ if (game.save_time === undefined) {
     document.getElementById("tabs_block").style.display = "none"
     document.getElementsByTagName("main")[0].style.display = "none"
 
-    if (game.collapse >= 1)
-        document.getElementById("spice_idle").className =
-            "spice_idle atomic_spice"
-    else if (game.ascend_complete[0])
-        document.getElementById("spice_idle").className =
-            "spice_idle arcane_spice"
-    else if (game.ascend >= 1)
-        document.getElementById("spice_idle").className = "spice_idle runes"
-    else if (game.prestige_bought[12] >= 1)
-        document.getElementById("spice_idle").className =
-            "spice_idle crystal_spice"
-    else if (game.prestige >= 1)
-        document.getElementById("spice_idle").className =
-            "spice_idle rainbow_spice"
-    else {
-        switch (game.color_boosts) {
-            case 0:
-                document.getElementById("spice_idle").className =
-                    "spice_idle red_spice"
-                break
-            case 1:
-                document.getElementById("spice_idle").className =
-                    "spice_idle yellow_spice"
-                break
-            case 2:
-                document.getElementById("spice_idle").className =
-                    "spice_idle green_spice"
-                break
-            case 3:
-                document.getElementById("spice_idle").className =
-                    "spice_idle blue_spice"
-                break
-            default:
-                document.getElementById("spice_idle").className =
-                    "spice_idle pink_spice"
-                break
-        }
-    }
+    title_update()
 
     offline_ms = Date.now() - game.save_time
     total_ticks = Math.floor((offline_ms * game.tickspeed) / 1000)
     if (total_ticks >= 8640000) total_ticks = 8640000
 
-    catchup_loop("offline")
+    catchup_loop()
 } else {
     tick_time = Date.now()
 
     tick_loop()
     graphics_loop()
-
-    window.setTimeout(save_loop, 60000)
 }
-
-let pause_time
-
-let before_time
-let after_time
-
-//checking for when the game is off-screen
-window.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") {
-        if (!pause) {
-            pause = true
-            pause_time = Date.now()
-
-            before_time = game.real_time_played[0]
-
-            document.getElementById("catchup_screen").style.display = "flex"
-            document.getElementById("catchup_header").innerHTML =
-                "Waiting for the game to be visible again..."
-            document.getElementById("offline_panel").style.display = "none"
-            document.getElementById("startup_panel").style.display = "none"
-            document.getElementById("tabs_block").style.display = "none"
-            document.getElementsByTagName("main")[0].style.display = "none"
-
-            close_modal()
-
-            if (game.collapse >= 1)
-                document.getElementById("spice_idle").className =
-                    "spice_idle atomic_spice"
-            else if (game.ascend_complete[0])
-                document.getElementById("spice_idle").className =
-                    "spice_idle arcane_spice"
-            else if (game.ascend >= 1)
-                document.getElementById("spice_idle").className =
-                    "spice_idle runes"
-            else if (game.prestige_bought[12] >= 1)
-                document.getElementById("spice_idle").className =
-                    "spice_idle crystal_spice"
-            else if (game.prestige >= 1)
-                document.getElementById("spice_idle").className =
-                    "spice_idle rainbow_spice"
-            else {
-                switch (game.color_boosts) {
-                    case 0:
-                        document.getElementById("spice_idle").className =
-                            "spice_idle red_spice"
-                        break
-                    case 1:
-                        document.getElementById("spice_idle").className =
-                            "spice_idle yellow_spice"
-                        break
-                    case 2:
-                        document.getElementById("spice_idle").className =
-                            "spice_idle green_spice"
-                        break
-                    case 3:
-                        document.getElementById("spice_idle").className =
-                            "spice_idle blue_spice"
-                        break
-                    default:
-                        document.getElementById("spice_idle").className =
-                            "spice_idle pink_spice"
-                        break
-                }
-            }
-        }
-    } else if (document.visibilityState === "visible") {
-        if (pause) {
-            let mobile = Number(
-                getComputedStyle(document.body).getPropertyValue("--mobile")
-            )
-
-            document.getElementById("catchup_screen").style.display = "flex"
-            document.getElementById("catchup_header").innerHTML =
-                "Catching up on time while the game was in the background...<br>Please keep the game on-screen"
-            if (mobile) {
-                document.getElementById("catchup_header").innerHTML =
-                    "Catching up on time while the game was in the background...<br><br>Please keep the game on-screen"
-            }
-            document.getElementById("offline_panel").style.display = "block"
-            document.getElementById("catchup_skips").style.display = "none"
-
-            ticks_run = 0
-            average_time = 0
-            average_rate = game.catchup_rate * game.tickspeed
-            average_ticks = 0
-            between_time = 0
-            offline_time = Date.now()
-            start_ms = 0
-            start_ticks = 0
-
-            offline_ms = Date.now() - pause_time
-            total_ticks = Math.floor((offline_ms * game.tickspeed) / 1000)
-            if (total_ticks >= 60000) total_ticks = 60000
-
-            after_time = Date.now()
-
-            catchup_loop("background")
-        }
-    }
-})
 
 //handling animated text colors
 let time = 0
@@ -5403,3 +5403,5 @@ function animation_loop() {
 }
 
 window.setTimeout(animation_loop, 10)
+
+window.setTimeout(save_loop, 60000)
