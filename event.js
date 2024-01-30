@@ -4990,6 +4990,4 @@ function start_game() {
 
     tick_loop()
     graphics_loop()
-
-    window.setTimeout(save_loop, 60000)
 }
