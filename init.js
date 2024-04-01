@@ -824,6 +824,457 @@ for (let i = 0; i < 30; i++) {
     new particle()
 }
 
+let meme_condition = false
+if (new Date().getMonth() === 3 && new Date().getDate() === 1) {
+    meme_condition = true
+}
+
+let spice_text = ["spice", "Spice", "SPICE"]
+let red_spice_text = [
+    "red spice",
+    "Red spice",
+    "Red Spice",
+    "RED SPICE",
+    "red",
+    "Red",
+    "RED",
+]
+let yellow_spice_text = [
+    "yellow spice",
+    "Yellow spice",
+    "Yellow Spice",
+    "YELLOW SPICE",
+    "yellow",
+    "Yellow",
+    "YELLOW",
+]
+let green_spice_text = [
+    "green spice",
+    "Green spice",
+    "Green Spice",
+    "GREEN SPICE",
+    "green",
+    "Green",
+    "GREEN",
+]
+let blue_spice_text = [
+    "blue spice",
+    "Blue spice",
+    "Blue Spice",
+    "BLUE SPICE",
+    "blue",
+    "Blue",
+    "BLUE",
+]
+let pink_spice_text = [
+    "pink spice",
+    "Pink spice",
+    "Pink Spice",
+    "PINK SPICE",
+    "pink",
+    "Pink",
+    "PINK",
+]
+let color_text = ["color", "Color", "COLOR"]
+let rainbow_spice_text = [
+    "rainbow spice",
+    "Rainbow spice",
+    "Rainbow Spice",
+    "RAINBOW SPICE",
+    "rainbow",
+    "Rainbow",
+    "RAINBOW",
+]
+let crystal_spice_text = [
+    "crystallized spice",
+    "Crystallized spice",
+    "Crystallized Spice",
+    "CRYSTALLIZED SPICE",
+    "crystallized",
+    "Crystallized",
+    "CRYSTALLIZED",
+    "crystal",
+    "Crystal",
+    "CRYSTAL",
+]
+let ansuz_rune_text = [
+    "ᚫ",
+    "ᚫ",
+    "ᚫ",
+    "ᚫ",
+    "rune power",
+    "Ansuz rune",
+    "Ansuz rune",
+    "rune",
+    "Rune",
+    "RUNE",
+    "rune",
+    "Rune",
+]
+let jera_rune_text = ["ᛡ", "ᛡ power"]
+let raido_rune_text = ["ᚱ", "ᚱ power"]
+let othala_rune_text = ["ᛟ", "ᛟ power"]
+let arcane_spice_text = [
+    "arcane spice",
+    "Arcane spice",
+    "Arcane Spice",
+    "ARCANE SPICE",
+    "arcane",
+    "Arcane",
+    "ARCANE",
+]
+let deity_text = ["deity", "deities"]
+let arcane_enchantment_text = [
+    "arcane enchantment",
+    "Arcane enchantment",
+    "arcane enchantments",
+    "Arcane enchantments",
+]
+let atomic_spice_text = [
+    "atomic spice",
+    "Atomic spice",
+    "Atomic Spice",
+    "ATOMIC SPICE",
+    "atomic spice",
+    "Atomic spice",
+    "Atomic Spice",
+    "ATOMIC SPICE",
+    "atomic",
+    "Atomic",
+    "ATOMIC",
+]
+let collider_text = "Spice Collider"
+let unstable_spice_text = [
+    "unstable spice",
+    "Unstable spice",
+    "Unstable Spice",
+    "UNSTABLE SPICE",
+    "unstable",
+    "Unstable",
+    "UNSTABLE",
+]
+let decay_text = [
+    "decay",
+    "Decay",
+    "decaying",
+    "Decaying",
+    "decayed",
+    "Decayed",
+]
+let decayed_spice_text = [
+    "decayed spice",
+    "Decayed spice",
+    "Decayed Spice",
+    "DECAYED SPICE",
+    "decayed",
+    "Decayed",
+    "DECAYED",
+]
+let antispice_text = [
+    "antispice",
+    "Antispice",
+    "basic antispice",
+    "Basic antispice",
+    "red antispice",
+    "Red antispice",
+    "yellow antispice",
+    "Yellow antispice",
+    "green antispice",
+    "Green antispice",
+    "blue antispice",
+    "Blue antispice",
+    "pink antispice",
+    "Pink antispice",
+    "rainbow antispice",
+    "Rainbow antispice",
+]
+
+if (meme_condition) {
+    spice_text = ["sugar", "Sugar", "SUGAR"]
+    red_spice_text = [
+        "white sugar",
+        "White sugar",
+        "White Sugar",
+        "WHITE SUGAR",
+        "white",
+        "White",
+        "WHITE",
+    ]
+    yellow_spice_text = [
+        "cane sugar",
+        "Cane sugar",
+        "Cane Sugar",
+        "CANE SUGAR",
+        "cane",
+        "Cane",
+        "CANE",
+    ]
+    green_spice_text = [
+        "demerara sugar",
+        "Demerara sugar",
+        "Demerara Sugar",
+        "DEMERARA SUGAR",
+        "demerara",
+        "Demerara",
+        "DEMERARA",
+    ]
+    blue_spice_text = [
+        "turbinado sugar",
+        "Turbinado sugar",
+        "Turbinado Sugar",
+        "TURBINADO SUGAR",
+        "turbinado",
+        "Turbinado",
+        "TURBINADO",
+    ]
+    pink_spice_text = [
+        "brown sugar",
+        "Brown sugar",
+        "Brown Sugar",
+        "BROWN SUGAR",
+        "brown",
+        "Brown",
+        "BROWN",
+    ]
+    color_text = ["sugar", "Sugar", "SUGAR"]
+    rainbow_spice_text = [
+        "sparkling sugar",
+        "Sparkling sugar",
+        "Sparkling Sugar",
+        "SPARKLING SUGAR",
+        "sparkling",
+        "Sparkling",
+        "SPARKLING",
+    ]
+    crystal_spice_text = [
+        "pearl sugar",
+        "Pearl sugar",
+        "Pearl Sugar",
+        "PEARL SUGAR",
+        "pearl",
+        "Pearl",
+        "PEARL",
+        "pearl",
+        "Pearl",
+        "PEARL",
+    ]
+    ansuz_rune_text = [
+        "sparkling cubes",
+        "sparkling cube",
+        "cubes",
+        "cube",
+        "sugar power",
+        "Sparkling cube",
+        "sparkling cube",
+        "cube",
+        "Cube",
+        "CUBE",
+        "sparkling cube",
+        "Sparkling Cube",
+    ]
+    jera_rune_text = ["white cubes", "white sugar power"]
+    raido_rune_text = ["cane cubes", "cane sugar power"]
+    othala_rune_text = ["brown cubes", "brown sugar power"]
+    arcane_spice_text = [
+        "stevia",
+        "Stevia",
+        "Stevia",
+        "STEVIA",
+        "stevia",
+        "Stevia",
+        "STEVIA",
+    ]
+    deity_text = ["galaxy", "galaxies"]
+    arcane_enchantment_text = [
+        "stevia enhancement",
+        "Stevia enhancement",
+        "stevia enhancements",
+        "Stevia enhancements",
+    ]
+    atomic_spice_text = [
+        "carbohydrates",
+        "Carbohydrates",
+        "Carbohydrates",
+        "CARBOHYDRATES",
+        "carbohydrate",
+        "Carbohydrate",
+        "Carbohydrate",
+        "CARBOHYDRATE",
+        "carbohydrate",
+        "Carbohydrate",
+        "CARBOHYDRATE",
+    ]
+    collider_text = "Sugar Splitter"
+    unstable_spice_text = [
+        "sucrose",
+        "Sucrose",
+        "Sucrose",
+        "SUCROSE",
+        "sucrose",
+        "Sucrose",
+        "SUCROSE",
+    ]
+    decay_text = [
+        "breakdown",
+        "Breakdown",
+        "breaking down",
+        "Breaking down",
+        "broken down",
+        "broken down",
+    ]
+    decayed_spice_text = [
+        "glucose",
+        "Glucose",
+        "Glucose",
+        "GLUCOSE",
+        "glucose",
+        "Glucose",
+        "GLUCOSE",
+    ]
+    antispice_text = [
+        "antisugar",
+        "Antisugar",
+        "fructose",
+        "Fructose",
+        "white antisugar",
+        "White antisugar",
+        "cane antisugar",
+        "Cane antisugar",
+        "demerara antisugar",
+        "Demerara antisugar",
+        "turbinado antisugar",
+        "Turbinado antisugar",
+        "brown antisugar",
+        "Brown antisugar",
+        "sparkling antisugar",
+        "Sparkling antisugar",
+    ]
+
+    document.body.className = "meme"
+
+    document.getElementById("red_spice_text").innerHTML = "white sugar"
+    document.getElementById("red_gen_name_s").innerHTML =
+        "White Sugar Strengthener"
+    document.getElementById("red").innerHTML = "WHITE"
+    document.getElementById("yellow_spice_text").innerHTML = "cane sugar"
+    document.getElementById("yellow_gen_name_s").innerHTML =
+        "Cane Sugar Strengthener"
+    document.getElementById("yellow").innerHTML = "CANE"
+    document.getElementById("green_spice_text").innerHTML = "demerara sugar"
+    document.getElementById("green_gen_name_s").innerHTML =
+        "Demerara Sugar Strengthener"
+    document.getElementById("blue_spice_text").innerHTML = "turbinado sugar"
+    document.getElementById("blue_gen_name_s").innerHTML =
+        "Turbinado Sugar Strengthener"
+    document.getElementById("pink_spice_text").innerHTML = "brown sugar"
+    document.getElementById("pink_gen_name_s").innerHTML =
+        "Brown Sugar Strengthener"
+
+    document.getElementById("rainbow_spice_text").innerHTML = "sparkling sugar"
+    document.getElementById("rainbow_spice_text2").innerHTML = "sparkling sugar"
+    document.getElementById("rainbow_spice_text3").innerHTML = "sparkling sugar"
+    document.getElementById("crystal_spice_text").innerHTML = "pearl sugar"
+    document.getElementById("crystal_gen_name_i").innerHTML = "Pearl Infusion"
+    document.getElementById("crystal_gen_name_s").innerHTML =
+        "Pearl Sugar Strengthener"
+
+    document.getElementById("prestige_boosts_text").innerHTML =
+        "Auto-Prestige Goal (Sugar Boosts):"
+    document.getElementById("prestige_boosts_delta_text").innerHTML =
+        "Auto-Prestige Delta (Sugar Boosts):"
+    document.getElementById("prestige_spice_text").innerHTML =
+        "Auto-Prestige Goal (Sparkling Sugar):"
+    document.getElementById("prestige_spice_delta_text").innerHTML =
+        "Auto-Prestige Delta (Sparkling Sugar):"
+
+    document.getElementById("jera_name").innerHTML = "White Sugar Cubes"
+    document.getElementById("raido_name").innerHTML = "Cane Sugar Cubes"
+    document.getElementById("othala_name").innerHTML = "Brown Sugar Cubes"
+
+    document.getElementById("ansuz_div").style.display = "none"
+    document.getElementById("ansuz_div2").style.display = "none"
+    document.getElementById("ansuz_div3").style.display = "none"
+    document.getElementById("cube_div").style.display = "block"
+    document.getElementById("cube_div2").style.display = "block"
+    document.getElementById("cube_div3").style.display = "block"
+    document.getElementById("runes").innerHTML = "SUGAR CUBES"
+
+    document.getElementById("distributor_text").innerHTML =
+        "Portion of cube gains to distribute:"
+    document.getElementById("jera_single").innerHTML = "Convert 1 Cube"
+    document.getElementById("jera_all").innerHTML = "Convert ALL Cubes"
+    document.getElementById("jera_half").innerHTML = "Convert HALF Cubes"
+    document.getElementById("raido_single").innerHTML = "Convert 1 Cube"
+    document.getElementById("raido_all").innerHTML = "Convert ALL Cubes"
+    document.getElementById("raido_half").innerHTML = "Convert HALF Cubes"
+    document.getElementById("othala_single").innerHTML = "Convert 1 Cube"
+    document.getElementById("othala_all").innerHTML = "Convert ALL Cubes"
+    document.getElementById("othala_half").innerHTML = "Convert HALF Cubes"
+    document.getElementById("all_distribute").innerHTML = "Distribute ALL Cubes"
+    document.getElementById("half_distribute").innerHTML =
+        "Distribute HALF Cubes"
+
+    document.getElementById("ascend_runes_text").innerHTML =
+        "Auto-Ascend Goal (Sparkling Cubes):"
+    document.getElementById("ascend_runes_delta_text").innerHTML =
+        "Auto-Ascend Delta (Sparkling Cubes):"
+
+    document.getElementById("ascension_rune_info").innerHTML =
+        "Your sparkling sugar cubes can be converted into any of the three cube types below" +
+        "<br>Each one makes sugar power of its own variety, boosting sugar production of its respective type(s)" +
+        "<br>Sparkling cubes can also be spent on other things than conversion"
+    document.getElementById("ascension_challenge_info").innerHTML =
+        "Entering an Ascension Challenge will reset your current Ascension" +
+        "<br>You must Ascend with the required amount of sparkling sugar to complete the Challenge" +
+        "<br><br>Ascension automation and sparkling sugar multipliers are disabled in Ascension Challenges"
+
+    document.getElementById("arcane_spice_text").innerHTML = "stevia"
+    document.getElementById("arcane_gen_name_n").innerHTML =
+        "Stevia Enhancement"
+    document.getElementById("arcane_gen_name_s").innerHTML =
+        "Stevia Strengthener"
+
+    document.getElementById("atomic_spice_text").innerHTML = "carbohydrates"
+    document.getElementById("atomic_spice_text2").innerHTML = "carbohydrates"
+    document.getElementById("collider_title").innerHTML = "The Sugar Splitter"
+
+    document.getElementById("collapse_spice_text").innerHTML =
+        "Auto-Collapse Goal (Carbohydrates):"
+    document.getElementById("collapse_decay_text").innerHTML =
+        "Auto-Collapse Goal (Real Seconds after Full Breakdown):"
+
+    document.getElementById("collider_tab1").innerHTML = "SUCROSE"
+    document.getElementById("collider_tab2").innerHTML = "FRUCTOSE"
+    document.getElementById("collider_tab3").innerHTML = "WHITE ANTISUGAR"
+    document.getElementById("collider_tab4").innerHTML = "CANE ANTISUGAR"
+    document.getElementById("collider_tab5").innerHTML = "DEMERARA ANTISUGAR"
+    document.getElementById("collider_tab6").innerHTML = "TURBINADO ANTISUGAR"
+    document.getElementById("collider_tab7").innerHTML = "BROWN ANTISUGAR"
+    document.getElementById("collider_tab8").innerHTML = "SPARKLING ANTISUGAR"
+    document.getElementById("unstable_spice_text").innerHTML = "sucrose"
+    document.getElementById("decayed_spice_text").innerHTML = "glucose"
+    document.getElementById("basic_antispice_text").innerHTML = "fructose"
+    document.getElementById("red_antispice_text").innerHTML = "white antisugar"
+    document.getElementById("yellow_antispice_text").innerHTML =
+        "cane antisugar"
+    document.getElementById("green_antispice_text").innerHTML =
+        "demerara antisugar"
+    document.getElementById("blue_antispice_text").innerHTML =
+        "turbinado antisugar"
+    document.getElementById("pink_antispice_text").innerHTML = "brown antisugar"
+    document.getElementById("rainbow_antispice_text").innerHTML =
+        "sparkling antisugar"
+    document.getElementById("antiperks_title").innerHTML = "Antisugar Perks"
+    document.getElementById("refund_perks").innerHTML = "Refund Antisugar Perks"
+
+    document.getElementById("spice_idle").innerHTML = "Sugar Idle"
+    document.title = "Sugar Idle"
+    document.getElementById("spices").innerHTML = "SUGARS"
+    document.getElementById("version").innerHTML =
+        "Sugar Idle v1.7.5<br>Made by Zakuro<br><br>Last updated March 32, 2024"
+    document.getElementById("compendium").style.display = "none"
+}
+
 //initialize map
 const spice_map = new Map()
 const prestige_map = new Map()
@@ -841,6 +1292,7 @@ class spice_gen {
     static generators = []
 
     color
+    text_color
     id
     base_price
     scaling
@@ -848,8 +1300,9 @@ class spice_gen {
     plural
 
     //generator constructor
-    constructor(color, id, base_price, name, plural) {
+    constructor(color, text_color, id, base_price, name, plural) {
         this.color = color
+        this.text_color = text_color
         this.id = id
         this.rid = spice_gen.generators.length
         this.base_price = base_price
@@ -861,13 +1314,22 @@ class spice_gen {
         //generator name
         let gen_name = document.createElement("P")
         gen_name.innerHTML =
-            this.color.replace(/^\w/, c => c.toUpperCase()) +
-            " Spice " +
+            this.text_color.replace(/^\w/, c => c.toUpperCase()) +
+            " " +
+            spice_text[1] +
+            " " +
             this.name.replace(/^\w/, c => c.toUpperCase())
-        if (this.color === "crystal")
+        if (this.text_color === "crystal")
             gen_name.innerHTML =
-                this.color.replace(/^\w/, c => c.toUpperCase()) +
-                "lized Spice " +
+                this.text_color.replace(/^\w/, c => c.toUpperCase()) +
+                "lized " +
+                spice_text[1] +
+                " " +
+                this.name.replace(/^\w/, c => c.toUpperCase())
+        if (this.text_color === "stevia")
+            gen_name.innerHTML =
+                this.text_color.replace(/^\w/, c => c.toUpperCase()) +
+                " " +
                 this.name.replace(/^\w/, c => c.toUpperCase())
         gen_name.className = "spice_gen_name " + this.color + "_spice"
 
@@ -961,54 +1423,348 @@ class spice_gen {
 
 //initializing spice generators
 //red
-new spice_gen("red", 0, new Decimal(5), "harvester", "harvesters")
-new spice_gen("red", 1, new Decimal(150), "machine", "machines")
-new spice_gen("red", 2, new Decimal(30000), "factory", "factories")
-new spice_gen("red", 3, new Decimal(4.5e8), "corporation", "corporations")
-new spice_gen("red", 4, new Decimal(6e13), "planet", "planets")
-new spice_gen("red", 5, new Decimal(9e20), "galaxy", "galaxies")
+new spice_gen(
+    "red",
+    red_spice_text[4],
+    0,
+    new Decimal(5),
+    "harvester",
+    "harvesters"
+)
+new spice_gen(
+    "red",
+    red_spice_text[4],
+    1,
+    new Decimal(150),
+    "machine",
+    "machines"
+)
+new spice_gen(
+    "red",
+    red_spice_text[4],
+    2,
+    new Decimal(30000),
+    "factory",
+    "factories"
+)
+new spice_gen(
+    "red",
+    red_spice_text[4],
+    3,
+    new Decimal(4.5e8),
+    "corporation",
+    "corporations"
+)
+new spice_gen(
+    "red",
+    red_spice_text[4],
+    4,
+    new Decimal(6e13),
+    "planet",
+    "planets"
+)
+new spice_gen(
+    "red",
+    red_spice_text[4],
+    5,
+    new Decimal(9e20),
+    "galaxy",
+    "galaxies"
+)
 //yellow
-new spice_gen("yellow", 0, new Decimal(5), "harvester", "harvesters")
-new spice_gen("yellow", 1, new Decimal(250), "machine", "machines")
-new spice_gen("yellow", 2, new Decimal(60000), "factory", "factories")
-new spice_gen("yellow", 3, new Decimal(2e9), "corporation", "corporations")
-new spice_gen("yellow", 4, new Decimal(3e14), "planet", "planets")
-new spice_gen("yellow", 5, new Decimal(5.5e21), "galaxy", "galaxies")
+new spice_gen(
+    "yellow",
+    yellow_spice_text[4],
+    0,
+    new Decimal(5),
+    "harvester",
+    "harvesters"
+)
+new spice_gen(
+    "yellow",
+    yellow_spice_text[4],
+    1,
+    new Decimal(250),
+    "machine",
+    "machines"
+)
+new spice_gen(
+    "yellow",
+    yellow_spice_text[4],
+    2,
+    new Decimal(60000),
+    "factory",
+    "factories"
+)
+new spice_gen(
+    "yellow",
+    yellow_spice_text[4],
+    3,
+    new Decimal(2e9),
+    "corporation",
+    "corporations"
+)
+new spice_gen(
+    "yellow",
+    yellow_spice_text[4],
+    4,
+    new Decimal(3e14),
+    "planet",
+    "planets"
+)
+new spice_gen(
+    "yellow",
+    yellow_spice_text[4],
+    5,
+    new Decimal(5.5e21),
+    "galaxy",
+    "galaxies"
+)
 //green
-new spice_gen("green", 0, new Decimal(5), "harvester", "harvesters")
-new spice_gen("green", 1, new Decimal(350), "machine", "machines")
-new spice_gen("green", 2, new Decimal(100000), "factory", "factories")
-new spice_gen("green", 3, new Decimal(7e9), "corporation", "corporations")
-new spice_gen("green", 4, new Decimal(1.5e15), "planet", "planets")
-new spice_gen("green", 5, new Decimal(3e22), "galaxy", "galaxies")
+new spice_gen(
+    "green",
+    green_spice_text[4],
+    0,
+    new Decimal(5),
+    "harvester",
+    "harvesters"
+)
+new spice_gen(
+    "green",
+    green_spice_text[4],
+    1,
+    new Decimal(350),
+    "machine",
+    "machines"
+)
+new spice_gen(
+    "green",
+    green_spice_text[4],
+    2,
+    new Decimal(100000),
+    "factory",
+    "factories"
+)
+new spice_gen(
+    "green",
+    green_spice_text[4],
+    3,
+    new Decimal(7e9),
+    "corporation",
+    "corporations"
+)
+new spice_gen(
+    "green",
+    green_spice_text[4],
+    4,
+    new Decimal(1.5e15),
+    "planet",
+    "planets"
+)
+new spice_gen(
+    "green",
+    green_spice_text[4],
+    5,
+    new Decimal(3e22),
+    "galaxy",
+    "galaxies"
+)
 //blue
-new spice_gen("blue", 0, new Decimal(5), "harvester", "harvesters")
-new spice_gen("blue", 1, new Decimal(500), "machine", "machines")
-new spice_gen("blue", 2, new Decimal(250000), "factory", "factories")
-new spice_gen("blue", 3, new Decimal(3e10), "corporation", "corporations")
-new spice_gen("blue", 4, new Decimal(7.5e15), "planet", "planets")
-new spice_gen("blue", 5, new Decimal(2e23), "galaxy", "galaxies")
+new spice_gen(
+    "blue",
+    blue_spice_text[4],
+    0,
+    new Decimal(5),
+    "harvester",
+    "harvesters"
+)
+new spice_gen(
+    "blue",
+    blue_spice_text[4],
+    1,
+    new Decimal(500),
+    "machine",
+    "machines"
+)
+new spice_gen(
+    "blue",
+    blue_spice_text[4],
+    2,
+    new Decimal(250000),
+    "factory",
+    "factories"
+)
+new spice_gen(
+    "blue",
+    blue_spice_text[4],
+    3,
+    new Decimal(3e10),
+    "corporation",
+    "corporations"
+)
+new spice_gen(
+    "blue",
+    blue_spice_text[4],
+    4,
+    new Decimal(7.5e15),
+    "planet",
+    "planets"
+)
+new spice_gen(
+    "blue",
+    blue_spice_text[4],
+    5,
+    new Decimal(2e23),
+    "galaxy",
+    "galaxies"
+)
 //pink
-new spice_gen("pink", 0, new Decimal(5), "harvester", "harvesters")
-new spice_gen("pink", 1, new Decimal(750), "machine", "machines")
-new spice_gen("pink", 2, new Decimal(500000), "factory", "factories")
-new spice_gen("pink", 3, new Decimal(1e11), "corporation", "corporations")
-new spice_gen("pink", 4, new Decimal(4e16), "planet", "planets")
-new spice_gen("pink", 5, new Decimal(1e24), "galaxy", "galaxies")
+new spice_gen(
+    "pink",
+    pink_spice_text[4],
+    0,
+    new Decimal(5),
+    "harvester",
+    "harvesters"
+)
+new spice_gen(
+    "pink",
+    pink_spice_text[4],
+    1,
+    new Decimal(750),
+    "machine",
+    "machines"
+)
+new spice_gen(
+    "pink",
+    pink_spice_text[4],
+    2,
+    new Decimal(500000),
+    "factory",
+    "factories"
+)
+new spice_gen(
+    "pink",
+    pink_spice_text[4],
+    3,
+    new Decimal(1e11),
+    "corporation",
+    "corporations"
+)
+new spice_gen(
+    "pink",
+    pink_spice_text[4],
+    4,
+    new Decimal(4e16),
+    "planet",
+    "planets"
+)
+new spice_gen(
+    "pink",
+    pink_spice_text[4],
+    5,
+    new Decimal(1e24),
+    "galaxy",
+    "galaxies"
+)
 //crystal
-new spice_gen("crystal", 0, Decimal.pow(2, 56), "furnace", "furnaces")
-new spice_gen("crystal", 1, Decimal.pow(2, 62), "refinery", "refineries")
-new spice_gen("crystal", 2, Decimal.pow(2, 68), "division", "divisions")
-new spice_gen("crystal", 3, Decimal.pow(2, 84), "corporation", "corporations")
-new spice_gen("crystal", 4, Decimal.pow(2, 100), "planet", "planets")
-new spice_gen("crystal", 5, Decimal.pow(2, 124), "galaxy", "galaxies")
+new spice_gen(
+    "crystal",
+    crystal_spice_text[4],
+    0,
+    Decimal.pow(2, 56),
+    meme_condition ? "harvester" : "furnace",
+    meme_condition ? "harvesters" : "furnaces"
+)
+new spice_gen(
+    "crystal",
+    crystal_spice_text[4],
+    1,
+    Decimal.pow(2, 62),
+    meme_condition ? "machine" : "refinery",
+    meme_condition ? "machines" : "refineries"
+)
+new spice_gen(
+    "crystal",
+    crystal_spice_text[4],
+    2,
+    Decimal.pow(2, 68),
+    meme_condition ? "factory" : "division",
+    meme_condition ? "factories" : "divisions"
+)
+new spice_gen(
+    "crystal",
+    crystal_spice_text[4],
+    3,
+    Decimal.pow(2, 84),
+    "corporation",
+    "corporations"
+)
+new spice_gen(
+    "crystal",
+    crystal_spice_text[4],
+    4,
+    Decimal.pow(2, 100),
+    "planet",
+    "planets"
+)
+new spice_gen(
+    "crystal",
+    crystal_spice_text[4],
+    5,
+    Decimal.pow(2, 124),
+    "galaxy",
+    "galaxies"
+)
 //arcane
-new spice_gen("arcane", 0, new Decimal(531441), "glyph", "glyphs")
-new spice_gen("arcane", 1, Decimal.pow(3, 16), "spellbook", "spellbooks")
-new spice_gen("arcane", 2, Decimal.pow(3, 20), "wizard", "wizards")
-new spice_gen("arcane", 3, Decimal.pow(3, 36), "shrine", "shrines")
-new spice_gen("arcane", 4, Decimal.pow(3, 73), "cult", "cults")
-new spice_gen("arcane", 5, Decimal.pow(3, 107), "deity", "deities")
+new spice_gen(
+    "arcane",
+    arcane_spice_text[4],
+    0,
+    new Decimal(531441),
+    meme_condition ? "harvester" : "glyph",
+    meme_condition ? "harvesters" : "glyphs"
+)
+new spice_gen(
+    "arcane",
+    arcane_spice_text[4],
+    1,
+    Decimal.pow(3, 16),
+    meme_condition ? "machine" : "spellbook",
+    meme_condition ? "machines" : "spellbooks"
+)
+new spice_gen(
+    "arcane",
+    arcane_spice_text[4],
+    2,
+    Decimal.pow(3, 20),
+    meme_condition ? "factory" : "wizard",
+    meme_condition ? "factories" : "wizards"
+)
+new spice_gen(
+    "arcane",
+    arcane_spice_text[4],
+    3,
+    Decimal.pow(3, 36),
+    meme_condition ? "corporation" : "shrine",
+    meme_condition ? "corporations" : "shrines"
+)
+new spice_gen(
+    "arcane",
+    arcane_spice_text[4],
+    4,
+    Decimal.pow(3, 73),
+    meme_condition ? "planet" : "cult",
+    meme_condition ? "planets" : "cults"
+)
+new spice_gen(
+    "arcane",
+    arcane_spice_text[4],
+    5,
+    Decimal.pow(3, 107),
+    deity_text[0],
+    deity_text[1]
+)
 //done initializing spice generators
 
 //prestige upgrade class
@@ -1057,10 +1813,16 @@ class prestige_upgrade {
 
 //initializing prestige upgrades
 //[0]
-new prestige_upgrade("Unlocks automation for red spice", new Decimal(1), 5)
+new prestige_upgrade(
+    "Unlocks automation for " + red_spice_text[0],
+    new Decimal(1),
+    5
+)
 //[1]
 new prestige_upgrade(
-    "Times Prestiged stat boosts all spice production<br>(Currently: 5x)",
+    "Times Prestiged stat boosts all " +
+        spice_text[0] +
+        " production<br>(Currently: 5x)",
     new Decimal(1),
     1
 )
@@ -1073,28 +1835,44 @@ new prestige_upgrade(
 //[3]
 new prestige_upgrade("Boost from buying 10 is squared", new Decimal(4), 4)
 //[4]
-new prestige_upgrade("You start with 1 color shift", new Decimal(8), 4)
+new prestige_upgrade(
+    "You start with 1 " + color_text[0] + " shift",
+    new Decimal(8),
+    4
+)
 //[5]
 new prestige_upgrade(
-    "Strengtheners boost the next color more<br>(1.05x -> 1.20x)",
+    "Strengtheners boost the next " +
+        color_text[0] +
+        " more<br>(1.05x -> 1.20x)",
     new Decimal(16),
     5
 )
 //[6]
 new prestige_upgrade(
-    "All spice production is boosted by unspent rainbow spice<br>(Currently: 1.00x)",
+    "All " +
+        spice_text[0] +
+        " production is boosted by unspent " +
+        rainbow_spice_text[0] +
+        "<br>(Currently: 1.00x)",
     new Decimal(256),
     1
 )
 //[7]
 new prestige_upgrade(
-    "Unlocks automation for color boosts",
+    "Unlocks automation for " + color_text[0] + " boosts",
     new Decimal(4096),
     1
 )
 //[8]
 new prestige_upgrade(
-    "All spices boost the previous color based on that spice's amount",
+    "All " +
+        spice_text[0] +
+        "s boost the previous " +
+        color_text[0] +
+        " based on that " +
+        spice_text[0] +
+        "'s amount",
     new Decimal(32768),
     1
 )
@@ -1106,27 +1884,34 @@ new prestige_upgrade(
 )
 //[10]
 new prestige_upgrade(
-    "Harvesters produce galaxies of the previous color",
+    "Harvesters produce galaxies of the previous " + color_text[0],
     new Decimal(2).pow(24),
     1
 )
 //[11]
 new prestige_upgrade(
-    "Red spice boosts every other color by its amount",
+    red_spice_text[1] +
+        " boosts every other " +
+        color_text[0] +
+        " by its amount",
     new Decimal(2).pow(32),
     1
 )
 //[12]
-new prestige_upgrade("Unlocks crystallized spice", new Decimal(2).pow(56), 1)
+new prestige_upgrade(
+    "Unlocks " + crystal_spice_text[0],
+    new Decimal(2).pow(56),
+    1
+)
 //[13]
 new prestige_upgrade(
-    "Unlocks automation for crystal infusions",
+    "Unlocks automation for " + crystal_spice_text[7] + " infusions",
     new Decimal(2).pow(63),
     1
 )
 //[14]
 new prestige_upgrade(
-    "Crystallized spice boosts pink spice by its amount",
+    crystal_spice_text[1] + " boosts " + pink_spice_text[0] + " by its amount",
     new Decimal(2).pow(81),
     1
 )
@@ -1134,13 +1919,16 @@ new prestige_upgrade(
 new prestige_upgrade("Unlocks prestige automation", new Decimal(2).pow(100), 1)
 //[16]
 new prestige_upgrade(
-    "Crystallized spice also boosts other colors by its amount",
+    crystal_spice_text[1] + " also boosts other colors by its amount",
     new Decimal(2).pow(120),
     1
 )
 //[17]
 new prestige_upgrade(
-    "Crystallized spice production is boosted based on your color boosts<br>(Currently: 1.00x)",
+    crystal_spice_text[1] +
+        " production is boosted based on your " +
+        color_text[0] +
+        " boosts<br>(Currently: 1.00x)",
     new Decimal(2).pow(141),
     1
 )
@@ -1152,37 +1940,46 @@ new prestige_upgrade(
 )
 //[19]
 new prestige_upgrade(
-    "Crystal infusions also boost crystallized spice production 1.08x",
+    crystal_spice_text[8] +
+        " infusions also boost " +
+        crystal_spice_text[0] +
+        " production 1.08x",
     new Decimal(2).pow(186),
     1
 )
 //[20]
 new prestige_upgrade(
-    "You get 12 free crystal infusions",
+    "You get 12 free " + crystal_spice_text[7] + " infusions",
     new Decimal(2).pow(214),
     12
 )
 //[21]
 new prestige_upgrade(
-    "Crystallized spice production is boosted by unspent rainbow spice<br>(Currently: 1.00x)",
+    crystal_spice_text[1] +
+        " production is boosted by unspent " +
+        rainbow_spice_text[0] +
+        "<br>(Currently: 1.00x)",
     new Decimal(2).pow(300),
     1
 )
 //[22]
 new prestige_upgrade(
-    "Color boosts don't reset progress",
+    color_text[1] + " boosts don't reset progress",
     new Decimal(2).pow(390),
     1
 )
 //[23]
 new prestige_upgrade(
-    "Crystallized spice furnace multipliers are raised to the 1.25 power",
+    crystal_spice_text[1] + " furnace multipliers are raised to the 1.25 power",
     new Decimal(2).pow(480),
     1
 )
 //[24]
 new prestige_upgrade(
-    "Crystallized spice furnaces produce pink galaxies",
+    crystal_spice_text[1] +
+        " furnaces produce " +
+        pink_spice_text[0] +
+        " galaxies",
     new Decimal(2).pow(720),
     1
 )
@@ -1301,7 +2098,7 @@ class ascension_upgrade {
 //initializing ascension upgrades
 //[0]
 new ascension_upgrade(
-    "The boost from red spice amount is 2x stronger",
+    "The boost from " + red_spice_text[0] + " amount is 2x stronger",
     new Decimal(1),
     undefined,
     undefined,
@@ -1341,7 +2138,7 @@ new ascension_upgrade(
 )
 //[4]
 new ascension_upgrade(
-    "Crystallized spice generator multipliers are stronger",
+    crystal_spice_text[1] + " generator multipliers are stronger",
     new Decimal(21),
     3,
     undefined,
@@ -1351,7 +2148,7 @@ new ascension_upgrade(
 )
 //[5]
 new ascension_upgrade(
-    "The free crystal infusions upgrade is uncapped",
+    "The free " + crystal_spice_text[7] + " infusions upgrade is uncapped",
     new Decimal(78),
     4,
     undefined,
@@ -1361,7 +2158,10 @@ new ascension_upgrade(
 )
 //[6]
 new ascension_upgrade(
-    "Crystal infusions boost crystallized spice production 1.12x",
+    crystal_spice_text[8] +
+        " infusions boost " +
+        crystal_spice_text[0] +
+        " production 1.12x",
     new Decimal(210),
     5,
     undefined,
@@ -1371,7 +2171,7 @@ new ascension_upgrade(
 )
 //[7]
 new ascension_upgrade(
-    "Crystal infusions are 25% stronger",
+    crystal_spice_text[8] + " infusions are 25% stronger",
     new Decimal(1378),
     6,
     undefined,
@@ -1401,7 +2201,7 @@ new ascension_upgrade(
 )
 //[10]
 new ascension_upgrade(
-    "Unlocks automation for crystallized spice",
+    "Unlocks automation for " + crystal_spice_text[0],
     new Decimal(45),
     9,
     undefined,
@@ -1431,7 +2231,7 @@ new ascension_upgrade(
 )
 //[13]
 new ascension_upgrade(
-    "Pink spice boosts crystallized spice by its amount",
+    pink_spice_text[1] + " boosts " + crystal_spice_text[0] + " by its amount",
     new Decimal(29646),
     12,
     undefined,
@@ -1451,7 +2251,9 @@ new ascension_upgrade(
 )
 //[15]
 new ascension_upgrade(
-    "Times Ascended stat boosts rainbow spice gains<br>(Currently: 1.00x)",
+    "Times Ascended stat boosts " +
+        rainbow_spice_text[0] +
+        " gains<br>(Currently: 1.00x)",
     new Decimal(508536),
     14,
     undefined,
@@ -1471,7 +2273,7 @@ new ascension_upgrade(
 )
 //[17]
 new ascension_upgrade(
-    "Unlocks automation for arcane enchantments",
+    "Unlocks automation for " + arcane_enchantment_text[2],
     new Decimal(66027286),
     16,
     undefined,
@@ -1481,7 +2283,7 @@ new ascension_upgrade(
 )
 //[18]
 new ascension_upgrade(
-    "Red spice boosts crystallized spice by its amount",
+    red_spice_text[1] + " boosts " + crystal_spice_text[0] + " by its amount",
     new Decimal(9.007199321849856e15),
     17,
     undefined,
@@ -1491,7 +2293,10 @@ new ascension_upgrade(
 )
 //[19]
 new ascension_upgrade(
-    "Arcane spice is boosted based on unused Ansuz runes<br>(Currently: 1.00x)",
+    arcane_spice_text[1] +
+        " is boosted based on unused " +
+        ansuz_rune_text[6] +
+        "s<br>(Currently: 1.00x)",
     new Decimal(2.0858168697697163e64),
     18,
     undefined,
@@ -1511,7 +2316,9 @@ new ascension_upgrade(
 )
 //[21]
 new ascension_upgrade(
-    "You gain 1x more Times Prestiged stat<br>(based on color boosts)",
+    "You gain 1x more Times Prestiged stat<br>(based on " +
+        color_text[0] +
+        " boosts)",
     new Decimal(55616627886),
     16,
     undefined,
@@ -1521,7 +2328,10 @@ new ascension_upgrade(
 )
 //[22]
 new ascension_upgrade(
-    "Arcane spice boosts crystallized spice by its amount",
+    arcane_spice_text[1] +
+        " boosts " +
+        crystal_spice_text[0] +
+        " by its amount",
     new Decimal(4.137798775129687e30),
     21,
     undefined,
@@ -1551,7 +2361,7 @@ new ascension_upgrade(
 )
 //[25]
 new ascension_upgrade(
-    "You gain 10% of your pending rainbow spice every second",
+    "You gain 10% of your pending " + rainbow_spice_text[0] + " every second",
     new Decimal(9.080499396228733e80),
     19,
     23,
@@ -1561,7 +2371,7 @@ new ascension_upgrade(
 )
 //[26]
 new ascension_upgrade(
-    "Boosts from rune power are 50% stronger",
+    "Boosts from " + ansuz_rune_text[4] + " are 50% stronger",
     new Decimal(3.9793885882016265e98),
     25,
     undefined,
@@ -1591,7 +2401,10 @@ new ascension_upgrade(
 )
 //[29]
 new ascension_upgrade(
-    "Arcane enchantments also boost arcane spice production 1.08x",
+    arcane_enchantment_text[3] +
+        " also boost " +
+        arcane_spice_text[0] +
+        " production 1.08x",
     new Decimal(1.7353473718952628e180),
     27,
     undefined,
@@ -1601,7 +2414,7 @@ new ascension_upgrade(
 )
 //[30]
 new ascension_upgrade(
-    "Red spice boosts arcane spice by its amount",
+    red_spice_text[1] + " boosts " + arcane_spice_text[0] + " by its amount",
     Decimal.pow(10, 385).mul(4.3167666593814529),
     28,
     undefined,
@@ -1611,7 +2424,7 @@ new ascension_upgrade(
 )
 //[31]
 new ascension_upgrade(
-    "Arcane spice boosts itself by its amount",
+    arcane_spice_text[1] + " boosts itself by its amount",
     Decimal.pow(10, 501).mul(7.5039392714382114),
     27,
     28,
@@ -1621,7 +2434,10 @@ new ascension_upgrade(
 )
 //[32]
 new ascension_upgrade(
-    "Arcane spice glyphs produce crystallized spice galaxies",
+    arcane_spice_text[1] +
+        " glyphs produce " +
+        crystal_spice_text[0] +
+        " galaxies",
     Decimal.pow(10, 727).mul(4.4308334327402763),
     31,
     undefined,
@@ -1631,7 +2447,7 @@ new ascension_upgrade(
 )
 //[33]
 new ascension_upgrade(
-    "Boosts from rune power are now 3x stronger",
+    "Boosts from " + ansuz_rune_text[4] + " are now 3x stronger",
     Decimal.pow(10, 987).mul(2.424227028858335),
     32,
     undefined,
@@ -1687,7 +2503,9 @@ class ascension_challenge {
             this.desc +
             "<br>Goal: <span class='rainbow_spice'>" +
             format_idec(this.goal, game.notation) +
-            " μg rainbow spice</span>"
+            " μg " +
+            rainbow_spice_text[0] +
+            "</span>"
         info.className = "a_challenge_text"
 
         //attaching text to text div
@@ -1715,19 +2533,27 @@ class ascension_challenge {
 //initializing ascension challenges
 //challenge 1
 new ascension_challenge(
-    "Crystal infusions cannot be purchased<br>Reward: Unlock arcane spice",
+    crystal_spice_text[8] +
+        " infusions cannot be purchased<br>Reward: Unlock " +
+        arcane_spice_text[0],
     Decimal.pow(10, 500),
     16
 )
 //challenge 2
 new ascension_challenge(
-    "Crystallized & arcane spice production is disabled<br>Reward: Crystallized spice multipliers are even stronger",
+    crystal_spice_text[5] +
+        " & " +
+        arcane_spice_text[0] +
+        " production is disabled<br>Reward: " +
+        crystal_spice_text[1] +
+        " multipliers are even stronger",
     Decimal.pow(10, 800),
     20
 )
 //challenge 3
 new ascension_challenge(
-    "Color boost requirements scale 10x harder<br>Reward: Strengtheners are 3x stronger, infusions are 20% stronger,<br>and strengthener price scaling 3x -> 2x",
+    color_text[1] +
+        " boost requirements scale 10x harder<br>Reward: Strengtheners are 3x stronger, infusions are 20% stronger,<br>and strengthener price scaling 3x -> 2x",
     Decimal.pow(10, 800),
     24
 )
@@ -1739,13 +2565,23 @@ new ascension_challenge(
 )
 //challenge 5
 new ascension_challenge(
-    "Normal/crystallized spice production stops after 1 second,<br>arcane enchantments do nothing except refresh production<br>Reward: Boosts from rune power are now 2x stronger",
+    "Normal/" +
+        crystal_spice_text[0] +
+        " production stops after 1 second,<br>" +
+        arcane_enchantment_text[2] +
+        " do nothing except refresh production<br>Reward: Boosts from " +
+        ansuz_rune_text[4] +
+        " are now 2x stronger",
     Decimal.pow(10, 19850),
     28
 )
 //challenge 6
 new ascension_challenge(
-    "All spice production boosts from Prestige and Ascension upgrades<br>are disabled, and rune power production is disabled<br>Reward: Unlock Collapse",
+    "All " +
+        spice_text[0] +
+        " production boosts from Prestige and Ascension upgrades<br>are disabled, and " +
+        ansuz_rune_text[4] +
+        " production is disabled<br>Reward: Unlock Collapse",
     Decimal.pow(10, 6360),
     34
 )
@@ -1826,7 +2662,12 @@ new research(
 )
 //[2] #3
 new research(
-    "Unstable spice decay now also boosts crystallized spice production",
+    unstable_spice_text[1] +
+        " " +
+        decay_text[0] +
+        " now also boosts " +
+        crystal_spice_text[0] +
+        " production",
     0,
     false,
     false,
@@ -1834,7 +2675,11 @@ new research(
 )
 //[3] #4
 new research(
-    "The rune power production exponent is increased by 0.100<br>Current rune power production exponent: 2.00",
+    "The " +
+        ansuz_rune_text[4] +
+        " production exponent is increased by 0.100<br>Current " +
+        ansuz_rune_text[4] +
+        " production exponent: 2.00",
     2,
     true,
     false,
@@ -1847,7 +2692,10 @@ new research(
 new research("Unlocks automation for Ascension upgrades", 2, false, false, 4000)
 //[5] #6
 new research(
-    "Atomic spice gains are additionally boosted by total rune power produced<br>Current boost: 1.00x",
+    atomic_spice_text[5] +
+        " gains are additionally boosted by total " +
+        ansuz_rune_text[4] +
+        " produced<br>Current boost: 1.00x",
     3,
     false,
     true,
@@ -1855,7 +2703,9 @@ new research(
 )
 //[6] #7
 new research(
-    "Unlocks the Distributor, which automates rune distribution",
+    "Unlocks the Distributor, which automates " +
+        ansuz_rune_text[7] +
+        " distribution",
     5,
     false,
     false,
@@ -1863,7 +2713,10 @@ new research(
 )
 //[7] #8
 new research(
-    "Atomic spice conversion is 10% more efficient<br>Current atomic spice efficiency: 60%",
+    atomic_spice_text[5] +
+        " conversion is 10% more efficient<br>Current " +
+        atomic_spice_text[4] +
+        " efficiency: 60%",
     5,
     true,
     false,
@@ -1874,7 +2727,9 @@ new research(
 )
 //[8] #9
 new research(
-    "Unlocks a delta option for RUNES mode of Ascension automation",
+    "Unlocks a delta option for " +
+        ansuz_rune_text[9] +
+        "S mode of Ascension automation",
     6,
     false,
     false,
@@ -1890,17 +2745,29 @@ new research(
 )
 //[10] #11
 new research(
-    "Unstable spice decay now also boosts arcane spice production",
+    unstable_spice_text[1] +
+        " " +
+        decay_text[0] +
+        " now also boosts " +
+        arcane_spice_text[0] +
+        " production",
     7,
     false,
     false,
     100000
 )
 //[11] #12
-new research("Unlocks automation for arcane spice", 9, false, false, 32000)
+new research(
+    "Unlocks automation for " + arcane_spice_text[0],
+    9,
+    false,
+    false,
+    32000
+)
 //[12] #13
 new research(
-    "Ansuz rune gains from Ascension are boosted by Times Collapsed statistic<br>Current boost: 1.00x",
+    ansuz_rune_text[5] +
+        " gains from Ascension are boosted by Times Collapsed statistic<br>Current boost: 1.00x",
     9,
     false,
     true,
@@ -1908,7 +2775,11 @@ new research(
 )
 //[13] #14
 new research(
-    "You get 1 free arcane enchantment for every 10 arcane enchantments you have",
+    "You get 1 free " +
+        arcane_enchantment_text[0] +
+        " for every 10 " +
+        arcane_enchantment_text[2] +
+        " you have",
     10,
     false,
     true,
@@ -1916,7 +2787,7 @@ new research(
 )
 //[14] #15
 new research(
-    "Boosts from rune power are now 5x stronger",
+    "Boosts from " + ansuz_rune_text[4] + " are now 5x stronger",
     12,
     false,
     false,
@@ -1924,7 +2795,9 @@ new research(
 )
 //[15] #16
 new research(
-    "You get 10 free arcane enchantments for every arcane strengthener you have",
+    "You get 10 free " +
+        arcane_enchantment_text[2] +
+        " for every arcane strengthener you have",
     13,
     false,
     true,
@@ -1932,7 +2805,11 @@ new research(
 )
 //[16] #17
 new research(
-    "Unstable spice boosts are 20% stronger when unstable spice is completely decayed",
+    unstable_spice_text[1] +
+        " boosts are 20% stronger when " +
+        unstable_spice_text[0] +
+        " is completely " +
+        decay_text[4],
     13,
     false,
     false,
@@ -1950,7 +2827,13 @@ new research(
 )
 //[19] #20
 new research(
-    "Unspent atomic spice makes the unstable spice decay boost stronger<br>The boost is currently 0.00% stronger",
+    "Unspent " +
+        atomic_spice_text[0] +
+        " makes the " +
+        unstable_spice_text[0] +
+        " " +
+        decay_text[0] +
+        " boost stronger<br>The boost is currently 0.00% stronger",
     18,
     false,
     true,
@@ -1959,14 +2842,22 @@ new research(
 //[20] #21
 new research("Unlocks Challenge 7", 19, false, false, 1.8e9)
 //[21] #22
-new research("Unlocks antispice", -701, false, false, 9e9)
+new research(
+    "Unlocks " + (meme_condition ? "fructose" : "antispice"),
+    -701,
+    false,
+    false,
+    9e9
+)
 //[22] #23
 new research("Unlocks Challenge 8", -702, false, false, 3.6e10)
 //[23] #24
-new research("Unlocks red antispice", -801, false, false, 1.08e11)
+new research("Unlocks " + antispice_text[4], -801, false, false, 1.08e11)
 //[24] #25
 new research(
-    "You gain 46,656x more atomic spice for every Collapse challenge completion<br>Current boost: 1.00x",
+    "You gain 46,656x more " +
+        atomic_spice_text[0] +
+        " for every Collapse challenge completion<br>Current boost: 1.00x",
     -703,
     false,
     true,
@@ -1975,10 +2866,14 @@ new research(
 //[25] #26
 new research("Unlocks Challenge 9", -803, false, false, 8e13)
 //[26] #27
-new research("Unlocks yellow antispice", -901, false, false, 5e14)
+new research("Unlocks " + antispice_text[6], -901, false, false, 5e14)
 //[27] #28
 new research(
-    "You get 50 free arcane enchantments for every Collapse (up to 50% of your bought arcane enchantments)",
+    "You get 50 free " +
+        arcane_enchantment_text[2] +
+        " for every Collapse (up to 50% of your bought " +
+        arcane_enchantment_text[2] +
+        ")",
     -805,
     false,
     true,
@@ -1987,9 +2882,15 @@ new research(
 //[28] #29
 new research("Unlocks Challenge 10", -904, false, false, 2.5e19)
 //[29] #30
-new research("Unlocks green antispice", -1001, false, false, 1e20)
+new research("Unlocks " + antispice_text[8], -1001, false, false, 1e20)
 //[30] #31
-new research("Unlocks Spice Collider automation", -30, false, false, 1.25e24)
+new research(
+    "Unlocks " + collider_text + " automation",
+    -30,
+    false,
+    false,
+    1.25e24
+)
 //[31] #32
 new research(
     "Collapse Challenges can be completed in bulk",
@@ -2001,10 +2902,14 @@ new research(
 //[32] #33
 new research("Unlocks Challenge 11", -1005, false, false, 1e27)
 //[33] #34
-new research("Unlocks blue antispice", -1101, false, false, 2.8e28)
+new research("Unlocks " + antispice_text[10], -1101, false, false, 2.8e28)
 //[34] #35
 new research(
-    "You gain 50% more rainbow spice after color augments begin",
+    "You gain 50% more " +
+        rainbow_spice_text[0] +
+        " after " +
+        color_text[0] +
+        " augments begin",
     -1009,
     false,
     false,
@@ -2013,10 +2918,10 @@ new research(
 //[35] #36
 new research("Unlocks Challenge 12", -1106, false, false, 1.72e39)
 //[36] #37
-new research("Unlocks pink antispice", -1201, false, false, 4.21e40)
+new research("Unlocks " + antispice_text[12], -1201, false, false, 4.21e40)
 //[37] #38
 new research(
-    "Boosts from rune power are now 5x stronger",
+    "Boosts from " + ansuz_rune_text[4] + " are now 5x stronger",
     -1111,
     false,
     false,
@@ -2032,7 +2937,7 @@ new research(
 )
 //[40] #40
 new research(
-    "Unlocks rainbow antispice",
+    "Unlocks " + antispice_text[14],
     -1208,
     false,
     false,
@@ -2083,7 +2988,9 @@ class collapse_challenge {
             this.desc +
             "<br></span><br>Goal: <span class='atomic_spice'>+" +
             format_idec(this.goal, game.notation) +
-            " atomic spice</span><br>Completions: 0"
+            " " +
+            atomic_spice_text[0] +
+            "</span><br>Completions: 0"
         info.className = "co_challenge_text"
 
         //attaching text to text div
@@ -2111,7 +3018,9 @@ class collapse_challenge {
 //initializing collapse challenges
 //challenge 7
 new collapse_challenge(
-    "Challenges 1, 3, 4, & 5 simultaneously<br>Reward: Normal spice multipliers are 2.5% stronger<br>Next research unlock in 1 completion",
+    "Challenges 1, 3, 4, & 5 simultaneously<br>Reward: Normal " +
+        spice_text[0] +
+        " multipliers are 2.5% stronger<br>Next research unlock in 1 completion",
     20,
     36,
     Decimal.pow(10, 29),
@@ -2126,7 +3035,18 @@ new collapse_challenge(
 )
 //challenge 8
 new collapse_challenge(
-    "Unstable spice decay gives no boost, it instead produces sixth generators<br>Reward: Unstable spice decay now also produces arcane spice deities<br>Next research unlock in 1 completion",
+    unstable_spice_text[1] +
+        " " +
+        decay_text[0] +
+        " gives no boost, it instead produces sixth generators<br>Reward: " +
+        unstable_spice_text[1] +
+        " " +
+        decay_text[0] +
+        " now also produces " +
+        arcane_spice_text[0] +
+        " " +
+        deity_text[1] +
+        "<br>Next research unlock in 1 completion",
     22,
     31,
     Decimal.pow(10, 25),
@@ -2159,7 +3079,16 @@ new collapse_challenge(
 )
 //challenge 10
 new collapse_challenge(
-    "Color augment scaling is much stronger, and color augments begin at 4 color boosts<br>Ascension upgrade prices are also reduced<br>Reward: Color augments begin at 4,194,304 color boosts<br>Next research unlock in 1 completion",
+    color_text[1] +
+        " augment scaling is much stronger, and " +
+        color_text[0] +
+        " augments begin at 4 " +
+        color_text[0] +
+        " boosts<br>Ascension upgrade prices are also reduced<br>Reward: " +
+        color_text[1] +
+        " augments begin at 4,194,304 " +
+        color_text[0] +
+        " boosts<br>Next research unlock in 1 completion",
     28,
     22,
     Decimal.pow(10, 1150),
@@ -2174,7 +3103,9 @@ new collapse_challenge(
 )
 //challenge 11
 new collapse_challenge(
-    "Ascension is disabled, but Challenge 6 is not required to Collapse<br>Reward: You gain 1% of your pending Ansuz runes every second<br>Next research unlock in 1 completion",
+    "Ascension is disabled, but Challenge 6 is not required to Collapse<br>Reward: You gain 1% of your pending " +
+        ansuz_rune_text[6] +
+        "s every second<br>Next research unlock in 1 completion",
     32,
     18,
     Decimal.pow(10, 1750),
@@ -2183,7 +3114,15 @@ new collapse_challenge(
 )
 //challenge 12
 new collapse_challenge(
-    "Same as Challenge 6, but all research boosts are disabled, and red, yellow, green, & blue spice production is disabled<br>Reward: You gain data 2x faster while researching<br>Next research unlock in 1 completion",
+    "Same as Challenge 6, but all research boosts are disabled, and " +
+        red_spice_text[4] +
+        ", " +
+        yellow_spice_text[4] +
+        ", " +
+        green_spice_text[4] +
+        ", & " +
+        blue_spice_text[0] +
+        " production is disabled<br>Reward: You gain data 2x faster while researching<br>Next research unlock in 1 completion",
     35,
     7,
     Decimal.pow(10, 580),
@@ -2491,18 +3430,33 @@ new antispice_perk("Repeatable researches are 15% stronger", 0)
 //[1]
 new antispice_perk("Challenge 7-12 rewards are 5% stronger", 0)
 //[2]
-new antispice_perk("You gain 10% more rainbow spice from Prestige", 0)
+new antispice_perk(
+    "You gain 10% more " + rainbow_spice_text[0] + " from Prestige",
+    0
+)
 //[3]
-new antispice_perk("You gain 12.5% more Ansuz runes from Ascension", 0)
+new antispice_perk(
+    "You gain 12.5% more " + ansuz_rune_text[6] + "s from Ascension",
+    0
+)
 //[4]
-new antispice_perk("Color boosts and strengtheners are 17.5% stronger", 0)
+new antispice_perk(
+    color_text[1] + " boosts and strengtheners are 17.5% stronger",
+    0
+)
 //[5]
 new antispice_perk(
-    "Crystal infusions and arcane enchantments are 6% stronger",
+    crystal_spice_text[8] +
+        " infusions and " +
+        arcane_enchantment_text[2] +
+        " are 6% stronger",
     0
 )
 //[6]
-new antispice_perk("ALL spice production multipliers are 1% stronger", 0)
+new antispice_perk(
+    "ALL " + spice_text[0] + " production multipliers are 1% stronger",
+    0
+)
 //[7]
 new antispice_perk(
     "The game speed multiplier is 25% stronger outside of Challenge 9",
