@@ -854,6 +854,9 @@ function goto_subtab(id) {
                 if (game.statistics_unit[0] === 0) {
                     document.getElementById("statistics_unit").innerHTML =
                         "Unit: RAINBOW SPICE"
+                    if (meme_condition)
+                        document.getElementById("statistics_unit").innerHTML =
+                            "Unit: SPARKLING SUGAR"
                 } else if (game.statistics_unit[0] === 1) {
                     document.getElementById("statistics_unit").innerHTML =
                         "Unit: PRESTIGES"
@@ -898,6 +901,10 @@ function goto_subtab(id) {
                     if (game.statistics_unit[1] === 0) {
                         document.getElementById("statistics_unit").innerHTML =
                             "Unit: ANSUZ RUNES"
+                        if (meme_condition)
+                            document.getElementById(
+                                "statistics_unit"
+                            ).innerHTML = "Unit: SPARKLING CUBES"
                     } else if (game.statistics_unit[1] === 1) {
                         document.getElementById("statistics_unit").innerHTML =
                             "Unit: ASCENSIONS"
@@ -939,6 +946,10 @@ function goto_subtab(id) {
                     if (game.statistics_unit[2] === 0) {
                         document.getElementById("statistics_unit").innerHTML =
                             "Unit: ATOMIC SPICE"
+                        if (meme_condition)
+                            document.getElementById(
+                                "statistics_unit"
+                            ).innerHTML = "Unit: CARBOHYDRATES"
                     } else if (game.statistics_unit[2] === 1) {
                         document.getElementById("statistics_unit").innerHTML =
                             "Unit: COLLAPSES"
@@ -970,6 +981,9 @@ function statistics_unit() {
                 game.statistics_unit[0] = 0
                 document.getElementById("statistics_unit").innerHTML =
                     "Unit: RAINBOW SPICE"
+                if (meme_condition)
+                    document.getElementById("statistics_unit").innerHTML =
+                        "Unit: SPARKLING SUGAR"
             }
             break
         case 2:
@@ -981,6 +995,9 @@ function statistics_unit() {
                 game.statistics_unit[1] = 0
                 document.getElementById("statistics_unit").innerHTML =
                     "Unit: ANSUZ RUNES"
+                if (meme_condition)
+                    document.getElementById("statistics_unit").innerHTML =
+                        "Unit: SPARKLING CUBES"
             }
             break
         case 3:
@@ -992,6 +1009,9 @@ function statistics_unit() {
                 game.statistics_unit[2] = 0
                 document.getElementById("statistics_unit").innerHTML =
                     "Unit: ATOMIC SPICE"
+                if (meme_condition)
+                    document.getElementById("statistics_unit").innerHTML =
+                        "Unit: CARBOHYDRATES"
             }
             break
     }
@@ -1188,11 +1208,11 @@ function confirmations(type, ignore) {
                 if (game.antispice_confirm) {
                     game.antispice_confirm = false
                     document.getElementById("antispice_confirm").innerHTML =
-                        "Antispice Confirmations<br>DISABLED"
+                        antispice_text[1] + " Confirmations<br>DISABLED"
                 } else {
                     game.antispice_confirm = true
                     document.getElementById("antispice_confirm").innerHTML =
-                        "Antispice Confirmations<br>ENABLED"
+                        antispice_text[1] + " Confirmations<br>ENABLED"
                 }
             } else {
                 document.getElementById("antispice_confirm").className =
@@ -1340,6 +1360,13 @@ function animations() {
             game.collider_animation = true
             document.getElementById("collider_animation").innerHTML =
                 "Collider Animations<br>ENABLED"
+        }
+        if (meme_condition) {
+            document.getElementById("collider_animation").className =
+                "settings_button"
+            game.collider_animation = false
+            document.getElementById("collider_animation").innerHTML =
+                "Splitter Animations<br>N/A"
         }
     } else {
         document.getElementById("collider_animation").className =
