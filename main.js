@@ -4513,7 +4513,9 @@ function load(savegame) {
         if (modal === "none") {
             open_modal(
                 "alert",
-                "You just tried to load an EXP Simulator save file into Spice Idle... Why did you think that would work?"
+                "You just tried to load an EXP Simulator save file into " +
+                    spice_text[1] +
+                    " Idle... Why did you think that would work?"
             )
         }
         return
@@ -5065,10 +5067,6 @@ function graphics_loop() {
         research_update()
         antispice_update()
     }
-    if (game.tab === 4) {
-        expansion_update()
-        dark_update()
-    }
     if (game.tab === 5) stats_update()
     if (game.tab === 6) settings_update()
     if (game.tab === 7) compendium_update()
@@ -5338,10 +5336,14 @@ if (game.save_time === undefined) {
     document.getElementById("catchup_screen").style.display = "flex"
     document.getElementById("startup_panel").style.display = "block"
     document.getElementById("catchup_header").innerHTML =
-        "The universe is full of spices...<br>Use them to conquer it"
+        "The universe is full of " +
+        spice_text[0] +
+        "s...<br>Use them to conquer it"
     if (mobile)
         document.getElementById("catchup_header").innerHTML =
-            "The universe is full of spices...<br><br>Use them to conquer it"
+            "The universe is full of " +
+            spice_text[0] +
+            "s...<br><br>Use them to conquer it"
     document.getElementById("offline_panel").style.display = "none"
     document.getElementById("tabs_block").style.display = "none"
     document.getElementsByTagName("main")[0].style.display = "none"
