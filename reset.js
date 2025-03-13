@@ -507,12 +507,19 @@ function prestige(override) {
             game.ascend_challenge === 0 &&
             game.collapse_challenge !== 12
         ) {
-            if (game.ascend < 10240)
-                amount = amount.mul(Decimal.pow(2, game.ascend / 20))
-            else
-                amount = amount.mul(
-                    Decimal.pow(2, 5 * (game.ascend - 7740) ** 0.5 + 262)
-                )
+            if (game.galactic_bought[14]) {
+                amount = amount.mul(Decimal.pow(2, game.ascend ** 0.5 * 20000))
+            } else {
+                if (game.ascend < 5120)
+                    amount = amount.mul(Decimal.pow(2, game.ascend / 10))
+                else
+                    amount = amount.mul(
+                        Decimal.pow(
+                            2,
+                            5 * (2 * game.ascend - 7740) ** 0.5 + 262
+                        )
+                    )
+            }
         }
 
         if (game.antispice[4].cmp(1) >= 0) {
@@ -531,8 +538,12 @@ function prestige(override) {
             amount = amount.pow(1.1)
         }
 
+        if (game.ascend_challenge === 0)
+            amount = amount.pow(1 + game.realm_effects[2] / 100)
+
         game.rainbow_spice = game.rainbow_spice.add(amount)
         game.antitotal_spice[6] = game.antitotal_spice[6].add(amount)
+
         for (let i = 8; i >= 0; i--) {
             game.prestige_amount_history[i + 1] =
                 game.prestige_amount_history[i]
@@ -547,6 +558,28 @@ function prestige(override) {
             game.prestige_real_time_history[0] = game.real_time_played[1]
         else game.prestige_real_time_history[0] = -1
         game.prestige_stat_history[0] = prestige_stat
+
+        if (game.prestige_real_time_history[0] === -1) {
+            if (
+                (game.prestige_stat_history[0] * 60) /
+                    game.prestige_time_history[0] >
+                    game.best_prestige_rate &&
+                game.prestige_time_history[0] > 0
+            )
+                game.best_prestige_rate =
+                    (game.prestige_stat_history[0] * 60) /
+                    game.prestige_time_history[0]
+        } else {
+            if (
+                (game.prestige_stat_history[0] * 60) /
+                    game.prestige_real_time_history[0] >
+                    game.best_prestige_rate &&
+                game.prestige_real_time_history[0] > 0
+            )
+                game.best_prestige_rate =
+                    (game.prestige_stat_history[0] * 60) /
+                    game.prestige_real_time_history[0]
+        }
 
         game.prestige_time_played = 0
         game.real_time_played[1] = 0
@@ -640,15 +673,15 @@ function ascend(override, challenge) {
         let amount = game.rainbow_spice.pow(1 / 128).div(256)
 
         if (game.research_complete[12] >= 1 && game.collapse_challenge !== 12) {
-            if (game.collapse <= 1224) {
+            if (game.collapse <= 612) {
                 amount = amount.mul(
-                    Decimal.pow(7.27e27, (game.collapse / 10) ** 0.5)
+                    Decimal.pow(7.27e27, (game.collapse / 5) ** 0.5)
                 )
             } else {
                 amount = amount.mul(
                     Decimal.pow(
                         7.27e27,
-                        (game.collapse - 1013.3) ** 0.25 + 7.2535
+                        (2 * game.collapse - 1013.3) ** 0.25 + 7.2535
                     )
                 )
             }
@@ -687,6 +720,8 @@ function ascend(override, challenge) {
             amount = amount.pow(1.125)
         }
 
+        amount = amount.pow(1 + game.realm_effects[2] / 100)
+
         game.ansuz = game.ansuz.add(amount.floor())
 
         if (game.research_complete[6] >= 1) {
@@ -715,6 +750,28 @@ function ascend(override, challenge) {
             game.ascend_challenge_history[0] = challenge
         else game.ascend_challenge_history[0] = -1
         game.ascend_stat_history[0] = ascension_stat
+
+        if (game.ascend_real_time_history[0] === -1) {
+            if (
+                (game.ascend_stat_history[0] * 60) /
+                    game.ascend_time_history[0] >
+                    game.best_ascend_rate &&
+                game.ascend_time_history[0] > 0
+            )
+                game.best_ascend_rate =
+                    (game.ascend_stat_history[0] * 60) /
+                    game.ascend_time_history[0]
+        } else {
+            if (
+                (game.ascend_stat_history[0] * 60) /
+                    game.ascend_real_time_history[0] >
+                    game.best_ascend_rate &&
+                game.ascend_real_time_history[0] > 0
+            )
+                game.best_ascend_rate =
+                    (game.ascend_stat_history[0] * 60) /
+                    game.ascend_real_time_history[0]
+        }
 
         game.ascend_time_played = 0
         game.real_time_played[2] = 0
@@ -782,16 +839,16 @@ function ascend(override, challenge) {
         if (game.research_complete[15] >= 1 && game.collapse_challenge !== 12)
             game.free_enchantment = BigInt(game.arcane_strengthener) * 10n
         if (game.research_complete[27] >= 1 && game.collapse_challenge !== 12) {
-            let collapse_free = BigInt(game.collapse) * 50n
+            let collapse_free = BigInt(game.collapse) * 100n
             if (game.collapse >= 100000)
                 collapse_free = BigInt(
                     Math.floor(
-                        2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                            3750000
+                        5000000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                            7500000
                     )
                 )
             if (game.collapse >= 1337500)
-                collapse_free = BigInt(game.collapse) * 5n + 9562500n
+                collapse_free = BigInt(game.collapse) * 10n + 19125000n
             if (collapse_free > game.arcane_enchantment / 2n)
                 collapse_free = game.arcane_enchantment / 2n
 
@@ -833,7 +890,7 @@ function ascend(override, challenge) {
         game.crystal_strengthener = 0
         game.crystal_strengthener_price = Decimal.pow(2, 76)
 
-        if (game.ascend === 1 && game.collapse === 0) {
+        if (game.ascend === 1 && game.collapse === 0 && game.expand === 0) {
             confirmations("ascend", true)
             confirmations("ascend", true)
         }
@@ -898,16 +955,16 @@ function ascend(override, challenge) {
                 game.research_complete[27] >= 1 &&
                 game.collapse_challenge !== 12
             ) {
-                let collapse_free = BigInt(game.collapse) * 50n
+                let collapse_free = BigInt(game.collapse) * 100n
                 if (game.collapse >= 100000)
                     collapse_free = BigInt(
                         Math.floor(
-                            2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                                3750000
+                            5000000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                                7500000
                         )
                     )
                 if (game.collapse >= 1337500)
-                    collapse_free = BigInt(game.collapse) * 5n + 9562500n
+                    collapse_free = BigInt(game.collapse) * 10n + 19125000n
                 if (collapse_free > game.arcane_enchantment / 2n)
                     collapse_free = game.arcane_enchantment / 2n
 
@@ -1012,6 +1069,17 @@ function pre_collapse(override, challenge) {
     )
         amount = amount.mul(Decimal.pow(46656, total_completions))
 
+    if (game.galactic_bought[13]) {
+        if (game.expand >= 300)
+            amount = amount.mul(
+                Decimal.pow(10, 3000 * phi ** 2 * (game.expand / 300) ** 0.5)
+            )
+        else amount = amount.mul(Decimal.pow(10, 10 * phi ** 2 * game.expand))
+    }
+
+    if (game.collapse_challenge === 0 && challenge === undefined)
+        amount = amount.pow(1 + game.realm_effects[2] / 100)
+
     let goal = new Decimal(1)
     if (game.collapse_challenge !== 0) {
         goal = get_collapse_goal(game.collapse_challenge - 7, 0)
@@ -1096,6 +1164,17 @@ function collapse(override, challenge) {
     )
         amount = amount.mul(Decimal.pow(46656, total_completions))
 
+    if (game.galactic_bought[13]) {
+        if (game.expand >= 300)
+            amount = amount.mul(
+                Decimal.pow(10, 3000 * phi ** 2 * (game.expand / 300) ** 0.5)
+            )
+        else amount = amount.mul(Decimal.pow(10, 10 * phi ** 2 * game.expand))
+    }
+
+    if (game.collapse_challenge === 0 && challenge === undefined)
+        amount = amount.pow(1 + game.realm_effects[2] / 100)
+
     let goal = new Decimal(1)
     if (game.collapse_challenge !== 0) {
         goal = get_collapse_goal(game.collapse_challenge - 7, 0)
@@ -1148,7 +1227,28 @@ function collapse(override, challenge) {
         else game.collapse_challenge_history[0] = -1
         game.collapse_stat_history[0] = collapse_stat
 
-        let old_time = game.real_time_played[3]
+        if (game.collapse_real_time_history[0] === -1) {
+            if (
+                (game.collapse_stat_history[0] * 60) /
+                    game.collapse_time_history[0] >
+                    game.best_collapse_rate &&
+                game.collapse_time_history[0] > 0
+            )
+                game.best_collapse_rate =
+                    (game.collapse_stat_history[0] * 60) /
+                    game.collapse_time_history[0]
+        } else {
+            if (
+                (game.collapse_stat_history[0] * 60) /
+                    game.collapse_real_time_history[0] >
+                    game.best_collapse_rate &&
+                game.collapse_real_time_history[0] > 0
+            )
+                game.best_collapse_rate =
+                    (game.collapse_stat_history[0] * 60) /
+                    game.collapse_real_time_history[0]
+        }
+
         game.collapse_time_played = 0
         game.real_time_played[3] = 0
         game.collapse_spice = new Decimal(5)
@@ -1175,8 +1275,6 @@ function collapse(override, challenge) {
         game.ascend_challenge = 0
         game.ascend_complete = new Array(6).fill(false)
 
-        if (game.subtab[3] > 1) game.subtab[3] = 0
-
         game.ascend_bought = new Array(35).fill(false)
 
         if (game.research_complete[1] >= 1) {
@@ -1191,6 +1289,12 @@ function collapse(override, challenge) {
         }
 
         game.autoas_goal2 = new Decimal(1)
+
+        if (game.galactic_bought[6]) {
+            if (game.autoco_mode === 0) {
+                game.autoco_goal2 = game.autoco_goal2.mul(game.autoco_delta)
+            }
+        }
 
         ascend(true)
         if (game.research_complete[18] === 0) {
@@ -1236,16 +1340,16 @@ function collapse(override, challenge) {
 
         game.free_enchantment = 0n
         if (game.research_complete[27] >= 1 && game.collapse_challenge !== 12) {
-            let collapse_free = BigInt(game.collapse) * 50n
+            let collapse_free = BigInt(game.collapse) * 100n
             if (game.collapse >= 100000)
                 collapse_free = BigInt(
                     Math.floor(
-                        2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                            3750000
+                        5000000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                            7500000
                     )
                 )
             if (game.collapse >= 1337500)
-                collapse_free = BigInt(game.collapse) * 5n + 9562500n
+                collapse_free = BigInt(game.collapse) * 10n + 19125000n
             if (collapse_free > game.arcane_enchantment / 2n)
                 collapse_free = game.arcane_enchantment / 2n
 
@@ -1263,7 +1367,7 @@ function collapse(override, challenge) {
             game.atomic_timer = 0
         }
 
-        if (game.collapse === 1) {
+        if (game.collapse === 1 && game.expand === 0) {
             confirmations("collapse", true)
             confirmations("collapse", true)
         }
@@ -1283,8 +1387,6 @@ function collapse(override, challenge) {
 
             game.ascend_challenge = 0
             game.ascend_complete = new Array(6).fill(false)
-
-            if (game.subtab[3] > 1) game.subtab[3] = 0
 
             game.ascend_bought = new Array(35).fill(false)
 
@@ -1348,16 +1450,16 @@ function collapse(override, challenge) {
                 game.research_complete[27] >= 1 &&
                 game.collapse_challenge !== 12
             ) {
-                let collapse_free = BigInt(game.collapse) * 50n
+                let collapse_free = BigInt(game.collapse) * 100n
                 if (game.collapse >= 100000)
                     collapse_free = BigInt(
                         Math.floor(
-                            2500000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                                3750000
+                            5000000 * ((game.collapse - 87500) / 50000) ** 0.5 +
+                                7500000
                         )
                     )
                 if (game.collapse >= 1337500)
-                    collapse_free = BigInt(game.collapse) * 5n + 9562500n
+                    collapse_free = BigInt(game.collapse) * 10n + 19125000n
                 if (collapse_free > game.arcane_enchantment / 2n)
                     collapse_free = game.arcane_enchantment / 2n
 
@@ -1365,6 +1467,269 @@ function collapse(override, challenge) {
             }
 
             game.global_spice_boost = new Decimal(1)
+        }
+    }
+}
+
+//code for expanding
+function pre_expand() {
+    let amount = Decimal.pow(
+        phi,
+        game.expand_spice
+            .div(Decimal.pow(10, 4.05e18 + Math.E * 1e15))
+            .log(10) / 5e17
+    )
+        .mul(2)
+        .floor()
+
+    if (
+        game.antispice_bought[8] &&
+        amount.cmp(1) >= 0 &&
+        game.selected_realm !== -1
+    ) {
+        if (game.expand_confirm) {
+            if (modal === "none") {
+                open_modal(
+                    "confirm",
+                    "Are you sure you want to leave this realm? ALL will be lost!",
+                    expand
+                )
+            }
+        } else {
+            expand()
+        }
+    }
+}
+
+function expand() {
+    let amount = Decimal.pow(
+        phi,
+        game.expand_spice
+            .div(Decimal.pow(10, 4.05e18 + Math.E * 1e15))
+            .log(10) / 5e17
+    )
+        .mul(2)
+        .floor()
+
+    if (amount.cmp(2584) >= 0)
+        amount = amount
+            .div(2584)
+            .pow(2 / 3)
+            .mul(2584)
+
+    let power = 10
+    while (amount.cmp(Decimal.pow(10, power)) >= 0) {
+        amount = amount.pow(
+            (4 * power ** 0.5 * (power + 8 * amount.log(10)) ** 0.5 -
+                4 * power) /
+                (8 * amount.log(10))
+        )
+        power *= 5
+    }
+
+    if (
+        game.antispice_bought[8] &&
+        amount.cmp(1) >= 0 &&
+        game.selected_realm !== -1
+    ) {
+        let expand_stat = 1
+        game.expand += expand_stat
+
+        game.galactic_shards = game.galactic_shards.add(amount)
+
+        game.dark_spice = new Decimal(0)
+        game.highest_dark_spice = new Decimal(0)
+        game.dark_construct = 0n
+        game.dark_construct_price = new Decimal(40 * phi)
+        game.dark_construct_boost = new Decimal(1)
+        game.dark_conversion = 0
+        game.dark_conversion_price = new Decimal(2650 * phi)
+        game.dark_efficiency = 0
+        for (let i = 0; i < 6; i++) {
+            game.dark_spice_gen[i] = new Decimal(
+                game.dark_spice_bought[i].toString()
+            )
+        }
+
+        for (let i = 8; i >= 0; i--) {
+            game.expand_amount_history[i + 1] = game.expand_amount_history[i]
+            game.expand_time_history[i + 1] = game.expand_time_history[i]
+            game.expand_real_time_history[i + 1] =
+                game.expand_real_time_history[i]
+            game.expand_stat_history[i + 1] = game.expand_stat_history[i]
+        }
+        game.expand_amount_history[0] = amount
+        game.expand_time_history[0] = game.expand_time_played
+        if (game.real_time_played[4] !== game.expand_time_played)
+            game.expand_real_time_history[0] = game.real_time_played[4]
+        else game.expand_real_time_history[0] = -1
+        game.expand_stat_history[0] = expand_stat
+
+        if (game.expand_real_time_history[0] === -1) {
+            if (
+                (game.expand_stat_history[0] * 60) /
+                    game.expand_time_history[0] >
+                    game.best_expand_rate &&
+                game.expand_time_history[0] > 0
+            )
+                game.best_expand_rate =
+                    (game.expand_stat_history[0] * 60) /
+                    game.expand_time_history[0]
+        } else {
+            if (
+                (game.expand_stat_history[0] * 60) /
+                    game.expand_real_time_history[0] >
+                    game.best_expand_rate &&
+                game.expand_real_time_history[0] > 0
+            )
+                game.best_expand_rate =
+                    (game.expand_stat_history[0] * 60) /
+                    game.expand_real_time_history[0]
+        }
+
+        game.expand_time_played = 0
+        game.real_time_played[4] = 0
+        game.expand_spice = new Decimal(5)
+
+        game.peak_galactic_gain = new Decimal(0)
+        game.peak_galactic_amount = new Decimal(0)
+        game.peak_galactic_time = 0
+
+        document.getElementById("exploration_map").querySelectorAll(".realm")[
+            game.current_realm
+        ].className = "realm"
+
+        if (!game.realms_visited.includes(game.selected_realm))
+            game.realms_visited.push(game.selected_realm)
+        game.current_realm = game.selected_realm
+        game.realm_effects[0] = realm.realms[game.current_realm].normal
+        game.realm_effects[1] = realm.realms[game.current_realm].special
+        game.realm_effects[2] = realm.realms[game.current_realm].reset
+
+        document.getElementById("exploration_map").querySelectorAll(".realm")[
+            game.current_realm
+        ].className = "realm current_realm"
+        document.getElementById("exploration_selected").className =
+            "current_realm"
+
+        document.getElementById("expansion_page").style.display = "block"
+
+        let total_length =
+            document.getElementById("exploration_map").scrollWidth
+        let screen_width =
+            document.getElementById("exploration_view").clientWidth
+        let screen_height =
+            document.getElementById("exploration_view").clientHeight
+        let unit = total_length / 3400
+
+        document.getElementById("exploration_view").scrollLeft =
+            realm.realms[game.current_realm].x * unit +
+            total_length / 2 -
+            screen_width / 2
+        document.getElementById("exploration_view").scrollTop =
+            realm.realms[game.current_realm].y * unit +
+            total_length / 2 -
+            screen_height / 2
+
+        if (game.tab !== 4 || game.subtab[5] !== 0)
+            document.getElementById("expansion_page").style.display = "none"
+
+        game.collapse_challenge = 0
+        game.collapse_complete = new Array(6).fill(0)
+
+        game.autocc_timer = 48
+        game.autocc_challenge = 0
+
+        game.research_view = 0
+        game.research_select = 0
+        game.research_pause = true
+        game.research_complete = new Array(40).fill(0)
+        game.data = new Array(40).fill(0)
+        game.data_boosts = 0
+
+        if (game.galactic_bought[5]) {
+            game.research_complete[1] = 1
+            game.research_complete[4] = 1
+            game.research_complete[6] = 1
+            game.research_complete[8] = 1
+            game.research_complete[9] = 1
+            game.research_complete[11] = 1
+            game.research_complete[17] = 1
+            game.research_complete[18] = 1
+            game.research_complete[30] = 1
+            game.research_complete[31] = 1
+
+            game.data[1] = 1000
+            game.data[4] = 4000
+            game.data[6] = 8000
+            game.data[8] = 16000
+            game.data[9] = 50000
+            game.data[11] = 32000
+            game.data[17] = 15000000
+            game.data[18] = 60000000
+            game.data[30] = research.researches[30].data
+            game.data[31] = research.researches[31].data
+        }
+
+        game.halflife = 1800
+        game.atomic_efficiency = 0.6
+
+        game.autoco_goal2 = new Decimal(1)
+
+        game.collider_tab = 0
+
+        game.antispice = [
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            0,
+        ]
+        game.spent_atomic_spice = [
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+        ]
+        game.antitotal_spice = [
+            undefined,
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+            new Decimal(0),
+        ]
+
+        game.total_rainbow_antispice = 0
+        game.antispice_bought = new Array(10).fill(false)
+        game.antispice_order = new Array(8).fill(0)
+
+        game.limit_active = false
+
+        collapse(true)
+        game.collapse = 0
+        game.ascend = 0
+        game.prestige = 0
+
+        game.atomic_spice = new Decimal(0)
+        game.unstable_spice = new Decimal(0)
+        game.total_unstable_spice = new Decimal(0)
+        game.unstable_boost = new Decimal(1)
+
+        game.collapse_amount_history = new Array(10).fill(-1)
+        game.collapse_time_history = new Array(10).fill(-1)
+
+        game.gamespeed = 1
+
+        if (game.expand === 1) {
+            confirmations("expand", true)
+            confirmations("expand", true)
         }
     }
 }
