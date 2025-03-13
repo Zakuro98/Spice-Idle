@@ -18,7 +18,7 @@ html {
 body {
     background-color: #221625;
     font-family: "Fira Code";
-    font-size: 16px;
+    font-size: 14.4px;
     font-weight: normal;
     margin: 0em;
     padding: 0em;
@@ -76,6 +76,14 @@ body {
     text-align: center;
     margin-top: 0em;
     margin-bottom: 0em;
+}
+
+.catchup_warning {
+    font-size: 1.25em;
+    color: white;
+    text-align: center;
+    margin-top: 0em;
+    margin-bottom: 0.5em;
 }
 
 .catchup_back {
@@ -482,19 +490,11 @@ main {
     text-shadow: 0 0 0.2em #ffd107;
     cursor: pointer;
 }
-.meme .shift1 {
-    color: #e3c286;
-    text-shadow: 0 0 0.2em #e3c286;
-}
 
 .shift2 {
     color: #25dd8a;
     text-shadow: 0 0 0.2em #25dd8a;
     cursor: pointer;
-}
-.meme .shift2 {
-    color: #fcb447;
-    text-shadow: 0 0 0.2em #fcb447;
 }
 
 .shift3 {
@@ -502,29 +502,17 @@ main {
     text-shadow: 0 0 0.2em #0072ff;
     cursor: pointer;
 }
-.meme .shift3 {
-    color: #de841d;
-    text-shadow: 0 0 0.2em #de841d;
-}
 
 .shift4 {
     color: #ff3dd8;
     text-shadow: 0 0 0.2em #ff3dd8;
     cursor: pointer;
 }
-.meme .shift4 {
-    color: #a3622a;
-    text-shadow: 0 0 0.2em #a3622a;
-}
 
 .boost {
     color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 100%, 50%);
     cursor: pointer;
-}
-.meme .boost {
-    color: hsl(calc(var(--time) * 36), 60%, 85%);
-    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 75%, 60%);
 }
 
 .max_all {
@@ -556,100 +544,63 @@ main {
     margin-right: 0em;
 }
 
-#boost_auto, #infusion_auto, #enchantment_auto, #prestige_auto_toggle, #ascend_auto_toggle, #collapse_auto_toggle {
+#boost_auto, #infusion_auto, #enchantment_auto, #research_upgrade_auto, #construct_auto, #conversion_auto, #prestige_auto_toggle, #ascend_auto_toggle, #collapse_auto_toggle {
     font-size: 1em;
 }
 
-.red_spice {
+.red_spice{
     color: #ff2714;
-}
-.meme .red_spice {
-    color: #e0d8c5;
 }
 
 .yellow_spice {
     color: #ffd107;
 }
-.meme .yellow_spice {
-    color: #e3c286;
-}
 
 .green_spice {
     color: #25dd8a;
-}
-.meme .green_spice {
-    color: #fcb447;
 }
 
 .blue_spice {
     color: #0072ff;
 }
-.meme .blue_spice {
-    color: #de841d;
-}
 
 .pink_spice {
     color: #ff3dd8;
-}
-.meme .pink_spice {
-    color: #a3622a;
 }
 
 .crystal_spice {
     color: white;
     text-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
 }
-.meme .crystal_spice {
-    text-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ffb829;
-}
 
 .arcane_spice {
     color: hsl(calc(5 * sin(var(--time) / 5) + 273), calc(15% * sin(var(--time)) + 85%), var(--arcane_light));
-    text-shadow: 0em 0em 0.2em hsl(calc(5 * sin(var(--time) / 5) + 273), calc(15% * sin(var(--time)) + 85%), var(--arcane_light)), 0em 0em 0.5em hsl(calc(5 * sin(var(--time) / 5) + 273), calc(9% * sin(var(--time)) + 91%), calc(7% * sin(var(--time)) + 48%));
-}
-.meme .arcane_spice {
-    color: hsl(calc(18 * sin(var(--time) / 2) + 126), 80%, 60%);
-    text-shadow: 0em 0em 0.15em hsl(calc(18 * sin(var(--time) / 2) + 126), 80%, 60%), 0em 0em 0.3em hsl(calc(18 * sin(var(--time) / 2) + 126), 60%, 40%);
+    text-shadow: 0em 0em 0.2em hsl(calc(5 * sin(var(--time) / 5) + 273), calc(15% * sin(var(--time)) + 85%), var(--arcane_light)), 0em 0em 0.5em hsl(calc(5 * sin(var(--time) / 5) + 273), calc(9% * sin(var(--time)) + 91%), calc(7% * sin(var(--time)) + 48%))
 }
 
 .red_cost {
     color: #ff2714;
     font-weight: 700;
 }
-.meme .red_cost {
-    color: #e0d8c5;
-}
 
 .yellow_cost {
     color: #ffd107;
     font-weight: 700;
-}
-.meme .yellow_cost {
-    color: #e3c286;
 }
 
 .green_cost {
     color: #25dd8a;
     font-weight: 700;
 }
-.meme .green_cost {
-    color: #fcb447;
-}
 
 .blue_cost {
     color: #0072ff;
     font-weight: 700;
 }
-.meme .blue_cost {
-    color: #de841d;
-}
 
 .pink_cost {
     color: #ff3dd8;
     font-weight: 700;
-}
-.meme .pink_cost {
-    color: #a3622a;
 }
 
 .rainbow_cost {
@@ -657,18 +608,11 @@ main {
     text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 100%, 50%);
     font-weight: 700;
 }
-.meme .rainbow_cost {
-    color: hsl(calc(var(--time) * 36), 75%, 85%);
-    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 75%, 60%);
-}
 
 .crystal_cost {
     color: white;
     text-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
     font-weight: 700;
-}
-.meme .crystal_cost {
-    text-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ffb829;
 }
 
 .rune_cost {
@@ -676,29 +620,17 @@ main {
     text-shadow: 0em 0em 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     font-weight: 700;
 }
-.meme .rune_cost {
-    color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-}
 
 .arcane_cost {
     color: hsl(calc(5 * sin(var(--time) / 5) + 273), calc(15% * sin(var(--time)) + 85%), var(--arcane_light));
     text-shadow: 0em 0em 0.2em hsl(calc(5 * sin(var(--time) / 5) + 273), calc(15% * sin(var(--time)) + 85%), var(--arcane_light)), 0em 0em 0.5em hsl(calc(5 * sin(var(--time) / 5) + 273), calc(9% * sin(var(--time)) + 91%), calc(7% * sin(var(--time)) + 48%));
     font-weight: 700;
 }
-.meme .arcane_cost {
-    color: hsl(calc(18 * sin(var(--time) / 2) + 126), 80%, 60%);
-    text-shadow: 0em 0em 0.15em hsl(calc(18 * sin(var(--time) / 2) + 126), 80%, 60%), 0em 0em 0.3em hsl(calc(18 * sin(var(--time) / 2) + 126), 60%, 40%);
-}
 
 .atomic_cost {
     color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
     font-weight: 700;
-}
-.meme .atomic_cost {
-    color: hsl(calc(10 * sin(var(--time)) + 15), 100%, var(--collapse_light));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 10), 100%, 50%), 0 0 0.5em hsl(calc(10 * sin(var(--time)) + 10), 100%, 40%);
 }
 
 .empty_cost {
@@ -760,6 +692,10 @@ main {
 
 #collapse_efficiency {
     margin-bottom: -3.675em;
+}
+
+#expand_efficiency {
+    text-align: center;
 }
 
 #prestige_upgrade_block {
@@ -830,10 +766,6 @@ main {
     color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 100%, 50%);
 }
-.meme .rainbow_spice {
-    color: hsl(calc(var(--time) * 36), 60%, 85%);
-    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 75%, 60%);
-}
 
 .p_locked {
     background-color: black;
@@ -849,12 +781,6 @@ main {
     box-shadow: 0 0 0.3em hsl(calc(var(--time) * 36), 100%, 50%), 0 0 0.6em hsl(calc(var(--time) * 36), 100%, 50%) inset;
     cursor: pointer;
 }
-.meme .p_unlocked {
-    color: hsl(calc(var(--time) * 36), 75%, 85%);
-    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 75%, 60%);
-    border: 1px solid hsl(calc(var(--time) * 36), 75%, 85%);
-    box-shadow: 0 0 0.3em hsl(calc(var(--time) * 36), 75%, 60%), 0 0 0.6em hsl(calc(var(--time) * 36), 75%, 60%) inset;
-}
 
 .p_unlocked:hover {
     background-color: black;
@@ -863,11 +789,6 @@ main {
     border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     box-shadow: 0 0 0.3em hsl(calc(var(--time) * 36), 100%, 50%), 0 0 1em hsl(calc(var(--time) * 36), 100%, 50%) inset;
 }
-.meme .p_unlocked:hover {
-    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36), 75%, 60%);
-    border: 1px solid hsl(calc(var(--time) * 36), 75%, 85%);
-    box-shadow: 0 0 0.3em hsl(calc(var(--time) * 36), 75%, 60%), 0 0 1em hsl(calc(var(--time) * 36), 75%, 60%) inset;
-}
 
 .p_unlocked:active {
     background-color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
@@ -875,12 +796,6 @@ main {
     text-shadow: none;
     border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     box-shadow: 0 0 0.4em hsl(calc(var(--time) * 36), 100%, 50%);
-}
-.meme .p_unlocked:active {
-    background-color: hsl(calc(var(--time) * 36), 75%, 85%);
-    text-shadow: none;
-    border: 1px solid hsl(calc(var(--time) * 36), 75%, 85%);
-    box-shadow: 0 0 0.4em hsl(calc(var(--time) * 36), 75%, 60%);
 }
 
 .p_unlocked2 {
@@ -891,12 +806,6 @@ main {
     box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%), 0 0 1.8em hsl(calc(var(--time) * 36), 100%, 50%) inset;
     cursor: pointer;
 }
-.meme .p_unlocked2 {
-    color: hsl(calc(var(--time) * 36), 75%, 85%);
-    text-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 75%, 60%);
-    border: 1px solid hsl(calc(var(--time) * 36), 75%, 85%);
-    box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 75%, 60%), 0 0 1.8em hsl(calc(var(--time) * 36), 75%, 60%) inset;
-}
 
 .p_unlocked2:hover {
     background-color: black;
@@ -904,11 +813,6 @@ main {
     text-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%);
     border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%), 0 0 3em hsl(calc(var(--time) * 36), 100%, 50%) inset;
-}
-.meme .p_unlocked2:hover {
-    text-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 75%, 60%);
-    border: 1px solid hsl(calc(var(--time) * 36), 75%, 85%);
-    box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 75%, 60%), 0 0 3em hsl(calc(var(--time) * 36), 75%, 60%) inset;
 }
 
 .p_unlocked2:active {
@@ -918,12 +822,6 @@ main {
     border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%);
 }
-.meme .p_unlocked2:active {
-    background-color: hsl(calc(var(--time) * 36), 75%, 85%);
-    text-shadow: none;
-    border: 1px solid hsl(calc(var(--time) * 36), 75%, 85%);
-    box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 75%, 60%);
-}
 
 .p_bought {
     background-color: hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
@@ -931,12 +829,6 @@ main {
     text-shadow: none;
     border: 1px solid hsl(calc(var(--time) * 36), 100%, var(--rainbow_light));
     box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 100%, 50%);
-}
-.meme .p_bought {
-    background-color: hsl(calc(var(--time) * 36), 75%, 85%);
-    text-shadow: none;
-    border: 1px solid hsl(calc(var(--time) * 36), 75%, 85%);
-    box-shadow: 0 0 0.5em hsl(calc(var(--time) * 36), 75%, 60%);
 }
 
 .c_unlocked {
@@ -947,12 +839,6 @@ main {
     box-shadow: 0em 0em 0.5em #ff2ad4, 0em 0em 3em #ff2ad4 inset;
     cursor: pointer;
 }
-.meme .c_unlocked {
-    color: #ffb829;
-    text-shadow: 0em 0em 0.2em #ffb829, 0em 0em 0.5em #ffb829;
-    border: 1px solid #ffb829;
-    box-shadow: 0em 0em 0.5em #ffb829, 0em 0em 3em #ffb829 inset;
-}
 
 .c_unlocked:hover {
     background-color: black;
@@ -960,10 +846,6 @@ main {
     text-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
     border: 1px solid white;
     box-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4, 0em 0em 1.2em white inset, 0em 0em 3em #ff2ad4 inset;
-}
-.meme .c_unlocked:hover {
-    text-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ffb829;
-    box-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ffb829, 0em 0em 1.2em white inset, 0em 0em 3em #ffb829 inset;
 }
 
 .c_unlocked:active {
@@ -973,10 +855,6 @@ main {
     border: 1px solid white;
     box-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
 }
-.meme .c_unlocked:active {
-    text-shadow: none;
-    box-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ffb829;
-}
 
 .c_bought {
     background-color: white;
@@ -984,10 +862,6 @@ main {
     text-shadow: none;
     border: 1px solid white;
     box-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ff2ad4;
-}
-.meme .c_bought {
-    text-shadow: none;
-    box-shadow: 0em 0em 0.2em white, 0em 0em 0.5em #ffb829;
 }
 
 .p_special {
@@ -1033,13 +907,13 @@ main {
     cursor: pointer;
 }
 
-#prestige_boosts, #prestige_spice, #prestige_time, #prestige_boosts_delta, #prestige_spice_delta, #ascend_runes, #ascend_time, #ascend_runes_delta, #collapse_spice, #collapse_time, #collapse_decay {
+#prestige_boosts, #prestige_spice, #prestige_time, #prestige_boosts_delta, #prestige_spice_delta, #ascend_runes, #ascend_time, #ascend_c11, #ascend_runes_delta, #collapse_spice, #collapse_time, #collapse_decay, #collapse_spice_delta {
     display: flex;
     justify-content: right;
     margin-top: 0.25em;
 }
 
-#prestige_goal, #ascend_goal {
+#prestige_goal, #ascend_goal, #collapse_goal {
     display: flex;
     justify-content: right;
     margin-top: 0.3em;
@@ -1118,6 +992,14 @@ main {
     margin-right: 0em;
 }
 
+#ascend_c11_text {
+    margin-top: 0.3em;
+}
+
+#ascend_auto_c11 {
+    margin-right: 0em;
+}
+
 .input {
     background-color: #311936;
     width: 8em;
@@ -1136,11 +1018,6 @@ main {
 
 .ansuz_panel {
     flex-grow: 1;
-}
-
-#cube_div, #cube_div2, #cube_div3 {
-    display: none;
-    margin-bottom: 0.75em;
 }
 
 .ansuz_num {
@@ -1208,13 +1085,6 @@ main {
     box-shadow: 0 0 0.3em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 1em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
     cursor: pointer;
 }
-.meme .a_unlocked {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 80%, 10%);
-    color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    box-shadow: 0 0 0.3em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)), 0 0 1em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)) inset;
-}
 
 .a_unlocked:hover {
     background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 80%, 20%);
@@ -1223,12 +1093,6 @@ main {
     border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
     box-shadow: 0 0 0.3em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 1em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
 }
-.meme .a_unlocked:hover {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 80%, 20%);
-    text-shadow: 0 0 0.1em white, 0 0 0.2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    box-shadow: 0 0 0.3em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)), 0 0 1em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)) inset;
-}
 
 .a_unlocked:active {
     background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
@@ -1236,12 +1100,6 @@ main {
     text-shadow: none;
     border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
-}
-.meme .a_unlocked:active {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    box-shadow: 0 0 0.4em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
 }
 
 .a_unlocked2 {
@@ -1252,13 +1110,6 @@ main {
     box-shadow: 0 0 0.6em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
     cursor: pointer;
 }
-.meme .a_unlocked2 {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 80%, 10%);
-    color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    box-shadow: 0 0 0.6em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)), 0 0 2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)) inset;
-}
 
 .a_unlocked2:hover {
     background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 80%, 20%);
@@ -1266,12 +1117,6 @@ main {
     text-shadow: 0 0 0.1em white, 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
     box-shadow: 0 0 0.6em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
-}
-.meme .a_unlocked2:hover {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 80%, 20%);
-    text-shadow: 0 0 0.1em white, 0 0 0.2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    box-shadow: 0 0 0.6em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)), 0 0 2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)) inset;
 }
 
 .a_unlocked2:active {
@@ -1281,12 +1126,6 @@ main {
     border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     box-shadow: 0 0 0.8em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
 }
-.meme .a_unlocked2:active {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    box-shadow: 0 0 0.8em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-}
 
 .a_bought {
     background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
@@ -1294,12 +1133,6 @@ main {
     text-shadow: none;
     border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     box-shadow: 0 0 0.8em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
-}
-.meme .a_bought {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    box-shadow: 0 0 0.8em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
 }
 
 .ac_locked {
@@ -1370,10 +1203,6 @@ main {
     color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
     text-shadow: 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
 }
-.meme .runes {
-    color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-}
 
 .rune_panel {
     margin-top: 2em;
@@ -1422,7 +1251,7 @@ main {
     margin-bottom: 0.25em;
 }
 
-.distributor_text {
+.distributor_text, .challenge_auto_text {
     color: white;
     font-size: 1.25em;
     margin: 0em 0.5em 0em 0em;
@@ -1472,7 +1301,7 @@ main {
     margin-bottom: 1.35em;
 }
 
-.distributor_input {
+.distributor_input, .challenge_auto_input {
     font-size: 0.9em;
     width: 3.2em;
 }
@@ -1500,7 +1329,7 @@ main {
         margin-right: 0.4em;
     }
 
-    #ascend_auto_buttons, #ascend_runes, #ascend_time {
+    #ascend_auto_buttons, #ascend_runes, #ascend_time, #ascend_c11 {
         justify-content: left;
     }
 
@@ -1576,9 +1405,6 @@ main {
     height: 2em;
     z-index: -1;
 }
-.meme .ascension_line {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 90%, 30%);
-}
 
 .ascension_line2 {
     padding: 0em;
@@ -1598,6 +1424,15 @@ main {
     margin-bottom: 3em;
 }
 
+.challenge_unlock {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+    margin-top: 3.25em;
+    margin-bottom: 2em;
+}
+
 .a_challenge_panel {
     display: flex;
     width: 70em;
@@ -1608,10 +1443,6 @@ main {
     margin-top: 1em;
     margin-left: auto;
     margin-right: auto;
-}
-.meme .a_challenge_panel {
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    box-shadow: 0 0 0.4em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)), 0 0 0.4em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)) inset;
 }
 
 .a_challenge_text {
@@ -1629,10 +1460,6 @@ main {
     text-shadow: 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     margin-top: 0em;
     margin-bottom: 0em;
-}
-.meme .a_challenge_header {
-    color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
 }
 
 .a_challenge_block {
@@ -1657,13 +1484,6 @@ main {
     box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 1em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
     cursor: pointer;
 }
-.meme .incomplete {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 80%, 10%);
-    color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    box-shadow: 0 0 0.4em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)), 0 0 1em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)) inset;
-}
 
 .incomplete:hover {
     background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 80%, 20%);
@@ -1671,12 +1491,6 @@ main {
     text-shadow: 0 0 0.1em white, 0 0 0.2em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light2));
     box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)), 0 0 1em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light)) inset;
-}
-.meme .incomplete:hover {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 80%, 20%);
-    text-shadow: 0 0 0.1em white, 0 0 0.2em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light2));
-    box-shadow: 0 0 0.4em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)), 0 0 1em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light)) inset;
 }
 
 .incomplete:active {
@@ -1686,12 +1500,6 @@ main {
     border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
 }
-.meme .incomplete:active {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    box-shadow: 0 0 0.4em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-}
 
 .inprogress {
     background-color: hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
@@ -1699,12 +1507,6 @@ main {
     text-shadow: none;
     border: 1px solid hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
     box-shadow: 0 0 0.4em hsl(calc(25 * sin(var(--time) / 2) + 208), 100%, var(--ascension_light));
-}
-.meme .inprogress {
-    background-color: hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
-    box-shadow: 0 0 0.4em hsl(calc(10 * sin(var(--time) / 2) + 40), 100%, var(--ascension_light));
 }
 
 .finished {
@@ -1748,7 +1550,7 @@ main {
     flex-grow: 1;
 }
 
-#ansuz_num3, #ansuz_text2, #cube_num3, #cube_text3 {
+#ansuz_num3, #ansuz_text2 {
     text-align: right;
 }
 
@@ -1869,10 +1671,6 @@ main {
     color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
 }
-.meme .atomic_spice {
-    color: hsl(calc(10 * sin(var(--time)) + 15), 100%, var(--collapse_light));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 10), 100%, 50%), 0 0 0.5em hsl(calc(10 * sin(var(--time)) + 10), 100%, 40%);
-}
 
 .collapse_info2 {
     color: white;
@@ -1895,13 +1693,6 @@ main {
     box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset, 0 0 0.8em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%) inset;
     cursor: pointer;
 }
-.meme .co_unlocked {
-    background-color: hsl(calc(10 * sin(var(--time)) + 15), 80%, 10%);
-    color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%);
-    box-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%), 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%) inset, 0 0 0.8em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%) inset;
-}
 
 .co_unlocked:hover {
     background-color: hsl(calc(30 * sin(var(--time)) + 92), 80%, 20%);
@@ -1910,12 +1701,6 @@ main {
     border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)) inset, 0 0 1em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset;
 }
-.meme .co_unlocked:hover {
-    background-color: hsl(calc(10 * sin(var(--time)) + 10), 80%, 20%);
-    text-shadow: 0 0 0.2em white, 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    box-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light)), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light)) inset, 0 0 1em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%) inset;
-}
 
 .co_unlocked:active {
     background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
@@ -1923,12 +1708,6 @@ main {
     text-shadow: none;
     border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
-}
-.meme .co_unlocked:active {
-    background-color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    box-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
 }
 
 .co_active {
@@ -1974,33 +1753,16 @@ main {
     text-shadow: 0 0 0.2em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 50%), 0 0 0.5em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 40%);
     cursor: pointer;
 }
-.meme #collider_tab1 {
-    background-color: hsl(calc(15 * sin(var(--time)) + 150), 100%, 10%);
-    border: 1px solid hsl(calc(15 * sin(var(--time)) + 150), 100%, var(--unstable_light));
-    color: hsl(calc(15 * sin(var(--time)) + 150), 100%, var(--unstable_light));
-    box-shadow: 0 0 0.2em hsl(calc(15 * sin(var(--time)) + 160), 100%, 40%) inset;
-    text-shadow: 0 0 0.2em hsl(calc(15 * sin(var(--time)) + 160), 100%, 50%), 0 0 0.5em hsl(calc(15 * sin(var(--time)) + 160), 100%, 40%);
-}
 
 #collider_tab1:hover {
     background-color: hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, 16%);
     box-shadow: 0 0 0.4em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 50%) inset;
     text-shadow: 0 0 0.2em hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, var(--unstable_light)), 0 0 0.5em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 50%);
 }
-.meme #collider_tab1:hover {
-    background-color: hsl(calc(15 * sin(var(--time)) + 150), 100%, 16%);
-    box-shadow: 0 0 0.4em hsl(calc(15 * sin(var(--time)) + 160), 100%, 50%) inset;
-    text-shadow: 0 0 0.2em hsl(calc(15 * sin(var(--time)) + 150), 100%, var(--unstable_light)), 0 0 0.5em hsl(calc(15 * sin(var(--time)) + 160), 100%, 50%);
-}
 
 #collider_tab1:active, #collider_tab1.current_tab {
     background-color: hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, var(--unstable_light));
     color: black;
-    text-shadow: none;
-    box-shadow: none;
-}
-.meme #collider_tab1:active, .meme #collider_tab1.current_tab {
-    background-color: hsl(calc(15 * sin(var(--time) * 3) + 150), 100%, var(--unstable_light));
     text-shadow: none;
     box-shadow: none;
 }
@@ -2016,29 +1778,14 @@ main {
     text-shadow: 0 0 0.2em white, 0 0 0.5em #aaaaaa;
     cursor: pointer;
 }
-.meme #collider_tab2 {
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 310), 90%, 60%);
-    color: hsl(calc(10 * sin(var(--time)) + 310), 90%, 60%);
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 310), 90%, 60%), 0 0 0.5em hsl(calc(10 * sin(var(--time)) + 310), 90%, 40%);
-}
 
 #collider_tab2:hover {
     background-color: #333333;
     box-shadow: 0 0 0.4em white inset;
 }
-.meme #collider_tab2:hover {
-    background-color: hsl(calc(10 * sin(var(--time)) + 310), 90%, 12%);
-    box-shadow: 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 310), 90%, 60%) inset;
-}
 
 #collider_tab2:active, #collider_tab2.current_tab {
     background-color: white;
-    color: black;
-    text-shadow: none;
-    box-shadow: none;
-}
-.meme #collider_tab2:active, .meme #collider_tab2.current_tab {
-    background-color: hsl(calc(10 * sin(var(--time)) + 310), 90%, 60%);
     color: black;
     text-shadow: none;
     box-shadow: none;
@@ -2055,29 +1802,15 @@ main {
     text-shadow: 0 0 0.2em #14ebff, 0 0 0.5em #00a8b8;
     cursor: pointer;
 }
-.meme #collider_tab3 {
-    border: 1px solid hsl(222, 30%, 83%);
-    color: hsl(222, 30%, 83%);
-    text-shadow: 0 0 0.2em hsl(222, 30%, 83%), 0 0 0.5em hsl(222, 30%, 55%);
-}
 
 #collider_tab3:hover {
     background-color: #003338;
     box-shadow: 0 0 0.4em #14ebff inset;
 }
-.meme #collider_tab3:hover {
-    background-color: hsl(222, 30%, 17%);
-    box-shadow: 0 0 0.4em hsl(222, 30%, 83%) inset;
-}
 
 #collider_tab3:active, #collider_tab3.current_tab {
     background-color: #14ebff;
     color: black;
-    text-shadow: none;
-    box-shadow: none;
-}
-.meme #collider_tab3:active, .meme #collider_tab3.current_tab {
-    background-color: hsl(222, 30%, 83%);
     text-shadow: none;
     box-shadow: none;
 }
@@ -2093,29 +1826,15 @@ main {
     text-shadow: 0 0 0.2em #1f48ff, 0 0 0.5em #0025b8;
     cursor: pointer;
 }
-.meme #collider_tab4 {
-    border: 1px solid hsl(219, 62%, 71%);
-    color: hsl(219, 62%, 71%);
-    text-shadow: 0 0 0.2em hsl(219, 62%, 71%), 0 0 0.5em hsl(219, 62%, 47%);
-}
 
 #collider_tab4:hover {
     background-color: #000b38;
     box-shadow: 0 0 0.4em #1f48ff inset;
 }
-.meme #collider_tab4:hover {
-    background-color: hsl(219, 62%, 14%);
-    box-shadow: 0 0 0.4em hsl(219, 62%, 71%) inset;
-}
 
 #collider_tab4:active, #collider_tab4.current_tab {
     background-color: #1f48ff;
     color: black;
-    text-shadow: none;
-    box-shadow: none;
-}
-.meme #collider_tab4:active, .meme #collider_tab4.current_tab {
-    background-color: hsl(219, 62%, 71%);
     text-shadow: none;
     box-shadow: none;
 }
@@ -2131,29 +1850,15 @@ main {
     text-shadow: 0 0 0.2em #ea1a78, 0 0 0.5em #9f1955;
     cursor: pointer;
 }
-.meme #collider_tab5 {
-    border: 1px solid hsl(216, 97%, 63%);
-    color: hsl(216, 97%, 63%);
-    text-shadow: 0 0 0.2em hsl(216, 97%, 63%), 0 0 0.5em hsl(216, 97%, 42%);
-}
 
 #collider_tab5:hover {
     background-color: #30081b;
     box-shadow: 0 0 0.4em #ea1a78 inset;
 }
-.meme #collider_tab5:hover {
-    background-color: hsl(216, 97%, 12%);
-    box-shadow: 0 0 0.4em hsl(216, 97%, 63%) inset;
-}
 
 #collider_tab5:active, #collider_tab5.current_tab {
     background-color: #ea1a78;
     color: black;
-    text-shadow: none;
-    box-shadow: none;
-}
-.meme #collider_tab5:active, .meme #collider_tab5.current_tab {
-    background-color: hsl(216, 97%, 63%);
     text-shadow: none;
     box-shadow: none;
 }
@@ -2169,29 +1874,15 @@ main {
     text-shadow: 0 0 0.2em #ff8c00, 0 0 0.5em #9f6319;
     cursor: pointer;
 }
-.meme #collider_tab6 {
-    border: 1px solid hsl(212, 77%, 49%);
-    color: hsl(212, 77%, 49%);
-    text-shadow: 0 0 0.2em hsl(212, 77%, 49%), 0 0 0.5em hsl(212, 77%, 33%);
-}
 
 #collider_tab6:hover {
     background-color: #301e08;
     box-shadow: 0 0 0.4em #ff8c00 inset;
 }
-.meme #collider_tab6:hover {
-    background-color: hsl(212, 77%, 10%);
-    box-shadow: 0 0 0.4em hsl(212, 77%, 49%) inset;
-}
 
 #collider_tab6:active, #collider_tab6.current_tab {
     background-color: #ff8c00;
     color: black;
-    text-shadow: none;
-    box-shadow: none;
-}
-.meme #collider_tab6:active, .meme #collider_tab6.current_tab {
-    background-color: hsl(212, 77%, 49%);
     text-shadow: none;
     box-shadow: none;
 }
@@ -2207,29 +1898,15 @@ main {
     text-shadow: 0 0 0.2em #3dff64, 0 0 0.5em #1fc740;
     cursor: pointer;
 }
-.meme #collider_tab7 {
-    border: 1px solid hsl(208, 59%, 40%);
-    color: hsl(208, 59%, 40%);
-    text-shadow: 0 0 0.2em hsl(208, 59%, 40%), 0 0 0.5em hsl(208, 59%, 27%);
-}
 
 #collider_tab7:hover {
     background-color: #0a3d14;
     box-shadow: 0 0 0.4em #3dff64 inset;
 }
-.meme #collider_tab7:hover {
-    background-color: hsl(208, 59%, 8%);
-    box-shadow: 0 0 0.4em hsl(208, 59%, 40%) inset;
-}
 
 #collider_tab7:active, #collider_tab7.current_tab {
     background-color: #3dff64;
     color: black;
-    text-shadow: none;
-    box-shadow: none;
-}
-.meme #collider_tab7:active, .meme #collider_tab7.current_tab {
-    background-color: hsl(208, 59%, 40%);
     text-shadow: none;
     box-shadow: none;
 }
@@ -2245,29 +1922,15 @@ main {
     text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.5em hsl(calc(var(--time) * 36 + 180), 90%, 40%);
     cursor: pointer;
 }
-.meme #collider_tab8 {
-    border: 1px solid hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    color: hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    text-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.5em hsl(calc(var(--time) * 36 + 180), 60%, 57%);
-}
 
 #collider_tab8:hover {
     background-color: hsl(calc(var(--time) * 36 + 180), 90%, 12%);
     box-shadow: 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 60%) inset;
 }
-.meme #collider_tab8:hover {
-    background-color: hsl(calc(var(--time) * 36 + 180), 60%, 17%);
-    box-shadow: 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 60%, 85%) inset;
-}
 
 #collider_tab8:active, #collider_tab8.current_tab {
     background-color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     color: black;
-    text-shadow: none;
-    box-shadow: none;
-}
-.meme #collider_tab8:active, .meme #collider_tab8.current_tab {
-    background-color: hsl(calc(var(--time) * 36 + 180), 60%, 85%);
     text-shadow: none;
     box-shadow: none;
 }
@@ -2388,81 +2051,45 @@ main {
     color: hsl(calc(18 * sin(var(--time) * 3) + 26), 100%, var(--unstable_light));
     text-shadow: 0 0 0.2em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 50%), 0 0 0.5em hsl(calc(18 * sin(var(--time) * 3) + 16), 100%, 40%);
 }
-.meme .unstable_spice {
-    color: hsl(calc(15 * sin(var(--time)) + 150), 100%, var(--unstable_light));
-    text-shadow: 0 0 0.2em hsl(calc(15 * sin(var(--time)) + 160), 100%, 50%), 0 0 0.5em hsl(calc(15 * sin(var(--time)) + 160), 100%, 40%);
-}
 
 .decayed_spice {
     color: hsl(300, var(--decayed_sat), var(--decayed_light));
     text-shadow: 0 0 0.2em hsl(300, calc(6% * sin(var(--time)) + 16%), 40%);
-}
-.meme .decayed_spice {
-    color: hsl(calc(10 * sin(var(--time)) + 350), 100%, var(--unstable_light));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 340), 100%, 50%), 0 0 0.5em hsl(calc(10 * sin(var(--time)) + 340), 100%, 40%);
 }
 
 .pure_antispice {
     color: white;
     text-shadow: 0 0 0.1em white, 0 0 0.2em #444444, 0 0 0.3em #222222, 0 0 0.4em #111111, 0 0 0.5em black;
 }
-.meme .pure_antispice {
-    color: hsl(calc(10 * sin(var(--time)) + 310), 90%, 60%);
-    text-shadow: 0 0 0.1em hsl(calc(10 * sin(var(--time)) + 310), 90%, 60%), 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 310), 90%, 16%), 0 0 0.3em hsl(calc(10 * sin(var(--time)) + 310), 90%, 8%), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 310), 90%, 4%), 0 0 0.5em black;
-}
 
 .red_antispice {
     color: #14ebff;
     text-shadow: 0 0 0.1em #14ebff, 0 0 0.2em #00464d, 0 0 0.3em #002124, 0 0 0.4em #001214, 0 0 0.5em black;
-}
-.meme .red_antispice {
-    color: hsl(222, 30%, 83%);
-    text-shadow: 0 0 0.1em hsl(222, 30%, 83%), 0 0 0.2em hsl(222, 30%, 21%), 0 0 0.3em hsl(222, 30%, 10%), 0 0 0.4em hsl(222, 30%, 6%), 0 0 0.5em black;
 }
 
 .yellow_antispice {
     color: #1f48ff;
     text-shadow: 0 0 0.1em #1f48ff, 0 0 0.2em #000f4d, 0 0 0.3em #000724, 0 0 0.4em #000414, 0 0 0.5em black;
 }
-.meme .yellow_antispice {
-    color: hsl(219, 62%, 71%);
-    text-shadow: 0 0 0.1em hsl(219, 62%, 71%), 0 0 0.2em hsl(219, 62%, 18%), 0 0 0.3em hsl(219, 62%, 9%), 0 0 0.4em hsl(219, 62%, 5%), 0 0 0.5em black;
-}
 
 .green_antispice {
     color: #ea1a78;
     text-shadow: 0 0 0.1em #ea1a78, 0 0 0.2em #430a23, 0 0 0.3em #1f0511, 0 0 0.4em #11030a, 0 0 0.5em black;
-}
-.meme .green_antispice {
-    color: hsl(216, 97%, 63%);
-    text-shadow: 0 0 0.1em hsl(216, 97%, 63%), 0 0 0.2em hsl(216, 97%, 16%), 0 0 0.3em hsl(216, 97%, 8%), 0 0 0.4em hsl(216, 97%, 5%), 0 0 0.5em black;
 }
 
 .blue_antispice {
     color: #ff8c00;
     text-shadow: 0 0 0.1em #ff8c00, 0 0 0.2em #43290a, 0 0 0.3em #1f1305, 0 0 0.4em #110b03, 0 0 0.5em black;
 }
-.meme .blue_antispice {
-    color: hsl(212, 77%, 49%);
-    text-shadow: 0 0 0.1em hsl(212, 77%, 49%), 0 0 0.2em hsl(212, 77%, 12%), 0 0 0.3em hsl(212, 77%, 6%), 0 0 0.4em hsl(212, 77%, 4%), 0 0 0.5em black;
-}
 
 .pink_antispice {
     color: #3dff64;
     text-shadow: 0 0 0.1em #3dff64, 0 0 0.2em #0c501a, 0 0 0.3em #06270d, 0 0 0.4em #041607, 0 0 0.5em black;
 }
-.meme .pink_antispice {
-    color: hsl(208, 59%, 40%);
-    text-shadow: 0 0 0.1em hsl(208, 59%, 40%), 0 0 0.2em hsl(208, 59%, 10%), 0 0 0.3em hsl(208, 59%, 5%), 0 0 0.4em hsl(208, 59%, 3%), 0 0 0.5em black;
-}
 
 .rainbow_antispice {
     color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     text-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.5em black;
-}
-.meme .rainbow_antispice {
-    color: hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    text-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 0.5em black;
 }
 
 .unstable_text {
@@ -2493,6 +2120,14 @@ main {
     margin-bottom: 0em;
 }
 
+.research_auto_text {
+    display: inline;
+    color: white;
+    font-size: 1.25em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
 #research_info {
     width: 47em;
 }
@@ -2504,10 +2139,6 @@ main {
     margin-top: 2em;
     margin-bottom: 0.5em;
 }
-.meme .research_number {
-    color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.5em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
-}
 
 .research_options {
     display: flex;
@@ -2517,8 +2148,16 @@ main {
     margin-left: 1.5em;
 }
 
+#research_automation_block {
+    margin-bottom: 1.5em;
+}
+
 #research_completed_block {
     margin-top: 1.5em;
+}
+
+#research_auto_toggle, #research_view_toggle {
+    display: inline;
 }
 
 .research_button {
@@ -2557,9 +2196,6 @@ main {
 .r_select {
     border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
 }
-.meme .r_select {
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-}
 
 .r_view, .r_view:hover, .r_view:active {
     background-color: white;
@@ -2574,11 +2210,6 @@ main {
     text-shadow: none;
     border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     cursor: default;
-}
-.meme .r_active, .meme .r_active:hover, .meme .r_active:active {
-    background-color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
 }
 
 #research_info_block {
@@ -2649,13 +2280,6 @@ main {
     box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset, 0 0 0.8em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%) inset;
     cursor: pointer;
 }
-.meme .r_pause {
-    background-color: hsl(calc(10 * sin(var(--time)) + 15), 80%, 10%);
-    color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%);
-    box-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%), 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%) inset, 0 0 0.8em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%) inset;
-}
 
 .r_pause:hover {
     background-color: hsl(calc(30 * sin(var(--time)) + 92), 80%, 20%);
@@ -2664,12 +2288,6 @@ main {
     border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)) inset, 0 0 1em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset;
 }
-.meme .r_pause:hover {
-    background-color: hsl(calc(10 * sin(var(--time)) + 10), 80%, 20%);
-    text-shadow: 0 0 0.2em white, 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    box-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light)), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light)) inset, 0 0 1em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%) inset;
-}
 
 .r_pause:active {
     background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
@@ -2677,12 +2295,6 @@ main {
     text-shadow: none;
     border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
-}
-.meme .r_pause:active {
-    background-color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    box-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
 }
 
 .r_done {
@@ -2693,12 +2305,6 @@ main {
     border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
     cursor: default;
-}
-.meme .r_done {
-    background-color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    box-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
 }
 
 #research_back {
@@ -2715,17 +2321,10 @@ main {
     background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     box-shadow: 0 0 0.3em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.6em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
 }
-.meme .r_on {
-    background-color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    box-shadow: 0 0 0.3em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.6em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
-}
 
 .r_off {
     background-color: hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
     box-shadow: none;
-}
-.meme .r_off {
-    background-color: hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
 }
 
 #research_boost {
@@ -2748,10 +2347,6 @@ main {
     margin-left: auto;
     margin-right: auto;
 }
-.meme .co_challenge_panel {
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    box-shadow: 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%) inset;
-}
 
 .co_challenge_text {
     font-size: 1.35em;
@@ -2768,10 +2363,6 @@ main {
     text-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
     margin-top: 0em;
     margin-bottom: 0em;
-}
-.meme .co_challenge_header {
-    color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.5em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
 }
 
 .co_challenge_block {
@@ -2801,13 +2392,6 @@ main {
     box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset, 0 0 1em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%) inset;
     cursor: pointer;
 }
-.meme .outside {
-    background-color: hsl(calc(10 * sin(var(--time)) + 15), 80%, 10%);
-    color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.5em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%);
-    box-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%), 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%) inset, 0 0 1em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%) inset;
-}
 
 .outside:hover {
     background-color: hsl(calc(30 * sin(var(--time)) + 92), 80%, 20%);
@@ -2815,12 +2399,6 @@ main {
     text-shadow: 0 0 0.2em white, 0 0 0.5em hsl(calc(30 * sin(var(--time)) + 102), 100%, 40%);
     border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     box-shadow: 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)), 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%), 0 0 0.2em hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light)) inset, 0 0 1em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%) inset;
-}
-.meme .outside:hover {
-    background-color: hsl(calc(10 * sin(var(--time)) + 10), 80%, 20%);
-    text-shadow: 0 0 0.2em white, 0 0 0.5em hsl(calc(10 * sin(var(--time)) + 15), 100%, 40%);
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    box-shadow: 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light)), 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%), 0 0 0.2em hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light)) inset, 0 0 1em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%) inset;
 }
 
 .outside:active {
@@ -2830,12 +2408,6 @@ main {
     border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     box-shadow: 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%);
 }
-.meme .outside:active {
-    background-color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    box-shadow: 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%);
-}
 
 .inside {
     background-color: hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
@@ -2844,12 +2416,6 @@ main {
     border: 1px solid hsl(calc(30 * sin(var(--time)) + 92), 100%, var(--collapse_light));
     box-shadow: 0 0 0.4em hsl(calc(30 * sin(var(--time)) + 102), 100%, 50%);
     cursor: default;
-}
-.meme .inside {
-    background-color: hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    text-shadow: none;
-    border: 1px solid hsl(calc(10 * sin(var(--time)) + 10), 100%, var(--collapse_light));
-    box-shadow: 0 0 0.4em hsl(calc(10 * sin(var(--time)) + 15), 100%, 50%);
 }
 
 @media (pointer: coarse) {
@@ -2882,6 +2448,21 @@ main {
     .small_text {
         font-size: 1em;
     }
+}
+
+#collapse_challenge_auto {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3em;
+}
+
+.challenge_auto_block {
+    display: flex;
+    margin-top: 0.1em;
+    margin-bottom: 0.6em;
 }
 
 .antispice_block {
@@ -2946,10 +2527,6 @@ main {
     border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     cursor: default;
 }
-.meme .ap_locked {
-    color: hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    border: 1px solid hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-}
 
 .ap_unlocked {
     background-color: hsl(calc(var(--time) * 36 + 180), 90%, 8%);
@@ -2959,13 +2536,6 @@ main {
     box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 1em black, 0 0 1em hsl(calc(var(--time) * 36 + 180), 90%, 40%) inset, 0 0 2.5em hsl(calc(var(--time) * 36 + 180), 90%, 24%) inset;
     cursor: pointer;
 }
-.meme .ap_unlocked {
-    background-color: hsl(calc(var(--time) * 36 + 180), 60%, 11%);
-    color: hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    text-shadow: 0 0 0.15em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.45em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 0.75em black;
-    border: 1px solid hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 1em black, 0 0 1em hsl(calc(var(--time) * 36 + 180), 60%, 57%) inset, 0 0 2.5em hsl(calc(var(--time) * 36 + 180), 60%, 34%) inset;
-}
 
 .ap_unlocked:hover {
     background-color: hsl(calc(var(--time) * 36 + 180), 90%, 16%);
@@ -2974,12 +2544,6 @@ main {
     border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 1em black, 0 0 2em hsl(calc(var(--time) * 36 + 180), 90%, 60%) inset, 0 0 5em hsl(calc(var(--time) * 36 + 180), 90%, 40%) inset;
 }
-.meme .ap_unlocked:hover {
-    background-color: hsl(calc(var(--time) * 36 + 180), 60%, 21%);
-    text-shadow: 0 0 0.15em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.45em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 0.75em black;
-    border: 1px solid hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 1em black, 0 0 2em hsl(calc(var(--time) * 36 + 180), 60%, 85%) inset, 0 0 5em hsl(calc(var(--time) * 36 + 180), 60%, 57%) inset;
-}
 
 .ap_unlocked:active {
     background-color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
@@ -2987,12 +2551,6 @@ main {
     text-shadow: 0 0 0.25em black, 0 0 0.5em black;
     border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 1em black;
-}
-.meme .ap_unlocked:active {
-    background-color: hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    text-shadow: 0 0 0.25em black, 0 0 0.5em black;
-    border: 1px solid hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 1em black;
 }
 
 .ap_unlocked2 {
@@ -3003,13 +2561,6 @@ main {
     box-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.5em black, 0 0 0.5em hsl(calc(var(--time) * 36 + 180), 90%, 40%) inset, 0 0 1.25em hsl(calc(var(--time) * 36 + 180), 90%, 24%) inset;
     cursor: pointer;
 }
-.meme .ap_unlocked2 {
-    background-color: hsl(calc(var(--time) * 36 + 180), 60%, 11%);
-    color: hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    text-shadow: 0 0 0.075em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.15em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.225em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 0.375em black;
-    border: 1px solid hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    box-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 0.5em black, 0 0 0.5em hsl(calc(var(--time) * 36 + 180), 60%, 57%) inset, 0 0 1.25em hsl(calc(var(--time) * 36 + 180), 60%, 34%) inset;
-}
 
 .ap_unlocked2:hover {
     background-color: hsl(calc(var(--time) * 36 + 180), 90%, 16%);
@@ -3018,12 +2569,6 @@ main {
     border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     box-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.5em black, 0 0 1em hsl(calc(var(--time) * 36 + 180), 90%, 60%) inset, 0 0 2.5em hsl(calc(var(--time) * 36 + 180), 90%, 40%) inset;
 }
-.meme .ap_unlocked2:hover {
-    background-color: hsl(calc(var(--time) * 36 + 180), 60%, 21%);
-    text-shadow: 0 0 0.075em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.15em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.225em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 0.375em black;
-    border: 1px solid hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    box-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 0.5em black, 0 0 1em hsl(calc(var(--time) * 36 + 180), 60%, 85%) inset, 0 0 2.5em hsl(calc(var(--time) * 36 + 180), 60%, 57%) inset;
-}
 
 .ap_unlocked2:active {
     background-color: hsl(calc(var(--time) * 36 + 180), 90%, 60%);
@@ -3031,12 +2576,6 @@ main {
     text-shadow: 0 0 0.125em black, 0 0 0.25em black;
     border: 1px solid hsl(calc(var(--time) * 36 + 180), 90%, 60%);
     box-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 0.5em black;
-}
-.meme .ap_unlocked2:active {
-    background-color: hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    text-shadow: 0 0 0.125em black, 0 0 0.25em black;
-    border: 1px solid hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    box-shadow: 0 0 0.1em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.3em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 0.5em black;
 }
 
 .ap_bought {
@@ -3047,15 +2586,18 @@ main {
     box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 90%, 60%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 90%, 16%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 90%, 8%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 90%, 4%), 0 0 1em black;
     cursor: default;
 }
-.meme .ap_bought {
-    background-color: hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    text-shadow: 0 0 0.25em black, 0 0 0.5em black;
-    border: 1px solid hsl(calc(var(--time) * 36 + 180), 60%, 85%);
-    box-shadow: 0 0 0.2em hsl(calc(var(--time) * 36 + 180), 60%, 85%), 0 0 0.4em hsl(calc(var(--time) * 36 + 180), 60%, 21%), 0 0 0.6em hsl(calc(var(--time) * 36 + 180), 60%, 11%), 0 0 0.8em hsl(calc(var(--time) * 36 + 180), 60%, 6%), 0 0 1em black;
-}
 
 .ap_special {
     margin-left: 27.5em;
+    margin-top: 2.5em;
+}
+
+.ap_special2 {
+    margin-left: 18.5em;
+    margin-top: 2.5em;
+}
+
+.ap_special3 {
     margin-top: 2.5em;
 }
 
@@ -3065,9 +2607,436 @@ main {
     }
 }
 
-#refund_perks {
+#refund_perks, #antispice_auto_toggle {
     margin-top: 0.25em;
     margin-bottom: 0.75em;
+}
+
+.exploration_screen {
+    position: relative;
+    background: #171019;
+    border-bottom: 1px solid white;
+    height: 43vw;
+    margin: -32px;
+}
+
+#exploration_view {
+    width: 100%;
+    height: 100%;  
+    overflow: hidden;
+    zoom: 100%;
+}
+
+#exploration_map {
+    position: relative;
+    width: 2040em;
+    height: 2040em;
+}
+
+.realm {
+    position: absolute;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 0.15em black) drop-shadow(0 0 0.3em black);
+    cursor: pointer;
+    transform: scale(1);
+}
+
+.current_realm {
+    transform: scale(calc(0.125 * sin(var(--time) * 3.141592) + 1.125));
+}
+
+.realm:hover {
+    filter: brightness(1.5) drop-shadow(0 0 0.15em black) drop-shadow(0 0 0.3em black);
+}
+
+#exploration_selected {
+    display: none;
+    position: absolute;
+    transform: scale(1) rotate(calc(var(--time) * 45deg));
+}
+
+#exploration_selected.current_realm {
+    transform: scale(calc(0.125 * sin(var(--time) * 3.141592) + 1.125)) rotate(calc(var(--time) * 45deg));
+}
+
+#realm_view_panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.expand_panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.exploration_panel {
+    background: #17101980;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#realm_view_panel .exploration_panel {
+    padding-top: 2em;
+    padding-bottom: 1em;
+}
+
+.expand_panel .exploration_panel {
+    padding-top: 1em;
+    padding-bottom: 2em;
+}
+
+.expand_button {
+    position: relative;
+    width: 12.5em;
+    padding: 0.4em 0.6em;
+    font-family: "Fira Code";
+    font-size: 2.25em;
+    cursor: default;
+    pointer-events: auto;
+}
+
+.expand_text {
+    font-size: 1.15em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0.25em;
+    margin-bottom: 0em;
+    text-align: center;
+}
+
+#expand_up {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin-top: 0.5em;
+}
+
+#expand_req2 {
+    display: none;
+    font-size: 1.5em;
+    margin-top: 0.5em;
+    color: grey;
+}
+
+.exploration_text {
+    font-size: 1em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    text-align: center;
+}
+
+.exploration_text2 {
+    font-size: 1.25em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    text-align: center;
+}
+
+.exploration_text3 {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    text-align: center;
+}
+
+#exploration_more {
+    margin-top: 1.9em;
+}
+
+.exploration_block {
+    flex: 0.25;
+    padding: 0em 1em;
+}
+
+#realm_view {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+#center_distance {
+    margin-bottom: 0.75em;
+}
+
+.ex_auto_text {
+    font-size: 1.25em;
+    font-weight: 400;
+    color: white;
+    margin-top: 0.09em;
+    margin-bottom: 0em;
+    margin-right: 0.5em;
+    text-align: right;
+    display: inline;
+}
+
+#revisit_auto_buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}
+
+#revisit_shards, #revisit_time {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.25em;
+}
+
+#revisit_auto_toggle {
+    font-size: 1.25em;
+}
+
+#revisit_auto_mode {
+    font-size: 1.25em;
+    margin-right: 0em;
+    cursor: pointer;
+}
+
+#re_shards_input, #re_time_input {
+    font-size: 1em;
+}
+
+#realm_current {
+    font-size: 1.75em;
+    margin-bottom: 0.75em;
+    margin-top: 3em;
+}
+
+#galactic_shards_header {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    text-align: center;
+}
+
+.ex_upgrade_menu {
+    display: flex;
+    margin-top: 3em;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+.ex_upgrade {
+    position: relative;
+    padding: 0.35em 0.5em;
+    font-family: "Fira Code";
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-top: 0.5em;
+    cursor: default;
+}
+
+.galactic_shards {
+    background-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%) 30%, hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.125em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%)) drop-shadow(0 0 0.25em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%));
+}
+
+.dark_spice {
+    color: hsl(300, calc(12.5% * sin(var(--time)) + 57.5%), 35%);
+    text-shadow: 0 0 0.1em hsl(300, calc(10% * sin(var(--time)) + 40%), 15%), 0 0 0.15em black, 0 0 0.2em black, 0 0 0.25em black, 0 0 0.3em black, 0 0 0.4em black, 0 0 0.5em black;
+}
+
+.galactic_cost {
+    background-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%) 30%, hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.125em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%)) drop-shadow(0 0 0.25em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%));
+    font-weight: 700;
+}
+
+.dark_cost {
+    color: hsl(300, calc(12.5% * sin(var(--time)) + 57.5%), 35%);
+    text-shadow: 0 0 0.1em hsl(300, calc(10% * sin(var(--time)) + 40%), 15%), 0 0 0.15em black, 0 0 0.2em black, 0 0 0.25em black, 0 0 0.3em black, 0 0 0.4em black, 0 0 0.5em black;
+    font-weight: 700;
+}
+
+.dark_header {
+    display: flex;
+}
+
+.dark_panel {
+    flex-grow: 1;
+}
+
+#galactic_shards_num2, #galactic_shards_text2 {
+    text-align: right;
+}
+
+#dark_buy_cs {
+    display: inline;
+}
+
+#dark_gen_cs {
+    margin-top: 0em;
+    margin-bottom: 3.5em;
+}
+
+#dark_gen_cv {
+    display: none;
+    margin-top: 0em;
+    margin-bottom: 3.5em;
+}
+
+.galactic_upgrade {
+    position: relative;
+    padding: 0.5em 0.5em;
+    font-family: "Fira Code";
+    font-size: 0.9em;
+    font-weight: 400;
+    margin: 0.5em;
+    width: 17em;
+    height: 9em;
+    cursor: default;
+}
+
+#galactic_upgrade_block {
+    display: flex;
+    flex-wrap: wrap;
+    width: 64.8em;
+    margin-left: calc(50% - 32.4em);
+    margin-top: 5em;
+}
+
+#coming_soon {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.ex_locked {
+    background: black;
+    color: hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%);
+    border: solid 1px hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%);
+}
+
+.ex_unlocked {
+    background: hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 80%, 10%);
+    border-style: solid;
+    border-width: 1px;
+    border-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 50%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 50%)) 1;
+    box-shadow: 0 0 0.2em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%), 0 0 0.4em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%), 0 0 0.5em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%) inset, 0 0 1em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%) inset;
+    cursor: pointer;
+}
+
+.ex_unlocked:hover {
+    background: hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 90%, 20%);
+    border-style: solid;
+    border-width: 1px;
+    border-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%)) 1;
+    box-shadow: 0 0 0.25em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%), 0 0 0.5em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%), 0 0 0.625em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%) inset, 0 0 1.25em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%) inset;
+}
+
+.ex_unlocked:active {
+    background: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%));
+    border-style: solid;
+    border-width: 1px;
+    border-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%)) 1;
+    box-shadow: 0 0 0.25em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%), 0 0 0.5em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%);
+}
+
+.ex_unlocked .galactic_span.bold, .ex_unlocked:hover .galactic_span.bold, .ex_unlocked:active .galactic_span.bold {
+    font-weight: bold;
+}
+
+.ex_unlocked2 {
+    background: hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 80%, 10%);
+    border-style: solid;
+    border-width: 1px;
+    border-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 50%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 50%)) 1;
+    box-shadow: 0 0 0.4em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%), 0 0 0.8em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%), 0 0 1.5em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%) inset, 0 0 3em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%) inset;
+    cursor: pointer;
+}
+
+.ex_unlocked2:hover {
+    background: hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 90%, 20%);
+    border-style: solid;
+    border-width: 1px;
+    border-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%)) 1;
+    box-shadow: 0 0 0.5em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%), 0 0 1em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%), 0 0 1.875em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%) inset, 0 0 3.75em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%) inset;
+}
+
+.ex_unlocked2:active, .ex_unlocked3:active {
+    background: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%));
+    border-style: solid;
+    border-width: 1px;
+    border-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%)) 1;
+    box-shadow: 0 0 0.5em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%), 0 0 1em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%);
+}
+
+.ex_bought {
+    background: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%));
+    color: black;
+    text-shadow: none;
+    border-style: solid;
+    border-width: 1px;
+    border-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%)) 1;
+    box-shadow: 0 0 0.5em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%), 0 0 1em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%);
+}
+
+.ex_unlocked .galactic_span, .ex_unlocked2 .galactic_span, .ex_unlocked3 .galactic_span {
+    font-weight: 500;
+    background-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%) 30%, hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.125em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%)) drop-shadow(0 0 0.25em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%));
+}
+
+.ex_unlocked:hover .galactic_span, .ex_unlocked2:hover .galactic_span, .ex_unlocked3:hover .galactic_span {
+    font-weight: 400;
+    color: white;
+    filter: drop-shadow(0 0 0.125em white) drop-shadow(0 0 0.25em hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 40%));
+}
+
+.ex_unlocked:active .galactic_span, .ex_unlocked2:active .galactic_span, .ex_unlocked3:active .galactic_span {
+    font-weight: 400;
+    color: black;
+    filter: none;
+}
+
+.ex_unlocked2 .galactic_span.bold, .ex_unlocked2:hover .galactic_span.bold, .ex_unlocked2:active .galactic_span.bold {
+    font-weight: bold;
+}
+
+.ex_unlocked3 {
+    background: hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 80%, 10%);
+    border-style: solid;
+    border-width: 1px;
+    border-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 50%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 50%)) 1;
+    box-shadow: 0 0 0.4em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%), 0 0 0.8em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%), 0 0 0.5em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%) inset, 0 0 1em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%) inset;
+    cursor: pointer;
+}
+
+.ex_unlocked3:hover {
+    background: hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 90%, 20%);
+    border-style: solid;
+    border-width: 1px;
+    border-image: linear-gradient(hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%), hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 55%)) 1;
+    box-shadow: 0 0 0.5em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%), 0 0 1em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%), 0 0 0.625em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%) inset, 0 0 1.25em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%) inset;
+}
+
+.ex_unlocked3 .galactic_span.bold, .ex_unlocked3:hover .galactic_span.bold, .ex_unlocked3:active .galactic_span.bold {
+    font-weight: bold;
 }
 
 .statistics_text {
