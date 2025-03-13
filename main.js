@@ -5638,7 +5638,6 @@ function load(savegame) {
         game.total_red_spice_boost[i] = new Decimal(
             game.total_red_spice_boost[i]
         )
-        game.red_limit[i] = new Decimal(game.red_limit[i])
         game.yellow_spice_gen[i] = new Decimal(game.yellow_spice_gen[i])
         game.yellow_spice_bought[i] = BigInt(game.yellow_spice_bought[i])
         game.yellow_spice_price[i] = new Decimal(game.yellow_spice_price[i])
@@ -5646,7 +5645,6 @@ function load(savegame) {
         game.total_yellow_spice_boost[i] = new Decimal(
             game.total_yellow_spice_boost[i]
         )
-        game.yellow_limit[i] = new Decimal(game.yellow_limit[i])
         game.green_spice_gen[i] = new Decimal(game.green_spice_gen[i])
         game.green_spice_bought[i] = BigInt(game.green_spice_bought[i])
         game.green_spice_price[i] = new Decimal(game.green_spice_price[i])
@@ -5654,7 +5652,6 @@ function load(savegame) {
         game.total_green_spice_boost[i] = new Decimal(
             game.total_green_spice_boost[i]
         )
-        game.green_limit[i] = new Decimal(game.green_limit[i])
         game.blue_spice_gen[i] = new Decimal(game.blue_spice_gen[i])
         game.blue_spice_bought[i] = BigInt(game.blue_spice_bought[i])
         game.blue_spice_price[i] = new Decimal(game.blue_spice_price[i])
@@ -5662,7 +5659,6 @@ function load(savegame) {
         game.total_blue_spice_boost[i] = new Decimal(
             game.total_blue_spice_boost[i]
         )
-        game.blue_limit[i] = new Decimal(game.blue_limit[i])
         game.pink_spice_gen[i] = new Decimal(game.pink_spice_gen[i])
         game.pink_spice_bought[i] = BigInt(game.pink_spice_bought[i])
         game.pink_spice_price[i] = new Decimal(game.pink_spice_price[i])
@@ -5670,7 +5666,6 @@ function load(savegame) {
         game.total_pink_spice_boost[i] = new Decimal(
             game.total_pink_spice_boost[i]
         )
-        game.pink_limit[i] = new Decimal(game.pink_limit[i])
 
         game.crystal_spice_gen[i] = new Decimal(game.crystal_spice_gen[i])
         game.crystal_spice_bought[i] = BigInt(game.crystal_spice_bought[i])
@@ -5679,7 +5674,6 @@ function load(savegame) {
         game.total_crystal_spice_boost[i] = new Decimal(
             game.total_crystal_spice_boost[i]
         )
-        game.crystal_limit[i] = new Decimal(game.crystal_limit[i])
 
         game.arcane_spice_gen[i] = new Decimal(game.arcane_spice_gen[i])
         game.arcane_spice_bought[i] = BigInt(game.arcane_spice_bought[i])
@@ -5688,7 +5682,6 @@ function load(savegame) {
         game.total_arcane_spice_boost[i] = new Decimal(
             game.total_arcane_spice_boost[i]
         )
-        game.arcane_limit[i] = new Decimal(game.arcane_limit[i])
 
         game.dark_spice_gen[i] = new Decimal(game.dark_spice_gen[i])
         game.dark_spice_bought[i] = BigInt(game.dark_spice_bought[i])
