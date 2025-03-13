@@ -205,6 +205,7 @@ function goto_page(id) {
     document.getElementById("prestige_files").style.display = "none"
     document.getElementById("ascension_files").style.display = "none"
     document.getElementById("collapse_files").style.display = "none"
+    document.getElementById("expansion_files").style.display = "none"
 
     document.getElementById("savebank_spices").className =
         "savebank_tab unlocked"
@@ -213,6 +214,8 @@ function goto_page(id) {
     document.getElementById("savebank_ascension").className =
         "savebank_tab unlocked"
     document.getElementById("savebank_collapse").className =
+        "savebank_tab unlocked"
+    document.getElementById("savebank_expansion").className =
         "savebank_tab unlocked"
 
     switch (id) {
@@ -234,6 +237,11 @@ function goto_page(id) {
         case 3:
             document.getElementById("collapse_files").style.display = "block"
             document.getElementById("savebank_collapse").className =
+                "savebank_tab selected"
+            break
+        case 4:
+            document.getElementById("expansion_files").style.display = "block"
+            document.getElementById("savebank_expansion").className =
                 "savebank_tab selected"
             break
     }
@@ -320,6 +328,9 @@ class save_file {
                 break
             case "collapse":
                 document.getElementById("collapse_files").appendChild(panel)
+                break
+            case "expansion":
+                document.getElementById("expansion_files").appendChild(panel)
                 break
         }
     }
@@ -690,6 +701,107 @@ new save_file(
         " played (game time)<br>" +
         format_time_long(815616) +
         " played (real time)",
-    "endgame",
+    "collapse end",
+    1
+)
+
+new save_file(
+    "expansion",
+    "1st Expansion completed<br>2 total galactic shards<br>1.205e4.166e18 total spice accumulated<br>" + //e4,166,411,963,014,053,000
+        format_time_long(1.3031709281590252e46, 2, 126144000) +
+        " played (game time)<br>" +
+        format_time_long(815737) +
+        " played (real time)",
+    "1st expand"
+)
+new save_file(
+    "expansion",
+    "3rd galactic upgrade purchased<br>10 total galactic shards<br>7.595e5.021e18 total spice accumulated<br>" + //e5,020,750,778,906,193,000
+        format_time_long(3.609111144511145e52, 2, 126144000) +
+        " played (game time)<br>" +
+        format_time_long(887208) +
+        " played (real time)",
+    "galactic 3"
+)
+new save_file(
+    "expansion",
+    "6th galactic upgrade purchased<br>196 total galactic shards<br>1.689e6.805e18 total spice accumulated<br>" + //e6,805,197,506,065,910,000
+        format_time_long(6.028145517945352e61, 2, 126144000) +
+        " played (game time)<br>" +
+        format_time_long(971481) +
+        " played (real time)",
+    "galactic 6"
+)
+new save_file(
+    "expansion",
+    "8th galactic upgrade purchased<br>2,941 total galactic shards<br>1.889e1.038e19 total spice accumulated<br>" + //e10,376,988,360,319,697,000
+        format_time_long(4.4650253610439205e63, 2, 126144000) +
+        " played (game time)<br>" +
+        format_time_long(1052874) +
+        " played (real time)",
+    "galactic 8"
+)
+new save_file(
+    "expansion",
+    "10th galactic upgrade purchased<br>161,914 total galactic shards<br>7.561e1.644e19 total spice accumulated<br>" + //e16,435,268,071,068,602,000
+        format_time_long(8.906219192321282e64, 2, 126144000) +
+        " played (game time)<br>" +
+        format_time_long(1071147) +
+        " played (real time)",
+    "galactic 10"
+)
+new save_file(
+    "expansion",
+    "12th galactic upgrade purchased<br>1.354e9 total galactic shards<br>2.384e3.019e19 total spice accumulated<br>" + //e30,193,222,304,317,890,000
+        format_time_long(4.737567598370362e68, 2, 7.025131039767849e61) +
+        " played (game time)<br>" +
+        format_time_long(1089609) +
+        " played (real time)",
+    "galactic 12"
+)
+new save_file(
+    "expansion",
+    "14th galactic upgrade purchased<br>5.057e15 total galactic shards<br>4.948e6.889e19 total spice accumulated<br>" + //e68,888,055,247,175,570,000
+        format_time_long(6.39999077715249e84, 2, 126144000) +
+        " played (game time)<br>" +
+        format_time_long(1153946) +
+        " played (real time)",
+    "galactic 14"
+)
+new save_file(
+    "expansion",
+    "16th galactic upgrade purchased<br>2.415e24 total galactic shards<br>4.459e1.477e20 total spice accumulated<br>" + //e147,724,836,677,048,470,000
+        format_time_long(1.0335356110208475e94, 2, 126144000) +
+        " played (game time)<br>" +
+        format_time_long(1351496) +
+        " played (real time)",
+    "galactic 16"
+)
+new save_file(
+    "expansion",
+    "18th galactic upgrade purchased<br>3.183e34 total galactic shards<br>1.521e2.707e20 total spice accumulated<br>" + //e270,725,132,404,605,550,000
+        format_time_long(1.6914299994477263e102, 2, 1.5104917876091026e95) +
+        " played (game time)<br>" +
+        format_time_long(1611453) +
+        " played (real time)",
+    "galactic 18"
+)
+new save_file(
+    "expansion",
+    "20th galactic upgrade purchased<br>5.611e45 total galactic shards<br>1.545e4.537e20 total spice accumulated<br>" + //e453,696,199,327,155,160,000
+        format_time_long(9.286377312016342e113, 2, 1.7491580860710943e109) +
+        " played (game time)<br>" +
+        format_time_long(1897672) +
+        " played (real time)",
+    "galactic 20"
+)
+new save_file(
+    "expansion",
+    "End of current content<br>2.985e51 total galactic shards<br>2.603e5.770e20 total spice accumulated<br>" + //e577,042,326,802,501,530,000
+        format_time_long(3.68956311435287e117, 2, 4.1876628990150334e111) +
+        " played (game time)<br>" +
+        format_time_long(1960992) +
+        " played (real time)",
+    "galactic crystals",
     1
 )
