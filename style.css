@@ -229,11 +229,11 @@ main {
 
 @media (pointer: coarse) {
     .tab {
-        font-size: 1.75em;
+        font-size: 1.6em;
     }
 
     .subtab {
-        font-size: 1.3em;
+        font-size: 1.2em;
     }
 }
 
@@ -1601,7 +1601,11 @@ main {
         flex-direction: column-reverse;
     }
 
-    #ansuz_text2, #ansuz_num3 {
+    .ansuz_panel {
+        margin-bottom: 1.5em;
+    }
+
+    #ansuz_text2, #ansuz_num3, #ansuz_up3 {
         text-align: left;
     }
 
@@ -2605,6 +2609,10 @@ main {
     .ap_special {
         margin-left: 9.625em;
     }
+
+    .ap_special2 {
+        margin-left: 0.5em;
+    }
 }
 
 #refund_perks, #antispice_auto_toggle {
@@ -2913,6 +2921,46 @@ main {
     width: 64.8em;
     margin-left: calc(50% - 32.4em);
     margin-top: 5em;
+}
+
+@media (pointer: coarse) {
+    #galactic_upgrade_block {
+        width: 32.4em;
+        margin-left: calc(50% - 16.2em);
+    }
+    
+    .dark_header {
+        flex-direction: column-reverse;
+    }
+
+    .galactic_shards_panel {
+        margin-bottom: 1.5em;
+    }
+
+    #galactic_shards_text2, #galactic_shards_num2 {
+        text-align: left;
+    }
+
+    .ex_upgrade_menu {
+        flex-direction: column;
+    }
+
+    #realm_capacity_block {
+        margin-top: 3em;
+    }
+
+    #exploration_more {
+        margin-top: 2.8em;
+    }
+
+    .exploration_screen {
+        height: calc(100vh - 11.5em);
+        /*calc(100vw / 0.43)*/
+    }
+
+    #exploration_map {
+        transform: rotate(90deg);
+    }
 }
 
 #coming_soon {
