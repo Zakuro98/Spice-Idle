@@ -5023,29 +5023,52 @@ window.addEventListener("blur", function () {
 //updating the exploration screen on screen size changes
 window.addEventListener("resize", function () {
     if (!pause) {
+        let mobile = Number(
+            getComputedStyle(document.body).getPropertyValue("--mobile")
+        )
+
         document.getElementById("expansion_page").style.display = "block"
+
+        let total_length =
+            document.getElementById("exploration_map").scrollWidth
 
         document.getElementById("exploration_view").style.zoom =
             (document.getElementById("exploration_screen").offsetWidth * 100) /
                 2560 +
             "%"
+        if (mobile)
+            document.getElementById("exploration_view").style.zoom =
+                (document.getElementById("exploration_screen").offsetWidth *
+                    100 *
+                    29376) /
+                    (2560 * 0.43 * total_length) +
+                "%"
 
-        let total_length =
-            document.getElementById("exploration_map").scrollWidth
         let screen_width =
             document.getElementById("exploration_view").clientWidth
         let screen_height =
             document.getElementById("exploration_view").clientHeight
         let unit = total_length / 3400
 
-        document.getElementById("exploration_view").scrollLeft =
-            realm.realms[game.current_realm].x * unit +
-            total_length / 2 -
-            screen_width / 2
-        document.getElementById("exploration_view").scrollTop =
-            realm.realms[game.current_realm].y * unit +
-            total_length / 2 -
-            screen_height / 2
+        if (mobile) {
+            document.getElementById("exploration_view").scrollLeft =
+                -realm.realms[game.current_realm].y * unit +
+                total_length / 2 -
+                screen_width / 2
+            document.getElementById("exploration_view").scrollTop =
+                realm.realms[game.current_realm].x * unit +
+                total_length / 2 -
+                screen_height / 2
+        } else {
+            document.getElementById("exploration_view").scrollLeft =
+                realm.realms[game.current_realm].x * unit +
+                total_length / 2 -
+                screen_width / 2
+            document.getElementById("exploration_view").scrollTop =
+                realm.realms[game.current_realm].y * unit +
+                total_length / 2 -
+                screen_height / 2
+        }
 
         if (game.tab !== 4 || game.subtab[5] !== 0)
             document.getElementById("expansion_page").style.display = "none"
