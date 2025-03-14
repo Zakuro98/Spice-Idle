@@ -707,6 +707,7 @@ function format_small(num, not) {
             }
         } else if (
             (not === 4 && num >= 1e9) ||
+            (not === 21 && num >= 1e9) ||
             ((not === 12 || not === 13) && num >= 1e9 && num < 1e36)
         ) {
             const single_array_cond = [
@@ -769,7 +770,10 @@ function format_small(num, not) {
 
             return lead_str + " " + one_str + ten_str
         } else if (not === 5 && num >= 1e9) {
-            return "e" + Math.log10(num).toFixed(6)
+            if (Math.log10(num) < 10) return "e" + Math.log10(num).toFixed(6)
+            else if (Math.log10(num) < 100)
+                return "e" + Math.log10(num).toFixed(5)
+            else return "e" + Math.log10(num).toFixed(4)
         } else if (not === 6 && num >= 1e9) {
             const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             let order = Math.floor(Math.log10(num) / 3) - 1
@@ -846,6 +850,11 @@ function format_small(num, not) {
             return format_cancer2(num, 6)
         } else if (not === 19) {
             return "[" + generate_string(num, false, 6) + "]"
+        } else if (not === 20 && num >= 1e9) {
+            let mantissa = num / 10 ** Math.floor(Math.log10(num))
+            if (Math.log10(num) < 100)
+                return mantissa.toFixed(6) + "e" + Math.floor(Math.log10(num))
+            else return mantissa.toFixed(5) + "e" + Math.floor(Math.log10(num))
         } else {
             return format_num(num, 0)
         }
@@ -1003,7 +1012,7 @@ if (meme_condition) {
     document.title = "Salt Idle"
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
-        "Salt Idle v1.8.0<br>Made by Zakuro<br><br>Last updated March 13, 2025"
+        "Salt Idle v1.8.1<br>Made by Zakuro<br><br>Last updated March 13, 2025"
 }
 
 //initialize map
@@ -3614,27 +3623,50 @@ function generate_realms() {
         )
     }
 
+    let mobile = Number(
+        getComputedStyle(document.body).getPropertyValue("--mobile")
+    )
+
     document.getElementsByTagName("main")[0].style.display = "block"
     document.getElementById("expansion_page").style.display = "block"
+
+    let total_length = document.getElementById("exploration_map").scrollWidth
 
     document.getElementById("exploration_view").style.zoom =
         (document.getElementById("exploration_screen").offsetWidth * 100) /
             2560 +
         "%"
+    if (mobile)
+        document.getElementById("exploration_view").style.zoom =
+            (document.getElementById("exploration_screen").offsetWidth *
+                100 *
+                29376) /
+                (2560 * 0.43 * total_length) +
+            "%"
 
-    let total_length = document.getElementById("exploration_map").scrollWidth
     let screen_width = document.getElementById("exploration_view").clientWidth
     let screen_height = document.getElementById("exploration_view").clientHeight
     let unit = total_length / 3400
 
-    document.getElementById("exploration_view").scrollLeft =
-        realm.realms[game.current_realm].x * unit +
-        total_length / 2 -
-        screen_width / 2
-    document.getElementById("exploration_view").scrollTop =
-        realm.realms[game.current_realm].y * unit +
-        total_length / 2 -
-        screen_height / 2
+    if (mobile) {
+        document.getElementById("exploration_view").scrollLeft =
+            -realm.realms[game.current_realm].y * unit +
+            total_length / 2 -
+            screen_width / 2
+        document.getElementById("exploration_view").scrollTop =
+            realm.realms[game.current_realm].x * unit +
+            total_length / 2 -
+            screen_height / 2
+    } else {
+        document.getElementById("exploration_view").scrollLeft =
+            realm.realms[game.current_realm].x * unit +
+            total_length / 2 -
+            screen_width / 2
+        document.getElementById("exploration_view").scrollTop =
+            realm.realms[game.current_realm].y * unit +
+            total_length / 2 -
+            screen_height / 2
+    }
 
     document.getElementsByTagName("main")[0].style.display = "none"
     if (game.tab !== 4 || game.subtab[5] !== 0)
