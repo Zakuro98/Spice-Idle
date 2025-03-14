@@ -1360,7 +1360,10 @@ function notation(not) {
     if (not === undefined) {
         game.notation++
         if (game.notation === 5) game.notation = 12
-        else if (game.notation === 14) game.notation = 5
+        else if (game.notation === 14) game.notation = 21
+        else if (game.notation === 22) game.notation = 5
+        else if (game.notation === 6) game.notation = 20
+        else if (game.notation === 21) game.notation = 6
         else if (game.notation === 8) {
             if (key.shift) game.notation = 16
             else game.notation = 9
@@ -1438,6 +1441,14 @@ function notation(not) {
             break
         case 19:
             document.getElementById("notation").innerHTML = "Notation<br>ARRAY"
+            break
+        case 20:
+            document.getElementById("notation").innerHTML =
+                "Notation<br>MIXED LOGARITHM"
+            break
+        case 21:
+            document.getElementById("notation").innerHTML =
+                "Notation<br>TRUNCATED STANDARD"
             break
     }
 }
