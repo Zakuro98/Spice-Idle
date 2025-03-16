@@ -5270,7 +5270,7 @@ function manual_save() {
 }
 
 function save() {
-    game.version = "1.8.0"
+    game.version = "1.8.2"
     game.save_time = Date.now()
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
@@ -5612,8 +5612,16 @@ function load(savegame) {
         game.seed = new Int32Array(JSON.parse(game.seed))
         random_seed = Array.from(game.seed)
     }
+    if (ver_index < 10802) {
+        if (game.prestige_bought[20] === null) {
+            game.prestige_bought[20] = 0
+        }
+        if (game.prestige_price[20].cmp(0) <= 0) {
+            game.prestige_price[20] = Decimal.pow(2, 214)
+        }
+    }
 
-    game.version = "1.8.0"
+    game.version = "1.8.2"
 
     game.red_spice = new Decimal(game.red_spice)
     game.highest_red_spice = new Decimal(game.highest_red_spice)
