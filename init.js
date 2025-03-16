@@ -16,7 +16,7 @@ function fib(n, inf) {
 
 //initializing game variables
 let game = {
-    version: "1.8.0",
+    version: "1.8.2",
 
     tickspeed: 100,
     gamespeed: 1,
