@@ -1612,6 +1612,10 @@ function expand() {
         document.getElementById("exploration_selected").className =
             "current_realm"
 
+        let mobile = Number(
+            getComputedStyle(document.body).getPropertyValue("--mobile")
+        )
+
         document.getElementById("expansion_page").style.display = "block"
 
         let total_length =
@@ -1622,14 +1626,25 @@ function expand() {
             document.getElementById("exploration_view").clientHeight
         let unit = total_length / 3400
 
-        document.getElementById("exploration_view").scrollLeft =
-            realm.realms[game.current_realm].x * unit +
-            total_length / 2 -
-            screen_width / 2
-        document.getElementById("exploration_view").scrollTop =
-            realm.realms[game.current_realm].y * unit +
-            total_length / 2 -
-            screen_height / 2
+        if (mobile) {
+            document.getElementById("exploration_view").scrollLeft =
+                -realm.realms[game.current_realm].y * unit +
+                total_length / 2 -
+                screen_width / 2
+            document.getElementById("exploration_view").scrollTop =
+                realm.realms[game.current_realm].x * unit +
+                total_length / 2 -
+                screen_height / 2
+        } else {
+            document.getElementById("exploration_view").scrollLeft =
+                realm.realms[game.current_realm].x * unit +
+                total_length / 2 -
+                screen_width / 2
+            document.getElementById("exploration_view").scrollTop =
+                realm.realms[game.current_realm].y * unit +
+                total_length / 2 -
+                screen_height / 2
+        }
 
         if (game.tab !== 4 || game.subtab[5] !== 0)
             document.getElementById("expansion_page").style.display = "none"
