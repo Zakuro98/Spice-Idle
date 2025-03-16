@@ -5357,8 +5357,11 @@ function import_save() {
                 pause = true
 
                 realm.realms = []
-                document.getElementById("exploration_map").innerHTML =
-                    '<canvas id="exploration_selected" width="256" height="256"></canvas>'
+                for (const r of document
+                    .getElementById("exploration_map")
+                    .querySelectorAll(".realm")) {
+                    r.parentNode.removeChild(r)
+                }
                 window.setTimeout(function () {
                     begin_realm_generation(true)
                 }, 100)
@@ -6519,7 +6522,9 @@ if (game.save_time === undefined) {
 
     title_update()
 
-    window.setTimeout(begin_realm_generation, 100)
+    pause = true
+
+    window.setTimeout(begin_realm_generation, 200)
 }
 
 //handling animated text colors
