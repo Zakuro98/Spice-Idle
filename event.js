@@ -2956,7 +2956,10 @@ function buy_prestige_upgrade(id, max) {
                     }
                     if (
                         game.prestige_bought[id] >=
-                        prestige_upgrade.upgrades[id].max
+                            prestige_upgrade.upgrades[id].max &&
+                        game.rainbow_spice.cmp(
+                            prestige_upgrade.upgrades[id].price
+                        ) >= 0
                     ) {
                         let n = Math.floor(
                             5.5 +
@@ -5912,7 +5915,9 @@ function start_game() {
 
     title_update()
 
+    pause = true
+
     window.setTimeout(function () {
         begin_realm_generation(true)
-    }, 100)
+    }, 200)
 }
