@@ -1012,7 +1012,7 @@ if (meme_condition) {
     document.title = "Salt Idle"
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
-        "Salt Idle v1.8.1<br>Made by Zakuro<br><br>Last updated March 13, 2025"
+        "Salt Idle v1.8.2<br>Made by Zakuro<br><br>Last updated March 16, 2025"
 }
 
 //initialize map
@@ -3944,6 +3944,30 @@ function generate_realms() {
     }
 
     console.log("name generation failed " + duplicate_count + " times")
+
+    document.getElementById("noise_seed").seed.baseVal = Math.floor(
+        random_float() * 1000000
+    )
+
+    ctx = document.getElementById("exploration_stars").getContext("2d")
+    ctx.clearRect(0, 0, 4096, 4096)
+    ctx.fillStyle = "white"
+    for (let i = 0; i < 1000; i++) {
+        let rx = Math.floor(random_float() * 4096)
+        let ry = Math.floor(random_float() * 4096)
+        ctx.globalAlpha = random_float() ** 2.5
+        ctx.beginPath()
+        ctx.moveTo(rx + 2, ry)
+        ctx.lineTo(rx, ry + 2)
+        ctx.lineTo(rx - 2, ry)
+        ctx.lineTo(rx, ry - 2)
+        ctx.lineTo(rx + 2, ry)
+        ctx.closePath()
+        ctx.fill()
+    }
+
+    document.getElementById("exploration_bg2").style.backgroundImage =
+        "url(" + document.getElementById("exploration_stars").toDataURL() + ")"
 
     console.log("took " + (Date.now() - start_time) + " ms")
 }
