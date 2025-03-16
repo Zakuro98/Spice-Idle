@@ -2622,10 +2622,10 @@ main {
 
 .exploration_screen {
     position: relative;
-    background: #171019;
     border-bottom: 1px solid white;
     height: 43vw;
     margin: -32px;
+    margin-bottom: 0px;
 }
 
 #exploration_view {
@@ -2639,6 +2639,38 @@ main {
     position: relative;
     width: 2040em;
     height: 2040em;
+}
+
+#exploration_bg {
+    position: absolute;
+    background: #171019;
+    width: 2040em;
+    height: 2040em;
+    top: 0em;
+    left: 0em;
+    z-index: -2;
+}
+
+#exploration_bg2 {
+    position: absolute;
+    width: 2040em;
+    height: 2040em;
+    top: 0em;
+    left: 0em;
+    z-index: -1;
+}
+
+#exploration_stars {
+    visibility: hidden;
+    width: 0em;
+    height: 0em;
+}
+
+#turbulence {
+    width: 100%;
+    height: 100%;
+    filter: brightness(85%) saturate(70%);
+    mix-blend-mode: hard-light;
 }
 
 .realm {
@@ -2688,7 +2720,7 @@ main {
 }
 
 .exploration_panel {
-    background: #17101980;
+    filter: drop-shadow(0 0 0.1em black) drop-shadow(0 0 0.2em black) drop-shadow(0 0 0.3em black);
     padding-left: 1em;
     padding-right: 1em;
 }
@@ -2763,7 +2795,7 @@ main {
 }
 
 #exploration_more {
-    margin-top: 1.9em;
+    margin-top: -0.4em;
 }
 
 .exploration_block {
@@ -2950,7 +2982,7 @@ main {
     }
 
     #exploration_more {
-        margin-top: 2.8em;
+        margin-top: -0.6em;
     }
 
     .exploration_screen {
