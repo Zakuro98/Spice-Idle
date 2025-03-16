@@ -5616,7 +5616,7 @@ function load(savegame) {
         if (game.prestige_bought[20] === null) {
             game.prestige_bought[20] = 0
         }
-        if (game.prestige_price[20].cmp(0) <= 0) {
+        if (new Decimal(game.prestige_price[20]).cmp(0) <= 0) {
             game.prestige_price[20] = Decimal.pow(2, 214)
         }
     }
