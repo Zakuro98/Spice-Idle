@@ -6432,8 +6432,7 @@ function catchup_loop() {
     } else {
         if (game.autopr_toggle && game.prestige_bought[15] >= 1) {
             if (
-                prestige_count <
-                old_prestiges + Math.floor((offline_ms * prestige_rate) / 1000)
+                prestige_count < Math.floor((offline_ms * prestige_rate) / 1000)
             ) {
                 if (ascend_count === 0 || game.ascend_bought[23])
                     game.prestige +=
@@ -6442,10 +6441,7 @@ function catchup_loop() {
             }
         }
         if (game.autoas_toggle && game.ascend_bought[12]) {
-            if (
-                ascend_count <
-                old_ascensions + Math.floor((offline_ms * ascend_rate) / 1000)
-            ) {
+            if (ascend_count < Math.floor((offline_ms * ascend_rate) / 1000)) {
                 if (
                     collapse_count === 0 ||
                     (game.research_complete[1] >= 1 &&
@@ -6458,8 +6454,7 @@ function catchup_loop() {
         }
         if (game.autoco_toggle && game.research_complete[17] >= 1) {
             if (
-                collapse_count <
-                old_collapses + Math.floor((offline_ms * collapse_rate) / 1000)
+                collapse_count < Math.floor((offline_ms * collapse_rate) / 1000)
             ) {
                 if (expand_count === 0)
                     game.collapse +=
@@ -6468,10 +6463,7 @@ function catchup_loop() {
             }
         }
         if (game.autore_toggle && game.galactic_bought[18]) {
-            if (
-                expand_count <
-                old_expansions + Math.floor((offline_ms * expand_rate) / 1000)
-            ) {
+            if (expand_count < Math.floor((offline_ms * expand_rate) / 1000)) {
                 game.expand +=
                     Math.floor((offline_ms * expand_rate) / 1000) - expand_count
             }
@@ -6563,8 +6555,7 @@ function background_timeout() {
     } else {
         if (game.autopr_toggle && game.prestige_bought[15] >= 1) {
             if (
-                prestige_count <
-                old_prestiges + Math.floor((offline_ms * prestige_rate) / 1000)
+                prestige_count < Math.floor((offline_ms * prestige_rate) / 1000)
             ) {
                 if (ascend_count === 0 || game.ascend_bought[23])
                     game.prestige +=
@@ -6573,10 +6564,7 @@ function background_timeout() {
             }
         }
         if (game.autoas_toggle && game.ascend_bought[12]) {
-            if (
-                ascend_count <
-                old_ascensions + Math.floor((offline_ms * ascend_rate) / 1000)
-            ) {
+            if (ascend_count < Math.floor((offline_ms * ascend_rate) / 1000)) {
                 if (
                     collapse_count === 0 ||
                     (game.research_complete[1] >= 1 &&
@@ -6589,8 +6577,7 @@ function background_timeout() {
         }
         if (game.autoco_toggle && game.research_complete[17] >= 1) {
             if (
-                collapse_count <
-                old_collapses + Math.floor((offline_ms * collapse_rate) / 1000)
+                collapse_count < Math.floor((offline_ms * collapse_rate) / 1000)
             ) {
                 if (expand_count === 0)
                     game.collapse +=
@@ -6599,10 +6586,7 @@ function background_timeout() {
             }
         }
         if (game.autore_toggle && game.galactic_bought[18]) {
-            if (
-                expand_count <
-                old_expansions + Math.floor((offline_ms * expand_rate) / 1000)
-            ) {
+            if (expand_count < Math.floor((offline_ms * expand_rate) / 1000)) {
                 game.expand +=
                     Math.floor((offline_ms * expand_rate) / 1000) - expand_count
             }
@@ -6664,8 +6648,7 @@ function background_while() {
     } else {
         if (game.autopr_toggle && game.prestige_bought[15] >= 1) {
             if (
-                prestige_count <
-                old_prestiges + Math.floor((offline_ms * prestige_rate) / 1000)
+                prestige_count < Math.floor((offline_ms * prestige_rate) / 1000)
             ) {
                 if (ascend_count === 0 || game.ascend_bought[23])
                     game.prestige +=
@@ -6674,10 +6657,7 @@ function background_while() {
             }
         }
         if (game.autoas_toggle && game.ascend_bought[12]) {
-            if (
-                ascend_count <
-                old_ascensions + Math.floor((offline_ms * ascend_rate) / 1000)
-            ) {
+            if (ascend_count < Math.floor((offline_ms * ascend_rate) / 1000)) {
                 if (
                     collapse_count === 0 ||
                     (game.research_complete[1] >= 1 &&
@@ -6690,8 +6670,7 @@ function background_while() {
         }
         if (game.autoco_toggle && game.research_complete[17] >= 1) {
             if (
-                collapse_count <
-                old_collapses + Math.floor((offline_ms * collapse_rate) / 1000)
+                collapse_count < Math.floor((offline_ms * collapse_rate) / 1000)
             ) {
                 if (expand_count === 0)
                     game.collapse +=
@@ -6700,10 +6679,7 @@ function background_while() {
             }
         }
         if (game.autore_toggle && game.galactic_bought[18]) {
-            if (
-                expand_count <
-                old_expansions + Math.floor((offline_ms * expand_rate) / 1000)
-            ) {
+            if (expand_count < Math.floor((offline_ms * expand_rate) / 1000)) {
                 game.expand +=
                     Math.floor((offline_ms * expand_rate) / 1000) - expand_count
             }
