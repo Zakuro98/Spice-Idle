@@ -2699,6 +2699,18 @@ main {
     transform: scale(calc(0.125 * sin(var(--time) * 3.141592) + 1.125)) rotate(calc(var(--time) * 45deg));
 }
 
+.realm_line {
+    padding: 0em;
+    margin: 0em;
+    background-color: hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%);
+    filter: drop-shadow(0 0 0.15em black) drop-shadow(0 0 0.3em black);
+    opacity: 50%;
+    line-height: 1px;
+    position: absolute;
+    height: 0.5em;
+    z-index: -1;
+}
+
 #realm_view_panel {
     position: absolute;
     top: 0;
@@ -3172,8 +3184,7 @@ main {
     font-size: 1.333em;
     color: white;
     width: 40em;
-    text-align: justify;
-    text-align-last: center;
+    text-align: center;
     margin-top: 0em;
     margin-bottom: 2em;
     margin-left: auto;
