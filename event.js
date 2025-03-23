@@ -167,10 +167,6 @@ function buy_gen(color, id) {
                     arcane_bought.toString()
                 )
 
-                if (id === 5) {
-                    if (!entry_unlocked[12]) entry_unlock(12)
-                }
-
                 game.autods_budget = new Decimal(0)
             }
             break
@@ -198,6 +194,8 @@ function buy_gen(color, id) {
                     ),
                     1
                 )
+
+                if (!entry_unlocked[13] && id === 0) entry_unlock(13)
             }
             break
     }
@@ -420,10 +418,6 @@ function buy_until10(color, id, budget) {
                         3,
                         arcane_bought.toString()
                     )
-
-                    if (id === 5) {
-                        if (!entry_unlocked[12]) entry_unlock(12)
-                    }
 
                     game.autods_budget = new Decimal(0)
                 }
@@ -2218,10 +2212,6 @@ function max_all(color) {
                             arcane_bought.toString()
                         )
 
-                        if (i === 5) {
-                            if (!entry_unlocked[12]) entry_unlock(12)
-                        }
-
                         game.autods_budget = new Decimal(0)
                     }
                 }
@@ -2969,15 +2959,20 @@ function buy_prestige_upgrade(id, max) {
                         )
                         let price = Decimal.pow(2, 8 * n ** 2 - 88 * n + 734)
 
-                        game.rainbow_spice = Decimal.max(
-                            game.rainbow_spice.sub(price),
-                            0
-                        )
-                        game.prestige_bought[id] = n
+                        if (n > game.prestige_bought[id]) {
+                            game.rainbow_spice = Decimal.max(
+                                game.rainbow_spice.sub(price),
+                                0
+                            )
+                            game.prestige_bought[id] = n
 
-                        prestige_upgrade.upgrades[id].price = price.mul(
-                            Decimal.pow(2, 16 * game.prestige_bought[id] - 80)
-                        )
+                            prestige_upgrade.upgrades[id].price = price.mul(
+                                Decimal.pow(
+                                    2,
+                                    16 * game.prestige_bought[id] - 80
+                                )
+                            )
+                        }
                     }
                 }
             } else {
@@ -3217,7 +3212,7 @@ function buy_prestige_upgrade(id, max) {
                                 prestige_upgrade.upgrades[id].price.mul(1024)
                             break
                         case 12:
-                            if (!entry_unlocked[7]) entry_unlock(7)
+                            if (!entry_unlocked[5]) entry_unlock(5)
                             break
                     }
             }
@@ -3258,8 +3253,6 @@ function buy_infusion() {
         game.crystal_infusion += 1n
 
         if (game.crystal_spice.cmp(0) < 0) game.crystal_spice = new Decimal(0)
-
-        if (!entry_unlocked[8] && game.crystal_infusion >= 100n) entry_unlock(8)
     }
 }
 
@@ -3602,10 +3595,6 @@ function buy_ascension_upgrade(id) {
                     0
                 )
                 game.ascend_bought[id] = true
-
-                if (id === 12) {
-                    if (!entry_unlocked[10]) entry_unlock(10)
-                }
 
                 if (id === 16) {
                     if (game.collapse === 0 && game.expand === 0) {
@@ -4507,6 +4496,8 @@ function activate_collider() {
                 game.atomic_spice = game.atomic_spice.mul(
                     1 - game.atomic_portion
                 )
+
+                if (!entry_unlocked[9]) entry_unlock(9)
             } else if (game.collider_tab === 1) {
                 game.spent_atomic_spice[0] = game.spent_atomic_spice[0].add(
                     game.atomic_spice.mul(game.atomic_portion)
@@ -5545,6 +5536,8 @@ function buy_antispice_perk(id) {
         game.antispice[6] = Math.max(game.antispice[6] - price, 0)
         game.antispice_bought[id] = true
         game.antispice_order[id] = total_bought + 1
+
+        if (!entry_unlocked[11] && id === 8) entry_unlock(11)
     }
 }
 
