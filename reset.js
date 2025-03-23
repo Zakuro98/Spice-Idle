@@ -131,11 +131,11 @@ function color_boost(override) {
             game.blue_spice = new Decimal(5)
             game.pink_spice = new Decimal(5)
 
-            game.highest_red_spice = new Decimal(5)
-            game.highest_yellow_spice = new Decimal(5)
-            game.highest_green_spice = new Decimal(5)
-            game.highest_blue_spice = new Decimal(5)
-            game.highest_pink_spice = new Decimal(5)
+            game.total_red_spice = new Decimal(5)
+            game.total_yellow_spice = new Decimal(5)
+            game.total_green_spice = new Decimal(5)
+            game.total_blue_spice = new Decimal(5)
+            game.total_pink_spice = new Decimal(5)
 
             game.global_spice_boost = new Decimal(1)
 
@@ -321,13 +321,12 @@ function color_boost(override) {
 
             game.color_boosts++
 
-            if (game.color_boosts <= 5) {
+            if (game.color_boosts <= 4) {
                 if (!entry_unlocked[game.color_boosts - 1])
                     entry_unlock(game.color_boosts - 1)
             }
 
             if (game.color_boosts >= game.augment_start) {
-                if (!entry_unlocked[13]) entry_unlock(13)
                 game.augment_reached = true
             }
         } else {
@@ -461,7 +460,6 @@ function color_boost(override) {
             }
 
             if (game.color_boosts >= game.augment_start) {
-                if (!entry_unlocked[13]) entry_unlock(13)
                 game.augment_reached = true
             }
         }
@@ -487,7 +485,8 @@ function prestige(override) {
         }
         if (!override) {
             game.prestige += prestige_stat
-            if (!entry_unlocked[5]) entry_unlock(5)
+            if (pause) prestige_count += prestige_stat
+            if (!entry_unlocked[4]) entry_unlock(4)
         }
 
         let amount = new Decimal(0)
@@ -589,9 +588,6 @@ function prestige(override) {
         game.peak_rainbow_boosts = 0
         game.peak_rainbow_time = 0
 
-        if (!entry_unlocked[6] && game.rainbow_spice.cmp(65536) >= 0)
-            entry_unlock(6)
-
         if (game.ascend_bought[9] && !override) {
             if (game.autopr_mode === 0) {
                 game.autopr_goal2[0] += game.autopr_delta[0]
@@ -604,7 +600,7 @@ function prestige(override) {
         }
 
         game.crystal_spice = new Decimal(0)
-        game.highest_crystal_spice = new Decimal(0)
+        game.total_crystal_spice = new Decimal(0)
         for (let i = 0; i < 6; i++) {
             game.crystal_spice_gen[i] = new Decimal(
                 game.crystal_spice_bought[i].toString()
@@ -667,7 +663,8 @@ function ascend(override, challenge) {
         }
         if (!override) {
             game.ascend += ascension_stat
-            if (!entry_unlocked[9]) entry_unlock(9)
+            if (pause) ascend_count += ascension_stat
+            if (!entry_unlocked[6]) entry_unlock(6)
         }
 
         let amount = game.rainbow_spice.pow(1 / 128).div(256)
@@ -782,8 +779,8 @@ function ascend(override, challenge) {
         game.peak_ansuz_time = 0
 
         if (game.ascend_challenge !== 0) {
-            if (!entry_unlocked[11] && game.ascend_challenge === 1)
-                entry_unlock(11)
+            if (!entry_unlocked[7] && game.ascend_challenge === 1)
+                entry_unlock(7)
             game.ascend_complete[game.ascend_challenge - 1] = true
             game.ascend_challenge = 0
         }
@@ -826,7 +823,7 @@ function ascend(override, challenge) {
         }
 
         game.arcane_spice = new Decimal(0)
-        game.highest_arcane_spice = new Decimal(0)
+        game.total_arcane_spice = new Decimal(0)
         for (let i = 0; i < 6; i++) {
             game.arcane_spice_gen[i] = new Decimal(
                 game.arcane_spice_bought[i].toString()
@@ -936,7 +933,7 @@ function ascend(override, challenge) {
             }
 
             game.arcane_spice = new Decimal(0)
-            game.highest_arcane_spice = new Decimal(0)
+            game.total_arcane_spice = new Decimal(0)
             for (let i = 0; i < 6; i++) {
                 game.arcane_spice_gen[i] = new Decimal(
                     game.arcane_spice_bought[i].toString()
@@ -1194,12 +1191,9 @@ function collapse(override, challenge) {
 
         if (!override) {
             game.collapse += collapse_stat
+            if (pause) collapse_count += collapse_stat
 
-            if (!entry_unlocked[14]) entry_unlock(14)
-
-            if (game.collapse >= 5) {
-                if (!entry_unlocked[15]) entry_unlock(15)
-            }
+            if (!entry_unlocked[8]) entry_unlock(8)
         }
         game.atomic_spice = game.atomic_spice.add(amount)
 
@@ -1267,9 +1261,6 @@ function collapse(override, challenge) {
                 game.pending_completions = 0
             } else game.collapse_complete[game.collapse_challenge - 7]++
             game.collapse_challenge = 0
-
-            if (!entry_unlocked[18] && game.collapse_challenge === 7)
-                entry_unlock(18)
         }
 
         game.ascend_challenge = 0
@@ -1534,11 +1525,14 @@ function expand() {
     ) {
         let expand_stat = 1
         game.expand += expand_stat
+        if (pause) expand_count += expand_stat
+
+        if (!entry_unlocked[12]) entry_unlock(12)
 
         game.galactic_shards = game.galactic_shards.add(amount)
 
         game.dark_spice = new Decimal(0)
-        game.highest_dark_spice = new Decimal(0)
+        game.total_dark_spice = new Decimal(0)
         game.dark_construct = 0n
         game.dark_construct_price = new Decimal(40 * phi)
         game.dark_construct_boost = new Decimal(1)
@@ -1599,8 +1593,41 @@ function expand() {
             game.current_realm
         ].className = "realm"
 
-        if (!game.realms_visited.includes(game.selected_realm))
+        if (!game.realms_visited.includes(game.selected_realm)) {
             game.realms_visited.push(game.selected_realm)
+            let current = realm.realms[game.selected_realm]
+            let closest = realm.realms[game.realms_visited[0]]
+            for (let i = 0; i < game.realms_visited.length - 1; i++) {
+                if (
+                    (current.x - realm.realms[game.realms_visited[i]].x) ** 2 +
+                        (current.y - realm.realms[game.realms_visited[i]].y) **
+                            2 <
+                    (current.x - closest.x) ** 2 + (current.y - closest.y) ** 2
+                )
+                    closest = realm.realms[game.realms_visited[i]]
+            }
+
+            let line = document.createElement("DIV")
+            let rx = 1020 + 0.6 * current.x
+            let ry = 1020 + 0.6 * current.y
+            let tx = 1020 + 0.6 * closest.x
+            let ty = 1020 + 0.6 * closest.y
+            let length = ((rx - tx) ** 2 + (ry - ty) ** 2) ** 0.5 - 7.5
+            let cx = (rx + tx) / 2 - length / 2
+            let cy = (ry + ty) / 2 - 0.25
+
+            line.className = "realm_line"
+
+            line.style.left = cx + "em"
+            line.style.top = cy + "em"
+            line.style.width = length + "em"
+            line.style.transform =
+                "rotate(" +
+                Math.atan2(ry - ty, rx - tx) * (180 / Math.PI) +
+                "deg)"
+
+            document.getElementById("exploration_map").appendChild(line)
+        }
         game.current_realm = game.selected_realm
         game.realm_effects[0] = realm.realms[game.current_realm].normal
         game.realm_effects[1] = realm.realms[game.current_realm].special
