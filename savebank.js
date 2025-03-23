@@ -447,7 +447,7 @@ new save_file(
 )
 new save_file(
     "ascension",
-    "Challenge 1 unlocked<br>1.092e7 ᚫ in total<br>2.308e3.718e6 total spice accumulated<br>" + //e3,717,922
+    "Challenge 1 unlocked<br>1.092e6 ᚫ in total<br>2.308e3.718e6 total spice accumulated<br>" + //e3,717,922
         format_time_long(132404) +
         " played",
     "c1 unlocked",
