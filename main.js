@@ -6172,11 +6172,6 @@ function tick_loop() {
         )
         if (total_ticks >= 10000) total_ticks = 10000
 
-        old_prestiges = game.prestige
-        old_ascensions = game.ascend
-        old_collapses = game.collapse
-        old_expansions = game.expand
-
         prestige_count = 0
         ascend_count = 0
         collapse_count = 0
@@ -6302,11 +6297,6 @@ function begin_realm_generation(skip) {
             (offline_ms * game.tickspeed) / (1000 * game.offline_speed)
         )
         if (total_ticks >= 1000000) total_ticks = 1000000
-
-        old_prestiges = game.prestige
-        old_ascensions = game.ascend
-        old_collapses = game.collapse
-        old_expansions = game.expand
 
         prestige_count = 0
         ascend_count = 0
@@ -6742,7 +6732,6 @@ let offline_time = Date.now()
 let start_ms = 0
 let start_ticks = 0
 
-let old_prestiges, old_ascensions, old_collapses, old_expansions
 let prestige_count, ascend_count, collapse_count, expand_count
 let prestige_rate, ascend_rate, collapse_rate, expand_rate
 
