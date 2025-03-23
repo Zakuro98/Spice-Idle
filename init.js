@@ -1013,7 +1013,7 @@ if (meme_condition) {
     document.title = "Salt Idle"
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
-        "Salt Idle v1.8.3<br>Made by Zakuro<br><br>Last updated March 16, 2025"
+        "Salt Idle v1.8.3<br>Made by Zakuro<br><br>Last updated March 23, 2025"
 }
 
 //initialize map
