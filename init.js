@@ -16,11 +16,12 @@ function fib(n, inf) {
 
 //initializing game variables
 let game = {
-    version: "1.8.3",
+    version: "1.8.4",
 
     tickspeed: 100,
     gamespeed: 1,
     seed: Array.from(crypto.getRandomValues(new Int32Array(4))),
+    new_generation: true,
 
     notation: 2,
     hotkeys: true,
@@ -1013,7 +1014,7 @@ if (meme_condition) {
     document.title = "Salt Idle"
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
-        "Salt Idle v1.8.3<br>Made by Zakuro<br><br>Last updated March 23, 2025"
+        "Salt Idle v1.8.4<br>Made by Zakuro<br><br>Last updated March 25, 2025"
 }
 
 //initialize map
@@ -3108,151 +3109,122 @@ function randn_bm() {
 
 const min_scaling = new Array()
 min_scaling.push([
-    [0, -50],
+    [0, -80],
     [0.2, -15],
     [0.35, -2],
     [0.5, 0],
     [0.9, 10],
+    [0.98, 20],
+    [1, 20],
 ])
 min_scaling.push([
-    [0, -50],
+    [0, -80],
     [0.2, -15],
     [0.35, -1],
     [0.5, 0],
     [0.9, 5],
+    [0.98, 15],
+    [1, 15],
 ])
 min_scaling.push([
-    [0, -25],
+    [0, -40],
     [0.2, 0],
     [0.9, 0],
+    [0.98, 10],
+    [1, 10],
 ])
 
 const max_scaling = new Array()
 max_scaling.push([
-    [0, -25],
+    [0, -40],
     [0.2, 0],
     [0.35, 4],
     [0.5, 15],
     [0.9, 50],
+    [0.98, 80],
+    [1, 80],
 ])
 max_scaling.push([
-    [0, -25],
+    [0, -40],
     [0.2, 0],
     [0.35, 2],
     [0.5, 10],
     [0.9, 40],
+    [0.98, 65],
+    [1, 65],
 ])
 max_scaling.push([
-    [0, -10],
+    [0, -20],
     [0.2, 0],
     [0.5, 0],
     [0.9, 30],
+    [0.98, 50],
+    [1, 50],
 ])
 
 function realm_randomize(type, distance) {
-    if (distance > 0.9) {
-        switch (type) {
-            case 0:
-                return 20 + 55 * randn_bm()
-            case 1:
-                return 15 + 45 * randn_bm()
-            case 2:
-                return 10 + 35 * randn_bm()
-        }
-    } else {
-        let min_index = 0
-        while (distance > min_scaling[type][min_index + 1][0]) {
-            min_index++
-        }
-        let max_index = 0
-        while (distance > max_scaling[type][max_index + 1][0]) {
-            max_index++
-        }
-
-        let min_domain =
-            min_scaling[type][min_index + 1][0] -
-            min_scaling[type][min_index][0]
-        let min_range =
-            min_scaling[type][min_index + 1][1] -
-            min_scaling[type][min_index][1]
-        let min_slope = min_range / min_domain
-        let min_value =
-            min_slope * (distance - min_scaling[type][min_index][0]) +
-            min_scaling[type][min_index][1]
-
-        let max_domain =
-            max_scaling[type][max_index + 1][0] -
-            max_scaling[type][max_index][0]
-        let max_range =
-            max_scaling[type][max_index + 1][1] -
-            max_scaling[type][max_index][1]
-        let max_slope = max_range / max_domain
-        let max_value =
-            max_slope * (distance - max_scaling[type][max_index][0]) +
-            max_scaling[type][max_index][1]
-
-        return min_value + (max_value - min_value) * randn_bm()
+    let min_index = 0
+    while (distance > min_scaling[type][min_index + 1][0]) {
+        min_index++
     }
+    let max_index = 0
+    while (distance > max_scaling[type][max_index + 1][0]) {
+        max_index++
+    }
+
+    let min_domain =
+        min_scaling[type][min_index + 1][0] - min_scaling[type][min_index][0]
+    let min_range =
+        min_scaling[type][min_index + 1][1] - min_scaling[type][min_index][1]
+    let min_slope = min_range / min_domain
+    let min_value =
+        min_slope * (distance - min_scaling[type][min_index][0]) +
+        min_scaling[type][min_index][1]
+
+    let max_domain =
+        max_scaling[type][max_index + 1][0] - max_scaling[type][max_index][0]
+    let max_range =
+        max_scaling[type][max_index + 1][1] - max_scaling[type][max_index][1]
+    let max_slope = max_range / max_domain
+    let max_value =
+        max_slope * (distance - max_scaling[type][max_index][0]) +
+        max_scaling[type][max_index][1]
+
+    return min_value + (max_value - min_value) * randn_bm()
 }
 
 function realm_range(type, distance, end) {
-    if (distance > 0.9) {
-        if (end === 1) {
-            switch (type) {
-                case 0:
-                    return 75
-                case 1:
-                    return 60
-                case 2:
-                    return 45
-            }
-        } else if (end === 0) {
-            switch (type) {
-                case 0:
-                    return 20
-                case 1:
-                    return 15
-                case 2:
-                    return 10
-            }
-        }
-    } else {
-        let min_index = 0
-        while (distance > min_scaling[type][min_index + 1][0]) {
-            min_index++
-        }
-        let max_index = 0
-        while (distance > max_scaling[type][max_index + 1][0]) {
-            max_index++
-        }
+    let min_index = 0
+    while (distance > min_scaling[type][min_index + 1][0]) {
+        min_index++
+    }
+    let max_index = 0
+    while (distance > max_scaling[type][max_index + 1][0]) {
+        max_index++
+    }
 
-        let min_domain =
-            min_scaling[type][min_index + 1][0] -
-            min_scaling[type][min_index][0]
-        let min_range =
-            min_scaling[type][min_index + 1][1] -
-            min_scaling[type][min_index][1]
-        let min_slope = min_range / min_domain
-        let min_value =
-            min_slope * (distance - min_scaling[type][min_index][0]) +
-            min_scaling[type][min_index][1]
+    let min_domain =
+        min_scaling[type][min_index + 1][0] - min_scaling[type][min_index][0]
+    let min_range =
+        min_scaling[type][min_index + 1][1] - min_scaling[type][min_index][1]
+    let min_slope = min_range / min_domain
+    let min_value =
+        min_slope * (distance - min_scaling[type][min_index][0]) +
+        min_scaling[type][min_index][1]
 
-        let max_domain =
-            max_scaling[type][max_index + 1][0] -
-            max_scaling[type][max_index][0]
-        let max_range =
-            max_scaling[type][max_index + 1][1] -
-            max_scaling[type][max_index][1]
-        let max_slope = max_range / max_domain
-        let max_value =
-            max_slope * (distance - max_scaling[type][max_index][0]) +
-            max_scaling[type][max_index][1]
+    let max_domain =
+        max_scaling[type][max_index + 1][0] - max_scaling[type][max_index][0]
+    let max_range =
+        max_scaling[type][max_index + 1][1] - max_scaling[type][max_index][1]
+    let max_slope = max_range / max_domain
+    let max_value =
+        max_slope * (distance - max_scaling[type][max_index][0]) +
+        max_scaling[type][max_index][1]
 
-        if (end === 1) {
-            return max_value
-        } else if (end === 0) {
-            return min_value
-        }
+    if (end === 1) {
+        return max_value
+    } else if (end === 0) {
+        return min_value
     }
 }
 
@@ -3376,9 +3348,9 @@ function generate_realms() {
                     Math.sin(
                         1 / (turn * dir) + order[i] * 0.4 * Math.PI + spin
                     ),
-                -80,
-                -80,
-                -50,
+                -99,
+                -99,
+                -90,
                 1.5,
                 "hsl(" +
                     random_float() * 360 +
@@ -3402,9 +3374,9 @@ function generate_realms() {
                     Math.sin(
                         1 / (turn * dir) + order[i] * 0.4 * Math.PI + spin
                     ),
-                -37.5,
-                -37.5,
-                -17.5,
+                -60,
+                -60,
+                -30,
                 1.5,
                 "hsl(" +
                     random_float() * 360 +
@@ -3427,13 +3399,37 @@ function generate_realms() {
         for (let j = 0; j < 98; j++) {
             distance.push(j * 0.01 + 0.02)
         }
-        if (i === 0) {
-            for (let j = 0; j < 600; j++) {
-                distance.push(random_float() ** 0.8 * 0.98 + 0.02)
+        if (game.new_generation) {
+            if (i === 0) {
+                for (let j = 0; j < 699; j++) {
+                    let rand = random_float()
+                    distance.push(
+                        ((2 * rand - rand ** 2) /
+                            (1 + 2 * rand - 2 * rand ** 2)) *
+                            0.98 +
+                            0.02
+                    )
+                }
+            } else {
+                for (let j = 0; j < 701; j++) {
+                    let rand = random_float()
+                    distance.push(
+                        ((2 * rand - rand ** 2) /
+                            (1 + 2 * rand - 2 * rand ** 2)) *
+                            0.98 +
+                            0.02
+                    )
+                }
             }
         } else {
-            for (let j = 0; j < 601; j++) {
-                distance.push(random_float() ** 0.8 * 0.98 + 0.02)
+            if (i === 0) {
+                for (let j = 0; j < 600; j++) {
+                    distance.push(random_float() ** 0.8 * 0.98 + 0.02)
+                }
+            } else {
+                for (let j = 0; j < 601; j++) {
+                    distance.push(random_float() ** 0.8 * 0.98 + 0.02)
+                }
             }
         }
         distance.sort(function (a, b) {
@@ -3446,12 +3442,19 @@ function generate_realms() {
         let fail_count = 0
 
         while (distance.length > 0) {
-            if (fail_count > 200) break
+            if (game.new_generation && fail_count > 1000) break
+            if (!game.new_generation && fail_count > 200) break
 
             let width = 1.25 - 1.25 * distance[0]
             if (distance[0] < 0.2) width = 1
             let shift =
                 random_float() * width * 0.4 * Math.PI - width * 0.2 * Math.PI
+            if (
+                game.new_generation &&
+                distance[0] === 0.65 &&
+                realm.realms.length <= 6
+            )
+                shift = 0
 
             let x =
                 radius *
@@ -3485,6 +3488,12 @@ function generate_realms() {
                             shift =
                                 random_float() * width * 0.4 * Math.PI -
                                 width * 0.2 * Math.PI
+                            if (
+                                game.new_generation &&
+                                distance[0] === 0.65 &&
+                                realm.realms.length <= 6
+                            )
+                                shift = 0
                             x =
                                 radius *
                                 distance[0] *
@@ -3520,7 +3529,11 @@ function generate_realms() {
             }
 
             if (status === "passed") {
-                if (distance[0] === 0.65 && i == 0) {
+                if (
+                    distance[0] === 0.65 &&
+                    ((realm.realms.length <= 6 && game.new_generation) ||
+                        (i === 0 && !game.new_generation))
+                ) {
                     new realm(
                         x,
                         y,
@@ -3540,6 +3553,51 @@ function generate_realms() {
                             "%)",
                         random_float() * 180
                     )
+                    if (game.new_generation) {
+                        let direction = Math.atan2(y, x) + Math.PI
+                        let normal_stat = realm_randomize(0, 0.375)
+                        let special_stat = realm_randomize(1, 0.375)
+                        let reset_stat = realm_randomize(2, 0.375)
+                        let normal_quality =
+                            0.5 +
+                            (normal_stat - realm_range(0, 0.375, 0)) /
+                                (realm_range(0, 0.375, 1) -
+                                    realm_range(0, 0.375, 0))
+                        let special_quality =
+                            0.5 +
+                            (special_stat - realm_range(1, 0.375, 0)) /
+                                (realm_range(1, 0.375, 1) -
+                                    realm_range(1, 0.375, 0))
+                        let size =
+                            0.5 +
+                            1 /
+                                (1 +
+                                    Math.exp(
+                                        -4.5 *
+                                            (normal_quality +
+                                                special_quality -
+                                                2)
+                                    ))
+                        new realm(
+                            x + 39.9 * Math.cos(direction),
+                            y + 39.9 * Math.sin(direction),
+                            normal_stat,
+                            special_stat,
+                            reset_stat,
+                            size,
+                            "hsl(" +
+                                random_float() * 360 +
+                                ", 100%, " +
+                                (random_float() ** 3 * 60 + 40) +
+                                "%)",
+                            "hsl(" +
+                                random_float() * 360 +
+                                ", 100%, " +
+                                (random_float() ** 3 * 60 + 40) +
+                                "%)",
+                            random_float() * 180
+                        )
+                    }
                 } else {
                     let normal_stat = realm_randomize(0, 1 - distance[0])
                     let special_stat = realm_randomize(1, 1 - distance[0])
@@ -3728,14 +3786,21 @@ function generate_realms() {
     let duplicate_count = 0
 
     let k = 200
+    if (game.new_generation) k = 228
     let clusters = new Array(k)
     for (let i = 0; i < k; i++) {
         clusters[i] = new Array()
     }
     let seeds = new Array()
     let temp_seeds = new Array()
-    for (let i = 0; i < 3495; i++) {
-        temp_seeds.push(realm.realms[i + 6])
+    if (game.new_generation) {
+        for (let i = 0; i < 3995; i++) {
+            temp_seeds.push(realm.realms[i + 6])
+        }
+    } else {
+        for (let i = 0; i < 3495; i++) {
+            temp_seeds.push(realm.realms[i + 6])
+        }
     }
     for (let i = 0; i < k; i++) {
         let s = Math.floor(random_float() * temp_seeds.length)
