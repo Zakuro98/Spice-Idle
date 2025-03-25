@@ -580,9 +580,9 @@ function expansion_update() {
         }
 
         if (highest_bought + 8 >= u.id) {
-            button.style.visible = "visible"
+            button.style.visibility = "visible"
         } else {
-            button.style.visible = "hidden"
+            button.style.visibility = "hidden"
         }
 
         if (highest_bought + 4 >= u.id || game.galactic_bought[u.id]) {
