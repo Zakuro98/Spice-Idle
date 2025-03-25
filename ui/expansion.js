@@ -410,10 +410,12 @@ function expansion_update() {
 
     document.getElementById("center_distance").innerHTML =
         "Distance to center: " +
-        format_dec(
-            (realm.realms[game.current_realm].x ** 2 +
-                realm.realms[game.current_realm].y ** 2) **
-                0.5,
+        format_num(
+            Math.round(
+                (realm.realms[game.current_realm].x ** 2 +
+                    realm.realms[game.current_realm].y ** 2) **
+                    0.5
+            ),
             game.notation
         ) +
         " units"
