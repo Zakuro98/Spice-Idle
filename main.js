@@ -3281,9 +3281,12 @@ function tick() {
     }
 
     if (game.galactic_bought[9]) {
-        game.passive_prestige += game.best_prestige_rate / (60 * game.tickspeed)
-        game.passive_ascend += game.best_ascend_rate / (60 * game.tickspeed)
-        game.passive_collapse += game.best_collapse_rate / (60 * game.tickspeed)
+        game.passive_prestige +=
+            game.best_prestige_rate / (60 * delta_time * game.gamespeed)
+        game.passive_ascend +=
+            game.best_ascend_rate / (60 * delta_time * game.gamespeed)
+        game.passive_collapse +=
+            game.best_collapse_rate / (60 * delta_time * game.gamespeed)
 
         if (game.passive_prestige >= 1) {
             game.prestige += Math.floor(game.passive_prestige)
@@ -5286,7 +5289,7 @@ function manual_save() {
 }
 
 function save() {
-    game.version = "1.8.3"
+    game.version = "1.8.4"
     game.save_time = Date.now()
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
@@ -5658,8 +5661,12 @@ function load(savegame) {
         game.total_arcane_spice = game.highest_arcane_spice
         game.total_dark_spice = game.highest_dark_spice
     }
+    if (ver_index < 10804) {
+        if (game.expand === 0) game.new_generation = true
+        else game.new_generation = false
+    }
 
-    game.version = "1.8.3"
+    game.version = "1.8.4"
 
     game.red_spice = new Decimal(game.red_spice)
     game.total_red_spice = new Decimal(game.total_red_spice)
