@@ -970,6 +970,13 @@ if (meme_condition) {
     document.getElementById("prestige_spice_delta_text").innerHTML =
         "Auto-Prestige Delta (Rainbow Salt):"
 
+    document.getElementById("ascend_challenge_info").innerHTML =
+        "Entering an Ascension Challenge will reset your current Ascension" +
+        "<br>You must Ascend with the required amount of rainbow salt to complete the Challenge" +
+        "<br><br>Ascension automation and rainbow salt multipliers are disabled in Ascension Challenges"
+
+    document.getElementById("arcane_unlock").innerHTML =
+        "Complete Challenge 1 to unlock arcane salt!"
     document.getElementById("arcane_spice_text").innerHTML = "arcane salt"
     document.getElementById("arcane_gen_name_s").innerHTML =
         "Arcane Salt Strengthener"
