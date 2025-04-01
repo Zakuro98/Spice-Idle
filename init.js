@@ -986,6 +986,10 @@ if (meme_condition) {
     document.getElementById("arcane_gen_name_s").innerHTML =
         "Arcane Salt Strengthener"
 
+    document.getElementById("collapse_info2").innerHTML =
+        "Atomic salt gains are based on total salt produced" +
+        '<span id="research_unlock"><br>Collapse 5 times to unlock Research</span>'
+
     document.getElementById("atomic_spice_text").innerHTML = "atomic salt"
     document.getElementById("atomic_spice_text2").innerHTML = "atomic salt"
     document.getElementById("collider_title").innerHTML = "The Salt Collider"
