@@ -4385,7 +4385,10 @@ new compendium(
     "ATOMIC " + spice_text[2],
     "- the smallest, indivisible and most fundamental unit of " +
         spice_text[0] +
-        "<br>- all spices are made up of atomic spice",
+        "<br>- all " +
+        spice_text[0] +
+        "s are made up of atomic " +
+        spice_text[0],
     "atomic_spice",
     8
 )
@@ -4401,7 +4404,9 @@ new compendium(
 )
 new compendium(
     "ANTI" + spice_text[2],
-    '- each spice has an opposite form, referred to as its "anti' +
+    "- each " +
+        spice_text[0] +
+        ' has an opposite form, referred to as its "anti' +
         spice_text[0] +
         '"<br>- the most fundamental anti' +
         spice_text[0] +
