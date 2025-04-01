@@ -1013,9 +1013,9 @@ function dark_update() {
         let a_str =
             "You have " +
             format_small(game.dark_gamespeed_level, game.notation) +
-            " dark spice accelerators,<br> applying the gamespeed boost to dark spice production with " +
+            " dark " + spice_text[0] + " accelerators,<br> applying the gamespeed boost to dark " + spice_text[0] + " production with " +
             format_small(game.dark_gamespeed_level, game.notation) +
-            "% strength,<br> effectively making dark spice production " +
+            "% strength,<br> effectively making dark " + spice_text[0] + " production " +
             format_dec(
                 game.gamespeed ** (game.dark_gamespeed_level / 100),
                 game.notation
