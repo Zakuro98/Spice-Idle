@@ -970,6 +970,11 @@ if (meme_condition) {
     document.getElementById("prestige_spice_delta_text").innerHTML =
         "Auto-Prestige Delta (Rainbow Salt):"
 
+    document.getElementById("ascend_info").innerHTML =
+        "Your Ansuz runes can be converted into any of the three rune types below" +
+        "<br>Each one makes rune power of its own variety, boosting salt production of its respective type(s)" +
+        "<br>Ansuz runes can also be spent on other things than conversion"
+
     document.getElementById("ascend_challenge_info").innerHTML =
         "Entering an Ascension Challenge will reset your current Ascension" +
         "<br>You must Ascend with the required amount of rainbow salt to complete the Challenge" +
@@ -1011,6 +1016,9 @@ if (meme_condition) {
         "rainbow antisalt"
     document.getElementById("antiperks_title").innerHTML = "Antisalt Perks"
     document.getElementById("refund_perks").innerHTML = "Refund Antisalt Perks"
+
+    document.getElementById("expand_req2").innerHTML =
+        "Antisalt perk 9 required"
 
     document.getElementById("dark_spice").innerHTML = "DARK SALT"
     document.getElementById("dark_spice_text").innerHTML = "dark salt"
