@@ -1028,6 +1028,8 @@ if (meme_condition) {
     document.getElementById("dark_spice_text").innerHTML = "dark salt"
     document.getElementById("dark_gen_name_s").innerHTML =
         "Dark Salt Strengthener"
+    document.getElementById("dark_gen_name_a").innerHTML =
+        "Dark Salt Accelerator"
 
     document.getElementById("spice_idle").innerHTML = "Salt Idle"
     document.title = "Salt Idle"
