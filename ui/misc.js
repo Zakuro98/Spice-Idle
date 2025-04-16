@@ -1362,6 +1362,12 @@ function compendium_update() {
 
 //graphics updates for settings page
 function settings_update() {
+    if (game.expand >= 1 && !game.new_generation) {
+        document.getElementById("switch_block").style.display = "flex"
+    } else {
+        document.getElementById("switch_block").style.display = "none"
+    }
+
     let str = "Hotkeys:<br>Up: Next tab<br>Down: Previous tab"
 
     if (game.color_boosts > 0 || game.prestige_bought[12])
@@ -1400,10 +1406,10 @@ function settings_update() {
     if (game.ascend >= 1 || game.collapse >= 1 || game.expand >= 1)
         str += "<br>A: Ascend"
 
-    if (game.distribute_unlocked) str += "<br>R: Distribute ALL runes"
+    if (game.distribute_unlocked) str += "<br>D: Distribute ALL runes"
 
     if (game.half_distribute_unlocked)
-        str += "<br>Shift+R: Distribute HALF runes"
+        str += "<br>Shift+D: Distribute HALF runes"
 
     if (game.ascend_bought[16] || game.collapse >= 1 || game.expand >= 1)
         str += "<br>X: Exit challenge"
@@ -1415,6 +1421,8 @@ function settings_update() {
         str += "<br>C: Collapse"
         str += "<br>Y: Activate Collider"
     }
+
+    if (game.collapse >= 5 || game.expand >= 1) str += "<br>R: Toggle research"
 
     if (game.expand >= 1) {
         str += "<br>E: Expand"
