@@ -1069,9 +1069,9 @@ function pre_collapse(override, challenge) {
     if (game.galactic_bought[13]) {
         if (game.expand >= 300)
             amount = amount.mul(
-                Decimal.pow(10, 3000 * phi ** 2 * (game.expand / 300) ** 0.5)
+                Decimal.pow(10, 1500 * phi ** 2 * (game.expand / 300) ** 0.5)
             )
-        else amount = amount.mul(Decimal.pow(10, 10 * phi ** 2 * game.expand))
+        else amount = amount.mul(Decimal.pow(10, 5 * phi ** 2 * game.expand))
     }
 
     if (game.collapse_challenge === 0 && challenge === undefined)
@@ -1164,9 +1164,9 @@ function collapse(override, challenge) {
     if (game.galactic_bought[13]) {
         if (game.expand >= 300)
             amount = amount.mul(
-                Decimal.pow(10, 3000 * phi ** 2 * (game.expand / 300) ** 0.5)
+                Decimal.pow(10, 1500 * phi ** 2 * (game.expand / 300) ** 0.5)
             )
-        else amount = amount.mul(Decimal.pow(10, 10 * phi ** 2 * game.expand))
+        else amount = amount.mul(Decimal.pow(10, 5 * phi ** 2 * game.expand))
     }
 
     if (game.collapse_challenge === 0 && challenge === undefined)
@@ -1515,6 +1515,12 @@ function expand() {
                 4 * power) /
                 (8 * amount.log(10))
         )
+        if (power === 50) {
+            amount = amount
+                .div(Decimal.pow(10, power))
+                .pow(0.5)
+                .mul(Decimal.pow(10, power))
+        }
         power *= 5
     }
 
