@@ -5609,7 +5609,7 @@ function buy_construct() {
                     Decimal.pow(1.0744, Number(game.dark_construct) - 73)
                 )
             )
-        else game.dark_construct_price = game.dark_construct_price.mul(phi ** 2)
+        else game.dark_construct_price = game.dark_construct_price.mul(phi ** 4)
 
         game.dark_construct += 1n
 
@@ -5706,18 +5706,18 @@ function max_construct() {
                 Decimal.sub(
                     1,
                     game.dark_spice
-                        .mul(1 - phi ** 2)
+                        .mul(1 - phi ** 4)
                         .div(game.dark_construct_price)
-                ).log(10) / Math.log10(phi ** 2)
+                ).log(10) / Math.log10(phi ** 4)
             )
         )
         if (n > 0n) {
             let price = game.dark_construct_price
-                .mul(Decimal.sub(1, Decimal.pow(phi, 2 * n.toString())))
-                .div(1 - phi ** 2)
+                .mul(Decimal.sub(1, Decimal.pow(phi, 4 * n.toString())))
+                .div(1 - phi ** 4)
             game.dark_spice = Decimal.max(game.dark_spice.sub(price), 0)
             game.dark_construct_price = game.dark_construct_price.mul(
-                Decimal.pow(phi, 2 * n.toString())
+                Decimal.pow(phi, 4 * n.toString())
             )
             game.dark_construct += n
         }
