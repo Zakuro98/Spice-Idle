@@ -627,25 +627,26 @@ const rn_scale = [0.202, 0.188, 0.174, 0.16, 0.145, 0.131]
 const rc_scale = [0.233, 0.206, 0.18, 0.153, 0.127, 0.101]
 
 let key = {
-    digit: [false, false, false, false, false, false],
-    shift: false,
-    escape: false,
-    enter: false,
+    digit: [0, 0, 0, 0, 0, 0],
+    shift: 0,
+    escape: 0,
+    enter: 0,
 
-    s: false,
-    m: false,
-    b: false,
-    p: false,
-    i: false,
-    a: false,
-    r: false,
-    n: false,
-    c: false,
-    x: false,
-    y: false,
-    e: false,
-    k: false,
-    v: false,
+    s: 0,
+    m: 0,
+    b: 0,
+    p: 0,
+    i: 0,
+    a: 0,
+    d: 0,
+    n: 0,
+    c: 0,
+    x: 0,
+    y: 0,
+    r: 0,
+    e: 0,
+    k: 0,
+    v: 0,
 }
 
 function format_small(num, not) {
@@ -1035,7 +1036,7 @@ if (meme_condition) {
     document.title = "Salt Idle"
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
-        "Salt Idle v1.8.4<br>Made by Zakuro<br><br>Last updated March 25, 2025"
+        "Salt Idle v1.8.5<br>Made by Zakuro<br><br>Last updated April 16, 2025"
 }
 
 //initialize map
@@ -1049,6 +1050,7 @@ const research_map = new Map()
 const research_map2 = new Map()
 const antispice_map = new Map()
 const galactic_map = new Map()
+const realm_map = new Map()
 const compendium_map = new Map()
 
 //spice generator class
@@ -3416,6 +3418,8 @@ function generate_realms() {
 
     let distance = new Array()
 
+    let chosen = undefined
+
     for (let i = 0; i < 5; i++) {
         for (let j = 0; j < 98; j++) {
             distance.push(j * 0.01 + 0.02)
@@ -3664,25 +3668,51 @@ function generate_realms() {
                                                 special_quality -
                                                 2)
                                     ))
-                    new realm(
-                        x,
-                        y,
-                        normal_stat,
-                        special_stat,
-                        reset_stat,
-                        size,
-                        "hsl(" +
-                            random_float() * 360 +
-                            ", 100%, " +
-                            (random_float() ** 3 * 60 + 40) +
-                            "%)",
-                        "hsl(" +
-                            random_float() * 360 +
-                            ", 100%, " +
-                            (random_float() ** 3 * 60 + 40) +
-                            "%)",
-                        random_float() * 180
-                    )
+                    if (
+                        i === order[0] &&
+                        distance[0] === 0.11 &&
+                        chosen === undefined
+                    ) {
+                        chosen = new realm(
+                            x,
+                            y,
+                            normal_stat,
+                            special_stat,
+                            reset_stat,
+                            0.5 + 1 / (1 + Math.exp(-2.043)),
+                            "hsl(" +
+                                random_float() * 360 +
+                                ", 100%, " +
+                                (random_float() ** 3 * 60 + 40) +
+                                "%)",
+                            "hsl(" +
+                                random_float() * 360 +
+                                ", 100%, " +
+                                (random_float() ** 3 * 60 + 40) +
+                                "%)",
+                            random_float() * 180
+                        )
+                    } else {
+                        new realm(
+                            x,
+                            y,
+                            normal_stat,
+                            special_stat,
+                            reset_stat,
+                            size,
+                            "hsl(" +
+                                random_float() * 360 +
+                                ", 100%, " +
+                                (random_float() ** 3 * 60 + 40) +
+                                "%)",
+                            "hsl(" +
+                                random_float() * 360 +
+                                ", 100%, " +
+                                (random_float() ** 3 * 60 + 40) +
+                                "%)",
+                            random_float() * 180
+                        )
+                    }
                 }
             } else if (status === "failed") {
                 let new_distance = random_float() * 0.8 + 0.2
@@ -3704,6 +3734,16 @@ function generate_realms() {
                 " times"
         )
     }
+
+    chosen.normal =
+        (realm_range(0, 0.89, 1) - realm_range(0, 0.89, 0)) * 0.727 +
+        realm_range(0, 0.89, 0)
+    chosen.special =
+        (realm_range(1, 0.89, 1) - realm_range(1, 0.89, 0)) * 0.727 +
+        realm_range(1, 0.89, 0)
+    chosen.reset =
+        (realm_range(2, 0.89, 1) - realm_range(2, 0.89, 0)) * 0.727 +
+        realm_range(2, 0.89, 0)
 
     let mobile = Number(
         getComputedStyle(document.body).getPropertyValue("--mobile")

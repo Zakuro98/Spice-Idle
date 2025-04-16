@@ -25,6 +25,12 @@ function expansion_update() {
                 4 * power) /
                 (8 * expand_amount.log(10))
         )
+        if (power === 50) {
+            expand_amount = expand_amount
+                .div(Decimal.pow(10, power))
+                .pow(0.5)
+                .mul(Decimal.pow(10, power))
+        }
         power *= 5
     }
 
@@ -554,7 +560,7 @@ function expansion_update() {
                         format_idec(
                             Decimal.pow(
                                 10,
-                                3000 * phi ** 2 * (game.expand / 300) ** 0.5
+                                1500 * phi ** 2 * (game.expand / 300) ** 0.5
                             ),
                             game.notation
                         ) +
@@ -565,7 +571,7 @@ function expansion_update() {
                         spice_text[0] +
                         " gains, even in Collapse Challenges<br>(Currently: " +
                         format_idec(
-                            Decimal.pow(10, 10 * phi ** 2 * game.expand),
+                            Decimal.pow(10, 5 * phi ** 2 * game.expand),
                             game.notation
                         ) +
                         "x)"
@@ -1013,9 +1019,15 @@ function dark_update() {
         let a_str =
             "You have " +
             format_small(game.dark_gamespeed_level, game.notation) +
-            " dark " + spice_text[0] + " accelerators,<br> applying the gamespeed boost to dark " + spice_text[0] + " production with " +
+            " dark " +
+            spice_text[0] +
+            " accelerators,<br> applying the gamespeed boost to dark " +
+            spice_text[0] +
+            " production with " +
             format_small(game.dark_gamespeed_level, game.notation) +
-            "% strength,<br> effectively making dark " + spice_text[0] + " production " +
+            "% strength,<br> effectively making dark " +
+            spice_text[0] +
+            " production " +
             format_dec(
                 game.gamespeed ** (game.dark_gamespeed_level / 100),
                 game.notation

@@ -3213,7 +3213,7 @@ main {
     margin-bottom: 3em;
 }
 
-#wipe_block {
+#wipe_block, #switch_block {
     margin-top: 3em;
 }
 

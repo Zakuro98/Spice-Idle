@@ -55,11 +55,11 @@ function collapse_update() {
     if (game.galactic_bought[13]) {
         if (game.expand >= 300)
             collapse_amount = collapse_amount.mul(
-                Decimal.pow(10, 3000 * phi ** 2 * (game.expand / 300) ** 0.5)
+                Decimal.pow(10, 1500 * phi ** 2 * (game.expand / 300) ** 0.5)
             )
         else
             collapse_amount = collapse_amount.mul(
-                Decimal.pow(10, 10 * phi ** 2 * game.expand)
+                Decimal.pow(10, 5 * phi ** 2 * game.expand)
             )
     }
 
