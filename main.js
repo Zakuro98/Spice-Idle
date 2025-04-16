@@ -1,5 +1,6 @@
 let tick_time = Date.now()
 let delta_time = undefined
+let delta_time_real = undefined
 let pause = false
 let pause_time
 
@@ -29,11 +30,11 @@ function tick() {
     game.collapse_time_played += 1 / delta_time
     game.expand_time_played += 1 / delta_time
 
-    game.ascend_challenge_timer += 1 / (delta_time * game.gamespeed)
-    game.atomic_timer += 1 / (delta_time * game.gamespeed)
+    game.ascend_challenge_timer += 1 / delta_time_real
+    game.atomic_timer += 1 / delta_time_real
 
     for (let i = 0; i < 5; i++) {
-        game.real_time_played[i] += 1 / (delta_time * game.gamespeed)
+        game.real_time_played[i] += 1 / delta_time_real
     }
 
     if (game.collapse_time_played > 0.0005 && game.collapse_challenge === 9) {
@@ -3077,12 +3078,12 @@ function tick() {
                     amount = amount.mul(
                         Decimal.pow(
                             10,
-                            3000 * phi ** 2 * (game.expand / 300) ** 0.5
+                            1500 * phi ** 2 * (game.expand / 300) ** 0.5
                         )
                     )
                 else
                     amount = amount.mul(
-                        Decimal.pow(10, 10 * phi ** 2 * game.expand)
+                        Decimal.pow(10, 5 * phi ** 2 * game.expand)
                     )
             }
 
@@ -3114,26 +3115,26 @@ function tick() {
                 game.data[r] +=
                     ((2 * reward_scaling) ** game.collapse_complete[5] *
                         3 ** game.dark_conversion) /
-                    (delta_time * game.gamespeed)
+                    delta_time_real
             } else {
                 game.data[r] +=
                     (2 *
                         1.5 ** (game.data_boosts - 1) *
                         (2 * reward_scaling) ** game.collapse_complete[5] *
                         3 ** game.dark_conversion) /
-                    (delta_time * game.gamespeed)
+                    delta_time_real
             }
         } else {
             if (game.data_boosts === 0) {
                 game.data[r] +=
                     (2 * reward_scaling) ** game.collapse_complete[5] /
-                    (delta_time * game.gamespeed)
+                    delta_time_real
             } else {
                 game.data[r] +=
                     (2 *
                         1.5 ** (game.data_boosts - 1) *
                         (2 * reward_scaling) ** game.collapse_complete[5]) /
-                    (delta_time * game.gamespeed)
+                    delta_time_real
             }
         }
 
@@ -3250,13 +3251,11 @@ function tick() {
                 amount = amount.mul(
                     Decimal.pow(
                         10,
-                        3000 * phi ** 2 * (game.expand / 300) ** 0.5
+                        1500 * phi ** 2 * (game.expand / 300) ** 0.5
                     )
                 )
             else
-                amount = amount.mul(
-                    Decimal.pow(10, 10 * phi ** 2 * game.expand)
-                )
+                amount = amount.mul(Decimal.pow(10, 5 * phi ** 2 * game.expand))
         }
 
         if (amount.cmp(game.pending_goal) >= 0) {
@@ -3282,11 +3281,10 @@ function tick() {
 
     if (game.galactic_bought[9]) {
         game.passive_prestige +=
-            game.best_prestige_rate / (60 * delta_time * game.gamespeed)
-        game.passive_ascend +=
-            game.best_ascend_rate / (60 * delta_time * game.gamespeed)
+            game.best_prestige_rate / (60 * delta_time_real)
+        game.passive_ascend += game.best_ascend_rate / (60 * delta_time_real)
         game.passive_collapse +=
-            game.best_collapse_rate / (60 * delta_time * game.gamespeed)
+            game.best_collapse_rate / (60 * delta_time_real)
 
         if (game.passive_prestige >= 1) {
             game.prestige += Math.floor(game.passive_prestige)
@@ -3327,7 +3325,7 @@ function tick() {
         game.autocc_toggle &&
         game.research_complete[35]
     ) {
-        game.autocc_timer += 1 / (delta_time * game.gamespeed)
+        game.autocc_timer += 1 / delta_time_real
         if (!pause) {
             if (game.autocc_challenge === 0) {
                 if (game.autocc_timer >= game.autocc_cooldown) {
@@ -3407,6 +3405,12 @@ function tick() {
                         4 * power) /
                         (8 * amount.log(10))
                 )
+                if (power === 50) {
+                    amount = amount
+                        .div(Decimal.pow(10, power))
+                        .pow(0.5)
+                        .mul(Decimal.pow(10, power))
+                }
                 power *= 5
             }
 
@@ -3596,11 +3600,11 @@ function tick() {
     if (game.galactic_bought[13]) {
         if (game.expand >= 300)
             atomic_gain = atomic_gain.mul(
-                Decimal.pow(10, 3000 * phi ** 2 * (game.expand / 300) ** 0.5)
+                Decimal.pow(10, 1500 * phi ** 2 * (game.expand / 300) ** 0.5)
             )
         else
             atomic_gain = atomic_gain.mul(
-                Decimal.pow(10, 10 * phi ** 2 * game.expand)
+                Decimal.pow(10, 5 * phi ** 2 * game.expand)
             )
     }
 
@@ -3640,6 +3644,12 @@ function tick() {
                 4 * power) /
                 (8 * galactic_gain.log(10))
         )
+        if (power === 50) {
+            galactic_gain = galactic_gain
+                .div(Decimal.pow(10, power))
+                .pow(0.5)
+                .mul(Decimal.pow(10, power))
+        }
         power *= 5
     }
 
@@ -4095,7 +4105,6 @@ function collider_tick() {
                         atomic_amount = (atomic_amount - 24) ** 0.54 + 24
                     else atomic_amount = 24
                 }
-                atomic_amount = 24
                 let old_total = game.total_rainbow_antispice
                 game.total_rainbow_antispice = Math.floor(
                     atomic_amount + rainbow_amount
@@ -4628,17 +4637,18 @@ function switch_key(eventcode, state) {
                 "a",
                 "b",
                 "c",
+                "d",
+                "e",
                 "i",
+                "k",
                 "m",
                 "n",
                 "p",
                 "r",
                 "s",
+                "v",
                 "x",
                 "y",
-                "e",
-                "k",
-                "v",
             ].includes(eventcode.substring(3).toLowerCase())
         ) {
             key[eventcode.substring(3).toLowerCase()] = state
@@ -4658,7 +4668,7 @@ function switch_key(eventcode, state) {
 document.body.addEventListener("keydown", function (event) {
     let active_element = document.activeElement
     if (event.code === "Escape" || event.code === "Enter")
-        switch_key(event.code, true)
+        switch_key(event.code, 1)
     if (
         active_element.tagName == "INPUT" &&
         (active_element.type == "text" || active_element.type == "number")
@@ -4666,7 +4676,7 @@ document.body.addEventListener("keydown", function (event) {
         event.stopPropagation()
     } else if (modal === "none") {
         if (event.code !== "Escape" && event.code !== "Enter")
-            switch_key(event.code, true) // change corresponding key and or key.digit(if between 1-7)
+            switch_key(event.code, 1) // change corresponding key and or key.digit(if between 1-7)
 
         if (game.hotkeys) {
             // upcoming: fast-button to change tab/subtabs
@@ -5012,31 +5022,32 @@ document.body.addEventListener("keydown", function (event) {
 })
 
 document.body.addEventListener("keyup", function (event) {
-    switch_key(event.code, false) // same as in keydown, this time "false" them
+    switch_key(event.code, 0) // same as in keydown, this time "false" them
 })
 
 window.addEventListener("blur", function () {
     for (let i = 0; i < 6; i++) {
-        key.digit[i] = false
+        key.digit[i] = 0
     }
 
-    key.shift = false
-    key.escape = false
-    key.enter = false
-    key.s = false
-    key.m = false
-    key.b = false
-    key.p = false
-    key.i = false
-    key.a = false
-    key.r = false
-    key.n = false
-    key.c = false
-    key.x = false
-    key.y = false
-    key.e = false
-    key.k = false
-    key.v = false
+    key.shift = 0
+    key.escape = 0
+    key.enter = 0
+    key.s = 0
+    key.m = 0
+    key.b = 0
+    key.p = 0
+    key.i = 0
+    key.a = 0
+    key.d = 0
+    key.n = 0
+    key.c = 0
+    key.x = 0
+    key.y = 0
+    key.r = 0
+    key.e = 0
+    key.k = 0
+    key.v = 0
 })
 
 //updating the exploration screen on screen size changes
@@ -5096,8 +5107,8 @@ window.addEventListener("resize", function () {
 
 function hotkey_tick() {
     if (modal !== "none") {
-        if (key.escape) close_modal()
-        if (key.enter) {
+        if (key.escape === 1) close_modal()
+        if (key.enter === 1) {
             switch (modal) {
                 case "alert":
                     close_modal()
@@ -5113,35 +5124,36 @@ function hotkey_tick() {
     }
 
     if (game.hotkeys && modal === "none") {
-        if (key.b) color_boost()
-        if (key.p) prestige()
-        if (key.i) buy_infusion()
-        if (key.a) pre_ascend()
-        if (key.shift && key.r) distribute_runes("half")
-        else if (key.r) distribute_runes("all")
-        if (key.n) buy_enchantment()
-        if (key.c) pre_collapse()
-        if (key.x) {
+        if (key.b === 1) color_boost()
+        if (key.p === 1) prestige()
+        if (key.i === 1) buy_infusion()
+        if (key.a === 1) pre_ascend()
+        if (key.shift === 1 && key.d === 1) distribute_runes("half")
+        else if (key.d === 1) distribute_runes("all")
+        if (key.n === 1) buy_enchantment()
+        if (key.c === 1) pre_collapse()
+        if (key.x === 1) {
             exit_ascension_challenge()
             exit_collapse_challenge()
         }
-        if (key.y) activate_collider()
-        if (key.e) pre_expand()
-        if (key.k) buy_construct()
-        if (key.v) buy_conversion()
+        if (key.y === 1) activate_collider()
+        if (key.r === 1) research_toggle()
+        if (key.e === 1) pre_expand()
+        if (key.k === 1) buy_construct()
+        if (key.v === 1) buy_conversion()
 
         if (game.tab === 0) {
             switch (game.subtab[0]) {
                 case 0:
                     for (let i = 0; i < 6; i++) {
-                        if (key.shift && key.digit[i]) {
+                        if (key.shift === 1 && key.digit[i] === 1) {
                             buy_gen("red", i)
-                        } else if (key.digit[i]) {
+                        } else if (key.digit[i] === 1) {
                             buy_until10("red", i)
                         }
 
-                        if (key.s) buy_strengthener("red")
-                        if (key.m) {
+                        if (key.s === 1) buy_strengthener("red")
+                        if (key.m === 1) {
                             if (
                                 game.color_boosts >= 1 ||
                                 game.prestige >= 1 ||
@@ -5155,14 +5167,14 @@ function hotkey_tick() {
                     break
                 case 1:
                     for (let i = 0; i < 6; i++) {
-                        if (key.shift && key.digit[i]) {
+                        if (key.shift === 1 && key.digit[i] === 1) {
                             buy_gen("yellow", i)
-                        } else if (key.digit[i]) {
+                        } else if (key.digit[i] === 1) {
                             buy_until10("yellow", i)
                         }
 
-                        if (key.s) buy_strengthener("yellow")
-                        if (key.m) {
+                        if (key.s === 1) buy_strengthener("yellow")
+                        if (key.m === 1) {
                             if (
                                 game.color_boosts >= 2 ||
                                 game.prestige >= 1 ||
@@ -5176,14 +5188,14 @@ function hotkey_tick() {
                     break
                 case 2:
                     for (let i = 0; i < 6; i++) {
-                        if (key.shift && key.digit[i]) {
+                        if (key.shift === 1 && key.digit[i] === 1) {
                             buy_gen("green", i)
-                        } else if (key.digit[i]) {
+                        } else if (key.digit[i] === 1) {
                             buy_until10("green", i)
                         }
 
-                        if (key.s) buy_strengthener("green")
-                        if (key.m) {
+                        if (key.s === 1) buy_strengthener("green")
+                        if (key.m === 1) {
                             if (
                                 game.color_boosts >= 3 ||
                                 game.prestige >= 1 ||
@@ -5197,14 +5209,14 @@ function hotkey_tick() {
                     break
                 case 3:
                     for (let i = 0; i < 6; i++) {
-                        if (key.shift && key.digit[i]) {
+                        if (key.shift === 1 && key.digit[i] === 1) {
                             buy_gen("blue", i)
-                        } else if (key.digit[i]) {
+                        } else if (key.digit[i] === 1) {
                             buy_until10("blue", i)
                         }
 
-                        if (key.s) buy_strengthener("blue")
-                        if (key.m) {
+                        if (key.s === 1) buy_strengthener("blue")
+                        if (key.m === 1) {
                             if (
                                 game.color_boosts >= 4 ||
                                 game.prestige >= 1 ||
@@ -5218,14 +5230,14 @@ function hotkey_tick() {
                     break
                 case 4:
                     for (let i = 0; i < 6; i++) {
-                        if (key.shift && key.digit[i]) {
+                        if (key.shift === 1 && key.digit[i] === 1) {
                             buy_gen("pink", i)
-                        } else if (key.digit[i]) {
+                        } else if (key.digit[i] === 1) {
                             buy_until10("pink", i)
                         }
 
-                        if (key.s) buy_strengthener("pink")
-                        if (key.m) {
+                        if (key.s === 1) buy_strengthener("pink")
+                        if (key.m === 1) {
                             if (
                                 game.color_boosts >= 5 ||
                                 game.prestige >= 1 ||
@@ -5242,14 +5254,14 @@ function hotkey_tick() {
         if (game.tab === 1) {
             if (game.subtab[1] === 1) {
                 for (let i = 0; i < 6; i++) {
-                    if (key.shift && key.digit[i]) {
+                    if (key.shift === 1 && key.digit[i] === 1) {
                         buy_gen("crystal", i)
-                    } else if (key.digit[i]) {
+                    } else if (key.digit[i] === 1) {
                         buy_until10("crystal", i)
                     }
 
-                    if (key.s) buy_strengthener("crystal")
-                    if (key.m) {
+                    if (key.s === 1) buy_strengthener("crystal")
+                    if (key.m === 1) {
                         if (
                             game.crystal_spice_bought[5] >= 5n ||
                             game.ascend >= 1 ||
@@ -5264,20 +5276,50 @@ function hotkey_tick() {
         if (game.tab === 2) {
             if (game.subtab[3] === 3) {
                 for (let i = 0; i < 6; i++) {
-                    if (key.shift && key.digit[i]) {
+                    if (key.shift === 1 && key.digit[i] === 1) {
                         buy_gen("arcane", i)
-                    } else if (key.digit[i]) {
+                    } else if (key.digit[i] === 1) {
                         buy_until10("arcane", i)
                     }
 
-                    if (key.s) buy_strengthener("arcane")
-                    if (key.m) {
+                    if (key.s === 1) buy_strengthener("arcane")
+                    if (key.m === 1) {
                         if (game.arcane_max_unlocked) max_all("arcane")
                     }
                 }
             }
         }
+        if (game.tab === 3) {
+            if (game.subtab[4] === 1) {
+                if (game.expand >= 1 && key.m === 1) {
+                    research_upgrade(true)
+                }
+            }
+        }
     }
+
+    for (let i = 0; i < 6; i++) {
+        if (key.digit[i] === 1) key.digit[i] = 2
+    }
+    if (key.shift === 1) key.shift = 2
+    if (key.escape === 1) key.escape = 2
+    if (key.enter === 1) key.enter = 2
+
+    if (key.s === 1) key.s = 2
+    if (key.m === 1) key.m = 2
+    if (key.b === 1) key.b = 2
+    if (key.p === 1) key.p = 2
+    if (key.i === 1) key.i = 2
+    if (key.a === 1) key.a = 2
+    if (key.d === 1) key.d = 2
+    if (key.n === 1) key.n = 2
+    if (key.c === 1) key.c = 2
+    if (key.x === 1) key.x = 2
+    if (key.y === 1) key.y = 2
+    if (key.r === 1) key.r = 2
+    if (key.e === 1) key.e = 2
+    if (key.k === 1) key.k = 2
+    if (key.v === 1) key.v = 2
 }
 
 //saving the game
@@ -5376,6 +5418,7 @@ function import_save() {
                 pause = true
 
                 realm.realms = []
+                realm_map.clear()
                 for (const r of document
                     .getElementById("exploration_map")
                     .querySelectorAll(".realm")) {
@@ -5407,6 +5450,28 @@ function pre_delete_save() {
 
 function delete_save() {
     localStorage.removeItem("new_spice_idle_save")
+    window.location.reload()
+}
+
+//switching to the new v1.8.4 realm generation
+function pre_switch_generation() {
+    if (modal === "none") {
+        open_modal(
+            "confirm",
+            "Are you sure you want to switch to the new v1.8.4 realm generation?<br>You will be reset to the starting realm, and all visited realms will be lost",
+            switch_generation
+        )
+    }
+}
+
+function switch_generation() {
+    game.realms_visited = [6]
+    game.current_realm = 6
+    game.selected_realm = -1
+    game.hovered_realm = -1
+    game.realm_effects = [0, 0, 0]
+    game.new_generation = true
+    save()
     window.location.reload()
 }
 
@@ -6128,11 +6193,13 @@ function tick_loop() {
     let delta_ms = undefined
     if (delta_time === undefined) {
         delta_time = game.tickspeed / game.gamespeed
+        delta_time_real = game.tickspeed
     } else {
         if (Date.now() < tick_time) tick_time = Date.now()
 
         delta_ms = Date.now() - tick_time
         delta_time = 1000 / (delta_ms * game.gamespeed)
+        delta_time_real = 1000 / delta_ms
     }
 
     if (delta_ms < 1000 || delta_ms === undefined) {
@@ -6373,6 +6440,8 @@ function catchup_loop() {
         delta_time =
             (1000 * (total_ticks - start_ticks)) /
             ((offline_ms - start_ms) * game.gamespeed)
+        delta_time_real =
+            (1000 * (total_ticks - start_ticks)) / (offline_ms - start_ms)
         for (let i = 0; i < total_ticks - ticks_run; i++) {
             tick()
             ticks_run++
@@ -6381,6 +6450,8 @@ function catchup_loop() {
         delta_time =
             (1000 * (total_ticks - start_ticks)) /
             ((offline_ms - start_ms) * game.gamespeed)
+        delta_time_real =
+            (1000 * (total_ticks - start_ticks)) / (offline_ms - start_ms)
         for (let i = 0; i < 100; i++) {
             tick()
             ticks_run++
@@ -6430,6 +6501,7 @@ function catchup_loop() {
     between_time += total_time
     while (between_time >= 1000 / game.tickspeed) {
         delta_time = game.tickspeed / game.gamespeed
+        delta_time_real = game.tickspeed
         between_time -= 1000 / game.tickspeed
         tick()
     }
@@ -6497,12 +6569,14 @@ function background_timeout() {
 
     if (total_ticks - ticks_run < 100) {
         delta_time = (1000 * total_ticks) / (offline_ms * game.gamespeed)
+        delta_time_real = (1000 * total_ticks) / offline_ms
         for (let i = 0; i < total_ticks - ticks_run; i++) {
             tick()
             ticks_run++
         }
     } else {
         delta_time = (1000 * total_ticks) / (offline_ms * game.gamespeed)
+        delta_time_real = (1000 * total_ticks) / offline_ms
         for (let i = 0; i < 100; i++) {
             tick()
             ticks_run++
@@ -6549,6 +6623,7 @@ function background_timeout() {
     between_time += total_time
     while (between_time >= 1000 / game.tickspeed) {
         delta_time = game.tickspeed / game.gamespeed
+        delta_time_real = game.tickspeed
         between_time -= 1000 / game.tickspeed
         tick()
     }
@@ -6618,12 +6693,14 @@ function background_while() {
     while (ticks_run < total_ticks) {
         if (total_ticks - ticks_run < 100) {
             delta_time = (1000 * total_ticks) / (offline_ms * game.gamespeed)
+            delta_time_real = (1000 * total_ticks) / offline_ms
             for (let i = 0; i < total_ticks - ticks_run; i++) {
                 tick()
                 ticks_run++
             }
         } else {
             delta_time = (1000 * total_ticks) / (offline_ms * game.gamespeed)
+            delta_time_real = (1000 * total_ticks) / offline_ms
             for (let i = 0; i < 100; i++) {
                 tick()
                 ticks_run++
@@ -6636,6 +6713,7 @@ function background_while() {
         between_time += total_time
         while (between_time >= 1000 / game.tickspeed) {
             delta_time = game.tickspeed / game.gamespeed
+            delta_time_real = game.tickspeed
             between_time -= 1000 / game.tickspeed
             tick()
         }
