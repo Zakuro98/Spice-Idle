@@ -4622,53 +4622,102 @@ function collider_tick() {
 
 //handling hotkeys
 function switch_key(eventcode, state) {
-    if (eventcode.startsWith("Digit")) {
-        // is it a "Digit" key, between 1 and 6? change its state to 'state'
-        if (
-            parseInt(eventcode.substring(5)) >= 1 &&
-            parseInt(eventcode.substring(5)) <= 6
-        ) {
-            key.digit[parseInt(eventcode.substring(5)) - 1] = state
+    if (state === 0) {
+        if (eventcode.startsWith("Digit")) {
+            // is it a "Digit" key, between 1 and 6? change its state to 'state'
+            if (
+                parseInt(eventcode.substring(5)) >= 1 &&
+                parseInt(eventcode.substring(5)) <= 6
+            ) {
+                if (key.digit[parseInt(eventcode.substring(5)) - 1] === -1)
+                    key.digit[parseInt(eventcode.substring(5)) - 1] = state
+            }
+        } else if (eventcode.startsWith("Key")) {
+            // a "Key"-key? and in a list? change its state to 'state'
+            if (
+                [
+                    "a",
+                    "b",
+                    "c",
+                    "d",
+                    "e",
+                    "i",
+                    "k",
+                    "m",
+                    "n",
+                    "p",
+                    "r",
+                    "s",
+                    "v",
+                    "x",
+                    "y",
+                ].includes(eventcode.substring(3).toLowerCase())
+            ) {
+                if (key[eventcode.substring(3).toLowerCase()] === -1)
+                    key[eventcode.substring(3).toLowerCase()] = state
+            }
         }
-    } else if (eventcode.startsWith("Key")) {
-        // a "Key"-key? and in a list? change its state to 'state'
-        if (
-            [
-                "a",
-                "b",
-                "c",
-                "d",
-                "e",
-                "i",
-                "k",
-                "m",
-                "n",
-                "p",
-                "r",
-                "s",
-                "v",
-                "x",
-                "y",
-            ].includes(eventcode.substring(3).toLowerCase())
-        ) {
-            key[eventcode.substring(3).toLowerCase()] = state
-        }
-    }
 
-    if (eventcode === "ShiftLeft" || eventcode === "ShiftRight") {
-        key.shift = state
-    }
-    if (eventcode === "Escape") {
-        key.escape = state
-    }
-    if (eventcode === "Enter") {
-        key.enter = state
+        if (eventcode === "ShiftLeft" || eventcode === "ShiftRight") {
+            if (key.shift === -1) key.shift = state
+        }
+        if (eventcode === "Escape") {
+            if (key.escape === -1) key.escape = state
+        }
+        if (eventcode === "Enter") {
+            if (key.enter === -1) key.enter = state
+        }
+    } else if (state === -1) {
+        if (eventcode.startsWith("Digit")) {
+            // is it a "Digit" key, between 1 and 6? change its state to 'state'
+            if (
+                parseInt(eventcode.substring(5)) >= 1 &&
+                parseInt(eventcode.substring(5)) <= 6
+            ) {
+                if (key.digit[parseInt(eventcode.substring(5)) - 1] >= 0)
+                    key.digit[parseInt(eventcode.substring(5)) - 1] = state
+            }
+        } else if (eventcode.startsWith("Key")) {
+            // a "Key"-key? and in a list? change its state to 'state'
+            if (
+                [
+                    "a",
+                    "b",
+                    "c",
+                    "d",
+                    "e",
+                    "i",
+                    "k",
+                    "m",
+                    "n",
+                    "p",
+                    "r",
+                    "s",
+                    "v",
+                    "x",
+                    "y",
+                ].includes(eventcode.substring(3).toLowerCase())
+            ) {
+                if (key[eventcode.substring(3).toLowerCase()] >= 0)
+                    key[eventcode.substring(3).toLowerCase()] = state
+            }
+        }
+
+        if (eventcode === "ShiftLeft" || eventcode === "ShiftRight") {
+            if (key.shift >= 0) key.shift = state
+        }
+        if (eventcode === "Escape") {
+            if (key.escape >= 0) key.escape = state
+        }
+        if (eventcode === "Enter") {
+            if (key.enter >= 0) key.enter = state
+        }
     }
 }
 document.body.addEventListener("keydown", function (event) {
     let active_element = document.activeElement
     if (event.code === "Escape" || event.code === "Enter")
-        switch_key(event.code, 1)
+        switch_key(event.code, 0)
     if (
         active_element.tagName == "INPUT" &&
         (active_element.type == "text" || active_element.type == "number")
@@ -4676,7 +4725,7 @@ document.body.addEventListener("keydown", function (event) {
         event.stopPropagation()
     } else if (modal === "none") {
         if (event.code !== "Escape" && event.code !== "Enter")
-            switch_key(event.code, 1) // change corresponding key and or key.digit(if between 1-7)
+            switch_key(event.code, 0) // change corresponding key and or key.digit(if between 1-7)
 
         if (game.hotkeys) {
             // upcoming: fast-button to change tab/subtabs
@@ -5022,33 +5071,279 @@ document.body.addEventListener("keydown", function (event) {
 })
 
 document.body.addEventListener("keyup", function (event) {
-    switch_key(event.code, 0) // same as in keydown, this time "false" them
+    switch_key(event.code, -1) // same as in keydown, this time "false" them
 })
 
 window.addEventListener("blur", function () {
     for (let i = 0; i < 6; i++) {
-        key.digit[i] = 0
+        key.digit[i] = -1
     }
 
-    key.shift = 0
-    key.escape = 0
-    key.enter = 0
-    key.s = 0
-    key.m = 0
-    key.b = 0
-    key.p = 0
-    key.i = 0
-    key.a = 0
-    key.d = 0
-    key.n = 0
-    key.c = 0
-    key.x = 0
-    key.y = 0
-    key.r = 0
-    key.e = 0
-    key.k = 0
-    key.v = 0
+    key.shift = -1
+    key.escape = -1
+    key.enter = -1
+    key.s = -1
+    key.m = -1
+    key.b = -1
+    key.p = -1
+    key.i = -1
+    key.a = -1
+    key.d = -1
+    key.n = -1
+    key.c = -1
+    key.x = -1
+    key.y = -1
+    key.r = -1
+    key.e = -1
+    key.k = -1
+    key.v = -1
 })
+
+function hotkey_tick() {
+    if (modal !== "none") {
+        if (key.escape === 0 || key.escape >= 0.5) close_modal()
+        if (key.enter === 0 || key.enter >= 0.5) {
+            switch (modal) {
+                case "alert":
+                    close_modal()
+                    break
+                case "confirm":
+                    document.getElementById("confirm_yes").onclick()
+                    break
+                case "import":
+                    import_save()
+                    break
+            }
+        }
+    }
+
+    if (game.hotkeys && modal === "none") {
+        if (key.b === 0 || key.b >= 0.5) color_boost()
+        if (key.p === 0 || key.p >= 0.5) prestige()
+        if (key.i === 0 || key.i >= 0.5) buy_infusion()
+        if (key.a === 0 || key.a >= 0.5) pre_ascend()
+        if (
+            (key.shift === 0 || key.shift >= 0.5) &&
+            (key.d === 0 || key.d >= 0.5)
+        )
+            distribute_runes("half")
+        else if (key.d === 0 || key.d >= 0.5) distribute_runes("all")
+        if (key.n === 0 || key.n >= 0.5) buy_enchantment()
+        if (key.c === 0 || key.c >= 0.5) pre_collapse()
+        if (key.x === 0 || key.x >= 0.5) {
+            exit_ascension_challenge()
+            exit_collapse_challenge()
+        }
+        if (key.y === 0 || key.y >= 0.5) activate_collider()
+        if (key.r === 0 || key.r >= 0.5) research_toggle()
+        if (key.e === 0 || key.e >= 0.5) pre_expand()
+        if (key.k === 0 || key.k >= 0.5) buy_construct()
+        if (key.v === 0 || key.v >= 0.5) buy_conversion()
+
+        if (game.tab === 0) {
+            switch (game.subtab[0]) {
+                case 0:
+                    for (let i = 0; i < 6; i++) {
+                        if (
+                            (key.shift === 0 || key.shift >= 0.5) &&
+                            (key.digit[i] === 0 || key.digit[i] >= 0.5)
+                        ) {
+                            buy_gen("red", i)
+                        } else if (key.digit[i] === 0 || key.digit[i] >= 0.5) {
+                            buy_until10("red", i)
+                        }
+
+                        if (key.s === 0 || key.s >= 0.5) buy_strengthener("red")
+                        if (key.m === 0 || key.m >= 0.5) {
+                            if (
+                                game.color_boosts >= 1 ||
+                                game.prestige >= 1 ||
+                                game.ascend >= 1 ||
+                                game.collapse >= 1 ||
+                                game.expand >= 1
+                            )
+                                max_all("red")
+                        }
+                    }
+                    break
+                case 1:
+                    for (let i = 0; i < 6; i++) {
+                        if (
+                            (key.shift === 0 || key.shift >= 0.5) &&
+                            (key.digit[i] === 0 || key.digit[i] >= 0.5)
+                        ) {
+                            buy_gen("yellow", i)
+                        } else if (key.digit[i] === 0 || key.digit[i] >= 0.5) {
+                            buy_until10("yellow", i)
+                        }
+
+                        if (key.s === 0 || key.s >= 0.5)
+                            buy_strengthener("yellow")
+                        if (key.m === 0 || key.m >= 0.5) {
+                            if (
+                                game.color_boosts >= 2 ||
+                                game.prestige >= 1 ||
+                                game.ascend >= 1 ||
+                                game.collapse >= 1 ||
+                                game.expand >= 1
+                            )
+                                max_all("yellow")
+                        }
+                    }
+                    break
+                case 2:
+                    for (let i = 0; i < 6; i++) {
+                        if (
+                            (key.shift === 0 || key.shift >= 0.5) &&
+                            (key.digit[i] === 0 || key.digit[i] >= 0.5)
+                        ) {
+                            buy_gen("green", i)
+                        } else if (key.digit[i] === 0 || key.digit[i] >= 0.5) {
+                            buy_until10("green", i)
+                        }
+
+                        if (key.s === 0 || key.s >= 0.5)
+                            buy_strengthener("green")
+                        if (key.m === 0 || key.m >= 0.5) {
+                            if (
+                                game.color_boosts >= 3 ||
+                                game.prestige >= 1 ||
+                                game.ascend >= 1 ||
+                                game.collapse >= 1 ||
+                                game.expand >= 1
+                            )
+                                max_all("green")
+                        }
+                    }
+                    break
+                case 3:
+                    for (let i = 0; i < 6; i++) {
+                        if (
+                            (key.shift === 0 || key.shift >= 0.5) &&
+                            (key.digit[i] === 0 || key.digit[i] >= 0.5)
+                        ) {
+                            buy_gen("blue", i)
+                        } else if (key.digit[i] === 0 || key.digit[i] >= 0.5) {
+                            buy_until10("blue", i)
+                        }
+
+                        if (key.s === 0 || key.s >= 0.5)
+                            buy_strengthener("blue")
+                        if (key.m === 0 || key.m >= 0.5) {
+                            if (
+                                game.color_boosts >= 4 ||
+                                game.prestige >= 1 ||
+                                game.ascend >= 1 ||
+                                game.collapse >= 1 ||
+                                game.expand >= 1
+                            )
+                                max_all("blue")
+                        }
+                    }
+                    break
+                case 4:
+                    for (let i = 0; i < 6; i++) {
+                        if (
+                            (key.shift === 0 || key.shift >= 0.5) &&
+                            (key.digit[i] === 0 || key.digit[i] >= 0.5)
+                        ) {
+                            buy_gen("pink", i)
+                        } else if (key.digit[i] === 0 || key.digit[i] >= 0.5) {
+                            buy_until10("pink", i)
+                        }
+
+                        if (key.s === 0 || key.s >= 0.5)
+                            buy_strengthener("pink")
+                        if (key.m === 0 || key.m >= 0.5) {
+                            if (
+                                game.color_boosts >= 5 ||
+                                game.prestige >= 1 ||
+                                game.ascend >= 1 ||
+                                game.collapse >= 1 ||
+                                game.expand >= 1
+                            )
+                                max_all("pink")
+                        }
+                    }
+                    break
+            }
+        }
+        if (game.tab === 1) {
+            if (game.subtab[1] === 1) {
+                for (let i = 0; i < 6; i++) {
+                    if (
+                        (key.shift === 0 || key.shift >= 0.5) &&
+                        (key.digit[i] === 0 || key.digit[i] >= 0.5)
+                    ) {
+                        buy_gen("crystal", i)
+                    } else if (key.digit[i] === 0 || key.digit[i] >= 0.5) {
+                        buy_until10("crystal", i)
+                    }
+
+                    if (key.s === 0 || key.s >= 0.5) buy_strengthener("crystal")
+                    if (key.m === 0 || key.m >= 0.5) {
+                        if (
+                            game.crystal_spice_bought[5] >= 5n ||
+                            game.ascend >= 1 ||
+                            game.collapse >= 1 ||
+                            game.expand >= 1
+                        )
+                            max_all("crystal")
+                    }
+                }
+            }
+        }
+        if (game.tab === 2) {
+            if (game.subtab[3] === 3) {
+                for (let i = 0; i < 6; i++) {
+                    if (
+                        (key.shift === 0 || key.shift >= 0.5) &&
+                        (key.digit[i] === 0 || key.digit[i] >= 0.5)
+                    ) {
+                        buy_gen("arcane", i)
+                    } else if (key.digit[i] === 0 || key.digit[i] >= 0.5) {
+                        buy_until10("arcane", i)
+                    }
+
+                    if (key.s === 0 || key.s >= 0.5) buy_strengthener("arcane")
+                    if (key.m === 0 || key.m >= 0.5) {
+                        if (game.arcane_max_unlocked) max_all("arcane")
+                    }
+                }
+            }
+        }
+        if (game.tab === 3) {
+            if (game.subtab[4] === 1) {
+                if (game.expand >= 1 && (key.m === 0 || key.m >= 0.5)) {
+                    research_upgrade(true)
+                }
+            }
+        }
+    }
+
+    for (let i = 0; i < 6; i++) {
+        if (key.digit[i] >= 0) key.digit[i] += 1 / delta_time_real
+    }
+    if (key.shift >= 0) key.shift += 1 / delta_time_real
+    if (key.escape >= 0) key.escape += 1 / delta_time_real
+    if (key.enter >= 0) key.enter += 1 / delta_time_real
+
+    if (key.s >= 0) key.s += 1 / delta_time_real
+    if (key.m >= 0) key.m += 1 / delta_time_real
+    if (key.b >= 0) key.b += 1 / delta_time_real
+    if (key.p >= 0) key.p += 1 / delta_time_real
+    if (key.i >= 0) key.i += 1 / delta_time_real
+    if (key.a >= 0) key.a += 1 / delta_time_real
+    if (key.d >= 0) key.d += 1 / delta_time_real
+    if (key.n >= 0) key.n += 1 / delta_time_real
+    if (key.c >= 0) key.c += 1 / delta_time_real
+    if (key.x >= 0) key.x += 1 / delta_time_real
+    if (key.y >= 0) key.y += 1 / delta_time_real
+    if (key.r >= 0) key.r += 1 / delta_time_real
+    if (key.e >= 0) key.e += 1 / delta_time_real
+    if (key.k >= 0) key.k += 1 / delta_time_real
+    if (key.v >= 0) key.v += 1 / delta_time_real
+}
 
 //updating the exploration screen on screen size changes
 window.addEventListener("resize", function () {
@@ -5104,223 +5399,6 @@ window.addEventListener("resize", function () {
             document.getElementById("expansion_page").style.display = "none"
     }
 })
-
-function hotkey_tick() {
-    if (modal !== "none") {
-        if (key.escape === 1) close_modal()
-        if (key.enter === 1) {
-            switch (modal) {
-                case "alert":
-                    close_modal()
-                    break
-                case "confirm":
-                    document.getElementById("confirm_yes").onclick()
-                    break
-                case "import":
-                    import_save()
-                    break
-            }
-        }
-    }
-
-    if (game.hotkeys && modal === "none") {
-        if (key.b === 1) color_boost()
-        if (key.p === 1) prestige()
-        if (key.i === 1) buy_infusion()
-        if (key.a === 1) pre_ascend()
-        if (key.shift === 1 && key.d === 1) distribute_runes("half")
-        else if (key.d === 1) distribute_runes("all")
-        if (key.n === 1) buy_enchantment()
-        if (key.c === 1) pre_collapse()
-        if (key.x === 1) {
-            exit_ascension_challenge()
-            exit_collapse_challenge()
-        }
-        if (key.y === 1) activate_collider()
-        if (key.r === 1) research_toggle()
-        if (key.e === 1) pre_expand()
-        if (key.k === 1) buy_construct()
-        if (key.v === 1) buy_conversion()
-
-        if (game.tab === 0) {
-            switch (game.subtab[0]) {
-                case 0:
-                    for (let i = 0; i < 6; i++) {
-                        if (key.shift === 1 && key.digit[i] === 1) {
-                            buy_gen("red", i)
-                        } else if (key.digit[i] === 1) {
-                            buy_until10("red", i)
-                        }
-
-                        if (key.s === 1) buy_strengthener("red")
-                        if (key.m === 1) {
-                            if (
-                                game.color_boosts >= 1 ||
-                                game.prestige >= 1 ||
-                                game.ascend >= 1 ||
-                                game.collapse >= 1 ||
-                                game.expand >= 1
-                            )
-                                max_all("red")
-                        }
-                    }
-                    break
-                case 1:
-                    for (let i = 0; i < 6; i++) {
-                        if (key.shift === 1 && key.digit[i] === 1) {
-                            buy_gen("yellow", i)
-                        } else if (key.digit[i] === 1) {
-                            buy_until10("yellow", i)
-                        }
-
-                        if (key.s === 1) buy_strengthener("yellow")
-                        if (key.m === 1) {
-                            if (
-                                game.color_boosts >= 2 ||
-                                game.prestige >= 1 ||
-                                game.ascend >= 1 ||
-                                game.collapse >= 1 ||
-                                game.expand >= 1
-                            )
-                                max_all("yellow")
-                        }
-                    }
-                    break
-                case 2:
-                    for (let i = 0; i < 6; i++) {
-                        if (key.shift === 1 && key.digit[i] === 1) {
-                            buy_gen("green", i)
-                        } else if (key.digit[i] === 1) {
-                            buy_until10("green", i)
-                        }
-
-                        if (key.s === 1) buy_strengthener("green")
-                        if (key.m === 1) {
-                            if (
-                                game.color_boosts >= 3 ||
-                                game.prestige >= 1 ||
-                                game.ascend >= 1 ||
-                                game.collapse >= 1 ||
-                                game.expand >= 1
-                            )
-                                max_all("green")
-                        }
-                    }
-                    break
-                case 3:
-                    for (let i = 0; i < 6; i++) {
-                        if (key.shift === 1 && key.digit[i] === 1) {
-                            buy_gen("blue", i)
-                        } else if (key.digit[i] === 1) {
-                            buy_until10("blue", i)
-                        }
-
-                        if (key.s === 1) buy_strengthener("blue")
-                        if (key.m === 1) {
-                            if (
-                                game.color_boosts >= 4 ||
-                                game.prestige >= 1 ||
-                                game.ascend >= 1 ||
-                                game.collapse >= 1 ||
-                                game.expand >= 1
-                            )
-                                max_all("blue")
-                        }
-                    }
-                    break
-                case 4:
-                    for (let i = 0; i < 6; i++) {
-                        if (key.shift === 1 && key.digit[i] === 1) {
-                            buy_gen("pink", i)
-                        } else if (key.digit[i] === 1) {
-                            buy_until10("pink", i)
-                        }
-
-                        if (key.s === 1) buy_strengthener("pink")
-                        if (key.m === 1) {
-                            if (
-                                game.color_boosts >= 5 ||
-                                game.prestige >= 1 ||
-                                game.ascend >= 1 ||
-                                game.collapse >= 1 ||
-                                game.expand >= 1
-                            )
-                                max_all("pink")
-                        }
-                    }
-                    break
-            }
-        }
-        if (game.tab === 1) {
-            if (game.subtab[1] === 1) {
-                for (let i = 0; i < 6; i++) {
-                    if (key.shift === 1 && key.digit[i] === 1) {
-                        buy_gen("crystal", i)
-                    } else if (key.digit[i] === 1) {
-                        buy_until10("crystal", i)
-                    }
-
-                    if (key.s === 1) buy_strengthener("crystal")
-                    if (key.m === 1) {
-                        if (
-                            game.crystal_spice_bought[5] >= 5n ||
-                            game.ascend >= 1 ||
-                            game.collapse >= 1 ||
-                            game.expand >= 1
-                        )
-                            max_all("crystal")
-                    }
-                }
-            }
-        }
-        if (game.tab === 2) {
-            if (game.subtab[3] === 3) {
-                for (let i = 0; i < 6; i++) {
-                    if (key.shift === 1 && key.digit[i] === 1) {
-                        buy_gen("arcane", i)
-                    } else if (key.digit[i] === 1) {
-                        buy_until10("arcane", i)
-                    }
-
-                    if (key.s === 1) buy_strengthener("arcane")
-                    if (key.m === 1) {
-                        if (game.arcane_max_unlocked) max_all("arcane")
-                    }
-                }
-            }
-        }
-        if (game.tab === 3) {
-            if (game.subtab[4] === 1) {
-                if (game.expand >= 1 && key.m === 1) {
-                    research_upgrade(true)
-                }
-            }
-        }
-    }
-
-    for (let i = 0; i < 6; i++) {
-        if (key.digit[i] === 1) key.digit[i] = 2
-    }
-    if (key.shift === 1) key.shift = 2
-    if (key.escape === 1) key.escape = 2
-    if (key.enter === 1) key.enter = 2
-
-    if (key.s === 1) key.s = 2
-    if (key.m === 1) key.m = 2
-    if (key.b === 1) key.b = 2
-    if (key.p === 1) key.p = 2
-    if (key.i === 1) key.i = 2
-    if (key.a === 1) key.a = 2
-    if (key.d === 1) key.d = 2
-    if (key.n === 1) key.n = 2
-    if (key.c === 1) key.c = 2
-    if (key.x === 1) key.x = 2
-    if (key.y === 1) key.y = 2
-    if (key.r === 1) key.r = 2
-    if (key.e === 1) key.e = 2
-    if (key.k === 1) key.k = 2
-    if (key.v === 1) key.v = 2
-}
 
 //saving the game
 function manual_save() {

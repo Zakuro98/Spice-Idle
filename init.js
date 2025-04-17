@@ -627,26 +627,26 @@ const rn_scale = [0.202, 0.188, 0.174, 0.16, 0.145, 0.131]
 const rc_scale = [0.233, 0.206, 0.18, 0.153, 0.127, 0.101]
 
 let key = {
-    digit: [0, 0, 0, 0, 0, 0],
-    shift: 0,
-    escape: 0,
-    enter: 0,
+    digit: [-1, -1, -1, -1, -1, -1],
+    shift: -1,
+    escape: -1,
+    enter: -1,
 
-    s: 0,
-    m: 0,
-    b: 0,
-    p: 0,
-    i: 0,
-    a: 0,
-    d: 0,
-    n: 0,
-    c: 0,
-    x: 0,
-    y: 0,
-    r: 0,
-    e: 0,
-    k: 0,
-    v: 0,
+    s: -1,
+    m: -1,
+    b: -1,
+    p: -1,
+    i: -1,
+    a: -1,
+    d: -1,
+    n: -1,
+    c: -1,
+    x: -1,
+    y: -1,
+    r: -1,
+    e: -1,
+    k: -1,
+    v: -1,
 }
 
 function format_small(num, not) {
@@ -1036,7 +1036,7 @@ if (meme_condition) {
     document.title = "Salt Idle"
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
-        "Salt Idle v1.8.5<br>Made by Zakuro<br><br>Last updated April 16, 2025"
+        "Salt Idle v1.8.6<br>Made by Zakuro<br><br>Last updated April 17, 2025"
 }
 
 //initialize map
