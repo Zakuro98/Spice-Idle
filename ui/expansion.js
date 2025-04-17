@@ -604,7 +604,7 @@ function expansion_update() {
             document.getElementById("ex_cost" + u.id).innerHTML =
                 "-" + format_inum(u.price, game.notation) + " galactic shards"
 
-        if (key.shift) {
+        if (key.shift >= 0) {
             document.getElementById("ex_cost" + u.id).style.display = "none"
             document.getElementById("ex_desc" + u.id).innerHTML =
                 '<span class="big">' + format_num(u.id + 1, 0) + "</span>"
