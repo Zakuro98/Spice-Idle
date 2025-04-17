@@ -928,7 +928,7 @@ function ascension_update() {
                 "-" + format_inum(u.price, game.notation) + " ᚫ"
         }
 
-        if (key.shift) {
+        if (key.shift >= 0) {
             let id_list = [
                 "1",
                 "2",
