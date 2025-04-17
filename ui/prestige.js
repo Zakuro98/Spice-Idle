@@ -941,7 +941,7 @@ function prestige_update() {
             " rainbow " +
             spice_text[0]
 
-        if (key.shift) {
+        if (key.shift >= 0) {
             document.getElementById("pr_cost" + u.id).style.display = "none"
             document.getElementById("pr_desc" + u.id).innerHTML =
                 '<span class="big">' + format_num(u.id + 1, 0) + "</span>"
