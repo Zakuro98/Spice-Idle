@@ -1003,6 +1003,11 @@ function ascend(override, challenge) {
             game.crystal_strengthener = 0
             game.crystal_strengthener_price = Decimal.pow(2, 76)
         }
+        
+        // Announce challenge completions to screen readers (these are infrequent achievements)
+        if (challenge && typeof announceToScreenReader === 'function') {
+            announceToScreenReader('Ascension challenge ' + challenge + ' completed!')
+        }
     }
 }
 
@@ -1254,6 +1259,7 @@ function collapse(override, challenge) {
         game.decay_time = 0
 
         if (game.collapse_challenge !== 0) {
+            const challengeNum = game.collapse_challenge
             if (game.research_complete[31] >= 1) {
                 game.collapse_complete[game.collapse_challenge - 7] +=
                     game.pending_completions
@@ -1261,6 +1267,11 @@ function collapse(override, challenge) {
                 game.pending_completions = 0
             } else game.collapse_complete[game.collapse_challenge - 7]++
             game.collapse_challenge = 0
+            
+            // Announce collapse challenge completion to screen readers
+            if (typeof announceToScreenReader === 'function') {
+                announceToScreenReader('Collapse challenge ' + challengeNum + ' completed!')
+            }
         }
 
         game.ascend_challenge = 0

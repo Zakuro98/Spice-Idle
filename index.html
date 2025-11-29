@@ -10,44 +10,45 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
+        <a href="#main-content" class="skip-link">Skip to main content</a>
         <div id="catchup_screen" class="catchup_screen">
             <div class="catchup_panel">
                 <div class="catchup_title">
-                    <p id="spice_idle" class="spice_idle red_spice">
+                    <p id="spice_idle" class="spice_idle red_spice" aria-hidden="true">
                         Spice Idle
                     </p>
                     <p class="catchup_version">
-                        v1.8.6
+                        v1.8.7
                     </p>
                 </div>
-                <p id="catchup_header" class="catchup_header">
+                <p id="catchup_header" class="catchup_header" aria-live="polite">
                     Catching up on time since the game was last saved...
                     <br>Please keep the game on-screen
                 </p>
                 <div id="offline_panel">
-                    <p id="catchup_info" class="catchup_text">
+                    <p id="catchup_info" class="catchup_text" aria-live="polite">
                         0 / 0 ticks run
                         <br>Currently running about 0 ticks/sec
                         <br>Estimated time to completion: 0 seconds
                     </p>
-                    <div class="catchup_back">
+                    <div class="catchup_back" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Offline progress">
                         <div id="catchup_progress" class="catchup_progress"></div>
                     </div>
                     <p class="catchup_warning">
                         Heads up! Increasing offline speed or skipping<br>ticks may make automation less efficient
                     </p>
                     <div id="catchup_skips" class="center_button">
-                        <button id="catchup_half_skip" class="catchup_button" onclick="offline_skip('half')">
+                        <button id="catchup_half_skip" class="catchup_button" onclick="offline_skip('half')" aria-label="Skip half of remaining offline ticks">
                             Skip Half of Ticks
                         </button>
-                        <button class="catchup_button" onclick="offline_skip('all')">
+                        <button class="catchup_button" onclick="offline_skip('all')" aria-label="Skip all remaining offline ticks">
                             Skip Offline Progress
                         </button>
                     </div>
                 </div>
                 <div id="startup_panel">
                     <div class="center_button">
-                        <button class="startup_button" onclick="start_game()">
+                        <button class="startup_button" onclick="start_game()" aria-label="Start a new game">
                             Begin Your Empire
                         </button>
                     </div>
@@ -55,167 +56,168 @@
             </div>
         </div>
 
+        <h1 class="visually-hidden">Spice Idle</h1>
         <div id="tabs_block" class="tabs_block">
-            <div class="menu">
-                <button id="spices" class="tab selected" onclick="goto_tab(0)">
+            <nav class="menu" role="tablist" aria-label="Main navigation">
+                <button id="spices" class="tab selected" onclick="goto_tab(0)" role="tab" aria-selected="true" aria-controls="spices_page">
                     SPICES
                 </button>
-                <button id="prestige" class="tab locked" onclick="goto_tab(1)">
+                <button id="prestige" class="tab locked" onclick="goto_tab(1)" role="tab" aria-selected="false" aria-controls="prestige_page" aria-disabled="true">
                     LOCKED
                 </button>
-                <button id="ascension" class="tab locked" onclick="goto_tab(2)">
+                <button id="ascension" class="tab locked" onclick="goto_tab(2)" role="tab" aria-selected="false" aria-controls="ascension_page" aria-disabled="true">
                     LOCKED
                 </button>
-                <button id="collapse" class="tab locked" onclick="goto_tab(3)">
+                <button id="collapse" class="tab locked" onclick="goto_tab(3)" role="tab" aria-selected="false" aria-controls="collapse_page" aria-disabled="true">
                     LOCKED
                 </button>
-                <button id="expansion" class="tab locked" onclick="goto_tab(4)">
+                <button id="expansion" class="tab locked" onclick="goto_tab(4)" role="tab" aria-selected="false" aria-controls="expansion_page" aria-disabled="true">
                     LOCKED
                 </button>
-                <button id="statistics" class="tab unlocked" onclick="goto_tab(5)">
+                <button id="statistics" class="tab unlocked" onclick="goto_tab(5)" role="tab" aria-selected="false" aria-controls="statistics_page">
                     STATISTICS
                 </button>
-                <button id="compendium" class="tab unlocked" onclick="goto_tab(7)">
+                <button id="compendium" class="tab unlocked" onclick="goto_tab(7)" role="tab" aria-selected="false" aria-controls="compendium_page">
                     COMPENDIUM
                 </button>
-                <button id="settings" class="tab unlocked" onclick="goto_tab(6)">
+                <button id="settings" class="tab unlocked" onclick="goto_tab(6)" role="tab" aria-selected="false" aria-controls="settings_page">
                     SETTINGS
                 </button>
-            </div>
+            </nav>
 
-            <div id="spices_tabs" class="submenu">
-                <button id="red" class="subtab selected" onclick="goto_subtab(0)">
+            <nav id="spices_tabs" class="submenu" role="tablist" aria-label="Spice color navigation">
+                <button id="red" class="subtab selected" onclick="goto_subtab(0)" role="tab" aria-selected="true" aria-controls="red_page">
                     RED
                 </button>
-                <button id="yellow" class="subtab unlocked" onclick="goto_subtab(1)">
+                <button id="yellow" class="subtab unlocked" onclick="goto_subtab(1)" role="tab" aria-selected="false" aria-controls="yellow_page">
                     YELLOW
                 </button>
-                <button id="green" class="subtab locked" onclick="goto_subtab(2)">
+                <button id="green" class="subtab locked" onclick="goto_subtab(2)" role="tab" aria-selected="false" aria-controls="green_page" aria-disabled="true">
                     LOCKED
                 </button>
-                <button id="blue" class="subtab locked" onclick="goto_subtab(3)">
+                <button id="blue" class="subtab locked" onclick="goto_subtab(3)" role="tab" aria-selected="false" aria-controls="blue_page" aria-disabled="true">
                     LOCKED
                 </button>
-                <button id="pink" class="subtab locked" onclick="goto_subtab(4)">
+                <button id="pink" class="subtab locked" onclick="goto_subtab(4)" role="tab" aria-selected="false" aria-controls="pink_page" aria-disabled="true">
                     LOCKED
                 </button>
-            </div>
+            </nav>
 
-            <div id="prestige_tabs" class="submenu">
-                <button id="prestige_upgrades" class="subtab selected" onclick="goto_subtab(0)">
+            <nav id="prestige_tabs" class="submenu" role="tablist" aria-label="Prestige navigation">
+                <button id="prestige_upgrades" class="subtab selected" onclick="goto_subtab(0)" role="tab" aria-selected="true" aria-controls="prestige_page">
                     PRESTIGE&nbsp;UPGRADES
                 </button>
-                <button id="crystallized_spice" class="subtab unlocked" onclick="goto_subtab(1)">
+                <button id="crystallized_spice" class="subtab unlocked" onclick="goto_subtab(1)" role="tab" aria-selected="false" aria-controls="crystal_page">
                     CRYSTALLIZED&nbsp;SPICE
                 </button>
-                <button id="crystal_upgrades" class="subtab unlocked" onclick="goto_subtab(2)">
+                <button id="crystal_upgrades" class="subtab unlocked" onclick="goto_subtab(2)" role="tab" aria-selected="false" aria-controls="crystal_page2">
                     CRYSTAL&nbsp;UPGRADES
                 </button>
-            </div>
+            </nav>
 
-            <div id="ascension_tabs" class="submenu">
-                <button id="runes" class="subtab selected" onclick="goto_subtab(0)">
+            <nav id="ascension_tabs" class="submenu" role="tablist" aria-label="Ascension navigation">
+                <button id="runes" class="subtab selected" onclick="goto_subtab(0)" role="tab" aria-selected="true" aria-controls="ascension_page">
                     RUNES
                 </button>
-                <button id="ascension_upgrades" class="subtab unlocked" onclick="goto_subtab(1)">
+                <button id="ascension_upgrades" class="subtab unlocked" onclick="goto_subtab(1)" role="tab" aria-selected="false" aria-controls="ascension_page2">
                     ASCENSION&nbsp;UPGRADES
                 </button>
-                <button id="ascension_challenges" class="subtab locked" onclick="goto_subtab(2)">
+                <button id="ascension_challenges" class="subtab locked" onclick="goto_subtab(2)" role="tab" aria-selected="false" aria-controls="challenges_page" aria-disabled="true">
                     LOCKED
                 </button>
-                <button id="arcane_spice" class="subtab locked" onclick="goto_subtab(3)">
+                <button id="arcane_spice" class="subtab locked" onclick="goto_subtab(3)" role="tab" aria-selected="false" aria-controls="arcane_page" aria-disabled="true">
                     LOCKED
                 </button>
-            </div>
+            </nav>
 
-            <div id="collapse_tabs" class="submenu">
-                <button id="spice_collider" class="subtab selected" onclick="goto_subtab(0)">
+            <nav id="collapse_tabs" class="submenu" role="tablist" aria-label="Collapse navigation">
+                <button id="spice_collider" class="subtab selected" onclick="goto_subtab(0)" role="tab" aria-selected="true" aria-controls="collapse_page">
                     SPICE&nbsp;COLLIDER
                 </button>
-                <button id="research" class="subtab unlocked" onclick="goto_subtab(1)">
+                <button id="research" class="subtab unlocked" onclick="goto_subtab(1)" role="tab" aria-selected="false" aria-controls="research_page">
                     RESEARCH
                 </button>
-                <button id="collapse_challenges" class="subtab locked" onclick="goto_subtab(2)">
+                <button id="collapse_challenges" class="subtab locked" onclick="goto_subtab(2)" role="tab" aria-selected="false" aria-controls="challenges_page2" aria-disabled="true">
                     LOCKED
                 </button>
-                <button id="antispice" class="subtab locked" onclick="goto_subtab(3)">
+                <button id="antispice" class="subtab locked" onclick="goto_subtab(3)" role="tab" aria-selected="false" aria-controls="antispice_page" aria-disabled="true">
                     LOCKED
                 </button>
-            </div>
+            </nav>
 
-            <div id="expansion_tabs" class="submenu">
-                <button id="exploration" class="subtab selected" onclick="goto_subtab(0)">
+            <nav id="expansion_tabs" class="submenu" role="tablist" aria-label="Expansion navigation">
+                <button id="exploration" class="subtab selected" onclick="goto_subtab(0)" role="tab" aria-selected="true" aria-controls="expansion_page">
                     EXPLORATION
                 </button>
-                <button id="dark_spice" class="subtab unlocked" onclick="goto_subtab(1)">
+                <button id="dark_spice" class="subtab unlocked" onclick="goto_subtab(1)" role="tab" aria-selected="false" aria-controls="dark_page">
                     DARK SPICE
                 </button>
-                <button id="galactic_upgrades" class="subtab unlocked" onclick="goto_subtab(2)">
+                <button id="galactic_upgrades" class="subtab unlocked" onclick="goto_subtab(2)" role="tab" aria-selected="false" aria-controls="galactic_page">
                     GALACTIC UPGRADES
                 </button>
-            </div>
+            </nav>
 
-            <div id="statistics_tabs" class="submenu">
-                <button id="statistics_subtab" class="subtab selected" onclick="goto_subtab(0)">
+            <nav id="statistics_tabs" class="submenu" role="tablist" aria-label="Statistics navigation">
+                <button id="statistics_subtab" class="subtab selected" onclick="goto_subtab(0)" role="tab" aria-selected="true" aria-controls="statistics_page">
                     STATISTICS
                 </button>
-                <button id="past_prestiges" class="subtab unlocked" onclick="goto_subtab(1)">
+                <button id="past_prestiges" class="subtab unlocked" onclick="goto_subtab(1)" role="tab" aria-selected="false" aria-controls="prestige_statistics_page">
                     PAST&nbsp;PRESTIGES
                 </button>
-                <button id="past_ascensions" class="subtab locked" onclick="goto_subtab(2)">
+                <button id="past_ascensions" class="subtab locked" onclick="goto_subtab(2)" role="tab" aria-selected="false" aria-controls="ascension_statistics_page" aria-disabled="true">
                     LOCKED
                 </button>
-                <button id="past_collapses" class="subtab locked" onclick="goto_subtab(3)">
+                <button id="past_collapses" class="subtab locked" onclick="goto_subtab(3)" role="tab" aria-selected="false" aria-controls="collapse_statistics_page" aria-disabled="true">
                     LOCKED
                 </button>
-                <button id="past_expansions" class="subtab locked" onclick="goto_subtab(4)">
+                <button id="past_expansions" class="subtab locked" onclick="goto_subtab(4)" role="tab" aria-selected="false" aria-controls="expansion_statistics_page" aria-disabled="true">
                     LOCKED
                 </button>
-            </div>
+            </nav>
         </div>
 
-        <div id="modal">
-            <div class="modal_background"></div>
+        <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal_background" aria-hidden="true"></div>
             <div class="modal_center">
-                <div id="modal_alert" class="modal_panel">
+                <div id="modal_alert" class="modal_panel" role="alertdialog" aria-labelledby="alert_text">
                     <p id="alert_text" class="modal_text">
                         Alert modal text here
                     </p>
 
                     <div class="center_button">
-                        <button class="spice_buy modal_button_last" onclick="close_modal()">
+                        <button class="spice_buy modal_button_last" onclick="close_modal()" aria-label="OK, close dialog">
                             OK
                         </button>
                     </div>
                 </div>
                 
-                <div id="modal_confirm" class="modal_panel">
+                <div id="modal_confirm" class="modal_panel" role="alertdialog" aria-labelledby="confirm_text">
                     <p id="confirm_text" class="modal_text">
                         Confirmation modal text here
                     </p>
 
                     <div class="center_button">
-                        <button id="confirm_yes" class="spice_buy modal_button">
+                        <button id="confirm_yes" class="spice_buy modal_button" aria-label="Yes, confirm action">
                             YES
                         </button>
-                        <button class="spice_buy modal_button_last" onclick="close_modal()">
+                        <button class="spice_buy modal_button_last" onclick="close_modal()" aria-label="No, cancel action">
                             NO
                         </button>
                     </div>
                 </div>
                 
-                <div id="modal_import" class="modal_panel">
-                    <p class="modal_text">
+                <div id="modal_import" class="modal_panel" role="dialog" aria-labelledby="import-title">
+                    <p class="modal_text" id="import-title">
                         Paste your exported save code here:
                     </p>
 
-                    <textarea class="input" id="import_input"></textarea>
+                    <textarea class="input" id="import_input" aria-label="Save code input"></textarea>
 
                     <div class="center_button">
-                        <button class="spice_buy modal_button" onclick="import_save()">
+                        <button class="spice_buy modal_button" onclick="import_save()" aria-label="Import save">
                             IMPORT
                         </button>
-                        <button class="spice_buy modal_button_last" onclick="close_modal()">
+                        <button class="spice_buy modal_button_last" onclick="close_modal()" aria-label="Cancel import">
                             CANCEL
                         </button>
                     </div>
@@ -223,12 +225,13 @@
             </div>
         </div>
 
-        <main>
+        <main id="main-content" aria-label="Game content" tabindex="-1">
             <div id="spices_page">
+                <h2 class="visually-hidden">Spices</h2>
                 <div id="color_shift">
-                    <p id="color_shift_header" class="spice_gen_name">
+                    <h3 id="color_shift_header" class="spice_gen_name">
                         Color Shift
-                    </p>
+                    </h3>
                     <p id="color_shift_info" class="spice_gen_info">
                         You have 0 color shifts,
                         <br>boosting ALL spice generators 1.00x
@@ -247,7 +250,8 @@
                     </p>
                 </div>
 
-                <div id="red_page" class="spice_page">
+                <div id="red_page" class="spice_page" role="tabpanel" aria-labelledby="red">
+                    <h3 class="visually-hidden">Red Spice</h3>
                     <p id="red_spice_num" class="spice_num red_spice">
                         5.00 g
                     </p>
@@ -259,10 +263,10 @@
                         +0.000 g red spice/sec
                     </p>
 
-                    <button id="red_max_all" class="spice_buy max_all" onclick="max_all('red')">
+                    <button id="red_max_all" class="spice_buy max_all" onclick="max_all('red')" aria-label="Buy maximum of all red spice generators">
                         Max All
                     </button>
-                    <button id="red_auto" class="spice_buy a_disabled" onclick="auto_toggle('red')">
+                    <button id="red_auto" class="spice_buy a_disabled" onclick="auto_toggle('red')" aria-label="Toggle auto-buy for red spice generators, currently off" aria-pressed="false">
                         Auto: OFF
                     </button>
 
@@ -272,11 +276,11 @@
                     </div>
 
                     <div id="red_gen_s" class="spice_gen_s">
-                        <p id="red_gen_name_s" class="spice_gen_name red_spice">
+                        <h4 id="red_gen_name_s" class="spice_gen_name red_spice">
                             Red Spice Strengthener
-                        </p>
+                        </h4>
                         <p id="red_info_s" class="spice_gen_info">
-                            You have 0 red spice strenghteners,
+                            You have 0 red spice strengtheners,
                             <br>boosting all red spice generators 1.00x
                         </p>
                         <div class="spice_buttons">
@@ -287,7 +291,8 @@
                     </div>
                 </div>
 
-                <div id="yellow_page" class="spice_page">
+                <div id="yellow_page" class="spice_page" role="tabpanel" aria-labelledby="yellow">
+                    <h3 class="visually-hidden">Yellow Spice</h3>
                     <p id="yellow_spice_num" class="spice_num yellow_spice">
                         10.0 g
                     </p>
@@ -299,10 +304,10 @@
                         +0.000 g yellow spice/sec
                     </p>
 
-                    <button id="yellow_max_all" class="spice_buy max_all" onclick="max_all('yellow')">
+                    <button id="yellow_max_all" class="spice_buy max_all" onclick="max_all('yellow')" aria-label="Buy maximum of all yellow spice generators">
                         Max All
                     </button>
-                    <button id="yellow_auto" class="spice_buy a_disabled" onclick="auto_toggle('yellow')">
+                    <button id="yellow_auto" class="spice_buy a_disabled" onclick="auto_toggle('yellow')" aria-label="Toggle auto-buy for yellow spice generators, currently off" aria-pressed="false">
                         Auto: OFF
                     </button>
 
@@ -312,11 +317,11 @@
                     </div>
 
                     <div id="yellow_gen_s" class="spice_gen_s">
-                        <p id="yellow_gen_name_s" class="spice_gen_name yellow_spice">
+                        <h4 id="yellow_gen_name_s" class="spice_gen_name yellow_spice">
                             Yellow Spice Strengthener
-                        </p>
+                        </h4>
                         <p id="yellow_info_s" class="spice_gen_info">
-                            You have 0 yellow spice strenghteners,
+                            You have 0 yellow spice strengtheners,
                             <br>boosting all red & yellow spice generators 1.00x
                         </p>
                         <div class="spice_buttons">
@@ -327,7 +332,8 @@
                     </div>
                 </div>
 
-                <div id="green_page" class="spice_page">
+                <div id="green_page" class="spice_page" role="tabpanel" aria-labelledby="green">
+                    <h3 class="visually-hidden">Green Spice</h3>
                     <p id="green_spice_num" class="spice_num green_spice">
                         20.0 g
                     </p>
@@ -339,10 +345,10 @@
                         +0.000 g green spice/sec
                     </p>
 
-                    <button id="green_max_all" class="spice_buy max_all" onclick="max_all('green')">
+                    <button id="green_max_all" class="spice_buy max_all" onclick="max_all('green')" aria-label="Buy maximum of all green spice generators">
                         Max All
                     </button>
-                    <button id="green_auto" class="spice_buy a_disabled" onclick="auto_toggle('green')">
+                    <button id="green_auto" class="spice_buy a_disabled" onclick="auto_toggle('green')" aria-label="Toggle auto-buy for green spice generators, currently off" aria-pressed="false">
                         Auto: OFF
                     </button>
 
@@ -352,11 +358,11 @@
                     </div>
 
                     <div id="green_gen_s" class="spice_gen_s">
-                        <p id="green_gen_name_s" class="spice_gen_name green_spice">
+                        <h4 id="green_gen_name_s" class="spice_gen_name green_spice">
                             Green Spice Strengthener
-                        </p>
+                        </h4>
                         <p id="green_info_s" class="spice_gen_info">
-                            You have 0 green spice strenghteners,
+                            You have 0 green spice strengtheners,
                             <br>boosting all red, yellow & green spice generators 1.00x
                         </p>
                         <div class="spice_buttons">
@@ -367,7 +373,8 @@
                     </div>
                 </div>
 
-                <div id="blue_page" class="spice_page">
+                <div id="blue_page" class="spice_page" role="tabpanel" aria-labelledby="blue">
+                    <h3 class="visually-hidden">Blue Spice</h3>
                     <p id="blue_spice_num" class="spice_num blue_spice">
                         40.0 g
                     </p>
@@ -379,10 +386,10 @@
                         +0.000 g blue spice/sec
                     </p>
 
-                    <button id="blue_max_all" class="spice_buy max_all" onclick="max_all('blue')">
+                    <button id="blue_max_all" class="spice_buy max_all" onclick="max_all('blue')" aria-label="Buy maximum of all blue spice generators">
                         Max All
                     </button>
-                    <button id="blue_auto" class="spice_buy a_disabled" onclick="auto_toggle('blue')">
+                    <button id="blue_auto" class="spice_buy a_disabled" onclick="auto_toggle('blue')" aria-label="Toggle auto-buy for blue spice generators, currently off" aria-pressed="false">
                         Auto: OFF
                     </button>
 
@@ -392,11 +399,11 @@
                     </div>
 
                     <div id="blue_gen_s" class="spice_gen_s">
-                        <p id="blue_gen_name_s" class="spice_gen_name blue_spice">
+                        <h4 id="blue_gen_name_s" class="spice_gen_name blue_spice">
                             Blue Spice Strengthener
-                        </p>
+                        </h4>
                         <p id="blue_info_s" class="spice_gen_info">
-                            You have 0 blue spice strenghteners,
+                            You have 0 blue spice strengtheners,
                             <br>boosting all red, yellow, green & blue spice generators 1.00x
                         </p>
                         <div class="spice_buttons">
@@ -407,7 +414,8 @@
                     </div>
                 </div>
 
-                <div id="pink_page" class="spice_page">
+                <div id="pink_page" class="spice_page" role="tabpanel" aria-labelledby="pink">
+                    <h3 class="visually-hidden">Pink Spice</h3>
                     <p id="pink_spice_num" class="spice_num pink_spice">
                         80.0 g
                     </p>
@@ -419,10 +427,10 @@
                         +0.000 g pink spice/sec
                     </p>
 
-                    <button id="pink_max_all" class="spice_buy max_all" onclick="max_all('pink')">
+                    <button id="pink_max_all" class="spice_buy max_all" onclick="max_all('pink')" aria-label="Buy maximum of all pink spice generators">
                         Max All
                     </button>
-                    <button id="pink_auto" class="spice_buy a_disabled" onclick="auto_toggle('pink')">
+                    <button id="pink_auto" class="spice_buy a_disabled" onclick="auto_toggle('pink')" aria-label="Toggle auto-buy for pink spice generators, currently off" aria-pressed="false">
                         Auto: OFF
                     </button>
 
@@ -432,11 +440,11 @@
                     </div>
 
                     <div id="pink_gen_s" class="spice_gen_s">
-                        <p id="pink_gen_name_s" class="spice_gen_name pink_spice">
+                        <h4 id="pink_gen_name_s" class="spice_gen_name pink_spice">
                             Pink Spice Strengthener
-                        </p>
+                        </h4>
                         <p id="pink_info_s" class="spice_gen_info">
-                            You have 0 pink spice strenghteners,
+                            You have 0 pink spice strengtheners,
                             <br>boosting ALL spice generators 1.00x
                         </p>
                         <div class="spice_buttons">
@@ -449,6 +457,7 @@
             </div>
 
             <div id="prestige_page">
+                <h2 class="visually-hidden">Prestige Upgrades</h2>
                 <div class="prestige_header">
                     <div class="rainbow_spice_panel">
                         <p id="rainbow_spice_num" class="spice_num rainbow_spice">
@@ -485,40 +494,40 @@
                                 </button>
                             </div>
                             <div id="prestige_boosts">
-                                <p class="p_auto_text">
+                                <label for="p_boosts_input" class="p_auto_text">
                                     Auto-Prestige Goal (Color Boosts):
-                                </p>
+                                </label>
                                 <input class="input" id="p_boosts_input" type="number" value="10" min="10">
                             </div>
                             <div id="prestige_boosts_delta">
-                                <p class="p_auto_text">
+                                <label for="p_boosts_input2" class="p_auto_text">
                                     Auto-Prestige Delta (Color Boosts):
-                                </p>
+                                </label>
                                 <input class="input" id="p_boosts_input2" type="number" value="5" min="0">
                             </div>
                             <div id="prestige_spice">
-                                <p id="prestige_spice_text" class="p_auto_text">
+                                <label for="p_spice_input" id="prestige_spice_text" class="p_auto_text">
                                     Auto-Prestige Goal (Rainbow Spice):
-                                </p>
+                                </label>
                                 <input class="input" id="p_spice_input" type="text" value="1">
                             </div>
                             <div id="prestige_spice_delta">
-                                <p id="prestige_spice_delta_text" class="p_auto_text">
+                                <label for="p_spice_input2" id="prestige_spice_delta_text" class="p_auto_text">
                                     Auto-Prestige Delta (Rainbow Spice):
-                                </p>
+                                </label>
                                 <input class="input" id="p_spice_input2" type="text" value="10">
                             </div>
                             <div id="prestige_time">
-                                <p class="p_auto_text">
+                                <label for="p_time_input" class="p_auto_text">
                                     Auto-Prestige Goal (Real Seconds):
-                                </p>
+                                </label>
                                 <input class="input" id="p_time_input" type="number" step="0.01" value="30" min="0.01">
                             </div>
                             <div id="prestige_goal">
                                 <p id="prestige_goal_text" class="p_auto_text">
                                     Current Auto-Prestige Goal: 10 color boosts
                                 </p>
-                                <button id="prestige_goal_reset" class="spice_buy" onclick="prestige_goal_reset()">
+                                <button id="prestige_goal_reset" class="spice_buy" onclick="prestige_goal_reset()" aria-label="Reset auto-prestige goal to default">
                                     Reset
                                 </button>
                             </div>
@@ -539,6 +548,7 @@
             </div>
 
             <div id="crystal_page" class="spice_page">
+                <h2 class="visually-hidden">Crystallized Spice</h2>
                 <div class="crystal_header">
                     <div class="crystal_panel">
                         <p id="crystal_spice_num" class="spice_num crystal_spice">
@@ -565,9 +575,9 @@
                 </div>
 
                 <div id="crystal_gen_i" class="spice_gen_s">
-                    <p class="spice_gen_name crystal_spice">
+                    <h3 class="spice_gen_name crystal_spice">
                         Crystal Infusion
-                    </p>
+                    </h3>
                     <p id="crystal_info_i" class="spice_gen_info">
                         You have 0 crystal infusions,
                         <br>boosting all normal spice generators 1.00x
@@ -595,11 +605,11 @@
                 </div>
 
                 <div id="crystal_gen_s" class="spice_gen_s">
-                    <p id="crystal_gen_name_s" class="spice_gen_name crystal_spice">
+                    <h4 id="crystal_gen_name_s" class="spice_gen_name crystal_spice">
                         Crystallized Spice Strengthener
-                    </p>
+                    </h4>
                     <p id="crystal_info_s" class="spice_gen_info">
-                        You have 0 crystallized spice strenghteners,
+                        You have 0 crystallized spice strengtheners,
                         <br>boosting crystallized spice generators 1.00x
                     </p>
                     <div class="spice_buttons">
@@ -611,6 +621,7 @@
             </div>
 
             <div id="crystal_page2">
+                <h2 class="visually-hidden">Crystal Upgrades</h2>
                 <div class="rainbow_spice_panel">
                     <p id="rainbow_spice_num3" class="spice_num rainbow_spice">
                         0.000 μg
@@ -633,11 +644,12 @@
             </div>
 
             <div id="ascension_page">
+                <h2 class="visually-hidden">Runes</h2>
                 <div class="ascension_header">
                     <div class="ansuz_panel">
-                        <p class="ansuz_text runes">
+                        <h3 class="ansuz_text runes">
                             Ansuz Runes
-                        </p>
+                        </h3>
                         <p id="ansuz_num" class="ansuz_num runes">
                             0 ᚫ
                         </p>
@@ -721,9 +733,9 @@
                 </div>
 
                 <div id="distributor" class="rune_panel">
-                    <p id="distributor_title" class="rune_header runes">
+                    <h3 id="distributor_title" class="rune_header runes">
                         The Distributor
-                    </p>
+                    </h3>
                     <button id="distribute_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('distributor')">
                         Auto: OFF
                     </button>
@@ -745,9 +757,9 @@
                 </p>
 
                 <div class="rune_panel">
-                    <p class="rune_header runes">
+                    <h3 class="rune_header runes">
                         Jera Runes
-                    </p>
+                    </h3>
                     <p id="jera_text" class="rune_text">
                         You have 0 ᛡ, producing 0 ᛡ power/sec
                         <br>You have 0 ᛡ power, boosting red spice production 1.00x
@@ -765,9 +777,9 @@
                     </div>
                 </div>
                 <div class="rune_panel">
-                    <p class="rune_header runes">
+                    <h3 class="rune_header runes">
                         Raido Runes
-                    </p>
+                    </h3>
                     <p id="raido_text" class="rune_text">
                         You have 0 ᚱ, producing 0 ᚱ power/sec
                         <br>You have 0 ᚱ power, boosting yellow, green, & blue spice production 1.00x
@@ -785,9 +797,9 @@
                     </div>
                 </div>
                 <div class="rune_panel">
-                    <p class="rune_header runes">
+                    <h3 class="rune_header runes">
                         Othala Runes
-                    </p>
+                    </h3>
                     <p id="othala_text" class="rune_text">
                         You have 0 ᛟ, producing 0 ᛟ power/sec
                         <br>You have 0 ᛟ power, boosting pink spice production 1.00x
@@ -807,11 +819,12 @@
             </div>
 
             <div id="ascension_page2">
+                <h2 class="visually-hidden">Ascension Upgrades</h2>
                 <div id="ansuz_menu">
                     <div class="ansuz_panel">
-                        <p class="ansuz_text runes">
+                        <h3 class="ansuz_text runes">
                             Ansuz Runes
-                        </p>
+                        </h3>
                         <p id="ansuz_num2" class="ansuz_num runes">
                             0 ᚫ
                         </p>
@@ -836,6 +849,7 @@
             </div>
 
             <div id="challenges_page">
+                <h2 class="visually-hidden">Ascension Challenges</h2>
                 <p id="ascend_challenge_info" class="challenge_info">
                     Entering an Ascension Challenge will reset your current Ascension
                     <br>You must Ascend with the required amount of rainbow spice to complete the Challenge
@@ -854,6 +868,7 @@
             </div>
 
             <div id="arcane_page" class="spice_page">
+                <h2 class="visually-hidden">Arcane Spice</h2>
                 <div class="arcane_header">
                     <div class="arcane_panel">
                         <p id="arcane_spice_num" class="spice_num arcane_spice">
@@ -867,9 +882,9 @@
                         </p>
                     </div>
                     <div class="ansuz_panel">
-                        <p id="ansuz_text2" class="ansuz_text runes">
+                        <h3 id="ansuz_text2" class="ansuz_text runes">
                             Ansuz Runes
-                        </p>
+                        </h3>
                         <p id="ansuz_num3" class="ansuz_num runes">
                             0 ᚫ
                         </p>
@@ -880,9 +895,9 @@
                 </div>
 
                 <div id="arcane_gen_n" class="spice_gen_s">
-                    <p class="spice_gen_name arcane_spice">
+                    <h3 class="spice_gen_name arcane_spice">
                         Arcane Enchantment
-                    </p>
+                    </h3>
                     <p id="arcane_info_n" class="spice_gen_info">
                         You have 0 arcane enchantments,
                         <br>boosting all crystallized spice generators 1.00x
@@ -914,11 +929,11 @@
                 </div>
 
                 <div id="arcane_gen_s" class="spice_gen_s">
-                    <p id="arcane_gen_name_s" class="spice_gen_name arcane_spice">
+                    <h4 id="arcane_gen_name_s" class="spice_gen_name arcane_spice">
                         Arcane Spice Strengthener
-                    </p>
+                    </h4>
                     <p id="arcane_info_s" class="spice_gen_info">
-                        You have 0 arcane spice strenghteners,
+                        You have 0 arcane spice strengtheners,
                         <br>boosting arcane spice generators 1.00x
                     </p>
                     <div class="spice_buttons">
@@ -930,6 +945,7 @@
             </div>
 
             <div id="collapse_page">
+                <h2 class="visually-hidden">Spice Collider</h2>
                 <div class="collapse_header">
                     <div class="atomic_spice_panel">
                         <p id="atomic_spice_num" class="spice_num atomic_spice">
@@ -1006,9 +1022,9 @@
                     </div>
                 </div>
 
-                <p id="collider_title" class="collapse_title atomic_spice">
+                <h3 id="collider_title" class="collapse_title atomic_spice">
                     The Spice Collider
-                </p>
+                </h3>
 
                 <div id="collider_block">
                     <canvas id="collider_view" width="1440" height="720"></canvas>
@@ -1099,6 +1115,7 @@
             </div>
 
             <div id="research_page">
+                <h2 class="visually-hidden">Research</h2>
                 <div class="atomic_spice_panel">
                     <p id="atomic_spice_num2" class="spice_num atomic_spice">
                         0
@@ -1108,9 +1125,9 @@
                     </p>
                 </div>
 
-                <p id="research_title" class="collapse_title atomic_spice">
+                <h3 id="research_title" class="collapse_title atomic_spice">
                     Research
-                </p>
+                </h3>
 
                 <div id="research_automation_block">
                     <p class="research_auto_text">
@@ -1177,6 +1194,7 @@
             </div>
 
             <div id="challenges_page2">
+                <h2 class="visually-hidden">Collapse Challenges</h2>
                 <p id="collapse_challenge_info" class="challenge_info">
                     Entering a Collapse Challenge will reset your current Collapse
                     <br>You must Collapse for the required amount of atomic spice to complete the Challenge
@@ -1220,6 +1238,7 @@
             </div>
 
             <div id="antispice_page">
+                <h2 class="visually-hidden">Antispice</h2>
                 <p id="antispice_reduction" class="antispice_text">
                     Your antispice boosts have been reduced due to being in a Collapse challenge
                 </p>
@@ -1316,9 +1335,9 @@
                             You have a total of 0 rainbow antispice
                         </p>
 
-                        <p id="antiperks_title" class="collapse_title rainbow_antispice">
+                        <h3 id="antiperks_title" class="collapse_title rainbow_antispice">
                             Antispice Perks
-                        </p>
+                        </h3>
                         <div class="center_button">
                             <button id="antispice_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('antispice')">
                                 Auto: OFF
@@ -1335,6 +1354,7 @@
             </div>
 
             <div id="expansion_page">
+                <h2 class="visually-hidden">Exploration</h2>
                 <div id="exploration_screen" class="exploration_screen">
                     <div id="exploration_view">
                         <div id="exploration_map">
@@ -1477,6 +1497,7 @@
             </div>
 
             <div id="dark_page" class="spice_page">
+                <h2 class="visually-hidden">Dark Spice</h2>
                 <div class="dark_header">
                     <div class="dark_panel">
                         <p id="dark_spice_num" class="spice_num dark_spice">
@@ -1501,9 +1522,9 @@
 
                 <div class="spice_gen_page">
                     <div id="dark_gen_cs" class="spice_gen_s spice_gen_panel">
-                        <p class="spice_gen_name dark_spice">
+                        <h3 class="spice_gen_name dark_spice">
                             Dark Construct
-                        </p>
+                        </h3>
                         <p id="dark_info_cs" class="spice_gen_info">
                             You have 0 dark constructs,
                             <br>boosting all normal spice generators 1.00x
@@ -1518,9 +1539,9 @@
                         </div>
                     </div>
                     <div id="dark_gen_cv" class="spice_gen_s spice_gen_panel">
-                        <p class="spice_gen_name dark_spice">
+                        <h3 class="spice_gen_name dark_spice">
                             Dark Conversion
-                        </p>
+                        </h3>
                         <p id="dark_info_cv" class="spice_gen_info">
                             You have 0 dark conversions,
                             <br>increasing atomic spice efficiency by 0%
@@ -1547,9 +1568,9 @@
 
                 <div class="spice_gen_page">
                     <div id="dark_gen_a" class="spice_gen_s spice_gen_panel">
-                        <p id="dark_gen_name_a" class="spice_gen_name dark_spice">
+                        <h4 id="dark_gen_name_a" class="spice_gen_name dark_spice">
                             Dark Spice Accelerator
-                        </p>
+                        </h4>
                         <p id="dark_info_a" class="spice_gen_info">
                             You have 0 dark spice accelerators,
                             <br>applying the gamespeed boost to dark spice production with 0% strength,
@@ -1562,11 +1583,11 @@
                         </div>
                     </div>
                     <div id="dark_gen_s" class="spice_gen_s spice_gen_panel">
-                        <p id="dark_gen_name_s" class="spice_gen_name dark_spice">
+                        <h4 id="dark_gen_name_s" class="spice_gen_name dark_spice">
                             Dark Spice Strengthener
-                        </p>
+                        </h4>
                         <p id="dark_info_s" class="spice_gen_info">
-                            You have 0 dark spice strenghteners,
+                            You have 0 dark spice strengtheners,
                             <br>boosting dark spice generators 1.00x
                         </p>
                         <div class="spice_buttons">
@@ -1579,6 +1600,7 @@
             </div>
 
             <div id="galactic_page">
+                <h2 class="visually-hidden">Galactic Upgrades</h2>
                 <div class="galactic_shards_panel">
                     <p id="galactic_shards_num3" class="spice_num galactic_shards">
                         0
@@ -1596,6 +1618,7 @@
             </div>
 
             <div id="statistics_page">
+                <h2 class="visually-hidden">Statistics</h2>
                 <p id="statistics_text" class="statistics_text">
                     You have 5.000 g red spice
                     <br>You have accumulated a total of 5.000 g spice
@@ -1614,6 +1637,7 @@
             </div>
 
             <div id="prestige_statistics_page">
+                <h2 class="visually-hidden">Past Prestiges</h2>
                 <p id="prestige_statistics_text" class="statistics_text">
                     Last 10 Prestiges:
                     <br>#1 (no data)
@@ -1632,6 +1656,7 @@
             </div>
 
             <div id="ascension_statistics_page">
+                <h2 class="visually-hidden">Past Ascensions</h2>
                 <p id="ascension_statistics_text" class="statistics_text">
                     Last 10 Ascensions:
                     <br>#1 (no data)
@@ -1650,6 +1675,7 @@
             </div>
 
             <div id="collapse_statistics_page">
+                <h2 class="visually-hidden">Past Collapses</h2>
                 <p id="collapse_statistics_text" class="statistics_text">
                     Last 10 Collapses:
                     <br>#1 (no data)
@@ -1668,6 +1694,7 @@
             </div>
 
             <div id="expansion_statistics_page">
+                <h2 class="visually-hidden">Past Expansions</h2>
                 <p id="expansion_statistics_text" class="statistics_text">
                     Last 10 Expansions:
                     <br>#1 (no data)
@@ -1685,55 +1712,58 @@
                 </p>
             </div>
 
-            <div id="compendium_page"></div>
+            <div id="compendium_page">
+                <h2 class="visually-hidden">Compendium</h2>
+            </div>
 
             <div id="settings_page">
+                <h2 class="visually-hidden">Settings</h2>
                 <div id="save_block" class="settings_block">
-                    <button id="save" class="settings_button can_modify s_big" onclick="manual_save()">
+                    <button id="save" class="settings_button can_modify s_big" onclick="manual_save()" aria-label="Save game manually">
                         SAVE
                     </button>
-                    <button id="export" class="settings_button can_modify s_big" onclick="export_save()">
+                    <button id="export" class="settings_button can_modify s_big" onclick="export_save()" aria-label="Export save data to clipboard">
                         EXPORT
                     </button>
-                    <button id="import" class="settings_button can_modify s_big" onclick="pre_import_save()">
+                    <button id="import" class="settings_button can_modify s_big" onclick="pre_import_save()" aria-label="Import save data from clipboard">
                         IMPORT
                     </button>
                 </div>
 
                 <div id="settings_block1" class="settings_block">
-                    <button id="notation" class="settings_button can_modify" onclick="notation()">
+                    <button id="notation" class="settings_button can_modify" onclick="notation()" aria-label="Change number notation, currently Scientific">
                         Notation
                         <br>SCIENTIFIC
                     </button>
-                    <button id="hotkeys" class="settings_button can_modify" onclick="hotkeys()">
+                    <button id="hotkeys" class="settings_button can_modify" onclick="hotkeys()" aria-label="Toggle keyboard hotkeys, currently Enabled">
                         Hotkeys
                         <br>ENABLED
                     </button>
-                    <button id="condensed" class="settings_button can_modify" onclick="condensed()">
+                    <button id="condensed" class="settings_button can_modify" onclick="condensed()" aria-label="Toggle condensed generator display, currently Disabled">
                         Condensed Generators
                         <br>DISABLED
                     </button>
                 </div>
                 <div id="settings_block2" class="settings_block">
-                    <button id="exponent_notation" class="settings_button can_modify" onclick="exponent_notation()">
+                    <button id="exponent_notation" class="settings_button can_modify" onclick="exponent_notation()" aria-label="Change exponent notation style, currently Long">
                         Exponent Notation
                         <br>LONG
                     </button>
-                    <button id="high_visibility" class="settings_button can_modify" onclick="high_visibility()">
+                    <button id="high_visibility" class="settings_button can_modify" onclick="high_visibility()" aria-label="Toggle high visibility text mode, currently Default">
                         Text Visibility
                         <br>DEFAULT
                     </button>
-                    <button id="refresh_rate" class="settings_button can_modify" onclick="refresh_rate()">
+                    <button id="refresh_rate" class="settings_button can_modify" onclick="refresh_rate()" aria-label="Change display refresh rate, currently 20 milliseconds">
                         Refresh Rate
                         <br>20 MS
                     </button>
                 </div>
                 <div id="settings_block3" class="settings_block">
-                    <button id="offline" class="settings_button can_modify" onclick="offline()">
+                    <button id="offline" class="settings_button can_modify" onclick="offline()" aria-label="Toggle offline progress, currently Enabled">
                         Offline Progress
                         <br>ENABLED
                     </button>
-                    <button id="offline_speed" class="settings_button can_modify" onclick="offline_speed()">
+                    <button id="offline_speed" class="settings_button can_modify" onclick="offline_speed()" aria-label="Change offline progress speed, currently 1 times normal speed">
                         Offline Speed
                         <br>1X
                     </button>
@@ -1820,7 +1850,7 @@
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.8.6<br>Made by Zakuro<br><br>Last updated April 17, 2025
+                Spice Idle v1.8.7<br>Made by Zakuro<br><br>Last updated November 29, 2025
             </p>
 
             <p id="classic_info" class="info">
@@ -1834,6 +1864,9 @@
             <a href="https://zakuro98.github.io/Spice-Idle-Classic/" target="_blank" class="info link">Spice Idle Classic</a>
             <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
             <a href="https://discord.gg/fuQSBkYYqH" target="_blank" class="info link">Discord</a>
+            
+            <!-- Screen reader announcement region for game events -->
+            <div id="sr-announcements" class="visually-hidden" aria-live="polite" aria-atomic="true" role="status"></div>
         </main>
         <script src="lib/hack_timer.js" charset="utf-8" type="text/javascript"></script>
         <script src="lib/break_infinity.js" charset="utf-8" type="text/javascript"></script>

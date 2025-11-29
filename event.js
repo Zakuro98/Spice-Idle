@@ -1,3 +1,15 @@
+// Helper function to announce messages to screen readers
+function announceToScreenReader(message) {
+    const announcementRegion = document.getElementById('sr-announcements');
+    if (announcementRegion) {
+        // Clear and set new message to trigger announcement
+        announcementRegion.textContent = '';
+        setTimeout(() => {
+            announcementRegion.textContent = message;
+        }, 100);
+    }
+}
+
 //purchasing spice generators
 function buy_gen(color, id) {
     switch (color) {

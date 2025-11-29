@@ -1036,7 +1036,7 @@ if (meme_condition) {
     document.title = "Salt Idle"
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
-        "Salt Idle v1.8.6<br>Made by Zakuro<br><br>Last updated April 17, 2025"
+        "Salt Idle v1.8.7<br>Made by Zakuro<br><br>Last updated November 29, 2025"
 }
 
 //initialize map
@@ -4374,6 +4374,12 @@ function entry_unlock(id) {
     entry_unlocked[id] = true
     game.compendium_new = true
     document.getElementById("compendium").className = "tab notice"
+    
+    // Announce new compendium entry to screen readers with specific entry name
+    if (typeof announceToScreenReader === 'function' && compendium.entries && compendium.entries[id]) {
+        const entryName = compendium.entries[id].name || 'Unknown'
+        announceToScreenReader('New discovery: ' + entryName + '. Check the Compendium tab for details.')
+    }
 }
 
 //initializing compendium entries

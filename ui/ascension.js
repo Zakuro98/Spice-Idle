@@ -426,10 +426,12 @@ function ascension_update() {
         else
             document.getElementById("ascension_challenges").className =
                 "subtab unlocked"
+        document.getElementById("ascension_challenges").removeAttribute("aria-disabled")
     } else {
         document.getElementById("ascension_challenges").innerHTML = "LOCKED"
         document.getElementById("ascension_challenges").className =
             "subtab locked"
+        document.getElementById("ascension_challenges").setAttribute("aria-disabled", "true")
     }
 
     if (
@@ -445,9 +447,11 @@ function ascension_update() {
         else
             document.getElementById("arcane_spice").className =
                 "subtab unlocked"
+        document.getElementById("arcane_spice").removeAttribute("aria-disabled")
     } else {
         document.getElementById("arcane_spice").innerHTML = "LOCKED"
         document.getElementById("arcane_spice").className = "subtab locked"
+        document.getElementById("arcane_spice").setAttribute("aria-disabled", "true")
     }
 
     if (game.research_complete[4] >= 1) {

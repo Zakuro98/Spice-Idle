@@ -1,5 +1,21 @@
+//helper function to update ARIA attributes when tab selection changes
+function updateTabAriaStates(selectedTabId, allTabIds) {
+    allTabIds.forEach(tabId => {
+        const tab = document.getElementById(tabId);
+        if (tab) {
+            if (tabId === selectedTabId) {
+                tab.setAttribute('aria-selected', 'true');
+            } else {
+                tab.setAttribute('aria-selected', 'false');
+            }
+        }
+    });
+}
+
 //switching tabs
 function goto_tab(id) {
+    const mainTabs = ['spices', 'prestige', 'ascension', 'collapse', 'expansion', 'statistics', 'compendium', 'settings'];
+    
     switch (id) {
         case 0:
             game.tab = id
@@ -39,6 +55,7 @@ function goto_tab(id) {
             document.getElementById("settings_page").style.display = "none"
 
             document.getElementById("spices").className = "tab selected"
+            updateTabAriaStates('spices', mainTabs)
             if (
                 game.color_boosts >= 10 ||
                 game.prestige >= 1 ||
@@ -121,6 +138,7 @@ function goto_tab(id) {
                 document.getElementById("settings_page").style.display = "none"
 
                 document.getElementById("prestige").className = "tab selected"
+                updateTabAriaStates('prestige', mainTabs)
                 document.getElementById("spices").className = "tab unlocked"
                 if (game.prestige_bought[25])
                     document.getElementById("ascension").className =
@@ -198,6 +216,7 @@ function goto_tab(id) {
                 document.getElementById("settings_page").style.display = "none"
 
                 document.getElementById("ascension").className = "tab selected"
+                updateTabAriaStates('ascension', mainTabs)
                 document.getElementById("spices").className = "tab unlocked"
                 if (
                     game.color_boosts >= 10 ||
@@ -284,6 +303,7 @@ function goto_tab(id) {
                 document.getElementById("settings_page").style.display = "none"
 
                 document.getElementById("collapse").className = "tab selected"
+                updateTabAriaStates('collapse', mainTabs)
                 document.getElementById("spices").className = "tab unlocked"
                 if (
                     game.color_boosts >= 10 ||
@@ -366,6 +386,7 @@ function goto_tab(id) {
                 document.getElementById("settings_page").style.display = "none"
 
                 document.getElementById("expansion").className = "tab selected"
+                updateTabAriaStates('expansion', mainTabs)
                 document.getElementById("spices").className = "tab unlocked"
                 if (
                     game.color_boosts >= 10 ||
@@ -431,6 +452,7 @@ function goto_tab(id) {
             document.getElementById("settings_page").style.display = "none"
 
             document.getElementById("statistics").className = "tab selected"
+            updateTabAriaStates('statistics', mainTabs)
             document.getElementById("spices").className = "tab unlocked"
             if (
                 game.color_boosts >= 10 ||
@@ -498,6 +520,7 @@ function goto_tab(id) {
             document.getElementById("compendium_page").style.display = "none"
 
             document.getElementById("settings").className = "tab selected"
+            updateTabAriaStates('settings', mainTabs)
             document.getElementById("spices").className = "tab unlocked"
             if (
                 game.color_boosts >= 10 ||
@@ -566,6 +589,7 @@ function goto_tab(id) {
             document.getElementById("settings_page").style.display = "none"
 
             document.getElementById("compendium").className = "tab selected"
+            updateTabAriaStates('compendium', mainTabs)
             document.getElementById("spices").className = "tab unlocked"
             if (
                 game.color_boosts >= 10 ||
@@ -597,6 +621,14 @@ function goto_tab(id) {
 
 //switching subtabs
 function goto_subtab(id) {
+    // Define subtab groups for aria-selected updates
+    const spicesSubtabs = ['red', 'yellow', 'green', 'blue', 'pink'];
+    const prestigeSubtabs = ['prestige_upgrades', 'crystallized_spice', 'crystal_upgrades'];
+    const ascensionSubtabs = ['runes', 'ascension_upgrades', 'ascension_challenges', 'arcane_spice'];
+    const collapseSubtabs = ['spice_collider', 'research', 'collapse_challenges', 'antispice'];
+    const expansionSubtabs = ['exploration', 'dark_spice', 'galactic_upgrades'];
+    const statisticsSubtabs = ['statistics_subtab', 'past_prestiges', 'past_ascensions', 'past_collapses', 'past_expansions'];
+
     if (game.tab === 0) {
         switch (id) {
             case 0:
@@ -623,6 +655,7 @@ function goto_subtab(id) {
                     document.getElementById("pink").className =
                         "subtab unlocked"
                 else document.getElementById("pink").className = "subtab locked"
+                updateTabAriaStates('red', spicesSubtabs)
                 break
             case 1:
                 game.subtab[0] = id
@@ -648,6 +681,7 @@ function goto_subtab(id) {
                     document.getElementById("pink").className =
                         "subtab unlocked"
                 else document.getElementById("pink").className = "subtab locked"
+                updateTabAriaStates('yellow', spicesSubtabs)
                 break
             case 2:
                 if (game.color_boosts >= 2) {
@@ -678,6 +712,7 @@ function goto_subtab(id) {
                     else
                         document.getElementById("pink").className =
                             "subtab locked"
+                    updateTabAriaStates('green', spicesSubtabs)
                 }
                 break
             case 3:
@@ -704,6 +739,7 @@ function goto_subtab(id) {
                     else
                         document.getElementById("pink").className =
                             "subtab locked"
+                    updateTabAriaStates('blue', spicesSubtabs)
                 }
                 break
             case 4:
@@ -726,6 +762,7 @@ function goto_subtab(id) {
                         "subtab unlocked"
                     document.getElementById("blue").className =
                         "subtab unlocked"
+                    updateTabAriaStates('pink', spicesSubtabs)
                 }
                 break
         }
@@ -746,6 +783,7 @@ function goto_subtab(id) {
                     "subtab unlocked"
                 document.getElementById("crystal_upgrades").className =
                     "subtab unlocked"
+                updateTabAriaStates('prestige_upgrades', prestigeSubtabs)
                 break
             case 1:
                 document.getElementById("crystal_page").style.display = "block"
@@ -756,6 +794,7 @@ function goto_subtab(id) {
                     "subtab unlocked"
                 document.getElementById("crystal_upgrades").className =
                     "subtab unlocked"
+                updateTabAriaStates('crystallized_spice', prestigeSubtabs)
                 break
             case 2:
                 document.getElementById("crystal_page2").style.display = "block"
@@ -766,6 +805,7 @@ function goto_subtab(id) {
                     "subtab unlocked"
                 document.getElementById("crystallized_spice").className =
                     "subtab unlocked"
+                updateTabAriaStates('crystal_upgrades', prestigeSubtabs)
                 break
         }
     } else if (game.tab === 2) {
@@ -796,6 +836,7 @@ function goto_subtab(id) {
                 else
                     document.getElementById("arcane_spice").className =
                         "subtab locked"
+                updateTabAriaStates('runes', ascensionSubtabs)
                 break
             case 1:
                 game.subtab[3] = id
@@ -822,6 +863,7 @@ function goto_subtab(id) {
                 else
                     document.getElementById("arcane_spice").className =
                         "subtab locked"
+                updateTabAriaStates('ascension_upgrades', ascensionSubtabs)
                 break
             case 2:
                 if (
@@ -852,6 +894,7 @@ function goto_subtab(id) {
                     else
                         document.getElementById("arcane_spice").className =
                             "subtab locked"
+                    updateTabAriaStates('ascension_challenges', ascensionSubtabs)
                 }
                 break
             case 3:
@@ -885,6 +928,7 @@ function goto_subtab(id) {
                         document.getElementById(
                             "ascension_challenges"
                         ).className = "subtab locked"
+                    updateTabAriaStates('arcane_spice', ascensionSubtabs)
                 }
                 break
         }
@@ -915,6 +959,7 @@ function goto_subtab(id) {
                 else
                     document.getElementById("antispice").className =
                         "subtab locked"
+                updateTabAriaStates('spice_collider', collapseSubtabs)
                 break
             case 1:
                 if (game.collapse >= 5 || game.expand >= 1) {
@@ -947,6 +992,7 @@ function goto_subtab(id) {
                     else
                         document.getElementById("antispice").className =
                             "subtab locked"
+                    updateTabAriaStates('research', collapseSubtabs)
                 }
                 break
             case 2:
@@ -974,6 +1020,7 @@ function goto_subtab(id) {
                     else
                         document.getElementById("antispice").className =
                             "subtab locked"
+                    updateTabAriaStates('collapse_challenges', collapseSubtabs)
                 }
                 break
             case 3:
@@ -1003,6 +1050,7 @@ function goto_subtab(id) {
                         document.getElementById(
                             "collapse_challenges"
                         ).className = "subtab locked"
+                    updateTabAriaStates('antispice', collapseSubtabs)
                 }
                 break
         }
@@ -1022,6 +1070,7 @@ function goto_subtab(id) {
                     "subtab unlocked"
                 document.getElementById("galactic_upgrades").className =
                     "subtab unlocked"
+                updateTabAriaStates('exploration', expansionSubtabs)
                 break
             case 1:
                 game.subtab[5] = id
@@ -1036,6 +1085,7 @@ function goto_subtab(id) {
                     "subtab unlocked"
                 document.getElementById("galactic_upgrades").className =
                     "subtab unlocked"
+                updateTabAriaStates('dark_spice', expansionSubtabs)
                 break
             case 2:
                 game.subtab[5] = id
@@ -1050,6 +1100,7 @@ function goto_subtab(id) {
                     "subtab unlocked"
                 document.getElementById("dark_spice").className =
                     "subtab unlocked"
+                updateTabAriaStates('galactic_upgrades', expansionSubtabs)
                 break
         }
     } else if (game.tab === 5) {
@@ -1096,6 +1147,7 @@ function goto_subtab(id) {
                 else
                     document.getElementById("past_expansions").className =
                         "subtab locked"
+                updateTabAriaStates('statistics_subtab', statisticsSubtabs)
                 break
             case 1:
                 game.subtab[2] = id
@@ -1147,6 +1199,7 @@ function goto_subtab(id) {
                 else
                     document.getElementById("past_expansions").className =
                         "subtab locked"
+                updateTabAriaStates('past_prestiges', statisticsSubtabs)
                 break
             case 2:
                 if (
@@ -1200,6 +1253,7 @@ function goto_subtab(id) {
                     else
                         document.getElementById("past_expansions").className =
                             "subtab locked"
+                    updateTabAriaStates('past_ascensions', statisticsSubtabs)
                 }
                 break
             case 3:
@@ -1246,6 +1300,7 @@ function goto_subtab(id) {
                     else
                         document.getElementById("past_expansions").className =
                             "subtab locked"
+                    updateTabAriaStates('past_collapses', statisticsSubtabs)
                 }
                 break
             case 4:
@@ -1288,6 +1343,7 @@ function goto_subtab(id) {
                         "subtab unlocked"
                     document.getElementById("past_collapses").className =
                         "subtab unlocked"
+                    updateTabAriaStates('past_expansions', statisticsSubtabs)
                 }
                 break
         }

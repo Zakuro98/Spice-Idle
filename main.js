@@ -4733,7 +4733,7 @@ document.body.addEventListener("keydown", function (event) {
             let available_subtabs = [4, 2, 4, 3, 3, 2]
             // ArrowButton-Action ;)
             if (event.code === "ArrowUp") {
-                // swich Tabs to the right (+rightmost to leftmost)
+                // switch Tabs to the right (+rightmost to leftmost)
                 if (
                     game.tab == 0 && // on Spices AND
                     (game.color_boosts >= 10 ||

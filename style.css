@@ -9,6 +9,90 @@
     --decayed_sat: 16%;
 }
 
+/* Visually hidden class for screen reader accessibility */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Skip link for keyboard navigation - becomes visible on focus */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #311936;
+    color: white;
+    padding: 8px 16px;
+    z-index: 100;
+    text-decoration: none;
+    font-family: "Fira Code";
+    border: 2px solid white;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Hide focus outline on main content (skip link target) since it's not interactive */
+#main-content:focus {
+    outline: none;
+}
+
+/* Enhanced focus styles for accessibility */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus,
+a:focus {
+    outline: 3px solid #ff3dd8;
+    outline-offset: 2px;
+}
+
+/* High contrast focus for buttons */
+.tab:focus,
+.subtab:focus,
+.spice_buy:focus,
+.settings_button:focus,
+.prestige_upgrade:focus,
+.ascension_upgrade:focus,
+.galactic_upgrade:focus {
+    outline: 3px solid #ff3dd8;
+    outline-offset: 2px;
+    box-shadow: 0 0 0.5em #ff3dd8;
+}
+
+/* Semantic heading styles - reset browser defaults to match existing visual style */
+h1, h2, h3, h4 {
+    font-family: "Fira Code";
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+/* Tab heading styles */
+.tab-heading {
+    font-size: 2.5em;
+    color: white;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.75em;
+}
+
+/* Section heading styles */
+.section-heading {
+    font-size: 2em;
+    color: white;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
 html {
     margin: 0;
     padding: 0;
