@@ -9,6 +9,44 @@
     --decayed_sat: 16%;
 }
 
+/* Visually hidden class for screen reader accessibility */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Semantic heading styles - reset browser defaults to match existing visual style */
+h1, h2, h3, h4 {
+    font-family: "Fira Code";
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+/* Tab heading styles */
+.tab-heading {
+    font-size: 2.5em;
+    color: white;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.75em;
+}
+
+/* Section heading styles */
+.section-heading {
+    font-size: 2em;
+    color: white;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
 html {
     margin: 0;
     padding: 0;
