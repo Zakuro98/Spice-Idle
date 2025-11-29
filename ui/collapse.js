@@ -1356,10 +1356,12 @@ function collapse_update() {
         else
             document.getElementById("collapse_challenges").className =
                 "subtab unlocked"
+        document.getElementById("collapse_challenges").removeAttribute("aria-disabled")
     } else {
         document.getElementById("collapse_challenges").innerHTML = "LOCKED"
         document.getElementById("collapse_challenges").className =
             "subtab locked"
+        document.getElementById("collapse_challenges").setAttribute("aria-disabled", "true")
     }
 
     if (game.research_complete[21] >= 1 || game.expand >= 1) {
@@ -1367,6 +1369,7 @@ function collapse_update() {
         if (game.subtab[4] === 3)
             document.getElementById("antispice").className = "subtab selected"
         else document.getElementById("antispice").className = "subtab unlocked"
+        document.getElementById("antispice").removeAttribute("aria-disabled")
 
         if (game.research_complete[21]) {
             document.getElementById("collider_tabs").style.display = "flex"
@@ -1456,6 +1459,7 @@ function collapse_update() {
     } else {
         document.getElementById("antispice").innerHTML = "LOCKED"
         document.getElementById("antispice").className = "subtab locked"
+        document.getElementById("antispice").setAttribute("aria-disabled", "true")
 
         document.getElementById("collider_tabs").style.display = "none"
     }

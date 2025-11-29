@@ -4121,6 +4121,7 @@ function spice_update() {
             if (game.subtab[0] === 2)
                 document.getElementById("green").className = "subtab selected"
             else document.getElementById("green").className = "subtab unlocked"
+            document.getElementById("green").removeAttribute("aria-disabled")
 
             if (game.color_boosts >= 3) {
                 document.getElementById("green_max_all").style.display = "block"
@@ -4131,6 +4132,7 @@ function spice_update() {
                 else
                     document.getElementById("blue").className =
                         "subtab unlocked"
+                document.getElementById("blue").removeAttribute("aria-disabled")
 
                 if (game.color_boosts >= 4) {
                     document.getElementById("blue_max_all").style.display =
@@ -4142,6 +4144,7 @@ function spice_update() {
                     else
                         document.getElementById("pink").className =
                             "subtab unlocked"
+                    document.getElementById("pink").removeAttribute("aria-disabled")
 
                     if (game.color_boosts >= 5)
                         document.getElementById("pink_max_all").style.display =
@@ -4154,22 +4157,28 @@ function spice_update() {
                         "none"
                     document.getElementById("pink").innerHTML = "LOCKED"
                     document.getElementById("pink").className = "subtab locked"
+                    document.getElementById("pink").setAttribute("aria-disabled", "true")
                 }
             } else {
                 document.getElementById("green_max_all").style.display = "none"
                 document.getElementById("blue").innerHTML = "LOCKED"
                 document.getElementById("blue").className = "subtab locked"
+                document.getElementById("blue").setAttribute("aria-disabled", "true")
                 document.getElementById("pink").innerHTML = "LOCKED"
                 document.getElementById("pink").className = "subtab locked"
+                document.getElementById("pink").setAttribute("aria-disabled", "true")
             }
         } else {
             document.getElementById("yellow_max_all").style.display = "none"
             document.getElementById("green").innerHTML = "LOCKED"
             document.getElementById("green").className = "subtab locked"
+            document.getElementById("green").setAttribute("aria-disabled", "true")
             document.getElementById("blue").innerHTML = "LOCKED"
             document.getElementById("blue").className = "subtab locked"
+            document.getElementById("blue").setAttribute("aria-disabled", "true")
             document.getElementById("pink").innerHTML = "LOCKED"
             document.getElementById("pink").className = "subtab locked"
+            document.getElementById("pink").setAttribute("aria-disabled", "true")
         }
     } else {
         document.getElementById("spices_tabs").style.display = "none"

@@ -11,9 +11,11 @@ function tabs_update() {
             document.getElementById("prestige").className = "tab selected"
         else document.getElementById("prestige").className = "tab unlocked"
         document.getElementById("prestige").innerHTML = "PRESTIGE"
+        document.getElementById("prestige").removeAttribute("aria-disabled")
     } else {
         document.getElementById("prestige").className = "tab locked"
         document.getElementById("prestige").innerHTML = "LOCKED"
+        document.getElementById("prestige").setAttribute("aria-disabled", "true")
     }
 
     if (game.prestige_bought[25]) {
@@ -21,9 +23,11 @@ function tabs_update() {
             document.getElementById("ascension").className = "tab selected"
         else document.getElementById("ascension").className = "tab unlocked"
         document.getElementById("ascension").innerHTML = "ASCENSION"
+        document.getElementById("ascension").removeAttribute("aria-disabled")
     } else {
         document.getElementById("ascension").className = "tab locked"
         document.getElementById("ascension").innerHTML = "LOCKED"
+        document.getElementById("ascension").setAttribute("aria-disabled", "true")
     }
 
     if (game.ascend_complete[5] || game.collapse >= 1 || game.expand >= 1) {
@@ -31,9 +35,11 @@ function tabs_update() {
             document.getElementById("collapse").className = "tab selected"
         else document.getElementById("collapse").className = "tab unlocked"
         document.getElementById("collapse").innerHTML = "COLLAPSE"
+        document.getElementById("collapse").removeAttribute("aria-disabled")
     } else {
         document.getElementById("collapse").className = "tab locked"
         document.getElementById("collapse").innerHTML = "LOCKED"
+        document.getElementById("collapse").setAttribute("aria-disabled", "true")
     }
 
     if (game.antispice_bought[8] || game.expand >= 1) {
@@ -41,9 +47,11 @@ function tabs_update() {
             document.getElementById("expansion").className = "tab selected"
         else document.getElementById("expansion").className = "tab unlocked"
         document.getElementById("expansion").innerHTML = "EXPANSION"
+        document.getElementById("expansion").removeAttribute("aria-disabled")
     } else {
         document.getElementById("expansion").className = "tab locked"
         document.getElementById("expansion").innerHTML = "LOCKED"
+        document.getElementById("expansion").setAttribute("aria-disabled", "true")
     }
 
     let mobile = Number(
@@ -757,9 +765,11 @@ function stats_update() {
         else
             document.getElementById("past_ascensions").className =
                 "subtab unlocked"
+        document.getElementById("past_ascensions").removeAttribute("aria-disabled")
     } else {
         document.getElementById("past_ascensions").innerHTML = "LOCKED"
         document.getElementById("past_ascensions").className = "subtab locked"
+        document.getElementById("past_ascensions").setAttribute("aria-disabled", "true")
     }
 
     stats_str = "Last 10 Ascensions:"
@@ -955,9 +965,11 @@ function stats_update() {
         else
             document.getElementById("past_collapses").className =
                 "subtab unlocked"
+        document.getElementById("past_collapses").removeAttribute("aria-disabled")
     } else {
         document.getElementById("past_collapses").innerHTML = "LOCKED"
         document.getElementById("past_collapses").className = "subtab locked"
+        document.getElementById("past_collapses").setAttribute("aria-disabled", "true")
     }
 
     stats_str = "Last 10 Collapses:"
@@ -1170,9 +1182,11 @@ function stats_update() {
         else
             document.getElementById("past_expansions").className =
                 "subtab unlocked"
+        document.getElementById("past_expansions").removeAttribute("aria-disabled")
     } else {
         document.getElementById("past_expansions").innerHTML = "LOCKED"
         document.getElementById("past_expansions").className = "subtab locked"
+        document.getElementById("past_expansions").setAttribute("aria-disabled", "true")
     }
 
     stats_str = "Last 10 Expansions:"
