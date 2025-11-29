@@ -22,6 +22,47 @@
     border: 0;
 }
 
+/* Skip link for keyboard navigation - becomes visible on focus */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #311936;
+    color: white;
+    padding: 8px 16px;
+    z-index: 100;
+    text-decoration: none;
+    font-family: "Fira Code";
+    border: 2px solid white;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Enhanced focus styles for accessibility */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus,
+a:focus {
+    outline: 3px solid #ff3dd8;
+    outline-offset: 2px;
+}
+
+/* High contrast focus for buttons */
+.tab:focus,
+.subtab:focus,
+.spice_buy:focus,
+.settings_button:focus,
+.prestige_upgrade:focus,
+.ascension_upgrade:focus,
+.galactic_upgrade:focus {
+    outline: 3px solid #ff3dd8;
+    outline-offset: 2px;
+    box-shadow: 0 0 0.5em #ff3dd8;
+}
+
 /* Semantic heading styles - reset browser defaults to match existing visual style */
 h1, h2, h3, h4 {
     font-family: "Fira Code";

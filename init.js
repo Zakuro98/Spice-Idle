@@ -4374,6 +4374,12 @@ function entry_unlock(id) {
     entry_unlocked[id] = true
     game.compendium_new = true
     document.getElementById("compendium").className = "tab notice"
+    
+    // Announce new compendium entry to screen readers with specific entry name
+    if (typeof announceToScreenReader === 'function' && compendium.entries && compendium.entries[id]) {
+        const entryName = compendium.entries[id].name || 'Unknown'
+        announceToScreenReader('New discovery: ' + entryName + '. Check the Compendium tab for details.')
+    }
 }
 
 //initializing compendium entries

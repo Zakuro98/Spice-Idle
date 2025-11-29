@@ -1,5 +1,21 @@
+//helper function to update ARIA attributes when tab selection changes
+function updateTabAriaStates(selectedTabId, allTabIds) {
+    allTabIds.forEach(tabId => {
+        const tab = document.getElementById(tabId);
+        if (tab) {
+            if (tabId === selectedTabId) {
+                tab.setAttribute('aria-selected', 'true');
+            } else {
+                tab.setAttribute('aria-selected', 'false');
+            }
+        }
+    });
+}
+
 //switching tabs
 function goto_tab(id) {
+    const mainTabs = ['spices', 'prestige', 'ascension', 'collapse', 'expansion', 'statistics', 'compendium', 'settings'];
+    
     switch (id) {
         case 0:
             game.tab = id
@@ -39,6 +55,7 @@ function goto_tab(id) {
             document.getElementById("settings_page").style.display = "none"
 
             document.getElementById("spices").className = "tab selected"
+            updateTabAriaStates('spices', mainTabs)
             if (
                 game.color_boosts >= 10 ||
                 game.prestige >= 1 ||
@@ -121,6 +138,7 @@ function goto_tab(id) {
                 document.getElementById("settings_page").style.display = "none"
 
                 document.getElementById("prestige").className = "tab selected"
+                updateTabAriaStates('prestige', mainTabs)
                 document.getElementById("spices").className = "tab unlocked"
                 if (game.prestige_bought[25])
                     document.getElementById("ascension").className =
@@ -198,6 +216,7 @@ function goto_tab(id) {
                 document.getElementById("settings_page").style.display = "none"
 
                 document.getElementById("ascension").className = "tab selected"
+                updateTabAriaStates('ascension', mainTabs)
                 document.getElementById("spices").className = "tab unlocked"
                 if (
                     game.color_boosts >= 10 ||
@@ -284,6 +303,7 @@ function goto_tab(id) {
                 document.getElementById("settings_page").style.display = "none"
 
                 document.getElementById("collapse").className = "tab selected"
+                updateTabAriaStates('collapse', mainTabs)
                 document.getElementById("spices").className = "tab unlocked"
                 if (
                     game.color_boosts >= 10 ||
@@ -366,6 +386,7 @@ function goto_tab(id) {
                 document.getElementById("settings_page").style.display = "none"
 
                 document.getElementById("expansion").className = "tab selected"
+                updateTabAriaStates('expansion', mainTabs)
                 document.getElementById("spices").className = "tab unlocked"
                 if (
                     game.color_boosts >= 10 ||
@@ -431,6 +452,7 @@ function goto_tab(id) {
             document.getElementById("settings_page").style.display = "none"
 
             document.getElementById("statistics").className = "tab selected"
+            updateTabAriaStates('statistics', mainTabs)
             document.getElementById("spices").className = "tab unlocked"
             if (
                 game.color_boosts >= 10 ||
@@ -498,6 +520,7 @@ function goto_tab(id) {
             document.getElementById("compendium_page").style.display = "none"
 
             document.getElementById("settings").className = "tab selected"
+            updateTabAriaStates('settings', mainTabs)
             document.getElementById("spices").className = "tab unlocked"
             if (
                 game.color_boosts >= 10 ||
@@ -566,6 +589,7 @@ function goto_tab(id) {
             document.getElementById("settings_page").style.display = "none"
 
             document.getElementById("compendium").className = "tab selected"
+            updateTabAriaStates('compendium', mainTabs)
             document.getElementById("spices").className = "tab unlocked"
             if (
                 game.color_boosts >= 10 ||
