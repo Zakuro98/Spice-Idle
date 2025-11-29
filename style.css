@@ -40,6 +40,11 @@
     top: 0;
 }
 
+/* Hide focus outline on main content (skip link target) since it's not interactive */
+#main-content:focus {
+    outline: none;
+}
+
 /* Enhanced focus styles for accessibility */
 button:focus,
 input:focus,
