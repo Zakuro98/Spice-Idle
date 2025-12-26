@@ -1037,6 +1037,12 @@ if (meme_condition) {
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
         "Salt Idle v1.8.6<br>Made by Zakuro<br><br>Last updated April 17, 2025"
+
+    document.getElementById("spice_idle_beta").innerHTML = "Salt Idle Beta"
+    document.getElementById("spice_idle_classic").innerHTML =
+        "Salt Idle Classic"
+    document.getElementById("beta_text").innerHTML =
+        "DISCLAIMER: Salt Idle Beta is an unfinished version and as such may have bugs or balancing issues"
 }
 
 //initialize map
