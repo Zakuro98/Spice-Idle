@@ -17,7 +17,7 @@
                         Spice Idle
                     </p>
                     <p class="catchup_version">
-                        v1.8.6
+                        v1.9.0 β9
                     </p>
                 </div>
                 <p id="catchup_header" class="catchup_header">
@@ -153,6 +153,9 @@
                 <button id="galactic_upgrades" class="subtab unlocked" onclick="goto_subtab(2)">
                     GALACTIC UPGRADES
                 </button>
+                <button id="galactic_crystals" class="subtab locked" onclick="goto_subtab(3)">
+                    LOCKED
+                </button>
             </div>
 
             <div id="statistics_tabs" class="submenu">
@@ -214,21 +217,6 @@
                     <div class="center_button">
                         <button class="spice_buy modal_button" onclick="import_save()">
                             IMPORT
-                        </button>
-                        <button class="spice_buy modal_button_last" onclick="close_modal()">
-                            CANCEL
-                        </button>
-                    </div>
-                </div>
-                
-                <div id="modal_beta" class="modal_panel">
-                    <p id="beta_text" class="modal_text">
-                        DISCLAIMER: Spice Idle Beta is an unfinished version and as such may have bugs or balancing issues
-                    </p>
-
-                    <div class="center_button">
-                        <button class="spice_buy modal_button" onclick="window.open('beta/index.html','_blank'); close_modal()">
-                            OK
                         </button>
                         <button class="spice_buy modal_button_last" onclick="close_modal()">
                             CANCEL
@@ -1351,7 +1339,7 @@
 
             <div id="expansion_page">
                 <div id="exploration_screen" class="exploration_screen">
-                    <div id="exploration_view">
+                    <div id="exploration_view" class="view_noscroll">
                         <div id="exploration_map">
                             <div id="exploration_bg">
                                 <svg id="turbulence">
@@ -1370,6 +1358,7 @@
                             </div>
                             <div id="exploration_bg2"></div>
                             <canvas id="exploration_selected" width="256" height="256"></canvas>
+                            <canvas id="exploration_target" width="256" height="256"></canvas>
                         </div>
                     </div>
 
@@ -1385,7 +1374,7 @@
                     </div>
 
                     <div class="expand_panel">
-                        <div class="exploration_panel">
+                        <div id="expansion_panel" class="exploration_panel">
                             <p id="center_distance" class="expand_text">
                                 Distance to center: 65.0%
                             </p>
@@ -1399,12 +1388,32 @@
                             <p id="expand_up" class="expand_text galactic_shards">
                                 +2 galactic shards
                             </p>
+                            <p id="exotic_up" class="expand_text exotic_shards">
+                                +1 exotic shard
+                            </p>
                             <p id="expand_req" class="expand_text">
                                 1.719e4.895e18 g total spice required for next galactic shard
                             </p>
                             <p id="expand_req2" class="expand_text">
                                 Antispice perk 9 required
                             </p>
+                        </div>
+
+                        <div id="zoom_panel" class="exploration_panel">
+                            <div class="center_button">
+                                <button id="zoom_out" class="spice_buy zoom_button" onclick="exploration_zoom('out')">
+                                    -
+                                </button>
+                                <button id="zoom_reset" class="spice_buy zoom_button" onclick="exploration_reset()">
+                                    Reset
+                                </button>
+                                <button id="zoom_in" class="spice_buy zoom_button" onclick="exploration_zoom('in')">
+                                    +
+                                </button>
+                                <button id="exploration_hide" class="spice_buy zoom_button" onclick="exploration_hide()">
+                                    Hide
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1438,6 +1447,23 @@
                         </p>
                         <input class="input" id="re_time_input" type="number" step="0.01" value="3600" min="0.01">
                     </div>
+                </div>
+
+                <div id="expand_auto_block">
+                    <div id="expand_auto_buttons">
+                        <p class="ex_auto_text">
+                            Expansion:
+                        </p>
+                        <button id="expand_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('expand')">
+                            Auto: OFF
+                        </button>
+                        <button id="expand_auto_mode" class="spice_buy" onclick="auto_toggle('expand_mode')">
+                            Targeting: MANUAL
+                        </button>
+                    </div>
+                    <p id="expand_auto_instruction" class="ex_auto_text">
+                        Right click to manually choose target realms
+                    </p>
                 </div>
 
                 <p id="expand_efficiency" class="reset_efficiency">
@@ -1608,6 +1634,210 @@
                 <p id="coming_soon">
                     More galactic upgrades coming soon...
                 </p>
+            </div>
+
+            <div id="crafting_page">
+                <div id="galactic_shards_header2">
+                    <p id="galactic_shards_num4" class="spice_num galactic_shards">
+                        0
+                    </p>
+                    <p id="galactic_shards_text4" class="spice_text galactic_shards">
+                        galactic shards
+                    </p>
+                </div>
+                <p id="exotic_shards_title" class="expansion_title exotic_shards">
+                    Exotic Shards
+                </p>
+                <div class="exotic_shards_panel">
+                    <div class="exotic_shards_block">
+                        <p id="red_shards_num" class="spice_num red_shards">
+                            0
+                        </p>
+                        <p id="red_shards_text" class="spice_text red_shards">
+                            red shards
+                        </p>
+                    </div>
+                    <div class="exotic_shards_block">
+                        <p id="yellow_shards_num" class="spice_num yellow_shards">
+                            0
+                        </p>
+                        <p id="yellow_shards_text" class="spice_text yellow_shards">
+                            yellow shards
+                        </p>
+                    </div>
+                    <div class="exotic_shards_block">
+                        <p id="green_shards_num" class="spice_num green_shards">
+                            0
+                        </p>
+                        <p id="green_shards_text" class="spice_text green_shards">
+                            green shards
+                        </p>
+                    </div>
+                    <div class="exotic_shards_block">
+                        <p id="blue_shards_num" class="spice_num blue_shards">
+                            0
+                        </p>
+                        <p id="blue_shards_text" class="spice_text blue_shards">
+                            blue shards
+                        </p>
+                    </div>
+                    <div class="exotic_shards_block">
+                        <p id="pink_shards_num" class="spice_num pink_shards">
+                            0
+                        </p>
+                        <p id="pink_shards_text" class="spice_text pink_shards">
+                            pink shards
+                        </p>
+                    </div>
+                    <div id="rainbow_shards_block" class="exotic_shards_block">
+                        <p id="rainbow_shards_num" class="spice_num rainbow_shards">
+                            0
+                        </p>
+                        <p id="rainbow_shards_text" class="spice_text rainbow_shards">
+                            rainbow shards
+                        </p>
+                    </div>
+                    <div id="dark_shards_block" class="exotic_shards_block">
+                        <p id="dark_shards_num" class="spice_num dark_shards">
+                            0
+                        </p>
+                        <p id="dark_shards_text" class="spice_text dark_shards">
+                            dark shards
+                        </p>
+                    </div>
+                </div>
+                <p id="crafting_title" class="expansion_title exotic_shards">
+                    Crafting
+                </p>
+                <div class="crafting_panel">
+                    <div class="recipe_panel">
+                        <div id="recipe_change" class="recipe_input">
+                            <button class="spice_buy recipe_button" onclick="recipe_down('count')">
+                                ÷10
+                            </button>
+                            <button id="recipe_up" class="spice_buy recipe_button" onclick="recipe_up('count')">
+                                x10
+                            </button>
+                        </div>
+                        <div class="recipe_input">
+                            <button id="recipe_prev" class="spice_buy recipe_button" onclick="recipe_down('type')">
+                                <
+                            </button>
+                            <p id="recipe_type" class="recipe_text red_shards">
+                                RED
+                            </p>
+                            <button id="recipe_next" class="spice_buy recipe_button" onclick="recipe_up('type')">
+                                >
+                            </button>
+                        </div>
+                        <div class="recipe_input">
+                            <button id="recipe_minus" class="spice_buy recipe_button" onclick="recipe_down('shards')">
+                                -1
+                            </button>
+                            <p id="recipe_count" class="recipe_text red_shards">
+                                0
+                            </p>
+                            <button id="recipe_plus" class="spice_buy recipe_button" onclick="recipe_up('shards')">
+                                +1
+                            </button>
+                        </div>
+                        <div id="level_input" class="recipe_input">
+                            <button id="level_minus" class="spice_buy recipe_button" onclick="recipe_down('level')">
+                                -1
+                            </button>
+                            <p id="level_count" class="recipe_text">
+                                LVL 1
+                            </p>
+                            <button id="level_plus" class="spice_buy recipe_button" onclick="recipe_up('level')">
+                                +1
+                            </button>
+                        </div>
+                    </div>
+                    <div id="preview_panel">
+                        <div id="preview_crystal" class="crystal_type2">
+                            <img id="crystal_img" src="img/crystal2.png">
+                        </div>
+                        <p id="preview_level" class="crystal_level">
+                            Galactic Crystal
+                            <br>LVL 1
+                        </p>
+                        <p id="preview_essence" class="essence">
+                            <span class="red_spice">
+                                0.527% red essence
+                            </span>
+                        </p>
+                        <div class="center_button">
+                            <button id="craft_button" class="spice_buy craft_button" onclick="craft()">
+                                Craft! 
+                                <span id="craft_price" class="galactic_cost">
+                                    -1.039e50 galactic shards
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="inventory_panel">
+                    <div>
+                        <p id="inventory_title" class="expansion_title exotic_shards">
+                            Inventory
+                        </p>
+                        <div id="inventory_block"></div>
+                        <div id="inventory_center" class="center_button">
+                            <button id="equip_button" class="spice_buy inventory_button" onclick="equip_crystal()">
+                                Equip
+                            </button>
+                            <button id="move_button" class="spice_buy inventory_button" onclick="move_crystal()">
+                                Move
+                            </button>
+                            <button id="swap_button" class="spice_buy inventory_button" onclick="swap_crystals()">
+                                Swap
+                            </button>
+                            <button id="scrap_button" class="spice_buy inventory_button" onclick="scrap_crystal()">
+                                Scrap
+                            </button>
+                        </div>
+                    </div>
+                    <div id="crystal_info_panel">
+                        <div id="inventory_crystal" class="crystal_type2">
+                            <img id="inventory_img" src="img/crystal2.png">
+                        </div>
+                        <p id="inventory_level" class="crystal_level">
+                            Galactic Crystal
+                            <br>LVL 1
+                        </p>
+                        <p id="inventory_essence" class="essence">
+                            <span class="red_spice">
+                                0.527% red essence
+                            </span>
+                        </p>
+                    </div>
+                    <div>
+                        <p id="equipped_title" class="expansion_title exotic_shards">
+                            Equipped
+                        </p>
+                        <div id="equipped_block"></div>
+                        <div id="equipped_center" class="center_button">
+                            <button id="unequip_button" class="spice_buy inventory_button" onclick="unequip_crystal()">
+                                Unequip
+                            </button>
+                            <button id="move_button2" class="spice_buy inventory_button" onclick="move_crystal()">
+                                Move
+                            </button>
+                            <button id="swap_button2" class="spice_buy inventory_button" onclick="swap_crystals()">
+                                Swap
+                            </button>
+                            <button id="scrap_button2" class="spice_buy inventory_button" onclick="scrap_crystal()">
+                                Scrap
+                            </button>
+                        </div>
+                        <p class="total_effects">
+                            Total Effects
+                        </p>
+                        <p id="total_crystal_effects" class="essence">
+                            None
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <div id="statistics_page">
@@ -1831,11 +2061,12 @@
                 <p class="hotkeys_list">
                     Name generation code by Airapport
                     <br>Tab/subtab hotkeys by Hedrauta
+                    <br>Pathfinding code by h
                 </p>
             </div>
 
             <p id="version" class="info">
-                Spice Idle v1.8.6<br>Made by Zakuro<br><br>Last updated April 17, 2025
+                Spice Idle v1.9.0 β9<br>Made by Zakuro
             </p>
 
             <p id="classic_info" class="info">
@@ -1846,8 +2077,7 @@
 
             <a href="changelog.html" target="_blank" class="info link">Changelog</a>
             <a href="savebank.html" target="_blank" class="info link">Savebank</a>
-            <p id="spice_idle_beta" class="info link2" onclick="if (modal === 'none') open_modal('beta')">Spice Idle Beta</p>
-            <a id="spice_idle_classic" href="https://zakuro98.github.io/Spice-Idle-Classic/" target="_blank" class="info link">Spice Idle Classic</a>
+            <a href="https://zakuro98.github.io/Spice-Idle-Classic/" target="_blank" class="info link">Spice Idle Classic</a>
             <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
             <a href="https://discord.gg/fuQSBkYYqH" target="_blank" class="info link">Discord</a>
         </main>

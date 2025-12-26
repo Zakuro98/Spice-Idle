@@ -16,7 +16,7 @@ function fib(n, inf) {
 
 //initializing game variables
 let game = {
-    version: "1.8.4",
+    version: "1.8.12",
 
     tickspeed: 100,
     gamespeed: 1,
@@ -491,12 +491,15 @@ let game = {
     galactic_shards: new Decimal(0),
 
     current_realm: 6,
+    previous_realm: -1,
     selected_realm: -1,
     hovered_realm: -1,
+    target_realm: -1,
 
-    galactic_bought: new Array(20).fill(false),
+    galactic_bought: new Array(32).fill(false),
 
     expand_amount_history: new Array(10).fill(-1),
+    expand_exotic_history: new Array(10).fill(-1),
     expand_time_history: new Array(10).fill(-1),
     expand_real_time_history: new Array(10).fill(-1),
     expand_stat_history: new Array(10).fill(-1),
@@ -577,6 +580,38 @@ let game = {
     autore_toggle: false,
     autore_mode: 0,
     autore_goal: [new Decimal(1e40), 3600],
+
+    autoex_toggle: false,
+    autoex_mode: 0,
+    autoex_queue: [],
+
+    rolls: new Array(7).fill(0),
+    failed_rolls: new Array(7).fill(0),
+    pending_shards: new Array(7).fill(0),
+    exotic_shards: new Array(7).fill(0),
+    rainbow_shards: false,
+    dark_shards: false,
+
+    recipe: [0, 0],
+    crystal_level: 1,
+    recipe_change: 1,
+    preview: null,
+
+    inventory: new Array(30).fill(null),
+    selected_slot: [-1, -1],
+    hovered_slot: -1,
+    equip: new Array(5).fill(null),
+    crystal_boost: [
+        new Array(5),
+        new Array(5),
+        new Array(5),
+        new Array(5),
+        new Array(5),
+        new Array(6),
+        new Array(6),
+    ],
+
+    exploration_hidden: false,
 
     peak_rainbow_gain: new Decimal(0),
     peak_rainbow_boosts: 0,
@@ -858,6 +893,42 @@ function format_small(num, not) {
             if (Math.log10(num) < 100)
                 return mantissa.toFixed(6) + "e" + Math.floor(Math.log10(num))
             else return mantissa.toFixed(5) + "e" + Math.floor(Math.log10(num))
+        } else if (not === 22) {
+            const dozenal = [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "X",
+                "Ԑ",
+            ]
+            let order = Math.floor(Math.log(num) / Math.log(12))
+            if (order < 9) {
+                output = ""
+                for (let i = order; i >= 0; i--) {
+                    output += dozenal[Math.floor(num / 12 ** i) % 12]
+                    if (i === 3 || i === 6) output += ","
+                }
+            } else {
+                output =
+                    dozenal[Math.floor(num / 12 ** order) % 12] +
+                    "." +
+                    dozenal[Math.floor(num / 12 ** (order - 1)) % 12] +
+                    dozenal[Math.floor(num / 12 ** (order - 2)) % 12] +
+                    dozenal[Math.floor(num / 12 ** (order - 3)) % 12] +
+                    dozenal[Math.floor(num / 12 ** (order - 4)) % 12] +
+                    dozenal[Math.floor(num / 12 ** (order - 5)) % 12] +
+                    dozenal[Math.floor(num / 12 ** (order - 6)) % 12] +
+                    "e" +
+                    format_num(order, not)
+            }
+            return output
         } else {
             return format_num(num, 0)
         }
@@ -1036,13 +1107,7 @@ if (meme_condition) {
     document.title = "Salt Idle"
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
-        "Salt Idle v1.8.6<br>Made by Zakuro<br><br>Last updated April 17, 2025"
-
-    document.getElementById("spice_idle_beta").innerHTML = "Salt Idle Beta"
-    document.getElementById("spice_idle_classic").innerHTML =
-        "Salt Idle Classic"
-    document.getElementById("beta_text").innerHTML =
-        "DISCLAIMER: Salt Idle Beta is an unfinished version and as such may have bugs or balancing issues"
+        "Salt Idle v1.9.0 β8<br>Made by Zakuro"
 }
 
 //initialize map
@@ -1056,7 +1121,6 @@ const research_map = new Map()
 const research_map2 = new Map()
 const antispice_map = new Map()
 const galactic_map = new Map()
-const realm_map = new Map()
 const compendium_map = new Map()
 
 //spice generator class
@@ -3170,8 +3234,8 @@ max_scaling.push([
     [0.35, 4],
     [0.5, 15],
     [0.9, 50],
-    [0.98, 80],
-    [1, 80],
+    [0.98, 65],
+    [1, 65],
 ])
 max_scaling.push([
     [0, -40],
@@ -3179,16 +3243,16 @@ max_scaling.push([
     [0.35, 2],
     [0.5, 10],
     [0.9, 40],
-    [0.98, 65],
-    [1, 65],
+    [0.98, 55],
+    [1, 55],
 ])
 max_scaling.push([
     [0, -20],
     [0.2, 0],
     [0.5, 0],
     [0.9, 30],
-    [0.98, 50],
-    [1, 50],
+    [0.98, 45],
+    [1, 45],
 ])
 
 function realm_randomize(type, distance) {
@@ -3277,9 +3341,6 @@ class realm {
         realm.realms.push(this)
 
         let realm_element = document.createElement("DIV")
-        realm_element.className = "realm"
-        if (this.id === game.current_realm)
-            realm_element.className = "realm current_realm"
         realm_element.style.width = 2.5 * this.size + "em"
         realm_element.style.height = 2.5 * this.size + "em"
         realm_element.style.left = 1020 + 0.6 * this.x - 1.25 * this.size + "em"
@@ -3292,6 +3353,20 @@ class realm {
             ", " +
             this.col2 +
             ")"
+        if (
+            game.realms_visited.includes(this.id) &&
+            (game.realms_visited[game.realms_visited.length - 1] !== this.id ||
+                game.previous_realm === this.id)
+        ) {
+            realm_element.className = "realm visited_realm"
+            if (this.id === game.current_realm)
+                realm_element.className = "realm visited_realm current_realm"
+            realm_element.style.padding = 0.5 * this.size + "em"
+        } else {
+            realm_element.className = "realm"
+            if (this.id === game.current_realm)
+                realm_element.className = "realm current_realm"
+        }
 
         realm_element.addEventListener("mouseover", () => {
             game.hovered_realm = this.id
@@ -3300,48 +3375,19 @@ class realm {
             game.hovered_realm = -1
         })
         realm_element.addEventListener("click", () => {
-            if (game.selected_realm === this.id) {
-                game.selected_realm = -1
-                document.getElementById("exploration_selected").style.display =
-                    "none"
-            } else {
-                if (
-                    ((this.x - realm.realms[game.current_realm].x) ** 2 +
-                        (this.y - realm.realms[game.current_realm].y) ** 2) **
-                        0.5 <
-                        40 + 10 * game.jump_distance_level &&
-                    (this.x ** 2 + this.y ** 2) ** 0.5 > 160 &&
-                    this.id >= 6
-                ) {
-                    game.selected_realm = this.id
-                    document.getElementById(
-                        "exploration_selected"
-                    ).style.display = "block"
-                    document.getElementById(
-                        "exploration_selected"
-                    ).style.width = 3.75 * this.size + "em"
-                    document.getElementById(
-                        "exploration_selected"
-                    ).style.height = 3.75 * this.size + "em"
-                    document.getElementById("exploration_selected").style.left =
-                        1020 + 0.6 * this.x - 1.875 * this.size + "em"
-                    document.getElementById("exploration_selected").style.top =
-                        1020 + 0.6 * this.y - 1.875 * this.size + "em"
-                    if (this.id === game.current_realm)
-                        document.getElementById(
-                            "exploration_selected"
-                        ).className = "current_realm"
-                    else
-                        document.getElementById(
-                            "exploration_selected"
-                        ).className = ""
-                }
-            }
+            if (!game.autoex_toggle) select_realm(this)
+        })
+        realm_element.addEventListener("contextmenu", e => {
+            e.preventDefault()
+
+            if (game.autoex_mode === 0) target_realm(this)
         })
 
         document.getElementById("exploration_map").appendChild(realm_element)
     }
 }
+
+let min_rx, max_rx, min_ry, max_ry, cells
 
 //generating the realm layout
 function generate_realms() {
@@ -3424,7 +3470,7 @@ function generate_realms() {
 
     let distance = new Array()
 
-    let chosen = undefined
+    let chosen = [undefined, undefined]
 
     for (let i = 0; i < 5; i++) {
         for (let j = 0; j < 98; j++) {
@@ -3677,9 +3723,33 @@ function generate_realms() {
                     if (
                         i === order[0] &&
                         distance[0] === 0.11 &&
-                        chosen === undefined
+                        chosen[0] === undefined
                     ) {
-                        chosen = new realm(
+                        chosen[0] = new realm(
+                            x,
+                            y,
+                            normal_stat,
+                            special_stat,
+                            reset_stat,
+                            0.5 + 1 / (1 + Math.exp(-2.043)),
+                            "hsl(" +
+                                random_float() * 360 +
+                                ", 100%, " +
+                                (random_float() ** 3 * 60 + 40) +
+                                "%)",
+                            "hsl(" +
+                                random_float() * 360 +
+                                ", 100%, " +
+                                (random_float() ** 3 * 60 + 40) +
+                                "%)",
+                            random_float() * 180
+                        )
+                    } else if (
+                        i === order[1] &&
+                        distance[0] === 0.02 &&
+                        chosen[1] === undefined
+                    ) {
+                        chosen[1] = new realm(
                             x,
                             y,
                             normal_stat,
@@ -3741,15 +3811,25 @@ function generate_realms() {
         )
     }
 
-    chosen.normal =
+    chosen[0].normal =
         (realm_range(0, 0.89, 1) - realm_range(0, 0.89, 0)) * 0.727 +
         realm_range(0, 0.89, 0)
-    chosen.special =
+    chosen[0].special =
         (realm_range(1, 0.89, 1) - realm_range(1, 0.89, 0)) * 0.727 +
         realm_range(1, 0.89, 0)
-    chosen.reset =
+    chosen[0].reset =
         (realm_range(2, 0.89, 1) - realm_range(2, 0.89, 0)) * 0.727 +
         realm_range(2, 0.89, 0)
+
+    chosen[1].normal =
+        (realm_range(0, 0.98, 1) - realm_range(0, 0.98, 0)) * 0.727 +
+        realm_range(0, 0.98, 0)
+    chosen[1].special =
+        (realm_range(1, 0.98, 1) - realm_range(1, 0.98, 0)) * 0.727 +
+        realm_range(1, 0.98, 0)
+    chosen[1].reset =
+        (realm_range(2, 0.98, 1) - realm_range(2, 0.98, 0)) * 0.727 +
+        realm_range(2, 0.98, 0)
 
     let mobile = Number(
         getComputedStyle(document.body).getPropertyValue("--mobile")
@@ -3838,6 +3918,42 @@ function generate_realms() {
         else document.getElementById("exploration_selected").className = ""
     } else {
         document.getElementById("exploration_selected").style.display = "none"
+    }
+
+    ctx = document.getElementById("exploration_target").getContext("2d")
+    ctx.clearRect(0, 0, 256, 256)
+    ctx.strokeStyle = "#e433ff"
+    ctx.lineWidth = 10
+    for (let i = 0; i < 4; i++) {
+        ctx.beginPath()
+        ctx.arc(
+            128,
+            128,
+            120,
+            (-0.2 + i * 0.5) * Math.PI,
+            (0.2 + i * 0.5) * Math.PI
+        )
+        ctx.stroke()
+    }
+
+    if (game.target_realm !== -1) {
+        document.getElementById("exploration_target").style.display = "block"
+        document.getElementById("exploration_target").style.width =
+            3.5 * realm.realms[game.target_realm].size + "em"
+        document.getElementById("exploration_target").style.height =
+            3.5 * realm.realms[game.target_realm].size + "em"
+        document.getElementById("exploration_target").style.left =
+            1020 +
+            0.6 * realm.realms[game.target_realm].x -
+            1.75 * realm.realms[game.target_realm].size +
+            "em"
+        document.getElementById("exploration_target").style.top =
+            1020 +
+            0.6 * realm.realms[game.target_realm].y -
+            1.75 * realm.realms[game.target_realm].size +
+            "em"
+    } else {
+        document.getElementById("exploration_target").style.display = "none"
     }
 
     console.log("naming realms...")
@@ -4112,44 +4228,69 @@ function generate_realms() {
         document.getElementById("exploration_bg2").style.display = "none"
     }
 
-    if (game.realms_visited.length >= 2) {
-        for (let i = 1; i < game.realms_visited.length; i++) {
-            let current = realm.realms[game.realms_visited[i]]
-            let closest = realm.realms[game.realms_visited[0]]
-            for (let j = 0; j < i; j++) {
-                if (
-                    (current.x - realm.realms[game.realms_visited[j]].x) ** 2 +
-                        (current.y - realm.realms[game.realms_visited[j]].y) **
-                            2 <
-                    (current.x - closest.x) ** 2 + (current.y - closest.y) ** 2
-                )
-                    closest = realm.realms[game.realms_visited[j]]
-            }
+    min_rx = Math.min(...realm.realms.map(r => r.x))
+    max_rx = Math.max(...realm.realms.map(r => r.x))
+    min_ry = Math.min(...realm.realms.map(r => r.y))
+    max_ry = Math.max(...realm.realms.map(r => r.y))
 
-            let line = document.createElement("DIV")
-            let rx = 1020 + 0.6 * current.x
-            let ry = 1020 + 0.6 * current.y
-            let tx = 1020 + 0.6 * closest.x
-            let ty = 1020 + 0.6 * closest.y
-            let length = ((rx - tx) ** 2 + (ry - ty) ** 2) ** 0.5 - 7.5
-            let cx = (rx + tx) / 2 - length / 2
-            let cy = (ry + ty) / 2 - 0.25
+    cells = Array(Math.ceil((max_rx - min_rx) / 80))
+        .fill()
+        .map(_ =>
+            Array(Math.ceil((max_ry - min_ry) / 80))
+                .fill()
+                .map(_ => [])
+        )
 
-            line.className = "realm_line"
-
-            line.style.left = cx + "em"
-            line.style.top = cy + "em"
-            line.style.width = length + "em"
-            line.style.transform =
-                "rotate(" +
-                Math.atan2(ry - ty, rx - tx) * (180 / Math.PI) +
-                "deg)"
-
-            document.getElementById("exploration_map").appendChild(line)
-        }
+    for (const r of realm.realms) {
+        r.cx = Math.floor((r.x - min_rx) / 80)
+        r.cy = Math.floor((r.y - min_ry) / 80)
+        cells[r.cx][r.cy].push(r)
     }
 
     console.log("took " + (Date.now() - start_time) + " ms")
+}
+
+//s = source, d = destination
+function calculate_path(s, d) {
+    let next_jump = Array(realm.realms.length).fill(undefined)
+    let ring_realms = [d]
+    let distance = 1
+    while (ring_realms.length > 0) {
+        let new_ring_realms = []
+        for (let i = 0; i < ring_realms.length; i++) {
+            let r = ring_realms[i]
+            let close_candidates = []
+            for (let j = r.cx - 1; j <= r.cx + 1; j++) {
+                for (let k = r.cy - 1; k <= r.cy + 1; k++) {
+                    if (
+                        j < 0 ||
+                        j >= cells.length ||
+                        k < 0 ||
+                        k >= cells[0].length
+                    )
+                        continue
+                    close_candidates = close_candidates.concat(cells[j][k])
+                }
+            }
+            for (let j = 0; j < close_candidates.length; j++) {
+                let c = close_candidates[j]
+                if (next_jump[c.id] !== undefined) continue
+                if (new_ring_realms.includes(c)) continue
+                if ((c.x - r.x) ** 2 + (c.y - r.y) ** 2 < 6400) {
+                    new_ring_realms.push(c)
+                    next_jump[c.id] = r.id
+                }
+            }
+        }
+        distance++
+        ring_realms = new_ring_realms
+        if (ring_realms.includes(s)) break
+    }
+    let path = [s.id]
+    while (path[path.length - 1] !== d.id) {
+        path.push(next_jump[path[path.length - 1]])
+    }
+    return path
 }
 
 //galactic upgrade class
@@ -4299,7 +4440,938 @@ new galactic_upgrade(
         " generators are boosted based on the previous generator's amount",
     fib(217, true)
 )
+//[20]
+new galactic_upgrade("Unlocks galactic crystals", fib(245, true))
+//[21]
+new galactic_upgrade(
+    "The exploration map can now be zoomed and scrolled",
+    fib(281, true)
+)
+//[22]
+new galactic_upgrade(
+    "All " +
+        spice_text[0] +
+        " production except dark " +
+        spice_text[0] +
+        " is 0.000% stronger<br>(based on realms visited)",
+    fib(325, true)
+)
+//[23]
+new galactic_upgrade(
+    "Dark " +
+        spice_text[0] +
+        " production is boosted by 1.62x for every 50 dark constructs",
+    fib(377, true)
+)
+//[24]
+new galactic_upgrade(
+    "You can now equip 3 galactic crystals at once",
+    fib(436, true)
+)
+//[25]
+new galactic_upgrade("Unlocks automation for Expansion", fib(504, true))
+//[26]
+new galactic_upgrade(
+    "Dark conversions now also boost Prestige, Ascension, and Collapse stat gains",
+    fib(580, true)
+)
+//[27]
+new galactic_upgrade(
+    "Dark " +
+        spice_text[0] +
+        " production is boosted by unspent galactic shards<br>(Currently: 1.00x)",
+    fib(663, true)
+)
 //done initializing galactic upgrades
+
+//rolling exotic shards
+function sample_rolls(n, p) {
+    if (n < 100) {
+        let count = 0
+        for (let i = 0; i < n; i++) {
+            count += Math.floor(Math.random() + p)
+        }
+        return count
+    }
+    if (p > 0.5) {
+        return n - sample_rolls(n, 1 - p)
+    }
+    let lam = n * p
+    if (lam < 20) {
+        // poisson
+        let k = -1
+        let q = 0
+        while (q < lam) {
+            q -= Math.log(Math.random())
+            k++
+        }
+        return k
+    } else {
+        // normal
+        let u = Math.random()
+        let v = Math.random()
+        let x = (-2 * Math.log(u)) ** 0.5 * Math.cos(2 * Math.PI * v)
+        return Math.round(lam + x * (n * p * (1 - p)) ** 0.5)
+    }
+}
+
+//calculate amount of essence based on shard count
+function get_essence(shards, type) {
+    switch (type) {
+        case 5:
+            if (shards < 4000) {
+                return 0.660068 * shards ** 0.438179
+            } else if (shards < 90000) {
+                return (
+                    23.5158 + 0.000243913 * (136660 * shards - 5.09621e8) ** 0.5
+                )
+            } else if (shards < 900000) {
+                return (
+                    46.8554 +
+                    0.0000482894 * (414164 * shards - 3.3034e10) ** 0.5
+                )
+            } else if (shards < 6499962) {
+                return (
+                    70.6061 +
+                    0.000015085 * (662857 * shards - 5.11692e11) ** 0.5
+                )
+            } else {
+                return 100
+            }
+        case 6:
+            if (shards < 1500) {
+                return 1.01447 * shards ** 0.438179
+            } else if (shards < 22500) {
+                return (
+                    22.5659 + 0.00015902 * (1406140 * shards - 1.87494e9) ** 0.5
+                )
+            } else if (shards < 175000) {
+                return (
+                    45.7657 + 0.00012268 * (364554 * shards - 7.01113e9) ** 0.5
+                )
+            } else if (shards < 900000) {
+                return (
+                    67.7379 +
+                    0.0000304755 * (1467450 * shards - 2.00019e11) ** 0.5
+                )
+            } else {
+                return 100
+            }
+        default:
+            if (shards < 7750) {
+                return 0.493999 * shards ** 0.438179
+            } else if (shards < 225000) {
+                return (
+                    23.8922 + 0.0000990374 * (319301 * shards - 2.3495e9) ** 0.5
+                )
+            } else if (shards < 3000000) {
+                return (
+                    47.7907 + 0.0000838109 * (37731 * shards - 7.79459e9) ** 0.5
+                )
+            } else if (shards < 24999917) {
+                return (
+                    71.1962 +
+                    0.0000117177 * (269869 * shards - 7.04228e11) ** 0.5
+                )
+            } else {
+                return 100
+            }
+    }
+}
+
+//setting up hashes
+String.prototype.hashCode = function () {
+    let hash = 0,
+        chr
+    if (this.length === 0) return hash
+    for (let i = 0; i < this.length; i++) {
+        chr = this.charCodeAt(i)
+        hash = (hash << 5) - hash + chr
+        hash |= 0
+    }
+    return hash
+}
+
+//galactic crystal effect interpretation
+function interpret_effect(type, effect, essence, level, count) {
+    let power = essence + essence ** 2 / 100 + (level - 1) / 2
+    if (power > 300) power = 10.30875 * Math.exp(0.0131328 * power) + 763.361
+    else power = power + power ** 1.8 / 28.9551
+    /*power = power * Math.exp(0.000363494 * power ** 1.455)*/
+    let scale = 1
+    switch (count) {
+        case 1:
+            scale = 1.25
+            break
+        case 2:
+            scale = 1
+            break
+        case 3:
+        case 4:
+            scale = 0.75
+            break
+    }
+    switch (type) {
+        case 0:
+            switch (effect) {
+                case 0:
+                    return (
+                        "Red " +
+                        spice_text[0] +
+                        " production " +
+                        format_idec(
+                            Decimal.pow(10, 3.442835e18 * power * scale),
+                            game.notation
+                        ) +
+                        "x"
+                    )
+                case 1:
+                    return (
+                        "Red strengtheners are " +
+                        format_dec(
+                            power ** 0.5376 * 4999 * scale + 1,
+                            game.notation
+                        ) +
+                        "x stronger"
+                    )
+                case 2:
+                    return (
+                        "Pre-Expansion synergies are " +
+                        format_dec(
+                            Math.log(1 + power / 2) ** 0.902662 *
+                                7.46264 *
+                                scale,
+                            game.notation
+                        ) +
+                        "% stronger"
+                    )
+                case 3:
+                    return (
+                        "First generators are " +
+                        format_dec(
+                            Math.max(
+                                0,
+                                Math.log(1 + power / 2) ** 0.902662 * 11.5671
+                            ) *
+                                scale *
+                                0.852,
+                            game.notation
+                        ) +
+                        "% stronger"
+                    )
+                case 4:
+                    return "Unstable " + spice_text[0] + " decay is stronger"
+            }
+        case 1:
+            switch (effect) {
+                case 0:
+                    return (
+                        "Yellow " +
+                        spice_text[0] +
+                        " production " +
+                        format_idec(
+                            Decimal.pow(10, 3.442835e18 * power * scale),
+                            game.notation
+                        ) +
+                        "x"
+                    )
+                case 1:
+                    return (
+                        "Yellow strengtheners are " +
+                        format_dec(
+                            power ** 0.5376 * 4999 * scale * 0.951 + 1,
+                            game.notation
+                        ) +
+                        "x stronger"
+                    )
+                case 2:
+                    return (
+                        "Color boosts are " +
+                        format_dec(
+                            power ** 0.5278 * 2999 * scale * 3.738 + 1,
+                            game.notation
+                        ) +
+                        "x stronger"
+                    )
+                case 3:
+                    return (
+                        "Second generators are " +
+                        format_dec(
+                            Math.max(
+                                0,
+                                Math.log(1 + power / 2) ** 0.902662 * 11.5671
+                            ) *
+                                scale *
+                                0.883,
+                            game.notation
+                        ) +
+                        "% stronger"
+                    )
+                case 4:
+                    return "The game runs faster"
+            }
+        case 2:
+            switch (effect) {
+                case 0:
+                    return (
+                        "Green " +
+                        spice_text[0] +
+                        " production " +
+                        format_idec(
+                            Decimal.pow(10, 3.442835e18 * power * scale),
+                            game.notation
+                        ) +
+                        "x"
+                    )
+                case 1:
+                    return (
+                        "Green strengtheners are " +
+                        format_dec(
+                            power ** 0.5376 * 4999 * scale * 0.913 + 1,
+                            game.notation
+                        ) +
+                        "x stronger"
+                    )
+                case 2:
+                    return (
+                        "Crystal infusions & arcane enchantments are " +
+                        format_dec(
+                            Math.log(1 + power / 2) * 27.8062 * scale,
+                            game.notation
+                        ) +
+                        "% stronger"
+                    )
+                case 3:
+                    return (
+                        "Third generators are " +
+                        format_dec(
+                            Math.max(
+                                0,
+                                Math.log(1 + power / 2) ** 0.902662 * 11.5671
+                            ) *
+                                scale *
+                                0.913,
+                            game.notation
+                        ) +
+                        "% stronger"
+                    )
+                case 4:
+                    return "Extra atomic efficiency"
+            }
+        case 3:
+            switch (effect) {
+                case 0:
+                    return (
+                        "Blue " +
+                        spice_text[0] +
+                        " production " +
+                        format_idec(
+                            Decimal.pow(10, 3.442835e18 * power * scale),
+                            game.notation
+                        ) +
+                        "x"
+                    )
+                case 1:
+                    return (
+                        "Blue strengtheners are " +
+                        format_dec(
+                            power ** 0.5376 * 4999 * scale * 0.883 + 1,
+                            game.notation
+                        ) +
+                        "x stronger"
+                    )
+                case 2:
+                    return (
+                        "Research is " +
+                        format_dec(
+                            (power + 1) ** (28.5 * scale),
+                            game.notation
+                        ) +
+                        "x faster"
+                    )
+                case 3:
+                    return (
+                        "Fourth generators are " +
+                        format_dec(
+                            Math.max(
+                                0,
+                                Math.log(1 + power / 2) ** 0.902662 * 11.5671
+                            ) *
+                                scale *
+                                0.951,
+                            game.notation
+                        ) +
+                        "% stronger"
+                    )
+                case 4:
+                    return "Color augments start later"
+            }
+        case 4:
+            switch (effect) {
+                case 0:
+                    return (
+                        "Pink " +
+                        spice_text[0] +
+                        " production " +
+                        format_idec(
+                            Decimal.pow(10, 3.442835e18 * power * scale),
+                            game.notation
+                        ) +
+                        "x"
+                    )
+                case 1:
+                    return (
+                        "Pink strengtheners are " +
+                        format_dec(
+                            power ** 0.5376 * 4999 * scale * 0.852 + 1,
+                            game.notation
+                        ) +
+                        "x stronger"
+                    )
+                case 2:
+                    return (
+                        "Crystallized " +
+                        spice_text[0] +
+                        " production " +
+                        format_idec(
+                            Decimal.pow(
+                                10,
+                                3.442835e18 * power * scale * 0.004
+                            ),
+                            game.notation
+                        ) +
+                        "x"
+                    )
+                case 3:
+                    return (
+                        "Fifth generators are " +
+                        format_dec(
+                            Math.max(
+                                0,
+                                Math.log(1 + power / 2) ** 0.902662 * 11.5671
+                            ) * scale,
+                            game.notation
+                        ) +
+                        "% stronger"
+                    )
+                case 4:
+                    return "Color boosts are cheaper"
+            }
+        case 5:
+            switch (effect) {
+                case 0:
+                    return (
+                        "Rainbow " +
+                        spice_text[0] +
+                        " gain " +
+                        format_idec(
+                            Decimal.pow(10, 2.7734e10 * power ** 0.5 * scale),
+                            game.notation
+                        ) +
+                        "x"
+                    )
+                case 1:
+                    return (
+                        "Crystal strengtheners are " +
+                        format_dec(
+                            power ** 0.5376 * 464.471 * scale + 1,
+                            game.notation
+                        ) +
+                        "x stronger"
+                    )
+                case 2:
+                    return (
+                        "Sixth generators are " +
+                        format_dec(
+                            Math.max(
+                                0,
+                                Math.log(1 + power / 2) ** 0.902662 * 9.93952 +
+                                    21.8094
+                            ) *
+                                1.058 *
+                                scale,
+                            game.notation
+                        ) +
+                        "% stronger"
+                    )
+                case 3:
+                    return "Ansuz rune gain boost"
+                case 4:
+                    return "Arcane strengtheners are stronger"
+                case 5:
+                    return "Atomic " + spice_text[0] + " gain boost"
+            }
+        case 6:
+            switch (effect) {
+                case 0:
+                    return "Arcane " + spice_text[0] + " production boost"
+                case 1:
+                    return "Dark " + spice_text[0] + " production boost"
+                case 2:
+                    return "Dark constructs are stronger"
+                case 3:
+                    return "Dark " + spice_text[0] + " synergies are stronger"
+                case 4:
+                    return "Galactic shard gain boost"
+                case 5:
+                    return "ALL spice production is stronger"
+            }
+    }
+}
+
+//setting up the galactic crystal inventory slots
+for (let i = 0; i < 30; i++) {
+    let slot = document.createElement("DIV")
+    slot.className = "inventory_slot"
+    slot.id = "slot" + i
+    slot.addEventListener("mouseover", () => {
+        game.hovered_slot = i
+    })
+    slot.addEventListener("mouseout", () => {
+        game.hovered_slot = -1
+    })
+    slot.addEventListener("click", () => {
+        if (game.selected_slot[0] === -1) {
+            game.selected_slot[0] = i
+            document.getElementById("slot" + i).className =
+                "inventory_slot selected_slot"
+        } else if (game.selected_slot[0] === i) {
+            if (game.selected_slot[1] !== -1) {
+                game.selected_slot[0] = game.selected_slot[1]
+                game.selected_slot[1] = -1
+            } else {
+                game.selected_slot[0] = -1
+            }
+            document.getElementById("slot" + i).className = "inventory_slot"
+        } else if (game.selected_slot[1] === i) {
+            game.selected_slot[1] = -1
+            document.getElementById("slot" + i).className = "inventory_slot"
+        } else {
+            if (game.selected_slot[0] >= 30) {
+                if (game.equip[game.selected_slot[0] - 30] === null) {
+                    if (game.inventory[i] !== null) {
+                        game.selected_slot[1] = game.selected_slot[0]
+                        game.selected_slot[0] = i
+                        document.getElementById("slot" + i).className =
+                            "inventory_slot selected_slot"
+                    }
+                } else {
+                    if (game.selected_slot[1] !== -1) {
+                        if (game.selected_slot[1] >= 30)
+                            document.getElementById(
+                                "slot" + game.selected_slot[1]
+                            ).className = "inventory_slot equip_slot"
+                        else
+                            document.getElementById(
+                                "slot" + game.selected_slot[1]
+                            ).className = "inventory_slot"
+                    }
+                    game.selected_slot[1] = i
+                    document.getElementById("slot" + i).className =
+                        "inventory_slot selected_slot"
+                }
+            } else {
+                if (game.inventory[game.selected_slot[0]] === null) {
+                    if (game.inventory[i] !== null) {
+                        game.selected_slot[1] = game.selected_slot[0]
+                        game.selected_slot[0] = i
+                        document.getElementById("slot" + i).className =
+                            "inventory_slot selected_slot"
+                    }
+                } else {
+                    if (game.selected_slot[1] !== -1) {
+                        if (game.selected_slot[1] >= 30)
+                            document.getElementById(
+                                "slot" + game.selected_slot[1]
+                            ).className = "inventory_slot equip_slot"
+                        else
+                            document.getElementById(
+                                "slot" + game.selected_slot[1]
+                            ).className = "inventory_slot"
+                    }
+                    game.selected_slot[1] = i
+                    document.getElementById("slot" + i).className =
+                        "inventory_slot selected_slot"
+                }
+            }
+        }
+    })
+
+    if (game.inventory[i] !== null) {
+        if (game.inventory[i].new) {
+            const shard_type = [
+                "red",
+                "yellow",
+                "green",
+                "blue",
+                "pink",
+                "rainbow",
+                "dark",
+            ]
+
+            let crystal = document.createElement("DIV")
+            crystal.className =
+                "slot_crystal " +
+                shard_type[game.inventory[i].type] +
+                "_crystal"
+            crystal.id = "slot_crystal" + i
+            let img = document.createElement("IMG")
+            img.className = "slot_img"
+            img.id = "slot_img" + i
+            img.src =
+                "img/" + shard_type[game.inventory[i].type] + "_crystal.png"
+            crystal.appendChild(img)
+            slot.appendChild(crystal)
+
+            let level = document.createElement("P")
+            level.innerHTML = format_small(game.inventory[i].level)
+            level.className = "slot_level"
+            level.id = "slot_level" + i
+            slot.appendChild(level)
+        } else {
+            let crystal = document.createElement("DIV")
+            crystal.className =
+                "slot_crystal crystal_type" + game.inventory[i].essence.length
+            crystal.id = "slot_crystal" + i
+            for (let j = 1; j <= game.inventory[i].essence.length; j++) {
+                switch (game.inventory[i].essence[j - 1][0]) {
+                    case 0:
+                        crystal.style.setProperty("--color" + j, "#ff2714")
+                        break
+                    case 1:
+                        crystal.style.setProperty("--color" + j, "#ffd107")
+                        break
+                    case 2:
+                        crystal.style.setProperty("--color" + j, "#25dd8a")
+                        break
+                    case 3:
+                        crystal.style.setProperty("--color" + j, "#0072ff")
+                        break
+                    case 4:
+                        crystal.style.setProperty("--color" + j, "#ff3dd8")
+                        break
+                }
+            }
+            let img = document.createElement("IMG")
+            img.className = "slot_img"
+            img.id = "slot_img" + i
+            img.src = "img/crystal" + game.inventory[i].essence.length + ".png"
+            crystal.appendChild(img)
+            slot.appendChild(crystal)
+
+            let level = document.createElement("P")
+            level.innerHTML = format_small(game.inventory[i].level)
+            level.className = "slot_level"
+            level.id = "slot_level" + i
+            slot.appendChild(level)
+        }
+    }
+
+    document.getElementById("inventory_block").appendChild(slot)
+}
+
+for (let i = 0; i < 5; i++) {
+    let slot = document.createElement("DIV")
+    slot.className = "inventory_slot equip_slot"
+    slot.id = "slot" + (30 + i)
+    slot.addEventListener("mouseover", () => {
+        game.hovered_slot = 30 + i
+    })
+    slot.addEventListener("mouseout", () => {
+        game.hovered_slot = -1
+    })
+    slot.addEventListener("click", () => {
+        if (game.selected_slot[0] === -1) {
+            game.selected_slot[0] = 30 + i
+            document.getElementById("slot" + (30 + i)).className =
+                "inventory_slot equip_slot selected_slot"
+        } else if (game.selected_slot[0] === 30 + i) {
+            if (game.selected_slot[1] !== -1) {
+                game.selected_slot[0] = game.selected_slot[1]
+                game.selected_slot[1] = -1
+            } else {
+                game.selected_slot[0] = -1
+            }
+            document.getElementById("slot" + (30 + i)).className =
+                "inventory_slot equip_slot"
+        } else if (game.selected_slot[1] === 30 + i) {
+            game.selected_slot[1] = -1
+            document.getElementById("slot" + (30 + i)).className =
+                "inventory_slot equip_slot"
+        } else {
+            if (game.selected_slot[0] >= 30) {
+                if (game.equip[game.selected_slot[0] - 30] === null) {
+                    if (game.equip[i] !== null) {
+                        game.selected_slot[1] = game.selected_slot[0]
+                        game.selected_slot[0] = 30 + i
+                        document.getElementById("slot" + (30 + i)).className =
+                            "inventory_slot equip_slot selected_slot"
+                    }
+                } else {
+                    if (game.selected_slot[1] !== -1) {
+                        if (game.selected_slot[1] >= 30)
+                            document.getElementById(
+                                "slot" + game.selected_slot[1]
+                            ).className = "inventory_slot equip_slot"
+                        else
+                            document.getElementById(
+                                "slot" + game.selected_slot[1]
+                            ).className = "inventory_slot"
+                    }
+                    game.selected_slot[1] = 30 + i
+                    document.getElementById("slot" + (30 + i)).className =
+                        "inventory_slot equip_slot selected_slot"
+                }
+            } else {
+                if (game.inventory[game.selected_slot[0]] === null) {
+                    if (game.equip[i] !== null) {
+                        game.selected_slot[1] = game.selected_slot[0]
+                        game.selected_slot[0] = 30 + i
+                        document.getElementById("slot" + (30 + i)).className =
+                            "inventory_slot equip_slot selected_slot"
+                    }
+                } else {
+                    if (game.selected_slot[1] !== -1) {
+                        if (game.selected_slot[1] >= 30)
+                            document.getElementById(
+                                "slot" + game.selected_slot[1]
+                            ).className = "inventory_slot equip_slot"
+                        else
+                            document.getElementById(
+                                "slot" + game.selected_slot[1]
+                            ).className = "inventory_slot"
+                    }
+                    game.selected_slot[1] = 30 + i
+                    document.getElementById("slot" + (30 + i)).className =
+                        "inventory_slot equip_slot selected_slot"
+                }
+            }
+        }
+    })
+
+    if (game.equip[i] !== null) {
+        if (game.equip[i].new) {
+            const shard_type = [
+                "red",
+                "yellow",
+                "green",
+                "blue",
+                "pink",
+                "rainbow",
+                "dark",
+            ]
+
+            let crystal = document.createElement("DIV")
+            crystal.className =
+                "slot_crystal equip_crystal " +
+                shard_type[game.equip[i].type] +
+                "_crystal"
+            crystal.id = "slot_crystal" + (30 + i)
+            let img = document.createElement("IMG")
+            img.className = "slot_img"
+            img.id = "slot_img" + (30 + i)
+            img.src = "img/" + shard_type[game.equip[i].type] + "_crystal.png"
+            crystal.appendChild(img)
+            slot.appendChild(crystal)
+
+            let level = document.createElement("P")
+            level.innerHTML = format_small(game.equip[i].level)
+            level.className = "slot_level equip_level"
+            level.id = "slot_level" + (30 + i)
+            slot.appendChild(level)
+        } else {
+            let crystal = document.createElement("DIV")
+            crystal.className =
+                "slot_crystal equip_crystal crystal_type" +
+                game.equip[i].essence.length
+            crystal.id = "slot_crystal" + (30 + i)
+            for (let j = 1; j <= game.equip[i].essence.length; j++) {
+                switch (game.equip[i].essence[j - 1][0]) {
+                    case 0:
+                        crystal.style.setProperty("--color" + j, "#ff2714")
+                        break
+                    case 1:
+                        crystal.style.setProperty("--color" + j, "#ffd107")
+                        break
+                    case 2:
+                        crystal.style.setProperty("--color" + j, "#25dd8a")
+                        break
+                    case 3:
+                        crystal.style.setProperty("--color" + j, "#0072ff")
+                        break
+                    case 4:
+                        crystal.style.setProperty("--color" + j, "#ff3dd8")
+                        break
+                }
+            }
+            let img = document.createElement("IMG")
+            img.className = "slot_img"
+            img.id = "slot_img" + (30 + i)
+            img.src = "img/crystal" + game.equip[i].essence.length + ".png"
+            crystal.appendChild(img)
+            slot.appendChild(crystal)
+
+            let level = document.createElement("P")
+            level.innerHTML = format_small(game.equip[i].level)
+            level.className = "slot_level equip_level"
+            level.id = "slot_level" + (30 + i)
+            slot.appendChild(level)
+        }
+    }
+
+    document.getElementById("equipped_block").appendChild(slot)
+}
+
+function update_slot(id) {
+    const shard_type = [
+        "red",
+        "yellow",
+        "green",
+        "blue",
+        "pink",
+        "rainbow",
+        "dark",
+    ]
+    if (id >= 30) {
+        document.getElementById("slot" + id).replaceChildren()
+        if (game.equip[id - 30] !== null) {
+            if (game.equip[id - 30].new) {
+                let slot = document.getElementById("slot" + id)
+
+                let crystal = document.createElement("DIV")
+                crystal.className =
+                    "slot_crystal equip_crystal " +
+                    shard_type[game.equip[id - 30].type] +
+                    "_crystal"
+                crystal.id = "slot_crystal" + id
+                let img = document.createElement("IMG")
+                img.className = "slot_img"
+                img.id = "slot_img" + id
+                img.src =
+                    "img/" +
+                    shard_type[game.equip[id - 30].type] +
+                    "_crystal.png"
+                crystal.appendChild(img)
+                slot.appendChild(crystal)
+
+                let level = document.createElement("P")
+                level.innerHTML = format_small(game.equip[id - 30].level)
+                level.className = "slot_level equip_level"
+                level.id = "slot_level" + id
+                slot.appendChild(level)
+            } else {
+                let slot = document.getElementById("slot" + id)
+
+                let crystal = document.createElement("DIV")
+                crystal.className =
+                    "slot_crystal equip_crystal crystal_type" +
+                    game.equip[id - 30].essence.length
+                crystal.id = "slot_crystal" + id
+                for (let j = 1; j <= game.equip[id - 30].essence.length; j++) {
+                    switch (game.equip[id - 30].essence[j - 1][0]) {
+                        case 0:
+                            crystal.style.setProperty("--color" + j, "#ff2714")
+                            break
+                        case 1:
+                            crystal.style.setProperty("--color" + j, "#ffd107")
+                            break
+                        case 2:
+                            crystal.style.setProperty("--color" + j, "#25dd8a")
+                            break
+                        case 3:
+                            crystal.style.setProperty("--color" + j, "#0072ff")
+                            break
+                        case 4:
+                            crystal.style.setProperty("--color" + j, "#ff3dd8")
+                            break
+                    }
+                }
+                let img = document.createElement("IMG")
+                img.className = "slot_img"
+                img.id = "slot_img" + id
+                img.src =
+                    "img/crystal" + game.equip[id - 30].essence.length + ".png"
+                crystal.appendChild(img)
+                slot.appendChild(crystal)
+
+                let level = document.createElement("P")
+                level.innerHTML = format_small(game.equip[id - 30].level)
+                level.className = "slot_level equip_level"
+                level.id = "slot_level" + id
+                slot.appendChild(level)
+            }
+        }
+    } else {
+        document.getElementById("slot" + id).replaceChildren()
+        if (game.inventory[id] !== null) {
+            if (game.inventory[id].new) {
+                let slot = document.getElementById("slot" + id)
+
+                let crystal = document.createElement("DIV")
+                crystal.className =
+                    "slot_crystal " +
+                    shard_type[game.inventory[id].type] +
+                    "_crystal"
+                crystal.id = "slot_crystal" + id
+                let img = document.createElement("IMG")
+                img.className = "slot_img"
+                img.id = "slot_img" + id
+                img.src =
+                    "img/" +
+                    shard_type[game.inventory[id].type] +
+                    "_crystal.png"
+                crystal.appendChild(img)
+                slot.appendChild(crystal)
+
+                let level = document.createElement("P")
+                level.innerHTML = format_small(game.inventory[id].level)
+                level.className = "slot_level"
+                level.id = "slot_level" + id
+                slot.appendChild(level)
+            } else {
+                let slot = document.getElementById("slot" + id)
+
+                let crystal = document.createElement("DIV")
+                crystal.className =
+                    "slot_crystal crystal_type" +
+                    game.inventory[id].essence.length
+                crystal.id = "slot_crystal" + id
+                for (let j = 1; j <= game.inventory[id].essence.length; j++) {
+                    switch (game.inventory[id].essence[j - 1][0]) {
+                        case 0:
+                            crystal.style.setProperty("--color" + j, "#ff2714")
+                            break
+                        case 1:
+                            crystal.style.setProperty("--color" + j, "#ffd107")
+                            break
+                        case 2:
+                            crystal.style.setProperty("--color" + j, "#25dd8a")
+                            break
+                        case 3:
+                            crystal.style.setProperty("--color" + j, "#0072ff")
+                            break
+                        case 4:
+                            crystal.style.setProperty("--color" + j, "#ff3dd8")
+                            break
+                    }
+                }
+                let img = document.createElement("IMG")
+                img.className = "slot_img"
+                img.id = "slot_img" + id
+                img.src =
+                    "img/crystal" + game.inventory[id].essence.length + ".png"
+                crystal.appendChild(img)
+                slot.appendChild(crystal)
+
+                let level = document.createElement("P")
+                level.innerHTML = format_small(game.inventory[id].level)
+                level.className = "slot_level"
+                level.id = "slot_level" + id
+                slot.appendChild(level)
+            }
+        }
+    }
+}
 
 //compendium entry setup
 function entry_toggle(entry, state) {

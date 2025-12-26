@@ -139,7 +139,7 @@ body {
     color: #aaaaaa;
     border: 1px solid white;
     margin-bottom: 0.3em;
-    margin-right: 0.3em;
+    margin-right: 0em;
     cursor: pointer;
 }
 
@@ -2630,9 +2630,21 @@ main {
 
 #exploration_view {
     width: 100%;
-    height: 100%;  
-    overflow: hidden;
+    height: 100%;
     zoom: 100%;
+}
+
+.view_noscroll {
+    overflow: hidden;
+}
+
+.view_scroll {
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+.view_scroll::-webkit-scrollbar {
+    display: none;
 }
 
 #exploration_map {
@@ -2676,9 +2688,21 @@ main {
 .realm {
     position: absolute;
     border-radius: 50%;
+    box-sizing: border-box;
     filter: drop-shadow(0 0 0.15em black) drop-shadow(0 0 0.3em black);
     cursor: pointer;
     transform: scale(1);
+}
+
+.visited_realm {
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
 }
 
 .current_realm {
@@ -2689,7 +2713,7 @@ main {
     filter: brightness(1.5) drop-shadow(0 0 0.15em black) drop-shadow(0 0 0.3em black);
 }
 
-#exploration_selected {
+#exploration_selected, #exploration_target {
     display: none;
     position: absolute;
     transform: scale(1) rotate(calc(var(--time) * 45deg));
@@ -2697,18 +2721,6 @@ main {
 
 #exploration_selected.current_realm {
     transform: scale(calc(0.125 * sin(var(--time) * 3.141592) + 1.125)) rotate(calc(var(--time) * 45deg));
-}
-
-.realm_line {
-    padding: 0em;
-    margin: 0em;
-    background-color: hsl(calc(7.5 * sin(var(--time) * 1.5) + 302.5), 100%, 65%);
-    filter: drop-shadow(0 0 0.15em black) drop-shadow(0 0 0.3em black);
-    opacity: 50%;
-    line-height: 1px;
-    position: absolute;
-    height: 0.5em;
-    z-index: -1;
 }
 
 #realm_view_panel {
@@ -2727,6 +2739,7 @@ main {
     left: 0;
     right: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     pointer-events: none;
 }
@@ -2744,7 +2757,7 @@ main {
 
 .expand_panel .exploration_panel {
     padding-top: 1em;
-    padding-bottom: 2em;
+    padding-bottom: 0em;
 }
 
 .expand_button {
@@ -2770,6 +2783,12 @@ main {
     font-size: 1.5em;
     font-weight: 500;
     margin-top: 0.5em;
+}
+
+#exotic_up {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin-top: 0em;
 }
 
 #expand_req2 {
@@ -2806,6 +2825,24 @@ main {
     text-align: center;
 }
 
+#zoom_panel {
+    padding-top: 0.75em;
+    padding-bottom: 0.5em;
+}
+
+.zoom_button {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+#zoom_in {
+    margin-right: 2em;
+}
+
+#exploration_hide {
+    margin-right: 0em;
+}
+
 #exploration_more {
     margin-top: -0.4em;
 }
@@ -2835,7 +2872,13 @@ main {
     display: inline;
 }
 
-#revisit_auto_buttons {
+#expand_auto_instruction {
+    display: block;
+    text-align: center;
+    margin-right: 0em;
+}
+
+#revisit_auto_buttons, #expand_auto_buttons {
     display: flex;
     justify-content: center;
     margin-top: 1em;
@@ -2847,11 +2890,11 @@ main {
     margin-top: 0.25em;
 }
 
-#revisit_auto_toggle {
+#revisit_auto_toggle, #expand_auto_toggle {
     font-size: 1.25em;
 }
 
-#revisit_auto_mode {
+#revisit_auto_mode, #expand_auto_mode {
     font-size: 1.25em;
     margin-right: 0em;
     cursor: pointer;
@@ -2867,7 +2910,7 @@ main {
     margin-top: 3em;
 }
 
-#galactic_shards_header {
+#galactic_shards_header, #galactic_shards_header2 {
     margin-left: auto;
     margin-right: auto;
     margin-top: 2em;
@@ -2898,6 +2941,14 @@ main {
     -webkit-background-clip: text;
     color: transparent;
     filter: drop-shadow(0 0 0.125em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 45%)) drop-shadow(0 0 0.25em hsl(calc(7.5 * sin(var(--time) * 1.5) + 282.5), 100%, 40%));
+}
+
+.exotic_shards {
+    background-image: linear-gradient(hsl(calc(5 * sin(var(--time) * 1.5) + 45), 100%, 80%) 30%, hsl(calc(5 * sin(var(--time) * 1.5) + 30), 100%, 70%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.05em hsl(calc(5 * sin(var(--time) * 1.5) + 30), 100%, 70%)) drop-shadow(0 0 0.1em hsl(calc(5 * sin(var(--time) * 1.5) + 25), 100%, 60%)) drop-shadow(0 0 0.3em hsl(calc(5 * sin(var(--time) * 1.5) + 20), 100%, 50%));
 }
 
 .dark_spice {
@@ -3131,6 +3182,490 @@ main {
     font-weight: bold;
 }
 
+.expansion_title {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 3em;
+    margin-bottom: 0.5em;
+}
+
+#exotic_shards_title {
+    margin-top: 2em;
+}
+
+#crafting_title {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+#inventory_title, #equipped_title {
+    margin-top: 3em;
+    margin-bottom: 1em;
+}
+
+.exotic_shards_block {
+    text-align: center;
+    padding-left: 3em;
+    padding-right: 3em;
+    margin-bottom: 1.5em;
+}
+
+@media (pointer: coarse) {
+    .exotic_shards_block {
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+    }
+}
+
+.exotic_shards_panel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.crafting_panel {
+    display: flex;
+    justify-content: center;
+}
+
+.recipe_panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4.75em;
+    margin-right: 5em;
+}
+
+.recipe_input {
+    display: flex;
+    flex-grow: 0;
+}
+
+#recipe_change {
+    margin-bottom: 1em;
+}
+
+#level_input {
+    margin-top: 1em; 
+}
+
+.recipe_text {
+    color: white;
+    font-size: 1.75em;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    white-space: nowrap;
+}
+
+#level_count {
+    font-weight: 400;
+}
+
+.recipe_button {
+    font-size: 1.25em;
+    margin-right: 0em;
+    cursor: pointer;
+}
+
+#recipe_up {
+    margin-left: 0.5em;
+}
+
+#preview_panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40em;
+}
+
+#preview_crystal {
+    display: inline-block;
+    position: relative;
+    width: 10em;
+    height: 10em;
+    margin-left: auto;
+    margin-right: auto;
+    --color1: #ff2714;
+    --color2: #ffd107;
+}
+
+#preview_crystal::after {
+    content: "";
+    position: absolute;
+    width: 10em;
+    height: 10em;
+    top: 0;
+}
+
+#crystal_img {
+    display: block;
+    width: 100%;
+}
+
+.crystal_level {
+    color: white;
+    font-size: 1.5em;
+    text-align: center;
+    margin-top: 0em;
+}
+
+.essence {
+    color: white;
+    font-size: 1.15em;
+    text-align: center;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.craft_button {
+    font-size: 1.25em;
+    margin-top: 2em;
+    margin-bottom: 0em;
+    margin-right: 0em;
+    cursor: pointer;
+}
+
+#inventory_panel {
+    display: flex;
+    justify-content: center;
+}
+
+#inventory_block {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(24.6em + 12px);
+    margin-bottom: 1em;
+}
+
+.inventory_slot {
+    position: relative;
+    width: 3.3em;
+    height: 3.3em;
+    margin: 0.4em;
+    background-color: #311936;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.inventory_slot:hover {
+    background-color: #421d49;
+}
+
+.inventory_slot:active {
+    background-color: #571c66;
+}
+
+.selected_slot {
+    border-width: 1px;
+    border-image: linear-gradient(hsl(calc(5 * sin(var(--time) * 1.5) + 45), 100%, 80%), hsl(calc(5 * sin(var(--time) * 1.5) + 30), 100%, 70%)) 1;
+    box-shadow: 0 0 0.05em hsl(calc(5 * sin(var(--time) * 1.5) + 30), 100%, 70%),
+                0 0 0.1em hsl(calc(5 * sin(var(--time) * 1.5) + 25), 100%, 60%),
+                0 0 0.3em hsl(calc(5 * sin(var(--time) * 1.5) + 20), 100%, 50%),
+                0 0 0.05em hsl(calc(5 * sin(var(--time) * 1.5) + 30), 100%, 70%) inset,
+                0 0 0.1em hsl(calc(5 * sin(var(--time) * 1.5) + 25), 100%, 60%) inset,
+                0 0 0.3em hsl(calc(5 * sin(var(--time) * 1.5) + 20), 100%, 50%) inset;
+}
+
+.slot_crystal {
+    display: inline-block;
+    position: relative;
+    width: 3.3em;
+    height: 3.3em;
+    pointer-events: none;
+    --color1: #ff2714;
+    --color2: #ffd107;
+}
+
+.slot_crystal::after {
+    content: "";
+    position: absolute;
+    width: 3.3em;
+    height: 3.3em;
+    top: 0;
+    transform: scale(1.01);
+}
+
+.slot_img {
+    display: block;
+    width: 100%;
+    pointer-events: none;
+}
+
+.slot_level {
+    position: absolute;
+    font-size: 1em;
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+    color: white;
+    text-shadow: 0 0 0.1em black, 0 0 0.2em black, 0 0 0.3em black;
+    margin: 0em;
+    top: calc(50% - 0.65em);
+    pointer-events: none;
+}
+
+#inventory_center, #equipped_center {
+    column-gap: 1em;
+}
+
+.inventory_button {
+    font-size: 1.25em;
+    margin-bottom: 0em;
+    margin-right: 0em;
+    cursor: pointer;
+}
+
+#crystal_info_panel {
+    display: flex;
+    flex-direction: column;
+    width: 20em;
+    margin-top: 6em;
+    margin-left: 3em;
+    margin-right: 3em;
+}
+
+#inventory_crystal {
+    display: inline-block;
+    position: relative;
+    width: 6.7em;
+    height: 6.7em;
+    margin-left: auto;
+    margin-right: auto;
+    --color1: #ff2714;
+    --color2: #ffd107;
+}
+
+#inventory_crystal::after {
+    content: "";
+    position: absolute;
+    width: 6.7em;
+    height: 6.7em;
+    top: 0;
+    transform: scale(1.03);
+}
+
+#inventory_img {
+    display: block;
+    width: 100%;
+}
+
+#inventory_level {
+    color: white;
+    font-size: 1.25em;
+    text-align: center;
+    margin-top: 0em;
+}
+
+#inventory_essence {
+    color: white;
+    font-size: 1em;
+    text-align: center;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+#equipped_block {
+    display: flex;
+    justify-content: center;
+    width: calc(18.6em + 6px);
+    margin-bottom: 1em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.equip_slot {
+    width: 5em;
+    height: 5em;
+    margin: 0.6em;
+}
+
+.equip_crystal {
+    width: 5em;
+    height: 5em;
+}
+
+.equip_crystal::after {
+    width: 5em;
+    height: 5em;
+}
+
+.equip_level {
+    font-size: 1.5em;
+}
+
+.total_effects {
+    color: white;
+    font-size: 1.25em;
+    text-align: center;
+    margin-top: 2em;
+}
+
+#total_crystal_effects {
+    color: white;
+    font-size: 1em;
+    text-align: center;
+    width: 30em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.crystal_type1::after {
+    background: var(--color1);
+    mask: url(https://i.imgur.com/2U5nZaJ.png) center/contain no-repeat;
+    -webkit-mask: url(https://i.imgur.com/2U5nZaJ.png) center/contain no-repeat;
+    mix-blend-mode: multiply;
+}
+
+.crystal_type2::after {
+    background: linear-gradient(195deg, var(--color1) 30%, #00000000 80%),
+                linear-gradient(15deg, var(--color2) 30%, #00000000 80%);
+    mask: url(https://i.imgur.com/FRp5uQZ.png) center/contain no-repeat;
+    -webkit-mask: url(https://i.imgur.com/FRp5uQZ.png) center/contain no-repeat;
+    mix-blend-mode: multiply;
+}
+
+.red_crystal {
+    filter: drop-shadow(0 0 0.1em hsl(5, 100%, 70%)) drop-shadow(0 0 0.2em hsl(0, 100%, 60%)) drop-shadow(0 0 0.6em hsl(355, 100%, 50%));
+}
+
+.red_crystal::after {
+    background: linear-gradient(195deg, hsl(15, 100%, 75%) 25%, hsl(5, 100%, 65%) 75%);
+    mask: url(https://i.imgur.com/qyHtOGt.png) center/contain no-repeat;
+    -webkit-mask: url(https://i.imgur.com/qyHtOGt.png) center/contain no-repeat;
+    mix-blend-mode: multiply;
+}
+
+.yellow_crystal {
+    filter: drop-shadow(0 0 0.1em hsl(49, 100%, 60%)) drop-shadow(0 0 0.2em hsl(44, 100%, 50%)) drop-shadow(0 0 0.6em hsl(39, 100%, 40%));
+}
+
+.yellow_crystal::after {
+    background: linear-gradient(195deg, hsl(59, 100%, 75%) 25%, hsl(49, 100%, 65%) 75%);
+    mask: url(https://i.imgur.com/OQWW760.png) center/contain no-repeat;
+    -webkit-mask: url(https://i.imgur.com/OQWW760.png) center/contain no-repeat;
+    mix-blend-mode: multiply;
+}
+
+.green_crystal {
+    filter: drop-shadow(0 0 0.1em hsl(153, 100%, 55%)) drop-shadow(0 0 0.2em hsl(158, 100%, 45%)) drop-shadow(0 0 0.6em hsl(163, 100%, 35%));
+}
+
+.green_crystal::after {
+    background: linear-gradient(195deg, hsl(148, 100%, 75%) 25%, hsl(153, 100%, 65%) 75%);
+    mask: url(https://i.imgur.com/TJtnQf5.png) center/contain no-repeat;
+    -webkit-mask: url(https://i.imgur.com/TJtnQf5.png) center/contain no-repeat;
+    mix-blend-mode: multiply;
+}
+
+.blue_crystal {
+    filter: drop-shadow(0 0 0.1em hsl(213, 100%, 70%)) drop-shadow(0 0 0.2em hsl(218, 100%, 60%)) drop-shadow(0 0 0.6em hsl(223, 100%, 50%));
+}
+
+.blue_crystal::after {
+    background: linear-gradient(195deg, hsl(203, 100%, 75%) 25%, hsl(213, 100%, 65%) 75%);
+    mask: url(https://i.imgur.com/o09pvSP.png) center/contain no-repeat;
+    -webkit-mask: url(https://i.imgur.com/o09pvSP.png) center/contain no-repeat;
+    mix-blend-mode: multiply;
+}
+
+.pink_crystal {
+    filter: drop-shadow(0 0 0.1em hsl(312, 100%, 70%)) drop-shadow(0 0 0.2em hsl(317, 100%, 60%)) drop-shadow(0 0 0.6em hsl(322, 100%, 50%));
+}
+
+.pink_crystal::after {
+    background: linear-gradient(195deg, hsl(302, 100%, 75%) 25%, hsl(312, 100%, 65%) 75%);
+    mask: url(https://i.imgur.com/IySzgGN.png) center/contain no-repeat;
+    -webkit-mask: url(https://i.imgur.com/IySzgGN.png) center/contain no-repeat;
+    mix-blend-mode: multiply;
+}
+
+.rainbow_crystal {
+    filter: drop-shadow(0 0 0.1em hsl(calc(var(--time) * 36), 100%, calc(60% - 10% * sin(var(--time) * 36deg + 25deg))))
+            drop-shadow(0 0 0.2em hsl(calc(var(--time) * 36 + 5), 100%, calc(50% - 10% * sin(var(--time) * 36deg + 25deg))))
+            drop-shadow(0 0 0.6em hsl(calc(var(--time) * 36 + 10), 100%, calc(40% - 10% * sin(var(--time) * 36deg + 25deg))));
+}
+
+.rainbow_crystal::after {
+    background: linear-gradient(195deg,
+                hsl(calc(var(--time) * 36 - 10), 100%, calc(70% - 10% * sin(var(--time) * 36deg + 25deg))) 25%,
+                hsl(calc(var(--time) * 36), 100%, calc(60% - 10% * sin(var(--time) * 36deg + 25deg))) 75%);
+    mask: url(https://i.imgur.com/o8BkTuh.png) center/contain no-repeat;
+    -webkit-mask: url(https://i.imgur.com/o8BkTuh.png) center/contain no-repeat;
+    mix-blend-mode: multiply;
+}
+
+.red_shards {
+    background-image: linear-gradient(hsl(15, 100%, 80%) 30%, hsl(5, 100%, 70%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.05em hsl(5, 100%, 70%)) drop-shadow(0 0 0.1em hsl(0, 100%, 60%)) drop-shadow(0 0 0.3em hsl(355, 100%, 50%));
+}
+
+.yellow_shards {
+    background-image: linear-gradient(hsl(59, 100%, 80%) 30%, hsl(49, 100%, 70%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.05em hsl(49, 100%, 60%)) drop-shadow(0 0 0.1em hsl(44, 100%, 50%)) drop-shadow(0 0 0.3em hsl(39, 100%, 40%));
+}
+
+.green_shards {
+    background-image: linear-gradient(hsl(148, 100%, 80%) 30%, hsl(153, 100%, 70%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.05em hsl(153, 100%, 55%)) drop-shadow(0 0 0.1em hsl(158, 100%, 45%)) drop-shadow(0 0 0.3em hsl(163, 100%, 35%));
+}
+
+.blue_shards {
+    background-image: linear-gradient(hsl(203, 100%, 80%) 30%, hsl(213, 100%, 70%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.05em hsl(213, 100%, 70%)) drop-shadow(0 0 0.1em hsl(218, 100%, 60%)) drop-shadow(0 0 0.3em hsl(223, 100%, 50%));
+}
+
+.pink_shards {
+    background-image: linear-gradient(hsl(302, 100%, 80%) 30%, hsl(312, 100%, 70%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.05em hsl(312, 100%, 70%)) drop-shadow(0 0 0.1em hsl(317, 100%, 60%)) drop-shadow(0 0 0.3em hsl(322, 100%, 50%));
+}
+
+.rainbow_shards {
+    background-image: linear-gradient(hsl(calc(var(--time) * 36 - 10), 100%, 80%) 30%, hsl(calc(var(--time) * 36), 100%, 70%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.05em hsl(calc(var(--time) * 36), 100%, calc(60% - 10% * sin(var(--time) * 36deg + 25deg))))
+            drop-shadow(0 0 0.1em hsl(calc(var(--time) * 36 + 5), 100%, calc(50% - 10% * sin(var(--time) * 36deg + 25deg))))
+            drop-shadow(0 0 0.3em hsl(calc(var(--time) * 36 + 10), 100%, calc(40% - 10% * sin(var(--time) * 36deg + 25deg))));
+}
+
+.dark_shards {
+    background-image: linear-gradient(hsl(290, calc(12.5% * sin(var(--time)) + 57.5%), 60%) 30%, hsl(300, calc(12.5% * sin(var(--time)) + 57.5%), 40%) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 0.05em hsl(300, calc(12.5% * sin(var(--time)) + 57.5%), 40%)) drop-shadow(0 0 0.1em hsl(305, calc(10% * sin(var(--time)) + 20%), 15%)) drop-shadow(0 0 0.2em black) drop-shadow(0 0 0.3em black);
+}
+
+.recipe_text2 {
+    font-size: 1.25em;
+}
+
+.recipe_text3 {
+    font-size: 1.25em;
+    font-weight: 500;
+}
+
 .statistics_text {
     font-size: 1.333em;
     font-weight: 400;
@@ -3291,15 +3826,7 @@ main {
     margin-right: 0.5em;
 }
 
-.link2 {
-    display: inline;
-    color: #ff3dd8;
-    cursor: pointer;
-    margin-right: 0.5em;
-    text-decoration: underline;
-}
-
-.link:hover, .link2:hover {
+.link:hover {
     color: #fd74e2;
 }
 

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Spice Idle Changelog</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <main>
+            <p class="title">
+                CHANGELOG
+            </p>
+            
+            <!-- <p class="change_head">
+                v1.9.0
+            </p>
+            <p class="change_major">
+                jesse we need to craft
+            </p> -->
+            <p class="change_minor">
+                v1.9.0 β9 - 2025/12/26 - 02:38 UTC
+                <br>+ galactic crystals can now only have 1 essence
+                <br>+ you can now equip 2 galactic crystals by default
+                <br>+ changed recipe ui and crafting cost to match
+                <br>+ added 4 new galactic upgrades
+                <br>+ rainbow shards and rainbow essence are now implemented
+                <br>+ 4th effects on red-pink essence are now implemented
+                <br>+ moved 3 effect galactic crystals up to 37.5%+ essence instead of 25%+ essence
+                <br>+ red-pink spice production boosts are now all the same
+                <br>+ buffed strengthener boosts from galactic crystals again
+                <br>+ buffed the color boosts effect on yellow essence
+                <br>- nerfed single effect essences again
+                <br>+ added "pity" exotic shards, given to you if too many rolls fail in a row
+                <br>+ fixed numbers larger than e1e21 being deleted by saves
+                <br><br>
+                v1.9.0 β8 - 2025/10/6 - 06:33 UTC
+                <br>+ buffed yellow-pink spice production boosts from galactic crystals
+                <br>+ buffed strengthener boosts from galactic crystals
+                <br>- nerfed the pre-expansion synergies effect on red essence
+                <br>- nerfed single effect essences
+                <br>+ number of effects is no longer random
+                <br>+ 4th and 5th effects on red-pink essence now appear sooner
+                <br>+ moved GU24 two upgrades earlier, and the old GU22 and GU23 one upgrade later
+                <br>+ already visited realms are now hollow circles instead of being connected by lines
+                <br><br>
+                v1.9.0 β7 - 2025/9/4 - 00:52 UTC
+                <br>+ changed essence formulas and the crafting cost formula
+                <br>+ reworked crystal power and crystal effect formulas
+                <br>+ essences with 1 effect are now stronger, and essences with 3 effects are now weaker
+                <br>+ made galactic upgrade 23 twice as strong
+                <br>+ past expansions can now show exotic shard gain if galactic crystals are unlocked
+                <br>+ the recipe menu now stays in place
+                <br>+ fixed a bug where unlocking crystallized spice doesn't unlock the compendium entry
+                <br><br>
+                v1.9.0 β6 - 2025/5/25 - 18:25 UTC
+                <br>+ buffed all galactic crystal effects even more again
+                <br>+ un-nerfed dark construct cost scaling post-2,000 constructs
+                <br>+ future galactic crystals now show the recipe used to craft them when hovered over
+                <br><br>
+                v1.9.0 β5 - 2025/5/11 - 12:28 UTC
+                <br>+ buffed all galactic crystal effects even more
+                <br>+ adjusted the crafting cost formula
+                <br><br>
+                v1.9.0 β4 - 2025/5/10 - 14:25 UTC
+                <br>+ buffed the "crystal infusions & arcane enchantments are stronger" and "research is faster" galactic crystal effects
+                <br><br>
+                v1.9.0 β3 - 2025/5/9 - 11:50 UTC
+                <br>+ fixed the jump distance being ignored for realm selection checks
+                <br><br>
+                v1.9.0 β2 - 2025/5/9 - 09:49 UTC
+                <br>+ fixed a bug with the "pre-expansion synergies are stronger" galactic crystal effect
+                <br><br>
+                v1.9.0 β1 - 2025/5/9 - 08:24 UTC
+                <br>+ added galactic crystals, which can be equipped for various boosts
+                <br>+ added exotic shards, which can be used to craft galactic crystals
+                <br>+ added 4 new galactic upgrades
+                <br>+ you can now hide the expansion button and its related UI
+                <!-- <br>+ added 12 new galactic upgrades*
+                <br>+ changed every instance of an "exponential percentage" to use ^ instead for clarity* -->
+                <br><br><br>
+                v1.8.6 - 2025/4/17 - 03:11 UTC
+                <br>+ fixed a bug with hotkeys not working simultaneously anymore
+                <br><br>
+                v1.8.5 - 2025/4/16 - 03:43 UTC
+                <br>+ added a guaranteed good realm around 176 units away from the center
+                <br>+ added a button in settings on older saves to switch to the new realm generation and reset to the starting realm
+                <br>- nerfed the galactic shard gain formula past 1e50
+                <br>- dark construct cost scaling is now twice as harsh past 2,000 constructs
+                <br>- nerfed galactic upgrade 14
+                <br>+ changed distribute runes hotkey, and added a new hotkey for starting research
+                <br>+ the max all hotkey now works on the research subtab
+                <br>+ fixed a bug where completing challenge 9 and expanding at the same time causes extreme progress
+                <br>+ fixed a bug where manually activating the collider can give you the wrong amount of rainbow antispice
+                <br><br>
+                v1.8.4 - 2025/3/25 - 12:51 UTC
+                <br>+ added 500 more realms to future save files
+                <br>+ changed the distribution of realms to be more even
+                <br>+ the starting realm is now always in the middle of its arm
+                <br>+ the starting realm is now also guaranteed to have a good realm within jumping distance
+                <br>+ fixed a bug with galactic upgrade 10
+                <br><br>
+                v1.8.3 - 2025/3/23 - 03:46 UTC
+                <br>+ added hacktimer, which should allow the game to properly run in the background
+                <br>- reduced the offline progress cap to 1,000,000 ticks
+                <br>+ offline progress now estimates prestige layer farming rates
+                <br>+ synergies are now based on total spice rather than highest spice
+                <br>+ added spore-esque lines connecting realms you've already visited
+                <br>+ changed how galactic upgrades are revealed to handle more edge cases
+                <br>+ some early ascension upgrades are now cheaper
+                <br>+ reduced challenge 1's goal
+                <br>+ all arcane spice generators are now 3x cheaper
+                <br>+ completely rewrote the compendium (and added entries for expansion stuff)
+                <br>+ added an option to disable the space background for performance
+                <br><br>
+                v1.8.2 - 2025/3/16 - 08:09 UTC
+                <br>+ added a space background for realms
+                <br>+ fixed a bug with the free crystal infusions upgrade
+                <br><br>
+                v1.8.1 - 2025/3/14 - 04:00 UTC
+                <br>+ fixed up the mobile UI for a bunch of things
+                <br>+ logarithm notation now only has decimals at small exponents
+                <br>+ standard notation now uses loops to determine -illions
+                <br>+ added "truncated standard" and "mixed logarithm" notations
+                <br><br>
+            </p>
+            <p class="change_head">
+                v1.8.0 - 2025/3/13 - 00:18 UTC
+            </p>
+            <p class="change_major">
+                domain expansion
+            </p>
+            <p class="change_minor">
+                + added expansion, the fifth and final prestige layer
+                <br>+ added realms, which are procedurally generated and different on every playthrough
+                <br>+ you can choose which realm you will go to when you expand your empire
+                <br>+ added galactic shards, which can be spent on all things expansion
+                <br>+ added dark spice
+                <br>+ added 20 galactic upgrades
+                <br>+ ascension upgrades are now even cheaper in challenge 10
+                <br>+ boosts based on ascension & collapse counts are now twice as strong
+                <br>+ moved the unstable spice boost text to be under decayed spice to reduce confusion
+                <br>+ added best prestige, ascension, collapse, and expansion rates statistics to past resets
+                <br>+ added 5 hotkeys
+                <br>+ hotkeys can now trigger confirmations on prestige layers
+                <br>+ subtabs are now permanently visible when unlocked, but still require the unlock condition to be interacted with
+                <br>+ added "production rates" and "offline speed" settings
+                <br>+ refresh rate now has more options
+                <br>+ fixed a bug with buying arcane strengtheners
+                <br>+ simplified the march 32nd joke to be easier to add new content onto
+                <br><br><br>
+                v1.7.5 - 2024/3/32 - 08:12 UTC
+                <br>+ added a joke that triggers on march 32nd
+                <br><br>
+                v1.7.4 - 2024/1/30 - 03:16 UTC
+                <br>+ background progress can no longer trigger by the game just being "hidden"
+                <br><br>
+                v1.7.3 - 2024/1/28 - 04:42 UTC
+                <br>+ potentially fixed a bug with background progress that would give you years of extra progress
+                <br>+ pressing escape will now close modals, and pressing enter will accept them
+                <br><br>
+                v1.7.2 - 2024/1/19 - 16:41 UTC
+                <br>+ added a title screen when the game is loaded the first time
+                <br>+ implemented offline progress
+                <br>+ improved background progress
+                <br>+ implemented in-game modals, rather than using the built-in pop-ups
+                <br>+ animated text colors should now be less performance heavy
+                <br>+ fixed some issues with the mobile UI
+                <br><br>
+                v1.7.1 - 2023/12/26 - 23:31 UTC
+                <br>+ added the compendium tab
+                <br>+ made the realm limit a small bit larger due to inconsistency issues
+                <br>+ the initial price of the arcane spice deity is now 27x cheaper
+                <br>+ the first rune is no longer forced if you've collapsed
+                <br>+ added some options to change the past resets display
+                <br>+ added an option to choose the minimum time before auto-collider can activate
+                <br>+ improved autobuying of the free crystal infusions upgrade
+                <br>+ added a toggle for antispice perk refund confirmations
+                <br>+ holding shift will make prestige & ascension upgrades show their ids
+                <br>+ added "array" notation, and updated random notation
+                <br>+ also changed one of the secret notations, and added a new one
+                <br>+ also fixed some bugs with other notations
+                <br>+ fixed some bugs with the color augment explanatory text
+                <br>+ fixed a bug with manually buying arcane strengtheners
+                <br>+ fixed a bug with the settings menu
+                <br>+ fixed an issue with the game's tick intervals
+                <br>+ fixed some issues with the savebank
+                <br><br>
+            </p>
+            <p class="change_head">
+                v1.7.0 - 2023/11/20 - 15:09 UTC
+            </p>
+            <p class="change_major">
+                new and improved!
+            </p>
+            <p class="change_minor">
+                + uploaded v1.6.5 to a new, different website to be preserved
+                <br>+ added the savebank
+                <br>+ changed the names of several spice generators
+                <br>+ numerous changes to every prestige layer:
+            </p>
+            <details class="change_minor">
+                <summary class="change_details">collapse</summary>
+                &nbsp; + changed the atomic spice gain formula
+                <br>&nbsp; + the default unstable spice half-life is now 30 minutes
+                <br>&nbsp; + the display indicating when research is unlocked now counts down with each collapse
+                <br>&nbsp; + unstable spice boosts are now reduced in ascension challenges
+                <br>&nbsp; + added 2 new researches for automation-related things
+                <br>&nbsp; - removed stop ascending after setting for auto-collapse
+                <br>&nbsp; + added a new "DECAY" mode for auto-collapse
+                <br>&nbsp; + changed the unlocks of most researches before collapse challenges
+                <br>&nbsp; + changed the scaling points of repeatable researches
+                <br>&nbsp; + changed the data requirements of researches #19 through #40
+                <br>&nbsp; + research #1 no longer has a cap
+                <br>&nbsp; + research #4 now instead increases the rune power production exponent
+                <br>&nbsp; + changed the formula of research #6's boost to atomic spice gain
+                <br>&nbsp; + research #13 (previously #11) also has a new formula
+                <br>&nbsp; + research #28 (previously #26) now stops decreasing its rate earlier at 5 free enchantments per collapse
+                <br>&nbsp; + research #39 (previously #37) now also boosts prestige gains
+                <br>&nbsp; + also rebalanced some other researches
+                <br>&nbsp; + changed the goals of all collapse challenges
+                <br>&nbsp; + challenge 8's research now unlocks from completing challenge 7 twice instead of once
+                <br>&nbsp; + changed challenge 9's rule, and its reward now scales harder starting at 7 completions
+                <br>&nbsp; + challenge 11's original reward no longer scales, and it has a new second reward starting at 2 completions
+                <br>&nbsp; + collider automation is now unlocked by having 30 total collapse challenge completions
+                <br>&nbsp; + rebalanced antispice boosts, perks, and gains
+                <br>&nbsp; + increased the realm limit
+            </details>
+            <details class="change_minor">
+                <summary class="change_details">ascension</summary>
+                &nbsp; + changed the ansuz rune gain formula
+                <br>&nbsp; + changed the prices of most ascension upgrades
+                <br>&nbsp; + the ascension upgrade that doubles free infusions now makes free infusions uncapped instead
+                <br>&nbsp; + also rebalanced some other ascension upgrades
+                <br>&nbsp; + changed how rune power works
+                <br>&nbsp; - removed the ability to recall runes
+                <br>&nbsp; + the game now prevents spending the first rune on anything that's not othala
+                <br>&nbsp; + rune types with 0 assigned will now produce a small amount of rune power if you've ascended
+                <br>&nbsp; + changed the ascension challenge goals
+                <br>&nbsp; + changed challenge 1's rule
+                <br>&nbsp; + ascension challenges can no longer disable the rewards of other ascension challenges
+                <br>&nbsp; - rainbow spice boosts no longer apply in ascension challenges
+                <br>&nbsp; + made some ascension challenge rewards more specific
+                <br>&nbsp; + changed arcane spice prices
+                <br>&nbsp; + arcane enchantment prices scale a bit slower at first
+            </details>
+            <details class="change_minor">
+                <summary class="change_details">prestige</summary>
+                &nbsp; + the display indicating when prestige is unlocked now appears sooner and counts down with each color boost
+                <br>&nbsp; + changed color boost & color augment scaling
+                <br>&nbsp; + crystal infusion prices scale a bit slower at first
+                <br>&nbsp; + you start gaining more free infusions after purchasing the upgrade 5 times
+                <br>&nbsp; + made some prestige glows a bit stronger
+            </details>
+            <p class="change_minor">
+                <br><br>
+                v1.6.5 - 2023/8/17 - 16:21 UTC
+                <br>+ slightly improved the max all code
+                <br>+ peak resource/min now appears before automation for that layer is unlocked without giving the moment the peak was reached
+                <br>+ the crystal infusion automation upgrade is now cheaper
+                <br>+ fixed a bug with past ascensions in statistics
+                <br><br>
+                v1.6.4 - 2023/7/21 - 11:32 UTC
+                <br>+ rainbow antispice gains now scale more harshly at first
+                <br>+ added more information to past resets
+                <br>+ modified the way long times are shown
+                <br>+ added an auto-prestige goal display with a reset button
+                <br>+ added "imperial" and "random" notations
+                <br>+ also added two new secret notations... 😉
+                <br>+ fixed some issues with cancer, letters, and BASE64 notations
+                <br><br>
+                v1.6.3 - 2023/7/7 - 06:10 UTC
+                <br>+ fixed a bug with the new max all code
+                <br><br>
+                v1.6.2 - 2023/7/6 - 02:10 UTC
+                <br>+ added an optional reset layer resource/min display
+                <br>+ added a "reduce flashing" option
+                <br>+ exit challenge buttons now only appear when in a challenge of the relevant prestige layer
+                <br>+ "refund antispice perks" now only appears when there are perks to refund
+                <br>+ changed the way max all buttons work
+                <br>+ the cursor now lights up on clickable buttons
+                <br>+ fixed a couple bugs with rainbow antispice
+                <br><br>
+                v1.6.1 - 2023/7/2 - 03:19 UTC
+                <br>+ implemented shifting hue colors for rainbow antispice in the spice collider
+                <br><br>
+            </p>
+            <p class="change_head">
+                v1.6.0 - 2023/6/30 - 20:09 UTC
+            </p>
+            <p class="change_major">
+                return of the rainbow
+            </p>
+            <p class="change_minor">
+                + added 9 new researches
+                <br>+ added 2 new collapse challenges
+                <br>+ added 3 new antispices
+                <br>+ added 8 antispice perks
+                <br>+ added lots of new scaling/walls
+                <br>+ implemented the "realm limit"
+                <br>+ made antispice stronger, and removed the antispice caps
+                <br>+ the collider can now only be activated if you will gain at least 1 antispice
+                <br>+ changed pure antispice's name to basic antispice
+                <br>- nerfed red spice synergies past e1e12 red spice
+                <br>+ changed all existing collapse challenge goals
+                <br>- nerfed challenge 7 rewards past 12 completions
+                <br>+ increased the challenge 3 goal again
+                <br>+ changed the requirements of researches #24 through #29
+                <br>+ research #4 requirements now scale faster after 57 completions
+                <br>+ extended the research #6 and #18 boosts to have asymptotic hardcaps instead
+                <br>+ added some more explanatory text
+                <br>+ raised the number limit from 1e9e15 to 1e1.798e308
+                <br>+ made improvements to tick intervals
+                <br>+ implemented femtillions in standard notation
+                <br>+ changed the way "precise" numbers are displayed past 1e9
+                <br><br><br>
+                v1.5.4 - 2023/4/10 - 19:14 UTC
+                <br>+ buffed research #26
+                <br>+ also made researches #12, #14, and #26 show the amount of free enchantments they give in their descriptions
+                <br>+ added new hotkeys for switching tabs/subtabs (courtesy of Hedrauta)
+                <br>+ FIXED -INFINITY ONCE AND FOR ALL
+                <br><br>
+                v1.5.3 - 2023/4/6 - 20:36 UTC
+                <br>+ changed goals for challenges 4, 5, and 6
+                <br><br>
+                v1.5.2 - 2023/4/6 - 18:14 UTC
+                <br>+ fixed a bug with the spice collider
+                <br>+ fixed a bug with green antispice
+                <br>+ challenges can now be completed from the challenge screens
+                <br>+ hotkeys/settings for things that are not yet unlocked are now hidden in settings
+                <br>+ hotkeys now automatically release when the game goes out of focus
+                <br>+ changed how boosts based on a spice's amount are displayed
+                <br>+ the 1.000e12 ᚫ upgrade now only applies if you can actually prestige
+                <br><br>
+                v1.5.1 - 2023/4/4 - 10:40 UTC
+                <br>+ fixed challenge 7
+                <br>+ fixed a bug with bulk challenge completions
+                <br>+ collapse challenges now display how many completions until the next research unlock
+                <br>+ added convert half for runes
+                <br><br>
+            </p>
+            <p class="change_head">
+                v1.5.0 - 2023/3/28 - 13:41 UTC
+            </p>
+            <p class="change_major">
+                not an antimatter dimensions reference
+            </p>
+            <p class="change_minor">
+                + added 13 new researches
+                <br>+ added 4 collapse challenges
+                <br>+ added antispice, with 4 varities that can all be produced in the spice collider
+                <br>+ removed the previous endgame wall (it wasn't really a wall anyway)
+                <br>+ also added several new walls
+                <br>+ research #1 is now capped at 40 completions
+                <br>+ buffed research #11
+                <br>- nerfed research #4 and research #8
+                <br>- nerfed the 140,000 ᚫ upgrade
+                <br>+ fixed some bugs with mixed notations
+                <br>+ improved the way times are shown in-game
+                <br>+ time until unstable spice is fully decayed is now shown
+                <br>+ made ascension colors more vibrant
+                <br>+ implemented picillions in standard notation
+                <br><br><br>
+                v1.4.2 - 2023/1/3 - 13:11 UTC
+                <br>+ added an animated graphic to the spice collider
+                <br>+ fixed a bug with ascension upgrades
+                <br>+ fixed another bug with buying prestige and ascension upgrades
+                <br><br>
+                v1.4.1 - 2023/1/1 - 12:49 UTC
+                <br>+ changed the unstable spice formula to be less punishing to early-game mistakes
+                <br>+ changed the ascension automation upgrade to cost 1,000 ᚫ
+                <br><br>
+            </p>
+            <p class="change_head">
+                v1.4.0 - 2023/1/1 - 01:51 UTC
+            </p>
+            <p class="change_major">
+                no black holes here
+            </p>
+            <p class="change_minor">
+                + added ascension challenge 6
+                <br>+ changed the goal for challenge 3 again
+                <br>+ added collapse, the fourth prestige layer
+                <br>+ added atomic spice, unstable spice, and decayed spice
+                <br>+ added the spice collider, which turns atomic spice into unstable spice
+                <br>+ added research, with a total of 16 different things to research
+                <br>+ fixed a bug with buying prestige and ascension upgrades
+                <br>+ improved ascension upgrades tab performance
+                <br>+ the rainbow visibility setting is now text visibility and applies to most colored text
+                <br>+ changed arcane spice's unit to milligrams
+                <br>+ color boosts after 2 million are now called color augments
+                <br>+ standard notation now works correctly with nanillions
+                <br>+ hotkeys are now enabled by default
+                <br><br><br>
+                v1.3.2 - 2022/11/20 - 00:21 UTC
+                <br>+ fixed a bug with recalling spent runes
+                <br>+ numerous ui improvements for mobile
+                <br>+ added rainbow visibility and refresh rate settings
+                <br>+ prestige upgrade automation is now done in bulk
+                <br>+ changed the goal for challenge 3
+                <br><br>
+                v1.3.1 - 2022/11/16 - 07:59 UTC
+                <br>+ fixed a couple small bugs
+                <br>+ the top menu bar now scrolls with the page, and can span multiple rows
+                <br>+ challenge rewards now require the relevant upgrade to be purchased to take effect
+                <br>+ implemented delta timing for more accurate production
+                <br>+ possibly implemented background production?
+                <br>+ time mode for prestige automation is now unlocked by default
+                <br><br>
+            </p>
+            <p class="change_head">
+                v1.3.0 - 2022/11/13 - 07:46 UTC
+            </p>
+            <p class="change_major">
+                ascension's peak
+            </p>
+            <p class="change_minor">
+                + added 9 new ascension upgrades
+                <br>+ added 2 new ascension challenges
+                <br>+ added a couple new walls for post-ascension content
+                <br><br><br>
+                v1.2.1 - 2022/10/30 - 11:47 UTC
+                <br>+ changed initial prices for yellow, green, blue, and pink spice again
+                <br>+ changed prices of some early prestige upgrades
+                <br>+ added time mode for automated ascension
+                <br><br>
+            </p>
+            <p class="change_head">
+                v1.2.0 - 2022/10/29 - 10:42 UTC
+            </p>
+            <p class="change_major">
+                you could make a religion out of this
+            </p>
+            <p class="change_minor">
+                + added 13 new ascension upgrades
+                <br>+ added arcane spice
+                <br>+ added 3 ascension challenges
+                <br>+ added challenge confirmations and exponent notation settings
+                <br>+ changed the name of a crystallized spice generator
+                <br>+ added multiple walls of different types
+                <br>+ added some descriptive text to the ascension screen
+                <br>+ fixed several small bugs
+                <br><br><br>
+                v1.1.2 - 2022/9/30 - 07:34 UTC
+                <br>+ added a new wall in color boosts
+                <br>- reset anyone past 1e7 runes converted back to the beginning of ascension
+                <br>+ added a link to the discord
+                <br><br>
+                v1.1.1 - 2022/9/20 - 23:22 UTC
+                <br>- nerfed rune power boost
+                <br>+ fixed several bugs with ascension
+                <br><br>
+            </p>
+            <p class="change_head">
+                v1.1.0 - 2022/9/18 - 09:30 UTC
+            </p>
+            <p class="change_major">
+                moon runes
+            </p>
+            <p class="change_minor">
+                + added ascension, the third prestige layer
+                <br>+ added runes, which serve various purposes
+                <br>+ added 13 ascension upgrades
+                <br>+ changed initial prices for yellow, green, blue, and pink spice
+                <br>+ strengtheners now boost the next color by 1.05x by default
+                <br>+ the color boost button now lights up when you can color boost
+                <br>+ added new ascension confirmations setting
+                <br><br><br>
+                v1.0.1 - 2022/9/4 - 02:05 UTC 
+                <br>+ changed the way notations work with some resources
+                <br>+ added mixed scientific and mixed engineering notations
+                <br><br>
+            </p>
+            <p class="change_head">
+                v1.0.0 - 2022/9/1 - 02:53 UTC
+            </p>
+            <p class="change_major">
+                game launch!
+            </p>
+            <p class="change_minor">
+                + the spice must flow
+            </p>
+        </main>
+    </body>
+
+</html>
