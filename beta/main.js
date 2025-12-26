@@ -4234,8 +4234,10 @@ function tick() {
                     1 / probability[i]
                 )
                 game.pending_shards[i] += successful_rolls
-                if (successful_rolls === 0) game.failed_rolls[i]++
-                else game.failed_rolls[i] = 0
+                if (new_rolls > 0) {
+                    if (successful_rolls === 0) game.failed_rolls[i]++
+                    else game.failed_rolls[i] = 0
+                }
 
                 game.rolls[i] += new_rolls
                 if (game.failed_rolls[i] >= probability[i]) {
@@ -7999,4 +8001,5 @@ for (let i = 30; i < 33; i++) {
             "inventory_slot equip_slot selected_slot"
 }
 update_crystal_boosts()
+
 
