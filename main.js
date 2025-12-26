@@ -5576,6 +5576,17 @@ function load(savegame) {
         return
     }
 
+    if (savegame.beta) {
+        if (modal === "none") {
+            open_modal(
+                "alert",
+                spice_text[1] +
+                    " Idle Beta saves cannot be loaded on the live version"
+            )
+        }
+        return
+    }
+
     const [edition, major, minor] = savegame.version
         .split(".")
         .map(val => parseInt(val))
@@ -6195,6 +6206,7 @@ function open_modal(type, text, onclick) {
     document.getElementById("modal_alert").style.display = "none"
     document.getElementById("modal_confirm").style.display = "none"
     document.getElementById("modal_import").style.display = "none"
+    document.getElementById("modal_beta").style.display = "none"
 
     switch (type) {
         case "alert":
@@ -6211,6 +6223,9 @@ function open_modal(type, text, onclick) {
             break
         case "import":
             document.getElementById("modal_import").style.display = "block"
+            break
+        case "beta":
+            document.getElementById("modal_beta").style.display = "block"
             break
     }
 }
