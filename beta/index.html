@@ -1,0 +1,2103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta charset="utf-8">
+        <meta name="keywords" content="spice, idle, spice idle, incremental">
+        <meta name="description" content="expand your spice empire">
+        <title>Spice Idle</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Fira+Sans:wght@400;700">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="catchup_screen" class="catchup_screen">
+            <div class="catchup_panel">
+                <div class="catchup_title">
+                    <p id="spice_idle" class="spice_idle red_spice">
+                        Spice Idle
+                    </p>
+                    <p class="catchup_version">
+                        v1.9.0 β9
+                    </p>
+                </div>
+                <p id="catchup_header" class="catchup_header">
+                    Catching up on time since the game was last saved...
+                    <br>Please keep the game on-screen
+                </p>
+                <div id="offline_panel">
+                    <p id="catchup_info" class="catchup_text">
+                        0 / 0 ticks run
+                        <br>Currently running about 0 ticks/sec
+                        <br>Estimated time to completion: 0 seconds
+                    </p>
+                    <div class="catchup_back">
+                        <div id="catchup_progress" class="catchup_progress"></div>
+                    </div>
+                    <p class="catchup_warning">
+                        Heads up! Increasing offline speed or skipping<br>ticks may make automation less efficient
+                    </p>
+                    <div id="catchup_skips" class="center_button">
+                        <button id="catchup_half_skip" class="catchup_button" onclick="offline_skip('half')">
+                            Skip Half of Ticks
+                        </button>
+                        <button class="catchup_button" onclick="offline_skip('all')">
+                            Skip Offline Progress
+                        </button>
+                    </div>
+                </div>
+                <div id="startup_panel">
+                    <div class="center_button">
+                        <button class="startup_button" onclick="start_game()">
+                            Begin Your Empire
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tabs_block" class="tabs_block">
+            <div class="menu">
+                <button id="spices" class="tab selected" onclick="goto_tab(0)">
+                    SPICES
+                </button>
+                <button id="prestige" class="tab locked" onclick="goto_tab(1)">
+                    LOCKED
+                </button>
+                <button id="ascension" class="tab locked" onclick="goto_tab(2)">
+                    LOCKED
+                </button>
+                <button id="collapse" class="tab locked" onclick="goto_tab(3)">
+                    LOCKED
+                </button>
+                <button id="expansion" class="tab locked" onclick="goto_tab(4)">
+                    LOCKED
+                </button>
+                <button id="statistics" class="tab unlocked" onclick="goto_tab(5)">
+                    STATISTICS
+                </button>
+                <button id="compendium" class="tab unlocked" onclick="goto_tab(7)">
+                    COMPENDIUM
+                </button>
+                <button id="settings" class="tab unlocked" onclick="goto_tab(6)">
+                    SETTINGS
+                </button>
+            </div>
+
+            <div id="spices_tabs" class="submenu">
+                <button id="red" class="subtab selected" onclick="goto_subtab(0)">
+                    RED
+                </button>
+                <button id="yellow" class="subtab unlocked" onclick="goto_subtab(1)">
+                    YELLOW
+                </button>
+                <button id="green" class="subtab locked" onclick="goto_subtab(2)">
+                    LOCKED
+                </button>
+                <button id="blue" class="subtab locked" onclick="goto_subtab(3)">
+                    LOCKED
+                </button>
+                <button id="pink" class="subtab locked" onclick="goto_subtab(4)">
+                    LOCKED
+                </button>
+            </div>
+
+            <div id="prestige_tabs" class="submenu">
+                <button id="prestige_upgrades" class="subtab selected" onclick="goto_subtab(0)">
+                    PRESTIGE&nbsp;UPGRADES
+                </button>
+                <button id="crystallized_spice" class="subtab unlocked" onclick="goto_subtab(1)">
+                    CRYSTALLIZED&nbsp;SPICE
+                </button>
+                <button id="crystal_upgrades" class="subtab unlocked" onclick="goto_subtab(2)">
+                    CRYSTAL&nbsp;UPGRADES
+                </button>
+            </div>
+
+            <div id="ascension_tabs" class="submenu">
+                <button id="runes" class="subtab selected" onclick="goto_subtab(0)">
+                    RUNES
+                </button>
+                <button id="ascension_upgrades" class="subtab unlocked" onclick="goto_subtab(1)">
+                    ASCENSION&nbsp;UPGRADES
+                </button>
+                <button id="ascension_challenges" class="subtab locked" onclick="goto_subtab(2)">
+                    LOCKED
+                </button>
+                <button id="arcane_spice" class="subtab locked" onclick="goto_subtab(3)">
+                    LOCKED
+                </button>
+            </div>
+
+            <div id="collapse_tabs" class="submenu">
+                <button id="spice_collider" class="subtab selected" onclick="goto_subtab(0)">
+                    SPICE&nbsp;COLLIDER
+                </button>
+                <button id="research" class="subtab unlocked" onclick="goto_subtab(1)">
+                    RESEARCH
+                </button>
+                <button id="collapse_challenges" class="subtab locked" onclick="goto_subtab(2)">
+                    LOCKED
+                </button>
+                <button id="antispice" class="subtab locked" onclick="goto_subtab(3)">
+                    LOCKED
+                </button>
+            </div>
+
+            <div id="expansion_tabs" class="submenu">
+                <button id="exploration" class="subtab selected" onclick="goto_subtab(0)">
+                    EXPLORATION
+                </button>
+                <button id="dark_spice" class="subtab unlocked" onclick="goto_subtab(1)">
+                    DARK SPICE
+                </button>
+                <button id="galactic_upgrades" class="subtab unlocked" onclick="goto_subtab(2)">
+                    GALACTIC UPGRADES
+                </button>
+                <button id="galactic_crystals" class="subtab locked" onclick="goto_subtab(3)">
+                    LOCKED
+                </button>
+            </div>
+
+            <div id="statistics_tabs" class="submenu">
+                <button id="statistics_subtab" class="subtab selected" onclick="goto_subtab(0)">
+                    STATISTICS
+                </button>
+                <button id="past_prestiges" class="subtab unlocked" onclick="goto_subtab(1)">
+                    PAST&nbsp;PRESTIGES
+                </button>
+                <button id="past_ascensions" class="subtab locked" onclick="goto_subtab(2)">
+                    LOCKED
+                </button>
+                <button id="past_collapses" class="subtab locked" onclick="goto_subtab(3)">
+                    LOCKED
+                </button>
+                <button id="past_expansions" class="subtab locked" onclick="goto_subtab(4)">
+                    LOCKED
+                </button>
+            </div>
+        </div>
+
+        <div id="modal">
+            <div class="modal_background"></div>
+            <div class="modal_center">
+                <div id="modal_alert" class="modal_panel">
+                    <p id="alert_text" class="modal_text">
+                        Alert modal text here
+                    </p>
+
+                    <div class="center_button">
+                        <button class="spice_buy modal_button_last" onclick="close_modal()">
+                            OK
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="modal_confirm" class="modal_panel">
+                    <p id="confirm_text" class="modal_text">
+                        Confirmation modal text here
+                    </p>
+
+                    <div class="center_button">
+                        <button id="confirm_yes" class="spice_buy modal_button">
+                            YES
+                        </button>
+                        <button class="spice_buy modal_button_last" onclick="close_modal()">
+                            NO
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="modal_import" class="modal_panel">
+                    <p class="modal_text">
+                        Paste your exported save code here:
+                    </p>
+
+                    <textarea class="input" id="import_input"></textarea>
+
+                    <div class="center_button">
+                        <button class="spice_buy modal_button" onclick="import_save()">
+                            IMPORT
+                        </button>
+                        <button class="spice_buy modal_button_last" onclick="close_modal()">
+                            CANCEL
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <div id="spices_page">
+                <div id="color_shift">
+                    <p id="color_shift_header" class="spice_gen_name">
+                        Color Shift
+                    </p>
+                    <p id="color_shift_info" class="spice_gen_info">
+                        You have 0 color shifts,
+                        <br>boosting ALL spice generators 1.00x
+                    </p>
+                    <p id="color_shift_req" class="spice_gen_boost">
+                        Requires 50 red spice galaxies
+                    </p>
+                    <button id="color_shift_button" class="spice_buy noshift" onclick="color_boost()">
+                        Reset for a new spice color
+                    </button>
+                    <button id="boost_auto" class="spice_buy a_disabled" onclick="auto_toggle('boost')">
+                        Auto: OFF
+                    </button>
+                    <p id="color_shift_unlock" class="spice_gen_boost">
+                        Color boost 10 times to unlock Prestige
+                    </p>
+                </div>
+
+                <div id="red_page" class="spice_page">
+                    <p id="red_spice_num" class="spice_num red_spice">
+                        5.00 g
+                    </p>
+                    <p id="red_spice_text" class="spice_text red_spice">
+                        red spice
+                    </p>
+
+                    <p id="red_spice_up" class="spice_up">
+                        +0.000 g red spice/sec
+                    </p>
+
+                    <button id="red_max_all" class="spice_buy max_all" onclick="max_all('red')">
+                        Max All
+                    </button>
+                    <button id="red_auto" class="spice_buy a_disabled" onclick="auto_toggle('red')">
+                        Auto: OFF
+                    </button>
+
+                    <div class="spice_gen_page">
+                        <div id="red_panel_left" class="spice_gen_panel"></div>
+                        <div id="red_panel_right" class="spice_gen_panel"></div>
+                    </div>
+
+                    <div id="red_gen_s" class="spice_gen_s">
+                        <p id="red_gen_name_s" class="spice_gen_name red_spice">
+                            Red Spice Strengthener
+                        </p>
+                        <p id="red_info_s" class="spice_gen_info">
+                            You have 0 red spice strenghteners,
+                            <br>boosting all red spice generators 1.00x
+                        </p>
+                        <div class="spice_buttons">
+                            <button id="red_buy_s" class="spice_buy" onclick="buy_strengthener('red')">
+                            Buy one: <span id="red_cost_s" class="red_cost" onclick="buy_strengthener('red')">-1.000e6 g red spice</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="yellow_page" class="spice_page">
+                    <p id="yellow_spice_num" class="spice_num yellow_spice">
+                        10.0 g
+                    </p>
+                    <p id="yellow_spice_text" class="spice_text yellow_spice">
+                        yellow spice
+                    </p>
+
+                    <p id="yellow_spice_up" class="spice_up">
+                        +0.000 g yellow spice/sec
+                    </p>
+
+                    <button id="yellow_max_all" class="spice_buy max_all" onclick="max_all('yellow')">
+                        Max All
+                    </button>
+                    <button id="yellow_auto" class="spice_buy a_disabled" onclick="auto_toggle('yellow')">
+                        Auto: OFF
+                    </button>
+
+                    <div class="spice_gen_page">
+                        <div id="yellow_panel_left" class="spice_gen_panel"></div>
+                        <div id="yellow_panel_right" class="spice_gen_panel"></div>
+                    </div>
+
+                    <div id="yellow_gen_s" class="spice_gen_s">
+                        <p id="yellow_gen_name_s" class="spice_gen_name yellow_spice">
+                            Yellow Spice Strengthener
+                        </p>
+                        <p id="yellow_info_s" class="spice_gen_info">
+                            You have 0 yellow spice strenghteners,
+                            <br>boosting all red & yellow spice generators 1.00x
+                        </p>
+                        <div class="spice_buttons">
+                            <button id="yellow_buy_s" class="spice_buy" onclick="buy_strengthener('yellow')">
+                            Buy one: <span id="yellow_cost_s" class="yellow_cost" onclick="buy_strengthener('yellow')">-2.000e7 g yellow spice</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="green_page" class="spice_page">
+                    <p id="green_spice_num" class="spice_num green_spice">
+                        20.0 g
+                    </p>
+                    <p id="green_spice_text" class="spice_text green_spice">
+                        green spice
+                    </p>
+
+                    <p id="green_spice_up" class="spice_up">
+                        +0.000 g green spice/sec
+                    </p>
+
+                    <button id="green_max_all" class="spice_buy max_all" onclick="max_all('green')">
+                        Max All
+                    </button>
+                    <button id="green_auto" class="spice_buy a_disabled" onclick="auto_toggle('green')">
+                        Auto: OFF
+                    </button>
+
+                    <div class="spice_gen_page">
+                        <div id="green_panel_left" class="spice_gen_panel"></div>
+                        <div id="green_panel_right" class="spice_gen_panel"></div>
+                    </div>
+
+                    <div id="green_gen_s" class="spice_gen_s">
+                        <p id="green_gen_name_s" class="spice_gen_name green_spice">
+                            Green Spice Strengthener
+                        </p>
+                        <p id="green_info_s" class="spice_gen_info">
+                            You have 0 green spice strenghteners,
+                            <br>boosting all red, yellow & green spice generators 1.00x
+                        </p>
+                        <div class="spice_buttons">
+                            <button id="green_buy_s" class="spice_buy" onclick="buy_strengthener('green')">
+                            Buy one: <span id="green_cost_s" class="green_cost" onclick="buy_strengthener('green')">-4.000e8 g green spice</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="blue_page" class="spice_page">
+                    <p id="blue_spice_num" class="spice_num blue_spice">
+                        40.0 g
+                    </p>
+                    <p id="blue_spice_text" class="spice_text blue_spice">
+                        blue spice
+                    </p>
+
+                    <p id="blue_spice_up" class="spice_up">
+                        +0.000 g blue spice/sec
+                    </p>
+
+                    <button id="blue_max_all" class="spice_buy max_all" onclick="max_all('blue')">
+                        Max All
+                    </button>
+                    <button id="blue_auto" class="spice_buy a_disabled" onclick="auto_toggle('blue')">
+                        Auto: OFF
+                    </button>
+
+                    <div class="spice_gen_page">
+                        <div id="blue_panel_left" class="spice_gen_panel"></div>
+                        <div id="blue_panel_right" class="spice_gen_panel"></div>
+                    </div>
+
+                    <div id="blue_gen_s" class="spice_gen_s">
+                        <p id="blue_gen_name_s" class="spice_gen_name blue_spice">
+                            Blue Spice Strengthener
+                        </p>
+                        <p id="blue_info_s" class="spice_gen_info">
+                            You have 0 blue spice strenghteners,
+                            <br>boosting all red, yellow, green & blue spice generators 1.00x
+                        </p>
+                        <div class="spice_buttons">
+                            <button id="blue_buy_s" class="spice_buy" onclick="buy_strengthener('blue')">
+                            Buy one: <span id="blue_cost_s" class="blue_cost" onclick="buy_strengthener('blue')">-8.000e9 g blue spice</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pink_page" class="spice_page">
+                    <p id="pink_spice_num" class="spice_num pink_spice">
+                        80.0 g
+                    </p>
+                    <p id="pink_spice_text" class="spice_text pink_spice">
+                        pink spice
+                    </p>
+
+                    <p id="pink_spice_up" class="spice_up">
+                        +0.000 g pink spice/sec
+                    </p>
+
+                    <button id="pink_max_all" class="spice_buy max_all" onclick="max_all('pink')">
+                        Max All
+                    </button>
+                    <button id="pink_auto" class="spice_buy a_disabled" onclick="auto_toggle('pink')">
+                        Auto: OFF
+                    </button>
+
+                    <div class="spice_gen_page">
+                        <div id="pink_panel_left" class="spice_gen_panel"></div>
+                        <div id="pink_panel_right" class="spice_gen_panel"></div>
+                    </div>
+
+                    <div id="pink_gen_s" class="spice_gen_s">
+                        <p id="pink_gen_name_s" class="spice_gen_name pink_spice">
+                            Pink Spice Strengthener
+                        </p>
+                        <p id="pink_info_s" class="spice_gen_info">
+                            You have 0 pink spice strenghteners,
+                            <br>boosting ALL spice generators 1.00x
+                        </p>
+                        <div class="spice_buttons">
+                            <button id="pink_buy_s" class="spice_buy" onclick="buy_strengthener('pink')">
+                            Buy one: <span id="pink_cost_s" class="pink_cost" onclick="buy_strengthener('pink')">-1.600e11 g pink spice</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prestige_page">
+                <div class="prestige_header">
+                    <div class="rainbow_spice_panel">
+                        <p id="rainbow_spice_num" class="spice_num rainbow_spice">
+                            0.000 μg
+                        </p>
+                        <p id="rainbow_spice_text" class="spice_text rainbow_spice">
+                            rainbow spice
+                        </p>
+                        <p id="rainbow_spice_up" class="spice_up">
+                            +0.000 μg rainbow spice/sec
+                        </p>
+                    </div>
+                    <div>
+                        <div class="prestige_panel">
+                            <div class="prestige_info">
+                                <p id="prestige_req" class="prestige_text">
+                                    10 color boosts required
+                                </p>
+                                <p id="prestige_up" class="prestige_text rainbow_spice">
+                                    +1.00 μg rainbow spice
+                                </p>
+                            </div>
+                            <button id="prestige_button" class="prestige_button p_locked" onclick="prestige()">
+                                PRESTIGE!
+                            </button>
+                        </div>
+                        <div id="prestige_auto_block">
+                            <div id="prestige_auto_buttons">
+                                <button id="prestige_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('prestige')">
+                                    Auto: OFF
+                                </button>
+                                <button id="prestige_auto_mode" class="spice_buy" onclick="auto_toggle('prestige_mode')">
+                                    Mode: BOOSTS
+                                </button>
+                            </div>
+                            <div id="prestige_boosts">
+                                <p class="p_auto_text">
+                                    Auto-Prestige Goal (Color Boosts):
+                                </p>
+                                <input class="input" id="p_boosts_input" type="number" value="10" min="10">
+                            </div>
+                            <div id="prestige_boosts_delta">
+                                <p class="p_auto_text">
+                                    Auto-Prestige Delta (Color Boosts):
+                                </p>
+                                <input class="input" id="p_boosts_input2" type="number" value="5" min="0">
+                            </div>
+                            <div id="prestige_spice">
+                                <p id="prestige_spice_text" class="p_auto_text">
+                                    Auto-Prestige Goal (Rainbow Spice):
+                                </p>
+                                <input class="input" id="p_spice_input" type="text" value="1">
+                            </div>
+                            <div id="prestige_spice_delta">
+                                <p id="prestige_spice_delta_text" class="p_auto_text">
+                                    Auto-Prestige Delta (Rainbow Spice):
+                                </p>
+                                <input class="input" id="p_spice_input2" type="text" value="10">
+                            </div>
+                            <div id="prestige_time">
+                                <p class="p_auto_text">
+                                    Auto-Prestige Goal (Real Seconds):
+                                </p>
+                                <input class="input" id="p_time_input" type="number" step="0.01" value="30" min="0.01">
+                            </div>
+                            <div id="prestige_goal">
+                                <p id="prestige_goal_text" class="p_auto_text">
+                                    Current Auto-Prestige Goal: 10 color boosts
+                                </p>
+                                <button id="prestige_goal_reset" class="spice_buy" onclick="prestige_goal_reset()">
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <p id="prestige_efficiency" class="reset_efficiency">
+                            Currently: +0.000 μg rainbow spice/min
+                            Peak: +0.000 μg rainbow spice/min at 0 color boosts
+                        </p>
+                    </div>
+                </div>
+
+                <div class="center_button prestige_upgrade_auto">
+                    <button id="upgrade_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('prestige_upgrade')">
+                        Auto: OFF
+                    </button>
+                </div>
+                <div id="prestige_upgrade_block"></div>
+            </div>
+
+            <div id="crystal_page" class="spice_page">
+                <div class="crystal_header">
+                    <div class="crystal_panel">
+                        <p id="crystal_spice_num" class="spice_num crystal_spice">
+                            0.000 g
+                        </p>
+                        <p id="crystal_spice_text" class="spice_text crystal_spice">
+                            crystallized spice
+                        </p>
+                        <p id="crystal_spice_up" class="spice_up">
+                            +0.000 g crystallized spice/sec
+                        </p>
+                    </div>
+                    <div class="rainbow_spice_panel">
+                        <p id="rainbow_spice_num2" class="spice_num rainbow_spice">
+                            0.000 μg
+                        </p>
+                        <p id="rainbow_spice_text2" id="rainbow_spice_text2" class="spice_text rainbow_spice">
+                            rainbow spice
+                        </p>
+                        <p id="rainbow_spice_up2" class="spice_up">
+                            +0.000 μg rainbow spice/sec
+                        </p>
+                    </div>
+                </div>
+
+                <div id="crystal_gen_i" class="spice_gen_s">
+                    <p class="spice_gen_name crystal_spice">
+                        Crystal Infusion
+                    </p>
+                    <p id="crystal_info_i" class="spice_gen_info">
+                        You have 0 crystal infusions,
+                        <br>boosting all normal spice generators 1.00x
+                    </p>
+                    <div class="spice_buttons">
+                        <button id="crystal_buy_i" class="spice_buy" onclick="buy_infusion()">
+                        Buy one: <span id="crystal_cost_i" class="crystal_cost" onclick="buy_infusion()">-10.0 g crystallized spice</span>
+                        </button>
+                        <button id="infusion_auto" class="spice_buy a_disabled" onclick="auto_toggle('infusion')">
+                            Auto: OFF
+                        </button>
+                    </div>
+                </div>
+
+                <button id="crystal_max_all" class="spice_buy max_all" onclick="max_all('crystal')">
+                    Max All
+                </button>
+                <button id="crystal_auto" class="spice_buy a_disabled" onclick="auto_toggle('crystal')">
+                    Auto: OFF
+                </button>
+
+                <div class="spice_gen_page">
+                    <div id="crystal_panel_left" class="spice_gen_panel"></div>
+                    <div id="crystal_panel_right" class="spice_gen_panel"></div>
+                </div>
+
+                <div id="crystal_gen_s" class="spice_gen_s">
+                    <p id="crystal_gen_name_s" class="spice_gen_name crystal_spice">
+                        Crystallized Spice Strengthener
+                    </p>
+                    <p id="crystal_info_s" class="spice_gen_info">
+                        You have 0 crystallized spice strenghteners,
+                        <br>boosting crystallized spice generators 1.00x
+                    </p>
+                    <div class="spice_buttons">
+                        <button id="crystal_buy_s" class="spice_buy" onclick="buy_strengthener('crystal')">
+                        Buy one: <span id="crystal_cost_s" class="rainbow_cost" onclick="buy_strengthener('crystal')">-4.835e24 μg rainbow spice</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="crystal_page2">
+                <div class="rainbow_spice_panel">
+                    <p id="rainbow_spice_num3" class="spice_num rainbow_spice">
+                        0.000 μg
+                    </p>
+                    <p id="rainbow_spice_text3" class="spice_text rainbow_spice">
+                        rainbow spice
+                    </p>
+
+                    <p id="rainbow_spice_up3" class="spice_up">
+                        +0.000 μg rainbow spice/sec
+                    </p>
+                </div>
+
+                <div class="center_button prestige_upgrade_auto">
+                    <button id="upgrade_auto_toggle2" class="spice_buy a_disabled" onclick="auto_toggle('prestige_upgrade')">
+                        Auto: OFF
+                    </button>
+                </div>
+                <div id="crystal_upgrade_block"></div>
+            </div>
+
+            <div id="ascension_page">
+                <div class="ascension_header">
+                    <div class="ansuz_panel">
+                        <p class="ansuz_text runes">
+                            Ansuz Runes
+                        </p>
+                        <p id="ansuz_num" class="ansuz_num runes">
+                            0 ᚫ
+                        </p>
+                        <p id="ansuz_up" class="spice_up">
+                            +0.000 ᚫ/sec
+                        </p>
+                        <div id="rune_control_block">
+                            <div id="distribute_buttons" class="rune_control2">
+                                <button class="rune_button a_unlocked" onclick="distribute_runes('all')">
+                                    Distribute ALL Runes
+                                </button>
+                                <button id="half_distribute" class="rune_button a_unlocked" onclick="distribute_runes('half')">
+                                    Distribute HALF Runes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ascension_panel">
+                            <div class="ascension_info">
+                                <p id="ascend_req" class="ascend_text">
+                                    1.798e308 μg rainbow spice required
+                                </p>
+                                <p id="ascend_up" class="ascend_text runes">
+                                    +1 ᚫ
+                                </p>
+                            </div>
+                            <button id="ascend_button" class="ascend_button a_locked" onclick="pre_ascend()">
+                                ASCEND!
+                            </button>
+                        </div>
+                        <div id="ascend_auto_block">
+                            <div id="ascend_auto_buttons">
+                                <button id="ascend_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('ascend')">
+                                    Auto: OFF
+                                </button>
+                                <button id="ascend_auto_mode" class="spice_buy" onclick="auto_toggle('ascend_mode')">
+                                    Mode: RUNES
+                                </button>
+                            </div>
+                            <div id="ascend_runes">
+                                <p class="p_auto_text">
+                                    Auto-Ascend Goal (Runes):
+                                </p>
+                                <input class="input" id="a_runes_input" type="text" value="1">
+                            </div>
+                            <div id="ascend_runes_delta">
+                                <p class="p_auto_text">
+                                    Auto-Ascend Delta (Runes):
+                                </p>
+                                <input class="input" id="a_runes_input2" type="text" value="5">
+                            </div>
+                            <div id="ascend_time">
+                                <p class="p_auto_text">
+                                    Auto-Ascend Goal (Real Seconds):
+                                </p>
+                                <input class="input" id="a_time_input" type="number" step="0.01" value="30" min="0.01">
+                            </div>
+                            <div id="ascend_goal">
+                                <p id="ascend_goal_text" class="p_auto_text">
+                                    Current Auto-Ascend Goal: +1 ᚫ
+                                </p>
+                                <button id="ascend_goal_reset" class="spice_buy" onclick="ascend_goal_reset()">
+                                    Reset
+                                </button>
+                            </div>
+                            <div id="ascend_c11">
+                                <p id="ascend_c11_text" class="p_auto_text">
+                                    Stop Ascending after Challenge 11:
+                                </p>
+                                <button id="ascend_auto_c11" class="spice_buy" onclick="auto_toggle('ascend_c11')">
+                                    DISABLED
+                                </button>
+                            </div>
+                        </div>
+                        <p id="ascend_efficiency" class="reset_efficiency">
+                            Currently: +0.000 ᚫ/min
+                            Peak: +0.000 ᚫ/min at +0 ᚫ
+                        </p>
+                    </div>
+                </div>
+
+                <div id="distributor" class="rune_panel">
+                    <p id="distributor_title" class="rune_header runes">
+                        The Distributor
+                    </p>
+                    <button id="distribute_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('distributor')">
+                        Auto: OFF
+                    </button>
+                    <div class="distributor_block">
+                        <p class="distributor_text">
+                            Portion of rune gains to distribute:
+                        </p>
+                        <input class="input distributor_input" id="ds_portion_input" type="number" value="50" min="0" max="100">
+                        <p class="distributor_percent">
+                            %
+                        </p>
+                    </div>
+                </div>
+
+                <p id="ascend_info" class="ascend_info">
+                    Your Ansuz runes can be converted into any of the three rune types below
+                    <br>Each one makes rune power of its own variety, boosting spice production of its respective type(s)
+                    <br>Ansuz runes can also be spent on other things than conversion
+                </p>
+
+                <div class="rune_panel">
+                    <p class="rune_header runes">
+                        Jera Runes
+                    </p>
+                    <p id="jera_text" class="rune_text">
+                        You have 0 ᛡ, producing 0 ᛡ power/sec
+                        <br>You have 0 ᛡ power, boosting red spice production 1.00x
+                    </p>
+                    <div id="jera_menu" class="rune_menu">
+                        <button class="rune_button a_unlocked" onclick="convert_rune(0,false)">
+                            Convert 1 ᚫ
+                        </button>
+                        <button class="rune_button a_unlocked" onclick="convert_rune(0,true)">
+                            Convert ALL ᚫ
+                        </button>
+                        <button id="jera_half" class="rune_button a_unlocked" onclick="convert_rune(0,true,true)">
+                            Convert HALF ᚫ
+                        </button>
+                    </div>
+                </div>
+                <div class="rune_panel">
+                    <p class="rune_header runes">
+                        Raido Runes
+                    </p>
+                    <p id="raido_text" class="rune_text">
+                        You have 0 ᚱ, producing 0 ᚱ power/sec
+                        <br>You have 0 ᚱ power, boosting yellow, green, & blue spice production 1.00x
+                    </p>
+                    <div id="raido_menu" class="rune_menu">
+                        <button class="rune_button a_unlocked" onclick="convert_rune(1,false)">
+                            Convert 1 ᚫ
+                        </button>
+                        <button class="rune_button a_unlocked" onclick="convert_rune(1,true)">
+                            Convert ALL ᚫ
+                        </button>
+                        <button id="raido_half" class="rune_button a_unlocked" onclick="convert_rune(1,true,true)">
+                            Convert HALF ᚫ
+                        </button>
+                    </div>
+                </div>
+                <div class="rune_panel">
+                    <p class="rune_header runes">
+                        Othala Runes
+                    </p>
+                    <p id="othala_text" class="rune_text">
+                        You have 0 ᛟ, producing 0 ᛟ power/sec
+                        <br>You have 0 ᛟ power, boosting pink spice production 1.00x
+                    </p>
+                    <div class="rune_menu">
+                        <button class="rune_button a_unlocked" onclick="convert_rune(2,false)">
+                            Convert 1 ᚫ
+                        </button>
+                        <button class="rune_button a_unlocked" onclick="convert_rune(2,true)">
+                            Convert ALL ᚫ
+                        </button>
+                        <button id="othala_half" class="rune_button a_unlocked" onclick="convert_rune(2,true,true)">
+                            Convert HALF ᚫ
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ascension_page2">
+                <div id="ansuz_menu">
+                    <div class="ansuz_panel">
+                        <p class="ansuz_text runes">
+                            Ansuz Runes
+                        </p>
+                        <p id="ansuz_num2" class="ansuz_num runes">
+                            0 ᚫ
+                        </p>
+                        <p id="ansuz_up2" class="spice_up">
+                            +0.000 ᚫ/sec
+                        </p>
+                    </div>
+                </div>
+
+                <div class="center_button">
+                    <button id="upgrade_auto_toggle3" class="spice_buy a_disabled" onclick="auto_toggle('ascend_upgrade')">
+                        Auto: OFF
+                    </button>
+                </div>
+                <div id="ascension_upgrade_panel">
+                    <div id="ascension_upgrade_panel2">
+                        <div id="ascension_upgrade_panel3">
+                            <div id="ascension_upgrade_screen"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="challenges_page">
+                <p id="ascend_challenge_info" class="challenge_info">
+                    Entering an Ascension Challenge will reset your current Ascension
+                    <br>You must Ascend with the required amount of rainbow spice to complete the Challenge
+                    <br><br>Ascension automation and rainbow spice multipliers are disabled in Ascension Challenges
+                </p>
+
+                <p id="ascend_challenge_unlock" class="challenge_unlock">
+                    No Ascension Challenges unlocked yet
+                </p>
+
+                <div class="center_button">
+                    <button id="exit_ascension_challenge" class="rune_button a_unlocked" onclick="exit_ascension_challenge()">
+                        Exit Challenge
+                    </button>
+                </div>
+            </div>
+
+            <div id="arcane_page" class="spice_page">
+                <div class="arcane_header">
+                    <div class="arcane_panel">
+                        <p id="arcane_spice_num" class="spice_num arcane_spice">
+                            0.000 mg
+                        </p>
+                        <p id="arcane_spice_text" class="spice_text arcane_spice">
+                            arcane spice
+                        </p>
+                        <p id="arcane_spice_up" class="spice_up">
+                            +0.000 mg arcane spice/sec
+                        </p>
+                    </div>
+                    <div class="ansuz_panel">
+                        <p id="ansuz_text2" class="ansuz_text runes">
+                            Ansuz Runes
+                        </p>
+                        <p id="ansuz_num3" class="ansuz_num runes">
+                            0 ᚫ
+                        </p>
+                        <p id="ansuz_up3" class="spice_up">
+                            +0.000 ᚫ/sec
+                        </p>
+                    </div>
+                </div>
+
+                <div id="arcane_gen_n" class="spice_gen_s">
+                    <p class="spice_gen_name arcane_spice">
+                        Arcane Enchantment
+                    </p>
+                    <p id="arcane_info_n" class="spice_gen_info">
+                        You have 0 arcane enchantments,
+                        <br>boosting all crystallized spice generators 1.00x
+                    </p>
+                    <div class="spice_buttons">
+                        <button id="arcane_buy_n" class="spice_buy" onclick="buy_enchantment()">
+                        Buy one: <span id="arcane_cost_n" class="arcane_cost" onclick="buy_enchantment()">-25.0 g arcane spice</span>
+                        </button>
+                        <button id="enchantment_auto" class="spice_buy a_disabled" onclick="auto_toggle('enchantment')">
+                            Auto: OFF
+                        </button>
+                    </div>
+                </div>
+
+                <p id="arcane_unlock" class="spice_up">
+                    Complete Challenge 1 to unlock arcane spice!
+                </p>
+
+                <button id="arcane_max_all" class="spice_buy max_all" onclick="max_all('arcane')">
+                    Max All
+                </button>
+                <button id="arcane_auto" class="spice_buy a_disabled" onclick="auto_toggle('arcane')">
+                    Auto: OFF
+                </button>
+
+                <div id="arcane_gen_page" class="spice_gen_page">
+                    <div id="arcane_panel_left" class="spice_gen_panel"></div>
+                    <div id="arcane_panel_right" class="spice_gen_panel"></div>
+                </div>
+
+                <div id="arcane_gen_s" class="spice_gen_s">
+                    <p id="arcane_gen_name_s" class="spice_gen_name arcane_spice">
+                        Arcane Spice Strengthener
+                    </p>
+                    <p id="arcane_info_s" class="spice_gen_info">
+                        You have 0 arcane spice strenghteners,
+                        <br>boosting arcane spice generators 1.00x
+                    </p>
+                    <div class="spice_buttons">
+                        <button id="arcane_buy_s" class="spice_buy" onclick="buy_strengthener('arcane')">
+                        Buy one: <span id="arcane_cost_s" class="rune_cost" onclick="buy_strengthener('arcane')">-1.500e6 ᚫ</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapse_page">
+                <div class="collapse_header">
+                    <div class="atomic_spice_panel">
+                        <p id="atomic_spice_num" class="spice_num atomic_spice">
+                            0
+                        </p>
+                        <p id="atomic_spice_text" class="spice_text atomic_spice">
+                            atomic spice
+                        </p>
+                    </div>
+                    <div>
+                        <div class="collapse_panel">
+                            <div class="collapse_info">
+                                <p id="collapse_req" class="collapse_text">
+                                    Challenge 6 required
+                                </p>
+                                <p id="collapse_up" class="collapse_text atomic_spice">
+                                    +1 atomic spice
+                                </p>
+                            </div>
+                            <button id="collapse_button" class="collapse_button co_locked" onclick="pre_collapse()">
+                                COLLAPSE!
+                            </button>
+                        </div>
+                        <p id="collapse_info2" class="collapse_info2">
+                            Atomic spice gains are based on total spice produced
+                            <span id="research_unlock"><br>Collapse 5 times to unlock Research</span>
+                        </p>
+                        <div id="collapse_auto_block">
+                            <div id="collapse_auto_buttons">
+                                <button id="collapse_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('collapse')">
+                                    Auto: OFF
+                                </button>
+                                <button id="collapse_auto_mode" class="spice_buy" onclick="auto_toggle('collapse_mode')">
+                                    Mode: SPICE
+                                </button>
+                            </div>
+                            <div id="collapse_spice">
+                                <p id="collapse_spice_text" class="p_auto_text">
+                                    Auto-Collapse Goal (Atomic Spice):
+                                </p>
+                                <input class="input" id="co_spice_input" type="text" value="1e50">
+                            </div>
+                            <div id="collapse_spice_delta" id="collapse_spice_delta">
+                                <p id="collapse_spice_delta_text" class="p_auto_text">
+                                    Auto-Collapse Delta (Atomic Spice):
+                                </p>
+                                <input class="input" id="co_spice_input2" type="text" value="1e10">
+                            </div>
+                            <div id="collapse_time">
+                                <p class="p_auto_text">
+                                    Auto-Collapse Goal (Real Seconds):
+                                </p>
+                                <input class="input" id="co_time_input" type="number" step="0.01" value="120" min="0.01">
+                            </div>
+                            <div id="collapse_decay">
+                                <p class="p_auto_text">
+                                    Auto-Collapse Goal (Real Seconds after Full Decay):
+                                </p>
+                                <input class="input" id="co_decay_input" type="number" step="0.01" value="10" min="0">
+                            </div>
+                            <div id="collapse_goal">
+                                <p id="collapse_goal_text" class="p_auto_text">
+                                    Current Auto-Collapse Goal: +1.000e50 atomic spice
+                                </p>
+                                <button id="collapse_goal_reset" class="spice_buy" onclick="collapse_goal_reset()">
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <p id="collapse_efficiency" class="reset_efficiency">
+                            Currently: +0.000 atomic spice/min
+                            Peak: +0.000 atomic spice/min at +0 atomic spice
+                        </p>
+                    </div>
+                </div>
+
+                <p id="collider_title" class="collapse_title atomic_spice">
+                    The Spice Collider
+                </p>
+
+                <div id="collider_block">
+                    <canvas id="collider_view" width="1440" height="720"></canvas>
+                    <canvas id="collider_view2" width="1440" height="720"></canvas>
+                    <canvas id="collider_view3" class="pure_collider" width="1440" height="720"></canvas>
+                </div>
+
+                <div class="collider_menu">
+                    <div id="collider_tabs">
+                        <button id="collider_tab1" class="spice_buy unstable_spice" onclick="game.collider_tab = 0">
+                            UNSTABLE SPICE
+                        </button>
+                        <button id="collider_tab2" class="spice_buy" onclick="game.collider_tab = 1">
+                            BASIC ANTISPICE
+                        </button>
+                        <button id="collider_tab3" class="spice_buy" onclick="game.collider_tab = 2">
+                            RED ANTISPICE
+                        </button>
+                        <button id="collider_tab4" class="spice_buy" onclick="game.collider_tab = 3">
+                            YELLOW ANTISPICE
+                        </button>
+                        <button id="collider_tab5" class="spice_buy" onclick="game.collider_tab = 4">
+                            GREEN ANTISPICE
+                        </button>
+                        <button id="collider_tab6" class="spice_buy" onclick="game.collider_tab = 5">
+                            BLUE ANTISPICE
+                        </button>
+                        <button id="collider_tab7" class="spice_buy" onclick="game.collider_tab = 6">
+                            PINK ANTISPICE
+                        </button>
+                        <button id="collider_tab8" class="spice_buy" onclick="game.collider_tab = 7">
+                            RAINBOW ANTISPICE
+                        </button>
+                    </div>
+                    <p id="collider_resource" class="collider_text">
+                        Activating the Spice Collider will consume all atomic spice and create unstable spice
+                    </p>
+                    <p id="collider_info" class="collider_text">
+                        Atomic spice efficiency: 60%
+                        <br>Expected yield: <span class="unstable_spice">+0 unstable spice</span>
+                    </p>
+                    <div id="collider_portion" class="distributor_block2">
+                        <p class="distributor_text">
+                            Portion of atomic spice to use:
+                        </p>
+                        <input class="input distributor_input" id="collider_input" type="number" value="100" min="1" max="100">
+                        <p class="distributor_percent">
+                            %
+                        </p>
+                    </div>
+                    <div id="collider_timing" class="distributor_block2">
+                        <p class="distributor_text">
+                            Minimum time between activations:
+                        </p>
+                        <input class="input distributor_input" id="collider_input2" type="number" step="0.01" value="1" min="0.5">
+                        <p class="distributor_percent">
+                            s real time
+                        </p>
+                    </div>
+                    <button id="activate_collider" class="atomic_button co_unlocked" onclick="activate_collider()">
+                        Activate Collider
+                    </button>
+                    <button id="collider_auto" class="atomic_button co_unlocked" onclick="auto_toggle('collider')">
+                        Auto: OFF
+                    </button>
+                </div>
+                
+                <p id="unstable_spice_num" class="spice_num unstable_spice">
+                    0
+                </p>
+                <p id="unstable_spice_text" class="spice_text unstable_spice">
+                    unstable spice
+                </p>
+                <p id="unstable_decay" class="unstable_text">
+                    Your unstable spice is decaying away with a half-life of 10 minutes,
+                    <br>and will be completely decayed in a very long time
+                </p>
+                
+                <p id="decayed_spice_num" class="spice_num decayed_spice">
+                    0
+                </p>
+                <p id="decayed_spice_text" class="spice_text decayed_spice">
+                    decayed spice
+                </p>
+                <p id="decay_boost" class="unstable_text">
+                    Unstable spice decay is boosting all normal spice production 1.00x
+                </p>
+            </div>
+
+            <div id="research_page">
+                <div class="atomic_spice_panel">
+                    <p id="atomic_spice_num2" class="spice_num atomic_spice">
+                        0
+                    </p>
+                    <p id="atomic_spice_text2" class="spice_text atomic_spice">
+                        atomic spice
+                    </p>
+                </div>
+
+                <p id="research_title" class="collapse_title atomic_spice">
+                    Research
+                </p>
+
+                <div id="research_automation_block">
+                    <p class="research_auto_text">
+                        Research automation:
+                    </p>
+                    <button id="research_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('research')">
+                        DISABLED
+                    </button>
+                    <p class="research_auto_text">
+                        <br>Switch view automatically:
+                    </p>
+                    <button id="research_view_toggle" class="spice_buy a_disabled" onclick="auto_toggle('research_view')">
+                        DISABLED
+                    </button>
+                </div>
+
+                <p id="research_available_text" class="research_text">
+                    Select a research:
+                </p>
+                <div id="research_available" class="research_options"></div>
+
+                <div id="research_completed_block">
+                    <p class="research_text">
+                        Completed researches:
+                    </p>
+                    <div id="research_completed" class="research_options"></div>
+                </div>
+
+                <div id="research_main_block">
+                    <p id="research_number" class="research_number">
+                        Research #1
+                    </p>
+                    <div id="research_info_block">
+                        <p id="research_info" class="research_text">
+                            The half-life of unstable spice becomes 33% shorter
+                            <br>Current unstable spice half-life: 10 minutes
+                            <br><br>
+                            Data on this research: 0 / 2,000
+                            <br>Estimated time to completion: 33 minutes, 20 seconds
+                        </p>
+                        <div id="research_control">
+                            <button id="research_toggle" class="research_toggle r_begin" onclick="research_toggle()">
+                                Begin&nbsp;Research
+                            </button>
+                            <div id="research_back">
+                                <div id="research_progress" class="r_off"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p id="research_boost" class="research_text">
+                        When researching, you gain 1.00 data/sec
+                    </p>
+                    <button id="research_upgrade" class="spice_buy" onclick="research_upgrade()">
+                        Upgrade: <span id="research_cost" class="atomic_cost" onclick="research_upgrade()">-4,096 atomic spice</span>
+                    </button>
+                    <button id="research_upgrade_max" class="spice_buy" onclick="research_upgrade(true)">
+                        Buy Max
+                    </button>
+                    <button id="research_upgrade_auto" class="spice_buy a_disabled" onclick="auto_toggle('research_upgrade')">
+                        Auto: OFF
+                    </button>
+                </div>
+            </div>
+
+            <div id="challenges_page2">
+                <p id="collapse_challenge_info" class="challenge_info">
+                    Entering a Collapse Challenge will reset your current Collapse
+                    <br>You must Collapse for the required amount of atomic spice to complete the Challenge
+                    <br><br>Collapse automation and atomic spice multipliers are disabled in Collapse Challenges,
+                    <br>and Collapse Challenge rewards do not apply in the Challenge they're from
+                </p>
+
+                <div id="collapse_challenge_auto">
+                    <button id="challenge_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('collapse_challenge')">
+                        Auto: OFF
+                    </button>
+                    <div class="challenge_auto_block">
+                        <p class="challenge_auto_text">
+                            Time in each Challenge (in real seconds):
+                        </p>
+                        <input class="input challenge_auto_input" id="cc_wait_input" type="number" step="0.01" value="2" min="0.01">
+                    </div>
+                    <div class="challenge_auto_block">
+                        <p class="challenge_auto_text">
+                            Time between Challenge sweeps (in real seconds):
+                        </p>
+                        <input class="input challenge_auto_input" id="cc_sweep_input" type="number" step="0.01" value="48" min="0.01">
+                    </div>
+                    <p class="challenge_auto_text">
+                        Collapse Challenge automation does not work during background/offline progress
+                    </p>
+                    <p id="challenge_auto_sweep" class="challenge_auto_text">
+                        0.000s until next sweep
+                    </p>
+                </div>
+
+                <p id="collapse_challenge_unlock" class="challenge_unlock">
+                    No Collapse Challenges unlocked yet
+                </p>
+
+                <div class="center_button">
+                    <button id="exit_collapse_challenge" class="atomic_button co_unlocked" onclick="exit_collapse_challenge()">
+                        Exit Challenge
+                    </button>
+                </div>
+            </div>
+
+            <div id="antispice_page">
+                <p id="antispice_reduction" class="antispice_text">
+                    Your antispice boosts have been reduced due to being in a Collapse challenge
+                </p>
+                <div class="antispice_panel">
+                    <div id="pure_antispice_block" class="antispice_block">
+                        <p id="pure_antispice_num" class="spice_num pure_antispice">
+                            0
+                        </p>
+                        <p id="basic_antispice_text" class="spice_text pure_antispice">
+                            basic antispice
+                        </p>
+                        <p id="pure_antispice_boost" class="antispice_text">
+                            Your basic antispice is boosting arcane spice production 1.00x,
+                            <br>and making first generators 0.000% stronger
+                        </p>
+                    </div>
+                    <div id="red_antispice_block" class="antispice_block">
+                        <p id="red_antispice_num" class="spice_num red_antispice">
+                            0
+                        </p>
+                        <p id="red_antispice_text" class="spice_text red_antispice">
+                            red antispice
+                        </p>
+                        <p id="red_antispice_boost" class="antispice_text">
+                            Your red antispice is boosting red spice production 1.00x,
+                            <br>improving synergy between colors by 0.000%,
+                            <br>and making second generators 0.000% stronger
+                        </p>
+                    </div>
+                    <div id="yellow_antispice_block" class="antispice_block">
+                        <p id="yellow_antispice_num" class="spice_num yellow_antispice">
+                            0
+                        </p>
+                        <p id="yellow_antispice_text" class="spice_text yellow_antispice">
+                            yellow antispice
+                        </p>
+                        <p id="yellow_antispice_boost" class="antispice_text">
+                            Your yellow antispice is boosting yellow spice production 1.00x,
+                            <br>making color boosts and strengtheners 1.00x stronger,
+                            <br>and making third generators 0.000% stronger
+                        </p>
+                    </div>
+                </div>
+                <div class="antispice_panel">
+                    <div id="green_antispice_block" class="antispice_block">
+                        <p id="green_antispice_num" class="spice_num green_antispice">
+                            0
+                        </p>
+                        <p id="green_antispice_text" class="spice_text green_antispice">
+                            green antispice
+                        </p>
+                        <p id="green_antispice_boost" class="antispice_text">
+                            Your green antispice is boosting green spice production 1.00x,
+                            <br>making crystal infusions and arcane enchantments 1.00x stronger,
+                            <br>and making fourth generators 0.000% stronger
+                        </p>
+                    </div>
+                    <div id="blue_antispice_block" class="antispice_block">
+                        <p id="blue_antispice_num" class="spice_num blue_antispice">
+                            0
+                        </p>
+                        <p id="blue_antispice_text" class="spice_text blue_antispice">
+                            blue antispice
+                        </p>
+                        <p id="blue_antispice_boost" class="antispice_text">
+                            Your blue antispice is boosting blue spice production 1.00x,
+                            <br>increasing Prestige and Ascension gains by 0.000%,
+                            <br>and making fifth generators 0.000% stronger
+                        </p>
+                    </div>
+                    <div id="pink_antispice_block" class="antispice_block">
+                        <p id="pink_antispice_num" class="spice_num pink_antispice">
+                            0
+                        </p>
+                        <p id="pink_antispice_text" class="spice_text pink_antispice">
+                            pink antispice
+                        </p>
+                        <p id="pink_antispice_boost" class="antispice_text">
+                            Your pink antispice is boosting pink spice production 1.00x,
+                            <br>boosting crystallized spice production 1.00x,
+                            <br>and making sixth generators 0.000% stronger
+                        </p>
+                    </div>
+                </div>
+                <div class="antispice_panel">
+                    <div id="rainbow_antispice_block" class="antispice_block">
+                        <p id="rainbow_antispice_num" class="spice_num rainbow_antispice">
+                            0
+                        </p>
+                        <p id="rainbow_antispice_text" class="spice_text rainbow_antispice">
+                            rainbow antispice
+                        </p>
+                        <p id="total_rainbow_antispice" class="antispice_text">
+                            You have a total of 0 rainbow antispice
+                        </p>
+
+                        <p id="antiperks_title" class="collapse_title rainbow_antispice">
+                            Antispice Perks
+                        </p>
+                        <div class="center_button">
+                            <button id="antispice_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('antispice')">
+                                Auto: OFF
+                            </button>
+                        </div>
+                        <div class="center_button">
+                            <button id="refund_perks" class="atomic_button ap_unlocked2" onclick="pre_refund_antispice_perks()">
+                                Refund Antispice Perks
+                            </button>
+                        </div>
+                        <div id="antispice_perk_block"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="expansion_page">
+                <div id="exploration_screen" class="exploration_screen">
+                    <div id="exploration_view" class="view_noscroll">
+                        <div id="exploration_map">
+                            <div id="exploration_bg">
+                                <svg id="turbulence">
+                                    <filter id="noise" x="0%" y="0%" width="100%" height="100%">
+                                        <feTurbulence id="noise_seed" baseFrequency="0.002" type="fractalNoise" numOctaves="4" seed="0"></feTurbulence>
+                                        <feColorMatrix
+                                            type="matrix"
+                                            values="1 0 0 0 0
+                                                    0 0 0 0 0
+                                                    0 0 1 0 0
+                                                    0 0 0 1 0">
+                                        </feColorMatrix>
+                                    </filter>
+                                    <rect x="0" y="0" width="100%" height="100%" filter="url(#noise)" fill="none"></rect>
+                                </svg>
+                            </div>
+                            <div id="exploration_bg2"></div>
+                            <canvas id="exploration_selected" width="256" height="256"></canvas>
+                            <canvas id="exploration_target" width="256" height="256"></canvas>
+                        </div>
+                    </div>
+
+                    <div id="realm_view_panel">
+                        <div class="exploration_panel">
+                            <p id="realm_view" class="exploration_text">
+                                Hovered Realm
+                            </p>
+                            <p id="realm_view2" class="exploration_text">
+                                none
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="expand_panel">
+                        <div id="expansion_panel" class="exploration_panel">
+                            <p id="center_distance" class="expand_text">
+                                Distance to center: 65.0%
+                            </p>
+
+                            <div class="center_button">
+                                <button id="expand_button" class="expand_button ex_unlocked" onclick="pre_expand()">
+                                    <span id="expand_span" class="galactic_span bold" onclick="pre_expand()">Expand Your Empire</span>
+                                </button>
+                            </div>
+
+                            <p id="expand_up" class="expand_text galactic_shards">
+                                +2 galactic shards
+                            </p>
+                            <p id="exotic_up" class="expand_text exotic_shards">
+                                +1 exotic shard
+                            </p>
+                            <p id="expand_req" class="expand_text">
+                                1.719e4.895e18 g total spice required for next galactic shard
+                            </p>
+                            <p id="expand_req2" class="expand_text">
+                                Antispice perk 9 required
+                            </p>
+                        </div>
+
+                        <div id="zoom_panel" class="exploration_panel">
+                            <div class="center_button">
+                                <button id="zoom_out" class="spice_buy zoom_button" onclick="exploration_zoom('out')">
+                                    -
+                                </button>
+                                <button id="zoom_reset" class="spice_buy zoom_button" onclick="exploration_reset()">
+                                    Reset
+                                </button>
+                                <button id="zoom_in" class="spice_buy zoom_button" onclick="exploration_zoom('in')">
+                                    +
+                                </button>
+                                <button id="exploration_hide" class="spice_buy zoom_button" onclick="exploration_hide()">
+                                    Hide
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="exploration_stars" width="4096" height="4096"></canvas>
+
+                <p id="exploration_more" class="exploration_text3">
+                    ↓ More ↓
+                </p>
+
+                <div id="revisit_auto_block">
+                    <div id="revisit_auto_buttons">
+                        <p class="ex_auto_text">
+                            Realm Revisiting:
+                        </p>
+                        <button id="revisit_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('revisit')">
+                            Auto: OFF
+                        </button>
+                        <button id="revisit_auto_mode" class="spice_buy" onclick="auto_toggle('revisit_mode')">
+                            Mode: SHARDS
+                        </button>
+                    </div>
+                    <div id="revisit_shards">
+                        <p class="ex_auto_text">
+                            Auto-Revisit Goal (Galactic Shards):
+                        </p>
+                        <input class="input" id="re_shards_input" type="text" value="1e40">
+                    </div>
+                    <div id="revisit_time">
+                        <p class="ex_auto_text">
+                            Auto-Revisit Goal (Real Seconds):
+                        </p>
+                        <input class="input" id="re_time_input" type="number" step="0.01" value="3600" min="0.01">
+                    </div>
+                </div>
+
+                <div id="expand_auto_block">
+                    <div id="expand_auto_buttons">
+                        <p class="ex_auto_text">
+                            Expansion:
+                        </p>
+                        <button id="expand_auto_toggle" class="spice_buy a_disabled" onclick="auto_toggle('expand')">
+                            Auto: OFF
+                        </button>
+                        <button id="expand_auto_mode" class="spice_buy" onclick="auto_toggle('expand_mode')">
+                            Targeting: MANUAL
+                        </button>
+                    </div>
+                    <p id="expand_auto_instruction" class="ex_auto_text">
+                        Right click to manually choose target realms
+                    </p>
+                </div>
+
+                <p id="expand_efficiency" class="reset_efficiency">
+                    Currently: +0.000 galactic shards/min
+                    Peak: +0.000 galactic shards/min at +0 galactic shards
+                </p>
+
+                <div id="galactic_shards_header">
+                    <p id="galactic_shards_num" class="spice_num galactic_shards">
+                        0
+                    </p>
+                    <p id="galactic_shards_text" class="spice_text galactic_shards">
+                        galactic shards
+                    </p>
+                </div>
+
+                <div class="ex_upgrade_menu">
+                    <div class="exploration_block">
+                        <p id="jump_distance_text" class="exploration_text3">
+                            Max Jump Distance
+                            <br>40 units
+                        </p>
+                        <div class="center_button">
+                            <button id="jump_distance_button" class="ex_upgrade ex_locked" onclick="upgrade_jump_distance()">
+                                <span id="jump_distance_cost" class="bold">-144 galactic shards</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="realm_capacity_block" class="exploration_block">
+                        <p id="realm_capacity_text" class="exploration_text3">
+                            Realm Capacity
+                            <br>1.000e4.053e18 g red spice
+                        </p>
+                        <div class="center_button">
+                            <button id="realm_capacity_button" class="ex_upgrade ex_locked" onclick="upgrade_capacity()">
+                                <span id="realm_capacity_cost" class="bold">-987 galactic shards</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <p id="realm_current" class="exploration_text2">
+                    Current Realm
+                </p>
+                <p id="realm_current2" class="exploration_text2">
+                    +0.000% normal spice power
+                    <br>+0.000% special spice power
+                    <br>+0.000% reset gain power
+                    <br><br>
+                    (Dark spice and galactic shards are unaffected by these effects)
+                </p>
+            </div>
+
+            <div id="dark_page" class="spice_page">
+                <div class="dark_header">
+                    <div class="dark_panel">
+                        <p id="dark_spice_num" class="spice_num dark_spice">
+                            0.000 kg
+                        </p>
+                        <p id="dark_spice_text" class="spice_text dark_spice">
+                            dark spice
+                        </p>
+                        <p id="dark_spice_up" class="spice_up">
+                            +0.000 g dark spice/sec
+                        </p>
+                    </div>
+                    <div class="galactic_shards_panel">
+                        <p id="galactic_shards_num2" class="spice_num galactic_shards">
+                            0
+                        </p>
+                        <p id="galactic_shards_text2" class="spice_text galactic_shards">
+                            galactic shards
+                        </p>
+                    </div>
+                </div>
+
+                <div class="spice_gen_page">
+                    <div id="dark_gen_cs" class="spice_gen_s spice_gen_panel">
+                        <p class="spice_gen_name dark_spice">
+                            Dark Construct
+                        </p>
+                        <p id="dark_info_cs" class="spice_gen_info">
+                            You have 0 dark constructs,
+                            <br>boosting all normal spice generators 1.00x
+                        </p>
+                        <div class="spice_buttons">
+                            <button id="dark_buy_cs" class="spice_buy" onclick="buy_construct()">
+                            Buy one: <span id="dark_cost_cs" class="dark_cost" onclick="buy_construct()">-324 kg dark spice</span>
+                            </button>
+                            <button id="construct_auto" class="spice_buy a_disabled" onclick="auto_toggle('construct')">
+                                Auto: OFF
+                            </button>
+                        </div>
+                    </div>
+                    <div id="dark_gen_cv" class="spice_gen_s spice_gen_panel">
+                        <p class="spice_gen_name dark_spice">
+                            Dark Conversion
+                        </p>
+                        <p id="dark_info_cv" class="spice_gen_info">
+                            You have 0 dark conversions,
+                            <br>increasing atomic spice efficiency by 0%
+                        </p>
+                        <div class="spice_buttons">
+                            <button id="dark_buy_cv" class="spice_buy" onclick="buy_conversion()">
+                            Buy one: <span id="dark_cost_cv" class="dark_cost" onclick="buy_conversion()">-36,406 kg dark spice</span>
+                            </button>
+                            <button id="conversion_auto" class="spice_buy a_disabled" onclick="auto_toggle('conversion')">
+                                Auto: OFF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="dark_max_all" class="spice_buy max_all" onclick="max_all('dark')">
+                    Max All
+                </button>
+
+                <div class="spice_gen_page">
+                    <div id="dark_panel_left" class="spice_gen_panel"></div>
+                    <div id="dark_panel_right" class="spice_gen_panel"></div>
+                </div>
+
+                <div class="spice_gen_page">
+                    <div id="dark_gen_a" class="spice_gen_s spice_gen_panel">
+                        <p id="dark_gen_name_a" class="spice_gen_name dark_spice">
+                            Dark Spice Accelerator
+                        </p>
+                        <p id="dark_info_a" class="spice_gen_info">
+                            You have 0 dark spice accelerators,
+                            <br>applying the gamespeed boost to dark spice production with 0% strength,
+                            <br>effectively making dark spice production 1.00x faster
+                        </p>
+                        <div class="spice_buttons">
+                            <button id="dark_buy_a" class="spice_buy" onclick="upgrade_dark_gamespeed()">
+                            Buy one: <span id="dark_cost_a" class="galactic_cost" onclick="upgrade_dark_gamespeed()">-13 galactic shards</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="dark_gen_s" class="spice_gen_s spice_gen_panel">
+                        <p id="dark_gen_name_s" class="spice_gen_name dark_spice">
+                            Dark Spice Strengthener
+                        </p>
+                        <p id="dark_info_s" class="spice_gen_info">
+                            You have 0 dark spice strenghteners,
+                            <br>boosting dark spice generators 1.00x
+                        </p>
+                        <div class="spice_buttons">
+                            <button id="dark_buy_s" class="spice_buy" onclick="buy_strengthener('dark')">
+                            Buy one: <span id="dark_cost_s" class="galactic_cost" onclick="buy_strengthener('dark')">-16,807 galactic shards</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="galactic_page">
+                <div class="galactic_shards_panel">
+                    <p id="galactic_shards_num3" class="spice_num galactic_shards">
+                        0
+                    </p>
+                    <p id="galactic_shards_text3" class="spice_text galactic_shards">
+                        galactic shards
+                    </p>
+                </div>
+
+                <div id="galactic_upgrade_block"></div>
+
+                <p id="coming_soon">
+                    More galactic upgrades coming soon...
+                </p>
+            </div>
+
+            <div id="crafting_page">
+                <div id="galactic_shards_header2">
+                    <p id="galactic_shards_num4" class="spice_num galactic_shards">
+                        0
+                    </p>
+                    <p id="galactic_shards_text4" class="spice_text galactic_shards">
+                        galactic shards
+                    </p>
+                </div>
+                <p id="exotic_shards_title" class="expansion_title exotic_shards">
+                    Exotic Shards
+                </p>
+                <div class="exotic_shards_panel">
+                    <div class="exotic_shards_block">
+                        <p id="red_shards_num" class="spice_num red_shards">
+                            0
+                        </p>
+                        <p id="red_shards_text" class="spice_text red_shards">
+                            red shards
+                        </p>
+                    </div>
+                    <div class="exotic_shards_block">
+                        <p id="yellow_shards_num" class="spice_num yellow_shards">
+                            0
+                        </p>
+                        <p id="yellow_shards_text" class="spice_text yellow_shards">
+                            yellow shards
+                        </p>
+                    </div>
+                    <div class="exotic_shards_block">
+                        <p id="green_shards_num" class="spice_num green_shards">
+                            0
+                        </p>
+                        <p id="green_shards_text" class="spice_text green_shards">
+                            green shards
+                        </p>
+                    </div>
+                    <div class="exotic_shards_block">
+                        <p id="blue_shards_num" class="spice_num blue_shards">
+                            0
+                        </p>
+                        <p id="blue_shards_text" class="spice_text blue_shards">
+                            blue shards
+                        </p>
+                    </div>
+                    <div class="exotic_shards_block">
+                        <p id="pink_shards_num" class="spice_num pink_shards">
+                            0
+                        </p>
+                        <p id="pink_shards_text" class="spice_text pink_shards">
+                            pink shards
+                        </p>
+                    </div>
+                    <div id="rainbow_shards_block" class="exotic_shards_block">
+                        <p id="rainbow_shards_num" class="spice_num rainbow_shards">
+                            0
+                        </p>
+                        <p id="rainbow_shards_text" class="spice_text rainbow_shards">
+                            rainbow shards
+                        </p>
+                    </div>
+                    <div id="dark_shards_block" class="exotic_shards_block">
+                        <p id="dark_shards_num" class="spice_num dark_shards">
+                            0
+                        </p>
+                        <p id="dark_shards_text" class="spice_text dark_shards">
+                            dark shards
+                        </p>
+                    </div>
+                </div>
+                <p id="crafting_title" class="expansion_title exotic_shards">
+                    Crafting
+                </p>
+                <div class="crafting_panel">
+                    <div class="recipe_panel">
+                        <div id="recipe_change" class="recipe_input">
+                            <button class="spice_buy recipe_button" onclick="recipe_down('count')">
+                                ÷10
+                            </button>
+                            <button id="recipe_up" class="spice_buy recipe_button" onclick="recipe_up('count')">
+                                x10
+                            </button>
+                        </div>
+                        <div class="recipe_input">
+                            <button id="recipe_prev" class="spice_buy recipe_button" onclick="recipe_down('type')">
+                                <
+                            </button>
+                            <p id="recipe_type" class="recipe_text red_shards">
+                                RED
+                            </p>
+                            <button id="recipe_next" class="spice_buy recipe_button" onclick="recipe_up('type')">
+                                >
+                            </button>
+                        </div>
+                        <div class="recipe_input">
+                            <button id="recipe_minus" class="spice_buy recipe_button" onclick="recipe_down('shards')">
+                                -1
+                            </button>
+                            <p id="recipe_count" class="recipe_text red_shards">
+                                0
+                            </p>
+                            <button id="recipe_plus" class="spice_buy recipe_button" onclick="recipe_up('shards')">
+                                +1
+                            </button>
+                        </div>
+                        <div id="level_input" class="recipe_input">
+                            <button id="level_minus" class="spice_buy recipe_button" onclick="recipe_down('level')">
+                                -1
+                            </button>
+                            <p id="level_count" class="recipe_text">
+                                LVL 1
+                            </p>
+                            <button id="level_plus" class="spice_buy recipe_button" onclick="recipe_up('level')">
+                                +1
+                            </button>
+                        </div>
+                    </div>
+                    <div id="preview_panel">
+                        <div id="preview_crystal" class="crystal_type2">
+                            <img id="crystal_img" src="img/crystal2.png">
+                        </div>
+                        <p id="preview_level" class="crystal_level">
+                            Galactic Crystal
+                            <br>LVL 1
+                        </p>
+                        <p id="preview_essence" class="essence">
+                            <span class="red_spice">
+                                0.527% red essence
+                            </span>
+                        </p>
+                        <div class="center_button">
+                            <button id="craft_button" class="spice_buy craft_button" onclick="craft()">
+                                Craft! 
+                                <span id="craft_price" class="galactic_cost">
+                                    -1.039e50 galactic shards
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="inventory_panel">
+                    <div>
+                        <p id="inventory_title" class="expansion_title exotic_shards">
+                            Inventory
+                        </p>
+                        <div id="inventory_block"></div>
+                        <div id="inventory_center" class="center_button">
+                            <button id="equip_button" class="spice_buy inventory_button" onclick="equip_crystal()">
+                                Equip
+                            </button>
+                            <button id="move_button" class="spice_buy inventory_button" onclick="move_crystal()">
+                                Move
+                            </button>
+                            <button id="swap_button" class="spice_buy inventory_button" onclick="swap_crystals()">
+                                Swap
+                            </button>
+                            <button id="scrap_button" class="spice_buy inventory_button" onclick="scrap_crystal()">
+                                Scrap
+                            </button>
+                        </div>
+                    </div>
+                    <div id="crystal_info_panel">
+                        <div id="inventory_crystal" class="crystal_type2">
+                            <img id="inventory_img" src="img/crystal2.png">
+                        </div>
+                        <p id="inventory_level" class="crystal_level">
+                            Galactic Crystal
+                            <br>LVL 1
+                        </p>
+                        <p id="inventory_essence" class="essence">
+                            <span class="red_spice">
+                                0.527% red essence
+                            </span>
+                        </p>
+                    </div>
+                    <div>
+                        <p id="equipped_title" class="expansion_title exotic_shards">
+                            Equipped
+                        </p>
+                        <div id="equipped_block"></div>
+                        <div id="equipped_center" class="center_button">
+                            <button id="unequip_button" class="spice_buy inventory_button" onclick="unequip_crystal()">
+                                Unequip
+                            </button>
+                            <button id="move_button2" class="spice_buy inventory_button" onclick="move_crystal()">
+                                Move
+                            </button>
+                            <button id="swap_button2" class="spice_buy inventory_button" onclick="swap_crystals()">
+                                Swap
+                            </button>
+                            <button id="scrap_button2" class="spice_buy inventory_button" onclick="scrap_crystal()">
+                                Scrap
+                            </button>
+                        </div>
+                        <p class="total_effects">
+                            Total Effects
+                        </p>
+                        <p id="total_crystal_effects" class="essence">
+                            None
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="statistics_page">
+                <p id="statistics_text" class="statistics_text">
+                    You have 5.000 g red spice
+                    <br>You have accumulated a total of 5.000 g spice
+                    <br><br>
+                    You have played for a total of 0.000 seconds
+                </p>
+            </div>
+
+            <div id="statistics_buttons" class="center_button">
+                <button id="statistics_unit" class="spice_buy statistics_button" onclick="statistics_unit()">
+                    Unit: RAINBOW SPICE
+                </button>
+                <button id="statistics_time" class="spice_buy statistics_button" onclick="statistics_time()">
+                    Time: GAME TIME
+                </button>
+            </div>
+
+            <div id="prestige_statistics_page">
+                <p id="prestige_statistics_text" class="statistics_text">
+                    Last 10 Prestiges:
+                    <br>#1 (no data)
+                    <br>#2 (no data)
+                    <br>#3 (no data)
+                    <br>#4 (no data)
+                    <br>#5 (no data)
+                    <br>#6 (no data)
+                    <br>#7 (no data)
+                    <br>#8 (no data)
+                    <br>#9 (no data)
+                    <br>#10 (no data)
+                    <br><br>
+                    Average rainbow spice gain: undefined
+                </p>
+            </div>
+
+            <div id="ascension_statistics_page">
+                <p id="ascension_statistics_text" class="statistics_text">
+                    Last 10 Ascensions:
+                    <br>#1 (no data)
+                    <br>#2 (no data)
+                    <br>#3 (no data)
+                    <br>#4 (no data)
+                    <br>#5 (no data)
+                    <br>#6 (no data)
+                    <br>#7 (no data)
+                    <br>#8 (no data)
+                    <br>#9 (no data)
+                    <br>#10 (no data)
+                    <br><br>
+                    Average Ansuz rune gain: undefined
+                </p>
+            </div>
+
+            <div id="collapse_statistics_page">
+                <p id="collapse_statistics_text" class="statistics_text">
+                    Last 10 Collapses:
+                    <br>#1 (no data)
+                    <br>#2 (no data)
+                    <br>#3 (no data)
+                    <br>#4 (no data)
+                    <br>#5 (no data)
+                    <br>#6 (no data)
+                    <br>#7 (no data)
+                    <br>#8 (no data)
+                    <br>#9 (no data)
+                    <br>#10 (no data)
+                    <br><br>
+                    Average atomic spice gain: undefined
+                </p>
+            </div>
+
+            <div id="expansion_statistics_page">
+                <p id="expansion_statistics_text" class="statistics_text">
+                    Last 10 Expansions:
+                    <br>#1 (no data)
+                    <br>#2 (no data)
+                    <br>#3 (no data)
+                    <br>#4 (no data)
+                    <br>#5 (no data)
+                    <br>#6 (no data)
+                    <br>#7 (no data)
+                    <br>#8 (no data)
+                    <br>#9 (no data)
+                    <br>#10 (no data)
+                    <br><br>
+                    Average galactic shard gain: undefined
+                </p>
+            </div>
+
+            <div id="compendium_page"></div>
+
+            <div id="settings_page">
+                <div id="save_block" class="settings_block">
+                    <button id="save" class="settings_button can_modify s_big" onclick="manual_save()">
+                        SAVE
+                    </button>
+                    <button id="export" class="settings_button can_modify s_big" onclick="export_save()">
+                        EXPORT
+                    </button>
+                    <button id="import" class="settings_button can_modify s_big" onclick="pre_import_save()">
+                        IMPORT
+                    </button>
+                </div>
+
+                <div id="settings_block1" class="settings_block">
+                    <button id="notation" class="settings_button can_modify" onclick="notation()">
+                        Notation
+                        <br>SCIENTIFIC
+                    </button>
+                    <button id="hotkeys" class="settings_button can_modify" onclick="hotkeys()">
+                        Hotkeys
+                        <br>ENABLED
+                    </button>
+                    <button id="condensed" class="settings_button can_modify" onclick="condensed()">
+                        Condensed Generators
+                        <br>DISABLED
+                    </button>
+                </div>
+                <div id="settings_block2" class="settings_block">
+                    <button id="exponent_notation" class="settings_button can_modify" onclick="exponent_notation()">
+                        Exponent Notation
+                        <br>LONG
+                    </button>
+                    <button id="high_visibility" class="settings_button can_modify" onclick="high_visibility()">
+                        Text Visibility
+                        <br>DEFAULT
+                    </button>
+                    <button id="refresh_rate" class="settings_button can_modify" onclick="refresh_rate()">
+                        Refresh Rate
+                        <br>20 MS
+                    </button>
+                </div>
+                <div id="settings_block3" class="settings_block">
+                    <button id="offline" class="settings_button can_modify" onclick="offline()">
+                        Offline Progress
+                        <br>ENABLED
+                    </button>
+                    <button id="offline_speed" class="settings_button can_modify" onclick="offline_speed()">
+                        Offline Speed
+                        <br>1X
+                    </button>
+                    <button id="resource_efficiency" class="settings_button" onclick="resource_efficiency()">
+                        ?????
+                    </button>
+                </div>
+                <div id="settings_block4" class="settings_block">
+                    <button id="reduce_flashing" class="settings_button" onclick="reduce_flashing()">
+                        ?????
+                    </button>
+                    <button id="production_rates" class="settings_button" onclick="production_rates()">
+                        ?????
+                    </button>
+                    <button id="ascend_confirm" class="settings_button" onclick="confirmations('ascend')">
+                        ?????
+                    </button>
+                </div>
+                <div id="settings_block5" class="settings_block">
+                    <button id="challenge_confirm" class="settings_button" onclick="confirmations('challenge')">
+                        ?????
+                    </button>
+                    <button id="collapse_confirm" class="settings_button" onclick="confirmations('collapse')">
+                        ?????
+                    </button>
+                    <button id="collider_animation" class="settings_button" onclick="animations()">
+                        ?????
+                    </button>
+                </div>
+                <div id="settings_block5" class="settings_block">
+                    <button id="antispice_confirm" class="settings_button" onclick="confirmations('antispice')">
+                        ?????
+                    </button>
+                    <button id="expand_confirm" class="settings_button" onclick="confirmations('expand')">
+                        ?????
+                    </button>
+                    <button id="realms_bg" class="settings_button" onclick="realms_bg(true)">
+                        ?????
+                    </button>
+                </div>
+
+                <div id="switch_block" class="settings_block">
+                    <button id="switch_generation" class="settings_button can_modify" onclick="pre_switch_generation()">
+                        SWITCH REALM GENERATION
+                    </button>
+                </div>
+
+                <div id="wipe_block" class="settings_block">
+                    <button id="wipe_save" class="settings_button can_modify s_big" onclick="pre_delete_save()">
+                        DELETE SAVE
+                    </button>
+                </div>
+
+                <p id="hotkeys_list" class="hotkeys_list">
+                    Hotkeys:
+                    <br>Up: Next tab
+                    <br>Down: Previous tab
+                    <br>Right: Next subtab
+                    <br>Left: Previous subtab
+                    <br>1-6: Buy until X of generator
+                    <br>Shift+1-6: Buy 1 of generator
+                    <br>S: Buy strengthener
+                    <br>M: Max all
+                    <br>B: Color shift/boost
+                    <br>P: Prestige
+                    <br>I: Buy crystal infusion
+                    <br>A: Ascend
+                    <br>D: Distribute HALF Runes
+                    <br>Shift+D: Distribute ALL Runes
+                    <br>X: Exit challenge
+                    <br>N: Buy arcane enchantment
+                    <br>C: Collapse
+                    <br>Y: Activate Collider
+                    <br>R: Toggle research
+                    <br>E: Expand
+                    <br>K: Buy dark construct
+                    <br>V: Buy dark conversion
+                </p>
+
+                <p class="hotkeys_list">
+                    Name generation code by Airapport
+                    <br>Tab/subtab hotkeys by Hedrauta
+                    <br>Pathfinding code by h
+                </p>
+            </div>
+
+            <p id="version" class="info">
+                Spice Idle v1.9.0 β9<br>Made by Zakuro
+            </p>
+
+            <p id="classic_info" class="info">
+                Confused? After the v1.7.0 update of Spice Idle, the game is no longer compatible with older versions.
+                <br>You can find v1.6.5 (and your old save) on <a href="https://zakuro98.github.io/Spice-Idle-Classic/" target="_blank" class="link">Spice Idle Classic</a>.
+                <br>If you'd like to continue in the new game from about where you were, you should check out the <a href="savebank.html" target="_blank" class="link">Savebank</a>.
+            </p>
+
+            <a href="changelog.html" target="_blank" class="info link">Changelog</a>
+            <a href="savebank.html" target="_blank" class="info link">Savebank</a>
+            <a href="https://zakuro98.github.io/Spice-Idle-Classic/" target="_blank" class="info link">Spice Idle Classic</a>
+            <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
+            <a href="https://discord.gg/fuQSBkYYqH" target="_blank" class="info link">Discord</a>
+        </main>
+        <script src="lib/hack_timer.js" charset="utf-8" type="text/javascript"></script>
+        <script src="lib/break_infinity.js" charset="utf-8" type="text/javascript"></script>
+        <script src="lib/imperial.js" charset="utf-8" type="text/javascript"></script>
+        <script src="lib/cancer.js" charset="utf-8" type="text/javascript"></script>
+        <script src="lib/format.js" charset="utf-8" type="text/javascript"></script>
+        <script src="lib/name_generator.js" charset="utf-8" type="text/javascript"></script>
+        <script src="lib/training.js" charset="utf-8" type="text/javascript"></script>
+        <script src="init.js" charset="utf-8" type="text/javascript"></script>
+        <script src="settings.js" charset="utf-8" type="text/javascript"></script>
+        <script src="reset.js" charset="utf-8" type="text/javascript"></script>
+        <script src="event.js" charset="utf-8" type="text/javascript"></script>
+        <script src="ui/spices.js" charset="utf-8" type="text/javascript"></script>
+        <script src="ui/prestige.js" charset="utf-8" type="text/javascript"></script>
+        <script src="ui/ascension.js" charset="utf-8" type="text/javascript"></script>
+        <script src="ui/collapse.js" charset="utf-8" type="text/javascript"></script>
+        <script src="ui/expansion.js" charset="utf-8" type="text/javascript"></script>
+        <script src="ui/misc.js" charset="utf-8" type="text/javascript"></script>
+        <script src="main.js" charset="utf-8" type="text/javascript"></script>
+    </body>
+</html>
