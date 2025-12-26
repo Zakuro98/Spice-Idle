@@ -3291,7 +3291,15 @@ main {
     margin-right: 0.5em;
 }
 
-.link:hover {
+.link2 {
+    display: inline;
+    color: #ff3dd8;
+    cursor: pointer;
+    margin-right: 0.5em;
+    text-decoration: underline;
+}
+
+.link:hover, .link2:hover {
     color: #fd74e2;
 }
 
