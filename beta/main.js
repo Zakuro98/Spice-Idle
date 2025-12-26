@@ -6461,13 +6461,17 @@ goto_tab(0)
 
 //loading Decimals from strings in the save file
 function load_decimal(string) {
-    let pos = string.indexOf("e")
-    if (pos === -1) {
-        return new Decimal(string)
+    if (typeof string === "string") {
+        let pos = string.indexOf("e")
+        if (pos === -1) {
+            return new Decimal(string)
+        } else {
+            let mantissa = string.slice(0, pos)
+            let exponent = string.slice(pos + 1, string.length)
+            return Decimal.pow(10, exponent).mul(mantissa)
+        }
     } else {
-        let mantissa = string.slice(0, pos)
-        let exponent = string.slice(pos + 1, string.length)
-        return Decimal.pow(10, exponent).mul(mantissa)
+        return string
     }
 }
 
@@ -7995,3 +7999,4 @@ for (let i = 30; i < 33; i++) {
             "inventory_slot equip_slot selected_slot"
 }
 update_crystal_boosts()
+
