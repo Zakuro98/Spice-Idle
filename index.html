@@ -220,6 +220,21 @@
                         </button>
                     </div>
                 </div>
+                
+                <div id="modal_beta" class="modal_panel">
+                    <p id="beta_text" class="modal_text">
+                        DISCLAIMER: Spice Idle Beta is an unfinished version and as such may have bugs or balancing issues
+                    </p>
+
+                    <div class="center_button">
+                        <button class="spice_buy modal_button" onclick="window.open('beta/index.html','_blank'); close_modal()">
+                            OK
+                        </button>
+                        <button class="spice_buy modal_button_last" onclick="close_modal()">
+                            CANCEL
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1831,7 +1846,8 @@
 
             <a href="changelog.html" target="_blank" class="info link">Changelog</a>
             <a href="savebank.html" target="_blank" class="info link">Savebank</a>
-            <a href="https://zakuro98.github.io/Spice-Idle-Classic/" target="_blank" class="info link">Spice Idle Classic</a>
+            <p id="spice_idle_beta" class="info link2" onclick="if (modal === 'none') open_modal('beta')">Spice Idle Beta</p>
+            <a id="spice_idle_classic" href="https://zakuro98.github.io/Spice-Idle-Classic/" target="_blank" class="info link">Spice Idle Classic</a>
             <a href="https://zakuro98.github.io/EXP-Simulator/" target="_blank" class="info link">EXP Simulator</a>
             <a href="https://discord.gg/fuQSBkYYqH" target="_blank" class="info link">Discord</a>
         </main>
