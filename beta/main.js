@@ -6293,13 +6293,14 @@ function manual_save() {
 
 function save() {
     game.version = "1.8.12"
+    game.beta = true
     game.save_time = Date.now()
     game.prestige_price = new Array(prestige_upgrade.upgrades.length).fill(0)
     for (const u of prestige_upgrade.upgrades) {
         game.prestige_price[u.id] = u.price
     }
     game.seed = JSON.stringify(Array.from(game.seed))
-    localStorage.setItem("new_spice_idle_save", JSON.stringify(game))
+    localStorage.setItem("spice_idle_beta_save", JSON.stringify(game))
     game.seed = new Int32Array(JSON.parse(game.seed))
 }
 
@@ -6430,7 +6431,7 @@ function pre_delete_save() {
 }
 
 function delete_save() {
-    localStorage.removeItem("new_spice_idle_save")
+    localStorage.removeItem("spice_idle_beta_save")
     window.location.reload()
 }
 
@@ -6804,6 +6805,7 @@ function load(savegame) {
     }
 
     game.version = "1.8.12"
+    game.beta = true
 
     game.red_spice = load_decimal(game.red_spice)
     game.total_red_spice = load_decimal(game.total_red_spice)
@@ -7196,7 +7198,7 @@ function load(savegame) {
 }
 
 //load the game when opened
-let stored_save = JSON.parse(localStorage.getItem("new_spice_idle_save"))
+let stored_save = JSON.parse(localStorage.getItem("spice_idle_beta_save"))
 if (stored_save === null) {
     let classic_save = JSON.parse(localStorage.getItem("spice_idle_save"))
     if (classic_save !== null) {
