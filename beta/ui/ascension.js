@@ -20,14 +20,14 @@ function ascension_update() {
         if (game.research_complete[12] >= 1 && game.collapse_challenge !== 12) {
             if (game.collapse <= 612) {
                 amount = amount.mul(
-                    Decimal.pow(7.27e27, (game.collapse / 5) ** 0.5)
+                    Decimal.pow(7.27e27, (game.collapse / 5) ** 0.5),
                 )
             } else {
                 amount = amount.mul(
                     Decimal.pow(
                         7.27e27,
-                        (2 * game.collapse - 1013.3) ** 0.25 + 7.2535
-                    )
+                        (2 * game.collapse - 1013.3) ** 0.25 + 7.2535,
+                    ),
                 )
             }
         }
@@ -44,19 +44,19 @@ function ascension_update() {
                         0.5 *
                         game.collapse_complete[4] *
                         reward_scaling) /
-                        9
-                )
+                        9,
+                ),
             )
         }
 
         if (game.antispice[4].cmp(1) >= 0) {
             if (game.collapse_challenge !== 0) {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03,
                 )
             } else {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06,
                 )
             }
         }
@@ -77,10 +77,10 @@ function ascension_update() {
                         original_amount
                             .pow(100 / (game.realm_effects[2] + 100))
                             .add(1),
-                        128
-                    )
+                        128,
+                    ),
                 ),
-                game.notation
+                game.notation,
             ) +
             rainbow_unit +
             " rainbow " +
@@ -94,7 +94,7 @@ function ascension_update() {
                 "Currently: +" +
                 format_idec(
                     amount.div(game.real_time_played[2]).mul(60),
-                    game.notation
+                    game.notation,
                 ) +
                 " ᚫ/min"
 
@@ -105,7 +105,7 @@ function ascension_update() {
                             "<br>Peak: +" +
                             format_idec(
                                 game.peak_ansuz_gain.mul(60),
-                                game.notation
+                                game.notation,
                             ) +
                             " ᚫ/min at +" +
                             format_inum(game.peak_ansuz_amount, game.notation) +
@@ -117,7 +117,7 @@ function ascension_update() {
                                 "<br>Peak: +" +
                                 format_idec(
                                     game.peak_ansuz_gain.mul(60),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " ᚫ/min at " +
                                 game.peak_ansuz_time.toFixed(2) +
@@ -127,12 +127,12 @@ function ascension_update() {
                                 "<br>Peak: +" +
                                 format_idec(
                                     game.peak_ansuz_gain.mul(60),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " ᚫ/min at " +
                                 format_dec(
                                     game.peak_ansuz_time,
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 "s"
                         break
@@ -204,7 +204,7 @@ function ascension_update() {
                     Decimal.pow(0.5, game.rune_power[0].div(250))
                         .mul(0.4 * rune_speed)
                         .mul(game.realtime_production ? game.gamespeed : 1),
-                    game.notation
+                    game.notation,
                 ) +
                 " ᛡ power/sec<br>You have " +
                 format_inum(game.rune_power[0].floor(), game.notation) +
@@ -222,7 +222,7 @@ function ascension_update() {
                     0.2 * rune_speed * game.realtime_production
                         ? game.gamespeed
                         : 1,
-                    game.notation
+                    game.notation,
                 ) +
                 " ᛡ power/sec<br>You have " +
                 format_inum(game.rune_power[0].floor(), game.notation) +
@@ -242,7 +242,7 @@ function ascension_update() {
                     .pow(rune_exp)
                     .mul(rune_speed)
                     .mul(game.realtime_production ? game.gamespeed : 1),
-                game.notation
+                game.notation,
             ) +
             " ᛡ power/sec<br>You have " +
             format_inum(game.rune_power[0].floor(), game.notation) +
@@ -262,7 +262,7 @@ function ascension_update() {
                     Decimal.pow(0.5, game.rune_power[1].div(250))
                         .mul(0.4 * rune_speed)
                         .mul(game.realtime_production ? game.gamespeed : 1),
-                    game.notation
+                    game.notation,
                 ) +
                 " ᚱ power/sec<br>You have " +
                 format_inum(game.rune_power[1].floor(), game.notation) +
@@ -280,7 +280,7 @@ function ascension_update() {
                     0.2 * rune_speed * game.realtime_production
                         ? game.gamespeed
                         : 1,
-                    game.notation
+                    game.notation,
                 ) +
                 " ᚱ power/sec<br>You have " +
                 format_inum(game.rune_power[1].floor(), game.notation) +
@@ -300,7 +300,7 @@ function ascension_update() {
                     .pow(rune_exp)
                     .mul(rune_speed)
                     .mul(game.realtime_production ? game.gamespeed : 1),
-                game.notation
+                game.notation,
             ) +
             " ᚱ power/sec<br>You have " +
             format_inum(game.rune_power[1].floor(), game.notation) +
@@ -320,7 +320,7 @@ function ascension_update() {
                     Decimal.pow(0.5, game.rune_power[2].div(250))
                         .mul(0.4 * rune_speed)
                         .mul(game.realtime_production ? game.gamespeed : 1),
-                    game.notation
+                    game.notation,
                 ) +
                 " ᛟ power/sec<br>You have " +
                 format_inum(game.rune_power[2].floor(), game.notation) +
@@ -338,7 +338,7 @@ function ascension_update() {
                     0.2 * rune_speed * game.realtime_production
                         ? game.gamespeed
                         : 1,
-                    game.notation
+                    game.notation,
                 ) +
                 " ᛟ power/sec<br>You have " +
                 format_inum(game.rune_power[2].floor(), game.notation) +
@@ -358,7 +358,7 @@ function ascension_update() {
                     .pow(rune_exp)
                     .mul(rune_speed)
                     .mul(game.realtime_production ? game.gamespeed : 1),
-                game.notation
+                game.notation,
             ) +
             " ᛟ power/sec<br>You have " +
             format_inum(game.rune_power[2].floor(), game.notation) +
@@ -411,7 +411,7 @@ function ascension_update() {
         format_inum(game.ansuz, game.notation) + " ᚫ"
 
     let mobile = Number(
-        getComputedStyle(document.body).getPropertyValue("--mobile")
+        getComputedStyle(document.body).getPropertyValue("--mobile"),
     )
 
     if (game.ascend_bought[16] || game.collapse >= 1 || game.expand >= 1) {
@@ -466,14 +466,14 @@ function ascension_update() {
         if (game.research_complete[12] >= 1 && game.collapse_challenge !== 12) {
             if (game.collapse <= 612) {
                 amount = amount.mul(
-                    Decimal.pow(7.27e27, (game.collapse / 5) ** 0.5)
+                    Decimal.pow(7.27e27, (game.collapse / 5) ** 0.5),
                 )
             } else {
                 amount = amount.mul(
                     Decimal.pow(
                         7.27e27,
-                        (2 * game.collapse - 1013.3) ** 0.25 + 7.2535
-                    )
+                        (2 * game.collapse - 1013.3) ** 0.25 + 7.2535,
+                    ),
                 )
             }
         }
@@ -490,19 +490,19 @@ function ascension_update() {
                         0.5 *
                         game.collapse_complete[4] *
                         reward_scaling) /
-                        9
-                )
+                        9,
+                ),
             )
         }
 
         if (game.antispice[4].cmp(1) >= 0) {
             if (game.collapse_challenge !== 0) {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03,
                 )
             } else {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06,
                 )
             }
         }
@@ -522,7 +522,7 @@ function ascension_update() {
                         .floor()
                         .mul(0.01)
                         .mul(game.realtime_production ? game.gamespeed : 1),
-                    game.notation
+                    game.notation,
                 ) +
                 " ᚫ/sec"
         }
@@ -581,12 +581,12 @@ function ascension_update() {
                         "Increase boost from strengtheners/boosts<br>(" +
                         format_dec(
                             2 + 0.2 * game.prestige_bought[2],
-                            game.notation
+                            game.notation,
                         ) +
                         "x -> " +
                         format_dec(
                             4 + 0.2 * game.prestige_bought[2],
-                            game.notation
+                            game.notation,
                         ) +
                         "x)"
                 if (
@@ -687,12 +687,12 @@ function ascension_update() {
                         "Increase boost from strengtheners/boosts<br>(" +
                         format_dec(
                             4 + 0.2 * game.prestige_bought[2],
-                            game.notation
+                            game.notation,
                         ) +
                         "x -> " +
                         format_dec(
                             6 + 0.2 * game.prestige_bought[2],
-                            game.notation
+                            game.notation,
                         ) +
                         "x)"
                 if (
@@ -710,7 +710,7 @@ function ascension_update() {
                         " gains<br>(Currently: " +
                         format_idec(
                             Decimal.pow(2, game.ascend / 10),
-                            game.notation
+                            game.notation,
                         ) +
                         "x)"
                 else
@@ -721,21 +721,37 @@ function ascension_update() {
                         format_idec(
                             Decimal.pow(
                                 2,
-                                5 * (2 * game.ascend - 7740) ** 0.5 + 262
+                                5 * (2 * game.ascend - 7740) ** 0.5 + 262,
                             ),
-                            game.notation
+                            game.notation,
                         ) +
                         "x)"
                 if (game.galactic_bought[14]) {
-                    u.desc =
-                        "Times Ascended stat boosts rainbow " +
-                        spice_text[0] +
-                        " gains<br>(Currently: " +
-                        format_idec(
-                            Decimal.pow(2, game.ascend ** 0.5 * 20000),
-                            game.notation
-                        ) +
-                        "x)"
+                    if (game.ascend < 3e15)
+                        u.desc =
+                            "Times Ascended stat boosts rainbow " +
+                            spice_text[0] +
+                            " gains<br>(Currently: " +
+                            format_idec(
+                                Decimal.pow(2, game.ascend ** 0.5 * 20000),
+                                game.notation,
+                            ) +
+                            "x)"
+                    else
+                        u.desc =
+                            "Times Ascended stat boosts rainbow " +
+                            spice_text[0] +
+                            " gains<br>(Currently: " +
+                            format_idec(
+                                Decimal.pow(
+                                    2,
+                                    (game.ascend - 1.5e15) ** (1 / 3) *
+                                        7177200 +
+                                        2.73861e11,
+                                ),
+                                game.notation,
+                            ) +
+                            "x)"
                 }
                 if (
                     game.ascend_challenge !== 0 ||
@@ -776,10 +792,10 @@ function ascension_update() {
                             Math.sin(
                                 (game.ansuz.log(10) -
                                     ascension_upgrade.upgrades[25].price.log(
-                                        10
+                                        10,
                                     )) /
                                     scale -
-                                    Math.PI / 2
+                                    Math.PI / 2,
                             ) +
                         1.75
                 }
@@ -794,15 +810,15 @@ function ascension_update() {
                             Math.sin(
                                 (game.ansuz.log(10) -
                                     ascension_upgrade.upgrades[28].price.log(
-                                        10
+                                        10,
                                     )) /
                                     scale -
-                                    Math.PI / 2
+                                    Math.PI / 2,
                             )
                 }
                 if (
                     game.ansuz.cmp(
-                        ascension_upgrade.upgrades[28].price.pow(2)
+                        ascension_upgrade.upgrades[28].price.pow(2),
                     ) >= 0
                 )
                     exponent = 1.6
@@ -816,7 +832,7 @@ function ascension_update() {
                             .div(1.2379705696153568e62)
                             .add(1)
                             .pow(exponent),
-                        game.notation
+                        game.notation,
                     ) +
                     "x)"
                 if (
@@ -1158,7 +1174,7 @@ function ascension_update() {
                     "Current Auto-Ascend Goal: +" +
                     format_inum(
                         game.autoas_goal[0].mul(game.autoas_goal2).ceil(),
-                        game.notation
+                        game.notation,
                     ) +
                     " ᚫ"
             } else {
@@ -1285,9 +1301,9 @@ function arcane_update() {
                         .pow(20)
                         .add(1)
                         .pow(antispice_power * game.crystal_boost[0][2]),
-                    1
+                    1,
                 ),
-                game.notation
+                game.notation,
             ) +
             "x"
 
@@ -1329,9 +1345,9 @@ function arcane_update() {
                             .pow(0.0175)
                             .add(1)
                             .pow(antispice_power * game.crystal_boost[0][2]),
-                        1
+                        1,
                     ),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
         }
@@ -1368,7 +1384,7 @@ function arcane_update() {
                 .mul(game.total_arcane_spice_boost[0])
                 .mul(game.realtime_production ? game.gamespeed : 1)
                 .mul(5),
-            game.notation
+            game.notation,
         ) +
         arcane_unit +
         " arcane " +
@@ -1389,7 +1405,7 @@ function arcane_update() {
                     .mul(game.total_arcane_spice_boost[0])
                     .mul(game.realtime_production ? game.gamespeed : 1)
                     .mul(5),
-                game.notation
+                game.notation,
             ) +
             arcane_unit +
             " arcane " +
@@ -1417,7 +1433,7 @@ function arcane_update() {
                         "You have " +
                         format_inum(
                             game.arcane_spice_gen[gen.id].floor(),
-                            game.notation
+                            game.notation,
                         ) +
                         " arcane " +
                         spice_text[0] +
@@ -1426,8 +1442,8 @@ function arcane_update() {
                     if (
                         game.arcane_spice_gen[gen.id].cmp(
                             new Decimal(
-                                game.arcane_spice_bought[gen.id].toString()
-                            )
+                                game.arcane_spice_bought[gen.id].toString(),
+                            ),
                         ) === 0
                     ) {
                         info_str += ",<br>producing "
@@ -1444,7 +1460,7 @@ function arcane_update() {
                                 game.arcane_spice_gen[gen.id]
                                     .floor()
                                     .add(game.free_deity),
-                                game.notation
+                                game.notation,
                             ) +
                             " arcane " +
                             spice_text[0] +
@@ -1457,8 +1473,8 @@ function arcane_update() {
                                     new Decimal(
                                         game.arcane_spice_bought[
                                             gen.id
-                                        ].toString()
-                                    )
+                                        ].toString(),
+                                    ),
                                 ) === 0
                         ) {
                             info_str += ",<br>producing "
@@ -1478,10 +1494,10 @@ function arcane_update() {
                                     .mul(
                                         game.realtime_production
                                             ? game.gamespeed
-                                            : 1
+                                            : 1,
                                     )
                                     .mul(5),
-                                game.notation
+                                game.notation,
                             ) +
                             arcane_unit +
                             " arcane " +
@@ -1500,9 +1516,9 @@ function arcane_update() {
                                         .mul(
                                             game.realtime_production
                                                 ? game.gamespeed
-                                                : 1
+                                                : 1,
                                         ),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " crystallized " +
                                 spice_text[0] +
@@ -1525,15 +1541,15 @@ function arcane_update() {
                                         .mul(
                                             game.total_arcane_spice_boost[
                                                 gen.id
-                                            ]
+                                            ],
                                         )
                                         .mul(
                                             game.realtime_production
                                                 ? game.gamespeed
-                                                : 1
+                                                : 1,
                                         )
                                         .mul(5),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " arcane " +
                                 spice_text[0] +
@@ -1548,15 +1564,15 @@ function arcane_update() {
                                         .mul(
                                             game.total_arcane_spice_boost[
                                                 gen.id
-                                            ]
+                                            ],
                                         )
                                         .mul(
                                             game.realtime_production
                                                 ? game.gamespeed
-                                                : 1
+                                                : 1,
                                         )
                                         .mul(5),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " arcane " +
                                 spice_text[0] +
@@ -1572,28 +1588,28 @@ function arcane_update() {
                                     game.arcane_spice_gen[gen.id]
                                         .add(game.free_deity)
                                         .floor(),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " " +
                                 gen.plural +
                                 " <span class='bold'>" +
                                 format_idec(
                                     game.total_arcane_spice_boost[gen.id],
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 "x</span>"
                         } else {
                             info_str =
                                 format_inum(
                                     game.arcane_spice_gen[gen.id].floor(),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " " +
                                 gen.plural +
                                 " <span class='bold'>" +
                                 format_idec(
                                     game.total_arcane_spice_boost[gen.id],
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 "x</span>"
                         }
@@ -1608,7 +1624,7 @@ function arcane_update() {
                         " are currently being boosted " +
                         format_idec(
                             game.total_arcane_spice_boost[gen.id],
-                            game.notation
+                            game.notation,
                         ) +
                         "x"
 
@@ -1619,22 +1635,22 @@ function arcane_update() {
                         "-" +
                         format_inum(
                             game.arcane_spice_price[gen.id].round(),
-                            game.notation
+                            game.notation,
                         ) +
                         " ᚫ"
                     if (game.ansuz.cmp(game.arcane_spice_price[gen.id]) >= 0) {
                         document.getElementById(
-                            "arcane_cost" + gen.id
+                            "arcane_cost" + gen.id,
                         ).className = "rune_cost"
                         document.getElementById(
-                            "arcane_buy" + gen.id
+                            "arcane_buy" + gen.id,
                         ).className = "spice_buy can_buy"
                     } else {
                         document.getElementById(
-                            "arcane_cost" + gen.id
+                            "arcane_cost" + gen.id,
                         ).className = "empty_cost"
                         document.getElementById(
-                            "arcane_buy" + gen.id
+                            "arcane_buy" + gen.id,
                         ).className = "spice_buy"
                     }
 
@@ -1646,14 +1662,14 @@ function arcane_update() {
                                 parseFloat(
                                     getComputedStyle(
                                         document.getElementById(
-                                            "arcane_buy" + gen.id
-                                        )
-                                    )["font-size"]
+                                            "arcane_buy" + gen.id,
+                                        ),
+                                    )["font-size"],
                                 ) -
                             0.8
 
                         document.getElementById(
-                            "arcane_buy" + gen.id
+                            "arcane_buy" + gen.id,
                         ).style.width = "auto"
 
                         let width2 =
@@ -1663,24 +1679,24 @@ function arcane_update() {
                                 parseFloat(
                                     getComputedStyle(
                                         document.getElementById(
-                                            "arcane_buy" + gen.id
-                                        )
-                                    )["font-size"]
+                                            "arcane_buy" + gen.id,
+                                        ),
+                                    )["font-size"],
                                 ) -
                             0.8
 
                         if (width2 > width) {
                             document.getElementById(
-                                "arcane_buy" + gen.id
+                                "arcane_buy" + gen.id,
                             ).style.width = width2 + 0.89 + "em"
                         } else {
                             document.getElementById(
-                                "arcane_buy" + gen.id
+                                "arcane_buy" + gen.id,
                             ).style.width = width + 0.89 + "em"
                         }
                     } else {
                         document.getElementById(
-                            "arcane_buy" + gen.id
+                            "arcane_buy" + gen.id,
                         ).style.width = "auto"
                     }
 
@@ -1692,17 +1708,17 @@ function arcane_update() {
                         "-" + format_inum(price.round(), game.notation) + " ᚫ"
                     if (game.ansuz.cmp(price) >= 0) {
                         document.getElementById(
-                            "arcane_ucost" + gen.id
+                            "arcane_ucost" + gen.id,
                         ).className = "rune_cost"
                         document.getElementById(
-                            "arcane_ubuy" + gen.id
+                            "arcane_ubuy" + gen.id,
                         ).className = "spice_buy can_buy"
                     } else {
                         document.getElementById(
-                            "arcane_ucost" + gen.id
+                            "arcane_ucost" + gen.id,
                         ).className = "empty_cost"
                         document.getElementById(
-                            "arcane_ubuy" + gen.id
+                            "arcane_ubuy" + gen.id,
                         ).className = "spice_buy"
                     }
 
@@ -1714,14 +1730,14 @@ function arcane_update() {
                                 parseFloat(
                                     getComputedStyle(
                                         document.getElementById(
-                                            "arcane_ubuy" + gen.id
-                                        )
-                                    )["font-size"]
+                                            "arcane_ubuy" + gen.id,
+                                        ),
+                                    )["font-size"],
                                 ) -
                             0.8
 
                         document.getElementById(
-                            "arcane_ubuy" + gen.id
+                            "arcane_ubuy" + gen.id,
                         ).style.width = "auto"
 
                         let width2 =
@@ -1731,24 +1747,24 @@ function arcane_update() {
                                 parseFloat(
                                     getComputedStyle(
                                         document.getElementById(
-                                            "arcane_ubuy" + gen.id
-                                        )
-                                    )["font-size"]
+                                            "arcane_ubuy" + gen.id,
+                                        ),
+                                    )["font-size"],
                                 ) -
                             0.8
 
                         if (width2 > width) {
                             document.getElementById(
-                                "arcane_ubuy" + gen.id
+                                "arcane_ubuy" + gen.id,
                             ).style.width = width2 + 0.89 + "em"
                         } else {
                             document.getElementById(
-                                "arcane_ubuy" + gen.id
+                                "arcane_ubuy" + gen.id,
                             ).style.width = width + 0.89 + "em"
                         }
                     } else {
                         document.getElementById(
-                            "arcane_ubuy" + gen.id
+                            "arcane_ubuy" + gen.id,
                         ).style.width = "auto"
                     }
 
@@ -1802,9 +1818,9 @@ function arcane_update() {
                 " generators " +
                 format_idec(
                     Decimal.pow(9, game.arcane_strengthener).pow(
-                        antispice_boosts
+                        antispice_boosts,
                     ),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
         }
@@ -1828,8 +1844,8 @@ function arcane_update() {
                 (document.getElementById("arcane_buy_s").offsetWidth - 1) /
                     parseFloat(
                         getComputedStyle(
-                            document.getElementById("arcane_buy_s")
-                        )["font-size"]
+                            document.getElementById("arcane_buy_s"),
+                        )["font-size"],
                     ) -
                 0.8
 
@@ -1839,8 +1855,8 @@ function arcane_update() {
                 (document.getElementById("arcane_buy_s").offsetWidth - 1) /
                     parseFloat(
                         getComputedStyle(
-                            document.getElementById("arcane_buy_s")
-                        )["font-size"]
+                            document.getElementById("arcane_buy_s"),
+                        )["font-size"],
                     ) -
                 0.8
 
@@ -1881,9 +1897,9 @@ function arcane_update() {
                 game.arcane_enchantment.toString() *
                     180 *
                     antispice_infusions *
-                    game.crystal_boost[2][2]
+                    game.crystal_boost[2][2],
             ),
-            game.notation
+            game.notation,
         ) +
         "x"
     if (game.free_enchantment > 0) {
@@ -1903,9 +1919,9 @@ function arcane_update() {
                     ).toString() *
                         180 *
                         antispice_infusions *
-                        game.crystal_boost[2][2]
+                        game.crystal_boost[2][2],
                 ),
-                game.notation
+                game.notation,
             ) +
             "x"
     }
@@ -1935,9 +1951,9 @@ function arcane_update() {
                                 game.arcane_enchantment + game.free_enchantment
                             ).toString() *
                                 antispice_infusions *
-                                game.crystal_boost[2][2]
+                                game.crystal_boost[2][2],
                         ),
-                        game.notation
+                        game.notation,
                     ) +
                     "x"
             } else {
@@ -1950,9 +1966,9 @@ function arcane_update() {
                             13 / 12,
                             game.arcane_enchantment.toString() *
                                 antispice_infusions *
-                                game.crystal_boost[2][2]
+                                game.crystal_boost[2][2],
                         ),
-                        game.notation
+                        game.notation,
                     ) +
                     "x"
             }
@@ -1987,7 +2003,7 @@ function arcane_update() {
                 parseFloat(
                     getComputedStyle(document.getElementById("arcane_buy_n"))[
                         "font-size"
-                    ]
+                    ],
                 ) -
             0.8
 
@@ -1998,7 +2014,7 @@ function arcane_update() {
                 parseFloat(
                     getComputedStyle(document.getElementById("arcane_buy_n"))[
                         "font-size"
-                    ]
+                    ],
                 ) -
             0.8
 
