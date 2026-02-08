@@ -27,7 +27,7 @@ function color_boost(override) {
                     game.pink_spice_bought[5] >=
                     Math.ceil(
                         (game.color_boosts + (33 ** 0.5 - 9) / 2) ** 3 -
-                            (9 * 33 ** 0.5 - 125) / 2
+                            (9 * 33 ** 0.5 - 125) / 2,
                     )
                 )
                     can_boost = true
@@ -340,8 +340,8 @@ function color_boost(override) {
                                     Math.cbrt(
                                         -8 * Number(game.pink_spice_bought[5]) -
                                             36 * 33 ** 0.5 +
-                                            500
-                                    ))
+                                            500,
+                                    )),
                         ) + 1
                 } else {
                     if (game.pink_spice_bought[5] <= 150 * scaling) {
@@ -349,56 +349,56 @@ function color_boost(override) {
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     50) /
-                                    25
+                                    25,
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 1200 * scaling) {
                         game.color_boosts =
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     250) /
-                                    50
+                                    50,
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 9000 * scaling) {
                         game.color_boosts =
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     975) /
-                                    75
+                                    75,
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 18000 * scaling) {
                         game.color_boosts =
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     4300) /
-                                    100
+                                    100,
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 63000 * scaling) {
                         game.color_boosts =
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     15450) /
-                                    150
+                                    150,
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 198600 * scaling) {
                         game.color_boosts =
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     41600) /
-                                    200
+                                    200,
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 1069500 * scaling) {
                         game.color_boosts =
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     161700) /
-                                    300
+                                    300,
                             ) + 1
                     } else if (game.pink_spice_bought[5] <= 2768000 * scaling) {
                         game.color_boosts =
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     982500) /
-                                    500
+                                    500,
                             ) + 1
                     } else if (
                         game.pink_spice_bought[5] <=
@@ -408,7 +408,7 @@ function color_boost(override) {
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     4733000) /
-                                    1000
+                                    1000,
                             ) + 1
                     } else if (
                         game.pink_spice_bought[5] <=
@@ -418,7 +418,7 @@ function color_boost(override) {
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     44734500) /
-                                    1500
+                                    1500,
                             ) + 1
                     } else if (
                         game.pink_spice_bought[5] <=
@@ -428,7 +428,7 @@ function color_boost(override) {
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     176737500) /
-                                    2500
+                                    2500,
                             ) + 1
                     } else if (
                         game.pink_spice_bought[5] <=
@@ -438,7 +438,7 @@ function color_boost(override) {
                             Math.floor(
                                 (Number(game.pink_spice_bought[5]) / scaling +
                                     2676738000) /
-                                    4000
+                                    4000,
                             ) + 1
                     } else {
                         let amount = 4000 * game.augment_start - 2676738000
@@ -451,7 +451,7 @@ function color_boost(override) {
                                         8 * amount +
                                         64016001) **
                                         0.5) /
-                                    2
+                                    2,
                             ) + 1
                     }
                 }
@@ -480,12 +480,12 @@ function prestige(override) {
         }
         if (game.research_complete[38] >= 1) {
             prestige_stat *= Math.floor(
-                1 + (1.05 ** (total_completions - 55)) ** 0.5
+                1 + (1.05 ** (total_completions - 55)) ** 0.5,
             )
         }
         if (game.galactic_bought[26]) {
             prestige_stat = Math.round(
-                prestige_stat * 10 ** (game.dark_conversion / 120)
+                prestige_stat * 10 ** (game.dark_conversion / 120),
             )
         }
         if (!override) {
@@ -501,7 +501,7 @@ function prestige(override) {
         if (game.research_complete[34] >= 1 && game.collapse_challenge !== 12) {
             if (game.color_boosts >= game.augment_start) {
                 let augment_amount = new Decimal(2).pow(
-                    (game.augment_start - 8) / 4
+                    (game.augment_start - 8) / 4,
                 )
                 amount = amount.div(augment_amount).pow(1.5).mul(augment_amount)
             }
@@ -512,7 +512,18 @@ function prestige(override) {
             game.collapse_challenge !== 12
         ) {
             if (game.galactic_bought[14]) {
-                amount = amount.mul(Decimal.pow(2, game.ascend ** 0.5 * 20000))
+                if (game.ascend < 3e15)
+                    amount = amount.mul(
+                        Decimal.pow(2, game.ascend ** 0.5 * 20000),
+                    )
+                else
+                    amount = amount.mul(
+                        Decimal.pow(
+                            2,
+                            (game.ascend - 1.5e15) ** (1 / 3) * 7177200 +
+                                2.73861e11,
+                        ),
+                    )
             } else {
                 if (game.ascend < 5120)
                     amount = amount.mul(Decimal.pow(2, game.ascend / 10))
@@ -520,8 +531,8 @@ function prestige(override) {
                     amount = amount.mul(
                         Decimal.pow(
                             2,
-                            5 * (2 * game.ascend - 7740) ** 0.5 + 262
-                        )
+                            5 * (2 * game.ascend - 7740) ** 0.5 + 262,
+                        ),
                     )
             }
         }
@@ -533,11 +544,11 @@ function prestige(override) {
         if (game.antispice[4].cmp(1) >= 0) {
             if (game.collapse_challenge !== 0) {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03,
                 )
             } else {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06,
                 )
             }
         }
@@ -603,7 +614,7 @@ function prestige(override) {
             }
             if (game.autopr_mode === 1) {
                 game.autopr_goal2[1] = game.autopr_goal2[1].mul(
-                    game.autopr_delta[1]
+                    game.autopr_delta[1],
                 )
             }
         }
@@ -612,7 +623,7 @@ function prestige(override) {
         game.total_crystal_spice = new Decimal(0)
         for (let i = 0; i < 6; i++) {
             game.crystal_spice_gen[i] = new Decimal(
-                game.crystal_spice_bought[i].toString()
+                game.crystal_spice_bought[i].toString(),
             )
         }
         game.crystal_infusion = 0n
@@ -642,7 +653,7 @@ function pre_ascend(override, challenge) {
                     "Are you sure you want to Ascend? This will reset EVERYTHING so far!",
                     function () {
                         ascend(override, challenge)
-                    }
+                    },
                 )
             }
         } else {
@@ -672,7 +683,7 @@ function ascend(override, challenge) {
         }
         if (game.galactic_bought[26]) {
             ascension_stat = Math.round(
-                ascension_stat * 10 ** (game.dark_conversion / 120)
+                ascension_stat * 10 ** (game.dark_conversion / 120),
             )
         }
         if (!override) {
@@ -686,14 +697,14 @@ function ascend(override, challenge) {
         if (game.research_complete[12] >= 1 && game.collapse_challenge !== 12) {
             if (game.collapse <= 612) {
                 amount = amount.mul(
-                    Decimal.pow(7.27e27, (game.collapse / 5) ** 0.5)
+                    Decimal.pow(7.27e27, (game.collapse / 5) ** 0.5),
                 )
             } else {
                 amount = amount.mul(
                     Decimal.pow(
                         7.27e27,
-                        (2 * game.collapse - 1013.3) ** 0.25 + 7.2535
-                    )
+                        (2 * game.collapse - 1013.3) ** 0.25 + 7.2535,
+                    ),
                 )
             }
         }
@@ -710,19 +721,19 @@ function ascend(override, challenge) {
                         0.5 *
                         game.collapse_complete[4] *
                         reward_scaling) /
-                        9
-                )
+                        9,
+                ),
             )
         }
 
         if (game.antispice[4].cmp(1) >= 0) {
             if (game.collapse_challenge !== 0) {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03,
                 )
             } else {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06,
                 )
             }
         }
@@ -737,7 +748,7 @@ function ascend(override, challenge) {
 
         if (game.research_complete[6] >= 1) {
             game.autods_budget = game.autods_budget.add(
-                amount.floor().mul(game.autods_portion).ceil()
+                amount.floor().mul(game.autods_portion).ceil(),
             )
         }
 
@@ -840,7 +851,7 @@ function ascend(override, challenge) {
         game.total_arcane_spice = new Decimal(0)
         for (let i = 0; i < 6; i++) {
             game.arcane_spice_gen[i] = new Decimal(
-                game.arcane_spice_bought[i].toString()
+                game.arcane_spice_bought[i].toString(),
             )
         }
         game.arcane_enchantment = 0n
@@ -855,8 +866,8 @@ function ascend(override, challenge) {
                 collapse_free = BigInt(
                     Math.floor(
                         5000000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                            7500000
-                    )
+                            7500000,
+                    ),
                 )
             if (game.collapse >= 1337500)
                 collapse_free = BigInt(game.collapse) * 10n + 19125000n
@@ -950,7 +961,7 @@ function ascend(override, challenge) {
             game.total_arcane_spice = new Decimal(0)
             for (let i = 0; i < 6; i++) {
                 game.arcane_spice_gen[i] = new Decimal(
-                    game.arcane_spice_bought[i].toString()
+                    game.arcane_spice_bought[i].toString(),
                 )
             }
             game.arcane_enchantment = 0n
@@ -971,8 +982,8 @@ function ascend(override, challenge) {
                     collapse_free = BigInt(
                         Math.floor(
                             5000000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                                7500000
-                        )
+                                7500000,
+                        ),
                     )
                 if (game.collapse >= 1337500)
                     collapse_free = BigInt(game.collapse) * 10n + 19125000n
@@ -1061,7 +1072,7 @@ function pre_collapse(override, challenge) {
             rune_atomic = Decimal.pow(
                 10,
                 (rune_atomic.log(10) / Decimal.pow(2, 1024).log(10)) ** 0.5 *
-                    Decimal.pow(2, 1024).log(10)
+                    Decimal.pow(2, 1024).log(10),
             )
         let a = Decimal.pow(2, 3072).log(10)
         if (rune_atomic.cmp(Decimal.pow(2, 3072)) >= 0)
@@ -1083,7 +1094,7 @@ function pre_collapse(override, challenge) {
     if (game.galactic_bought[13]) {
         if (game.expand >= 300)
             amount = amount.mul(
-                Decimal.pow(10, 1500 * phi ** 2 * (game.expand / 300) ** 0.5)
+                Decimal.pow(10, 1500 * phi ** 2 * (game.expand / 300) ** 0.5),
             )
         else amount = amount.mul(Decimal.pow(10, 5 * phi ** 2 * game.expand))
     }
@@ -1107,7 +1118,7 @@ function pre_collapse(override, challenge) {
                     "Are you sure you want to Collapse? This will reset EVERYTHING so far!",
                     function () {
                         collapse(override, challenge)
-                    }
+                    },
                 )
             }
         } else {
@@ -1156,7 +1167,7 @@ function collapse(override, challenge) {
             rune_atomic = Decimal.pow(
                 10,
                 (rune_atomic.log(10) / Decimal.pow(2, 1024).log(10)) ** 0.5 *
-                    Decimal.pow(2, 1024).log(10)
+                    Decimal.pow(2, 1024).log(10),
             )
         let a = Decimal.pow(2, 3072).log(10)
         if (rune_atomic.cmp(Decimal.pow(2, 3072)) >= 0)
@@ -1178,7 +1189,7 @@ function collapse(override, challenge) {
     if (game.galactic_bought[13]) {
         if (game.expand >= 300)
             amount = amount.mul(
-                Decimal.pow(10, 1500 * phi ** 2 * (game.expand / 300) ** 0.5)
+                Decimal.pow(10, 1500 * phi ** 2 * (game.expand / 300) ** 0.5),
             )
         else amount = amount.mul(Decimal.pow(10, 5 * phi ** 2 * game.expand))
     }
@@ -1204,7 +1215,7 @@ function collapse(override, challenge) {
         }
         if (game.galactic_bought[26]) {
             collapse_stat = Math.round(
-                collapse_stat * 10 ** (game.dark_conversion / 120)
+                collapse_stat * 10 ** (game.dark_conversion / 120),
             )
         }
 
@@ -1355,8 +1366,8 @@ function collapse(override, challenge) {
                 collapse_free = BigInt(
                     Math.floor(
                         5000000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                            7500000
-                    )
+                            7500000,
+                    ),
                 )
             if (game.collapse >= 1337500)
                 collapse_free = BigInt(game.collapse) * 10n + 19125000n
@@ -1465,8 +1476,8 @@ function collapse(override, challenge) {
                     collapse_free = BigInt(
                         Math.floor(
                             5000000 * ((game.collapse - 87500) / 50000) ** 0.5 +
-                                7500000
-                        )
+                                7500000,
+                        ),
                     )
                 if (game.collapse >= 1337500)
                     collapse_free = BigInt(game.collapse) * 10n + 19125000n
@@ -1487,7 +1498,7 @@ function pre_expand() {
         phi,
         game.expand_spice
             .div(Decimal.pow(10, 4.05e18 + Math.E * 1e15))
-            .log(10) / 5e17
+            .log(10) / 5e17,
     )
         .mul(2)
         .floor()
@@ -1502,7 +1513,7 @@ function pre_expand() {
                 open_modal(
                     "confirm",
                     "Are you sure you want to leave this realm? ALL will be lost!",
-                    expand
+                    expand,
                 )
             }
         } else {
@@ -1516,7 +1527,7 @@ function expand(override) {
         phi,
         game.expand_spice
             .div(Decimal.pow(10, 4.05e18 + Math.E * 1e15))
-            .log(10) / 5e17
+            .log(10) / 5e17,
     )
         .mul(2)
         .floor()
@@ -1532,7 +1543,7 @@ function expand(override) {
         amount = amount.pow(
             (4 * power ** 0.5 * (power + 8 * amount.log(10)) ** 0.5 -
                 4 * power) /
-                (8 * amount.log(10))
+                (8 * amount.log(10)),
         )
         if (power === 50) {
             amount = amount
@@ -1578,7 +1589,7 @@ function expand(override) {
         game.dark_efficiency = 0
         for (let i = 0; i < 6; i++) {
             game.dark_spice_gen[i] = new Decimal(
-                game.dark_spice_bought[i].toString()
+                game.dark_spice_bought[i].toString(),
             )
         }
 
@@ -1683,7 +1694,7 @@ function expand(override) {
 
         if (!exploration_moved) {
             let mobile = Number(
-                getComputedStyle(document.body).getPropertyValue("--mobile")
+                getComputedStyle(document.body).getPropertyValue("--mobile"),
             )
 
             document.getElementById("expansion_page").style.display = "block"
@@ -1743,7 +1754,7 @@ function expand(override) {
                     "none"
                 open_modal(
                     "alert",
-                    "Realm pathfinding failed! You do not meet the requirement to enter the next realm in queue."
+                    "Realm pathfinding failed! You do not meet the requirement to enter the next realm in queue.",
                 )
             } else if (
                 ((target.x ** 2 + target.y ** 2) ** 0.5 <= 160 &&
@@ -1755,7 +1766,7 @@ function expand(override) {
                     "none"
                 open_modal(
                     "alert",
-                    "Realm pathfinding aborted! You no longer meet the requirement to enter the target realm."
+                    "Realm pathfinding aborted! You no longer meet the requirement to enter the target realm.",
                 )
             } else {
                 select_realm(next)
@@ -1765,7 +1776,7 @@ function expand(override) {
                     if (game.autoex_mode === 0) {
                         game.target_realm = -1
                         document.getElementById(
-                            "exploration_target"
+                            "exploration_target",
                         ).style.display = "none"
                     }
                 }
@@ -1814,7 +1825,7 @@ function expand(override) {
                 auto_toggle("expand_mode")
                 open_modal(
                     "alert",
-                    "Auto-Expansion targeting mode has been switched to MANUAL, as there are no more unvisited realms!"
+                    "Auto-Expansion targeting mode has been switched to MANUAL, as there are no more unvisited realms!",
                 )
             }
         }
@@ -1931,7 +1942,7 @@ function expand(override) {
             game.dark_efficiency = 0
             for (let i = 0; i < 6; i++) {
                 game.dark_spice_gen[i] = new Decimal(
-                    game.dark_spice_bought[i].toString()
+                    game.dark_spice_bought[i].toString(),
                 )
             }
 
