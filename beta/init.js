@@ -16,7 +16,8 @@ function fib(n, inf) {
 
 //initializing game variables
 let game = {
-    version: "1.8.12",
+    version: "1.8.13",
+    beta: true,
 
     tickspeed: 100,
     gamespeed: 1,
@@ -610,6 +611,15 @@ let game = {
         new Array(6),
         new Array(6),
     ],
+    crystal_stack: [
+        Array.from({ length: 5 }, () => []),
+        Array.from({ length: 5 }, () => []),
+        Array.from({ length: 5 }, () => []),
+        Array.from({ length: 5 }, () => []),
+        Array.from({ length: 5 }, () => []),
+        Array.from({ length: 6 }, () => []),
+        Array.from({ length: 6 }, () => []),
+    ],
 
     exploration_hidden: false,
 
@@ -705,7 +715,7 @@ function format_small(num, not) {
         let output = format_small(num, random_notation)
         let output2 = output.replaceAll(
             '<span style="text-decoration:overline">',
-            "("
+            "(",
         )
         let output3 = output2.replaceAll("</span>", ")").match(regex)
 
@@ -722,7 +732,7 @@ function format_small(num, not) {
 
         output = output2.replaceAll(
             "(",
-            '<span style="text-decoration:overline">'
+            '<span style="text-decoration:overline">',
         )
         return output.replaceAll(")", "</span>")
     } else if (not === 17) {
@@ -1107,7 +1117,7 @@ if (meme_condition) {
     document.title = "Salt Idle"
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
-        "Salt Idle v1.9.0 β8<br>Made by Zakuro"
+        "Salt Idle v1.9.0 β10<br>Made by Zakuro"
 }
 
 //initialize map
@@ -1363,7 +1373,7 @@ class prestige_upgrade {
 new prestige_upgrade(
     "Unlocks automation for red " + spice_text[0],
     new Decimal(1),
-    5
+    5,
 )
 //[1]
 new prestige_upgrade(
@@ -1371,13 +1381,13 @@ new prestige_upgrade(
         spice_text[0] +
         " production<br>(Currently: 5x)",
     new Decimal(1),
-    1
+    1,
 )
 //[2]
 new prestige_upgrade(
     "Increase boost from strengtheners/shifts<br>(2.00x -> 2.20x)",
     new Decimal(2),
-    15
+    15,
 )
 //[3]
 new prestige_upgrade("Boost from buying 10 is squared", new Decimal(4), 4)
@@ -1387,7 +1397,7 @@ new prestige_upgrade("You start with 1 color shift", new Decimal(8), 4)
 new prestige_upgrade(
     "Strengtheners boost the next color more<br>(1.05x -> 1.20x)",
     new Decimal(16),
-    5
+    5,
 )
 //[6]
 new prestige_upgrade(
@@ -1397,13 +1407,13 @@ new prestige_upgrade(
         spice_text[0] +
         "<br>(Currently: 1.00x)",
     new Decimal(256),
-    1
+    1,
 )
 //[7]
 new prestige_upgrade(
     "Unlocks automation for color boosts",
     new Decimal(4096),
-    1
+    1,
 )
 //[8]
 new prestige_upgrade(
@@ -1413,37 +1423,37 @@ new prestige_upgrade(
         spice_text[0] +
         "'s total amount",
     new Decimal(32768),
-    1
+    1,
 )
 //[9]
 new prestige_upgrade(
     "Reduce the strengthener price scaling<br>(10x -> 8x)",
     new Decimal(2).pow(20),
-    4
+    4,
 )
 //[10]
 new prestige_upgrade(
     "Harvesters produce galaxies of the previous color",
     new Decimal(2).pow(24),
-    1
+    1,
 )
 //[11]
 new prestige_upgrade(
     "Red " + spice_text[0] + " boosts every other color by its total amount",
     new Decimal(2).pow(32),
-    1
+    1,
 )
 //[12]
 new prestige_upgrade(
     "Unlocks crystallized " + spice_text[0],
     new Decimal(2).pow(56),
-    1
+    1,
 )
 //[13]
 new prestige_upgrade(
     "Unlocks automation for crystal infusions",
     new Decimal(2).pow(63),
-    1
+    1,
 )
 //[14]
 new prestige_upgrade(
@@ -1453,7 +1463,7 @@ new prestige_upgrade(
         spice_text[0] +
         " by its total amount",
     new Decimal(2).pow(81),
-    1
+    1,
 )
 //[15]
 new prestige_upgrade("Unlocks Prestige automation", new Decimal(2).pow(100), 1)
@@ -1463,7 +1473,7 @@ new prestige_upgrade(
         spice_text[0] +
         " also boosts other colors by its total amount",
     new Decimal(2).pow(120),
-    1
+    1,
 )
 //[17]
 new prestige_upgrade(
@@ -1471,13 +1481,13 @@ new prestige_upgrade(
         spice_text[0] +
         " production is boosted based on your color boosts<br>(Currently: 1.00x)",
     new Decimal(2).pow(141),
-    1
+    1,
 )
 //[18]
 new prestige_upgrade(
     "Increase boost from strengtheners/boosts<br>(5.00x -> 6.00x)",
     new Decimal(2).pow(165),
-    1
+    1,
 )
 //[19]
 new prestige_upgrade(
@@ -1485,13 +1495,13 @@ new prestige_upgrade(
         spice_text[0] +
         " production 1.08x",
     new Decimal(2).pow(186),
-    1
+    1,
 )
 //[20]
 new prestige_upgrade(
     "You get 12 free crystal infusions",
     new Decimal(2).pow(214),
-    12
+    12,
 )
 //[21]
 new prestige_upgrade(
@@ -1501,13 +1511,13 @@ new prestige_upgrade(
         spice_text[0] +
         "<br>(Currently: 1.00x)",
     new Decimal(2).pow(300),
-    1
+    1,
 )
 //[22]
 new prestige_upgrade(
     "Color boosts don't reset progress",
     new Decimal(2).pow(390),
-    1
+    1,
 )
 //[23]
 new prestige_upgrade(
@@ -1515,13 +1525,13 @@ new prestige_upgrade(
         spice_text[0] +
         " furnace multipliers are raised to the 1.25 power",
     new Decimal(2).pow(480),
-    1
+    1,
 )
 //[24]
 new prestige_upgrade(
     "Crystallized " + spice_text[0] + " furnaces produce pink galaxies",
     new Decimal(2).pow(720),
-    1
+    1,
 )
 //[25]
 new prestige_upgrade("Unlocks Ascension", new Decimal(2).pow(1024), 1)
@@ -1644,7 +1654,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "0em",
-    0
+    0,
 )
 //[1]
 new ascension_upgrade(
@@ -1654,7 +1664,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "12em",
-    0
+    0,
 )
 //[2]
 new ascension_upgrade(
@@ -1664,7 +1674,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "24em",
-    0
+    0,
 )
 //[3]
 new ascension_upgrade(
@@ -1674,7 +1684,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "36em",
-    0
+    0,
 )
 //[4]
 new ascension_upgrade(
@@ -1684,7 +1694,7 @@ new ascension_upgrade(
     undefined,
     "10em",
     "48em",
-    0
+    0,
 )
 //[5]
 new ascension_upgrade(
@@ -1694,7 +1704,7 @@ new ascension_upgrade(
     undefined,
     "10em",
     "60em",
-    0
+    0,
 )
 //[6]
 new ascension_upgrade(
@@ -1706,7 +1716,7 @@ new ascension_upgrade(
     undefined,
     "10em",
     "72em",
-    0
+    0,
 )
 //[7]
 new ascension_upgrade(
@@ -1716,7 +1726,7 @@ new ascension_upgrade(
     undefined,
     "20em",
     "84em",
-    0
+    0,
 )
 //[8]
 new ascension_upgrade(
@@ -1726,7 +1736,7 @@ new ascension_upgrade(
     undefined,
     "-10em",
     "48em",
-    0
+    0,
 )
 //[9]
 new ascension_upgrade(
@@ -1736,7 +1746,7 @@ new ascension_upgrade(
     undefined,
     "-10em",
     "60em",
-    0
+    0,
 )
 //[10]
 new ascension_upgrade(
@@ -1746,7 +1756,7 @@ new ascension_upgrade(
     undefined,
     "-10em",
     "72em",
-    0
+    0,
 )
 //[11]
 new ascension_upgrade(
@@ -1756,7 +1766,7 @@ new ascension_upgrade(
     undefined,
     "-20em",
     "84em",
-    0
+    0,
 )
 //[12]
 new ascension_upgrade(
@@ -1766,7 +1776,7 @@ new ascension_upgrade(
     10,
     "0em",
     "84em",
-    0
+    0,
 )
 //[13]
 new ascension_upgrade(
@@ -1780,7 +1790,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "96em",
-    0
+    0,
 )
 //[14]
 new ascension_upgrade(
@@ -1790,7 +1800,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "108em",
-    0
+    0,
 )
 //[15]
 new ascension_upgrade(
@@ -1802,7 +1812,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "120em",
-    0
+    0,
 )
 //[16]
 new ascension_upgrade(
@@ -1812,7 +1822,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "132em",
-    1
+    1,
 )
 //[17]
 new ascension_upgrade(
@@ -1822,7 +1832,7 @@ new ascension_upgrade(
     undefined,
     "-10em",
     "144em",
-    0
+    0,
 )
 //[18]
 new ascension_upgrade(
@@ -1836,7 +1846,7 @@ new ascension_upgrade(
     undefined,
     "-10em",
     "156em",
-    0
+    0,
 )
 //[19]
 new ascension_upgrade(
@@ -1848,7 +1858,7 @@ new ascension_upgrade(
     undefined,
     "-10em",
     "168em",
-    0
+    0,
 )
 //[20]
 new ascension_upgrade(
@@ -1858,7 +1868,7 @@ new ascension_upgrade(
     undefined,
     "-30em",
     "156em",
-    2
+    2,
 )
 //[21]
 new ascension_upgrade(
@@ -1868,7 +1878,7 @@ new ascension_upgrade(
     undefined,
     "10em",
     "144em",
-    0
+    0,
 )
 //[22]
 new ascension_upgrade(
@@ -1882,7 +1892,7 @@ new ascension_upgrade(
     undefined,
     "10em",
     "156em",
-    0
+    0,
 )
 //[23]
 new ascension_upgrade(
@@ -1892,7 +1902,7 @@ new ascension_upgrade(
     undefined,
     "10em",
     "168em",
-    0
+    0,
 )
 //[24]
 new ascension_upgrade(
@@ -1902,7 +1912,7 @@ new ascension_upgrade(
     undefined,
     "30em",
     "156em",
-    3
+    3,
 )
 //[25]
 new ascension_upgrade(
@@ -1912,7 +1922,7 @@ new ascension_upgrade(
     23,
     "0em",
     "180em",
-    0
+    0,
 )
 //[26]
 new ascension_upgrade(
@@ -1922,7 +1932,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "192em",
-    0
+    0,
 )
 //[27]
 new ascension_upgrade(
@@ -1932,7 +1942,7 @@ new ascension_upgrade(
     undefined,
     "-10em",
     "204em",
-    4
+    4,
 )
 //[28]
 new ascension_upgrade(
@@ -1942,7 +1952,7 @@ new ascension_upgrade(
     undefined,
     "10em",
     "204em",
-    5
+    5,
 )
 //[29]
 new ascension_upgrade(
@@ -1954,7 +1964,7 @@ new ascension_upgrade(
     undefined,
     "-20em",
     "216em",
-    0
+    0,
 )
 //[30]
 new ascension_upgrade(
@@ -1968,7 +1978,7 @@ new ascension_upgrade(
     undefined,
     "20em",
     "216em",
-    0
+    0,
 )
 //[31]
 new ascension_upgrade(
@@ -1978,7 +1988,7 @@ new ascension_upgrade(
     28,
     "0em",
     "216em",
-    0
+    0,
 )
 //[32]
 new ascension_upgrade(
@@ -1992,7 +2002,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "228em",
-    0
+    0,
 )
 //[33]
 new ascension_upgrade(
@@ -2002,7 +2012,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "240em",
-    0
+    0,
 )
 //[34]
 new ascension_upgrade(
@@ -2012,7 +2022,7 @@ new ascension_upgrade(
     undefined,
     "0em",
     "252em",
-    6
+    6,
 )
 //done initializing ascension upgrades
 
@@ -2085,7 +2095,7 @@ new ascension_challenge(
     "Crystal infusions cannot be purchased<br>Reward: Unlock arcane " +
         spice_text[0],
     Decimal.pow(10, 450),
-    16
+    16,
 )
 //challenge 2
 new ascension_challenge(
@@ -2095,19 +2105,19 @@ new ascension_challenge(
         spice_text[0] +
         " multipliers are even stronger",
     Decimal.pow(10, 800),
-    20
+    20,
 )
 //challenge 3
 new ascension_challenge(
     "Color boost requirements scale 10x harder<br>Reward: Strengtheners are 3x stronger, infusions are 20% stronger,<br>and strengthener price scaling 3x -> 2x",
     Decimal.pow(10, 800),
-    24
+    24,
 )
 //challenge 4
 new ascension_challenge(
     "4th, 5th, and 6th generators don't produce anything<br>Reward: 4th generators are 3% stronger, 5th generators are 6%<br>stronger, and 6th generators are 10% stronger",
     Decimal.pow(10, 6200),
-    27
+    27,
 )
 //challenge 5
 new ascension_challenge(
@@ -2115,7 +2125,7 @@ new ascension_challenge(
         spice_text[0] +
         " production stops after 1 second,<br>arcane enchantments do nothing except refresh production<br>Reward: Boosts from rune power are now 2x stronger",
     Decimal.pow(10, 19850),
-    28
+    28,
 )
 //challenge 6
 new ascension_challenge(
@@ -2123,7 +2133,7 @@ new ascension_challenge(
         spice_text[0] +
         " production boosts from Prestige and Ascension upgrades<br>are disabled, and rune power production is disabled<br>Reward: Unlock Collapse",
     Decimal.pow(10, 6360),
-    34
+    34,
 )
 //done initializing ascension challenges
 
@@ -2197,7 +2207,7 @@ new research(
     2000,
     1500,
     1.5,
-    2
+    2,
 )
 //[1] #2
 new research(
@@ -2206,7 +2216,7 @@ new research(
     undefined,
     false,
     false,
-    1000
+    1000,
 )
 //[2] #3
 new research(
@@ -2219,7 +2229,7 @@ new research(
     undefined,
     false,
     false,
-    6000
+    6000,
 )
 //[3] #4
 new research(
@@ -2231,7 +2241,7 @@ new research(
     10000,
     5000,
     1.75,
-    2.5
+    2.5,
 )
 //[4] #5
 new research(
@@ -2240,7 +2250,7 @@ new research(
     undefined,
     false,
     false,
-    4000
+    4000,
 )
 //[5] #6
 new research(
@@ -2251,7 +2261,7 @@ new research(
     undefined,
     false,
     true,
-    20000
+    20000,
 )
 //[6] #7
 new research(
@@ -2260,7 +2270,7 @@ new research(
     undefined,
     false,
     false,
-    8000
+    8000,
 )
 //[7] #8
 new research(
@@ -2276,7 +2286,7 @@ new research(
     30000,
     5000,
     3,
-    5
+    5,
 )
 //[8] #9
 new research(
@@ -2285,7 +2295,7 @@ new research(
     undefined,
     false,
     false,
-    16000
+    16000,
 )
 //[9] #10
 new research(
@@ -2294,7 +2304,7 @@ new research(
     undefined,
     false,
     false,
-    50000
+    50000,
 )
 //[10] #11
 new research(
@@ -2307,7 +2317,7 @@ new research(
     undefined,
     false,
     false,
-    100000
+    100000,
 )
 //[11] #12
 new research(
@@ -2316,7 +2326,7 @@ new research(
     undefined,
     false,
     false,
-    32000
+    32000,
 )
 //[12] #13
 new research(
@@ -2325,7 +2335,7 @@ new research(
     7,
     false,
     true,
-    200000
+    200000,
 )
 //[13] #14
 new research(
@@ -2334,7 +2344,7 @@ new research(
     undefined,
     false,
     true,
-    400000
+    400000,
 )
 //[14] #15
 new research(
@@ -2343,7 +2353,7 @@ new research(
     undefined,
     false,
     false,
-    900000
+    900000,
 )
 //[15] #16
 new research(
@@ -2352,7 +2362,7 @@ new research(
     undefined,
     false,
     true,
-    2000000
+    2000000,
 )
 //[16] #17
 new research(
@@ -2365,7 +2375,7 @@ new research(
     undefined,
     false,
     false,
-    5000000
+    5000000,
 )
 //[17] #18
 new research(
@@ -2374,7 +2384,7 @@ new research(
     undefined,
     false,
     false,
-    15000000
+    15000000,
 )
 //[18] #19
 new research(
@@ -2383,7 +2393,7 @@ new research(
     16,
     false,
     false,
-    60000000
+    60000000,
 )
 //[19] #20
 new research(
@@ -2396,7 +2406,7 @@ new research(
     16,
     false,
     true,
-    3e8
+    3e8,
 )
 //[20] #21
 new research("Unlocks Challenge 7", 19, undefined, false, false, 1.8e9)
@@ -2411,7 +2421,7 @@ new research(
     20,
     false,
     false,
-    1.08e11
+    1.08e11,
 )
 //[24] #25
 new research(
@@ -2422,7 +2432,7 @@ new research(
     21,
     false,
     true,
-    2.25e12
+    2.25e12,
 )
 //[25] #26
 new research("Unlocks Challenge 9", -803, 22, false, false, 8e13)
@@ -2433,7 +2443,7 @@ new research(
     22,
     false,
     false,
-    5e14
+    5e14,
 )
 //[27] #28
 new research(
@@ -2442,7 +2452,7 @@ new research(
     23,
     false,
     true,
-    8.5e17
+    8.5e17,
 )
 //[28] #29
 new research("Unlocks Challenge 10", -904, 25, false, false, 2.5e19)
@@ -2453,7 +2463,7 @@ new research(
     25,
     false,
     false,
-    1e20
+    1e20,
 )
 //[30] #31
 new research(
@@ -2462,7 +2472,7 @@ new research(
     26,
     false,
     false,
-    1.25e24
+    1.25e24,
 )
 //[31] #32
 new research(
@@ -2471,7 +2481,7 @@ new research(
     26,
     false,
     false,
-    8e25
+    8e25,
 )
 //[32] #33
 new research("Unlocks Challenge 11", -1005, 28, false, false, 1e27)
@@ -2482,7 +2492,7 @@ new research(
     28,
     false,
     false,
-    2.8e28
+    2.8e28,
 )
 //[34] #35
 new research(
@@ -2493,7 +2503,7 @@ new research(
     29,
     false,
     false,
-    7.2e35
+    7.2e35,
 )
 //[35] #36
 new research("Unlocks Challenge 12", -1106, 32, false, false, 1.72e39)
@@ -2504,7 +2514,7 @@ new research(
     32,
     false,
     false,
-    4.21e40
+    4.21e40,
 )
 //[37] #38
 new research(
@@ -2513,7 +2523,7 @@ new research(
     33,
     false,
     false,
-    Math.floor(((1 + 5 ** 0.5) / 2) * 1e47)
+    Math.floor(((1 + 5 ** 0.5) / 2) * 1e47),
 )
 //[38] #39
 new research(
@@ -2522,7 +2532,7 @@ new research(
     36,
     false,
     true,
-    Math.floor(Math.PI * 1e49)
+    Math.floor(Math.PI * 1e49),
 )
 //[39] #40
 new research(
@@ -2531,7 +2541,7 @@ new research(
     38,
     false,
     false,
-    Math.floor(Math.E * 1e58)
+    Math.floor(Math.E * 1e58),
 )
 //done initializing collapse researches
 
@@ -2546,7 +2556,7 @@ function research_goal(id) {
                 (research.researches[id].data *
                     research.researches[id].factor **
                         game.research_complete[id]) /
-                    research.researches[id].unit
+                    research.researches[id].unit,
             ) * research.researches[id].unit
     } else {
         goal =
@@ -2555,7 +2565,7 @@ function research_goal(id) {
                     research.researches[id].factor ** 3 *
                     research.researches[id].factor2 **
                         (game.research_complete[id] - 3)) /
-                    research.researches[id].unit
+                    research.researches[id].unit,
             ) * research.researches[id].unit
 
         if (id === 7 && game.research_complete[id] >= 7) {
@@ -2568,7 +2578,7 @@ function research_goal(id) {
                                 ((game.research_complete[id] - 6) *
                                     (game.research_complete[id] - 5)) /
                                     2)) /
-                        research.researches[id].unit
+                        research.researches[id].unit,
                 ) * research.researches[id].unit
         }
 
@@ -2579,7 +2589,7 @@ function research_goal(id) {
                         research.researches[id].factor ** 3 *
                         research.researches[id].factor2 **
                             (game.research_complete[id] * 3 - 41)) /
-                        research.researches[id].unit
+                        research.researches[id].unit,
                 ) * research.researches[id].unit
         }
         if (id === 0 && game.research_complete[id] >= 30) {
@@ -2589,7 +2599,7 @@ function research_goal(id) {
                         research.researches[id].factor ** 3 *
                         research.researches[id].factor2 **
                             (game.research_complete[id] * 9 - 215)) /
-                        research.researches[id].unit
+                        research.researches[id].unit,
                 ) * research.researches[id].unit
         }
         if (id === 3 && game.research_complete[id] >= 15) {
@@ -2599,7 +2609,7 @@ function research_goal(id) {
                         research.researches[id].factor ** 3 *
                         research.researches[id].factor2 **
                             (game.research_complete[id] * 3 - 29)) /
-                        research.researches[id].unit
+                        research.researches[id].unit,
                 ) * research.researches[id].unit
         }
         if (id === 3 && game.research_complete[id] >= 55) {
@@ -2609,7 +2619,7 @@ function research_goal(id) {
                         research.researches[id].factor ** 3 *
                         research.researches[id].factor2 **
                             (game.research_complete[id] * 7.5 - 272)) /
-                        research.researches[id].unit
+                        research.researches[id].unit,
                 ) * research.researches[id].unit
         }
     }
@@ -2703,7 +2713,7 @@ new collapse_challenge(
         Decimal.pow(10, 57),
         Decimal.pow(10, 88),
     ],
-    [5, 8, -13, 18]
+    [5, 8, -13, 18],
 )
 //challenge 8
 new collapse_challenge(
@@ -2726,7 +2736,7 @@ new collapse_challenge(
         Decimal.pow(10, 222),
         Decimal.pow(10, 384),
     ],
-    [3, 6, -10, 14, 18, 25]
+    [3, 6, -10, 14, 18, 25],
 )
 //challenge 9
 new collapse_challenge(
@@ -2742,7 +2752,7 @@ new collapse_challenge(
         Decimal.pow(10, 375),
         Decimal.pow(10, 555),
     ],
-    [4, -7, 10, 14, 20]
+    [4, -7, 10, 14, 20],
 )
 //challenge 10
 new collapse_challenge(
@@ -2757,7 +2767,7 @@ new collapse_challenge(
         Decimal.pow(10, 625),
         Decimal.pow(10, 750),
     ],
-    [-5, -9, 12, 15]
+    [-5, -9, 12, 15],
 )
 //challenge 11
 new collapse_challenge(
@@ -2766,7 +2776,7 @@ new collapse_challenge(
     18,
     Decimal.pow(10, 1750),
     [Decimal.pow(10, 250), Decimal.pow(10, 300), Decimal.pow(10, 400)],
-    [6, 11]
+    [6, 11],
 )
 //challenge 12
 new collapse_challenge(
@@ -2784,7 +2794,7 @@ new collapse_challenge(
         Decimal.pow(10, 120),
         Decimal.pow(10, 60),
     ],
-    [-2, -3, -4, -5, -7]
+    [-2, -3, -4, -5, -7],
 )
 //done initializing collapse challenges
 
@@ -2811,20 +2821,20 @@ function get_collapse_goal(challenge, pending) {
                     c.delta[i].pow(
                         Math.abs(c.scaling[i]) -
                             Math.abs(c.scaling[i - 1]) +
-                            extra[i - 1]
-                    )
+                            extra[i - 1],
+                    ),
                 )
             if (completions >= Math.abs(c.scaling[i]))
                 temp_goal = step.mul(
                     c.delta[i + 1].pow(
-                        completions - Math.abs(c.scaling[i]) + extra[i] + 1
-                    )
+                        completions - Math.abs(c.scaling[i]) + extra[i] + 1,
+                    ),
                 )
 
             superstep = step.mul(
                 c.delta[i + 1].pow(
-                    c.superscaling - Math.abs(c.scaling[i]) + extra[i]
-                )
+                    c.superscaling - Math.abs(c.scaling[i]) + extra[i],
+                ),
             )
             superdelta = c.delta[i + 1]
         }
@@ -2835,31 +2845,31 @@ function get_collapse_goal(challenge, pending) {
                     ((completions - c.superscaling + 2) *
                         (completions - c.superscaling + 3)) /
                         2 -
-                        1
-                )
+                        1,
+                ),
             )
 
             if (challenge === 0 && completions >= 55) {
                 let scale_point = superstep.mul(
                     superdelta.pow(
-                        ((57 - c.superscaling) * (58 - c.superscaling)) / 2 - 1
-                    )
+                        ((57 - c.superscaling) * (58 - c.superscaling)) / 2 - 1,
+                    ),
                 )
                 temp_goal = temp_goal.div(scale_point).pow(2).mul(scale_point)
             }
             if (challenge === 4 && completions >= 23) {
                 let scale_point = superstep.mul(
                     superdelta.pow(
-                        ((25 - c.superscaling) * (26 - c.superscaling)) / 2 - 1
-                    )
+                        ((25 - c.superscaling) * (26 - c.superscaling)) / 2 - 1,
+                    ),
                 )
                 temp_goal = temp_goal.div(scale_point).pow(2).mul(scale_point)
             }
             if (challenge === 5 && completions >= 11) {
                 let scale_point = superstep.mul(
                     superdelta.pow(
-                        ((13 - c.superscaling) * (14 - c.superscaling)) / 2 - 1
-                    )
+                        ((13 - c.superscaling) * (14 - c.superscaling)) / 2 - 1,
+                    ),
                 )
                 temp_goal = temp_goal.div(scale_point).pow(2).mul(scale_point)
 
@@ -2870,8 +2880,8 @@ function get_collapse_goal(challenge, pending) {
                                 ((24 - c.superscaling) *
                                     (25 - c.superscaling)) /
                                     2 -
-                                    1
-                            )
+                                    1,
+                            ),
                         )
                         .div(scale_point)
                         .pow(2)
@@ -2888,8 +2898,8 @@ function get_collapse_goal(challenge, pending) {
                                     ((37 - c.superscaling) *
                                         (38 - c.superscaling)) /
                                         2 -
-                                        1
-                                )
+                                        1,
+                                ),
                             )
                             .div(scale_point)
                             .pow(2)
@@ -2938,7 +2948,7 @@ function get_antispice_amount(type, raw) {
                 else if (antispice_amount.cmp(Decimal.pow(10, 240)) >= 0)
                     antispice_amount = Decimal.pow(
                         10,
-                        (antispice_amount.log(10) - 240) ** 1.35 + 240
+                        (antispice_amount.log(10) - 240) ** 1.35 + 240,
                     )
                 break
             case "red":
@@ -2948,7 +2958,7 @@ function get_antispice_amount(type, raw) {
                 else if (antispice_amount.cmp(Decimal.pow(10, 182)) >= 0)
                     antispice_amount = Decimal.pow(
                         10,
-                        (antispice_amount.log(10) - 182) ** 1.35 + 182
+                        (antispice_amount.log(10) - 182) ** 1.35 + 182,
                     )
                 break
             case "yellow":
@@ -2958,7 +2968,7 @@ function get_antispice_amount(type, raw) {
                 else if (antispice_amount.cmp(Decimal.pow(10, 120)) >= 0)
                     antispice_amount = Decimal.pow(
                         10,
-                        (antispice_amount.log(10) - 120) ** 1.35 * 1.3 + 120
+                        (antispice_amount.log(10) - 120) ** 1.35 * 1.3 + 120,
                     )
                 break
             case "green":
@@ -2968,7 +2978,7 @@ function get_antispice_amount(type, raw) {
                 else if (antispice_amount.cmp(Decimal.pow(10, 79)) >= 0)
                     antispice_amount = Decimal.pow(
                         10,
-                        (antispice_amount.log(10) - 79) ** 1.35 * 1.6 + 79
+                        (antispice_amount.log(10) - 79) ** 1.35 * 1.6 + 79,
                     )
                 break
             case "blue":
@@ -2978,7 +2988,7 @@ function get_antispice_amount(type, raw) {
                 else if (antispice_amount.cmp(Decimal.pow(10, 43)) >= 0)
                     antispice_amount = Decimal.pow(
                         10,
-                        (antispice_amount.log(10) - 43) ** 1.35 * 1.9 + 43
+                        (antispice_amount.log(10) - 43) ** 1.35 * 1.9 + 43,
                     )
                 break
             case "pink":
@@ -2990,7 +3000,7 @@ function get_antispice_amount(type, raw) {
                         10,
                         (antispice_amount.log(10) - Math.log10(50)) ** 1.35 *
                             0.9 +
-                            Math.log10(50)
+                            Math.log10(50),
                     )
                 break
             case "crystal":
@@ -3002,7 +3012,7 @@ function get_antispice_amount(type, raw) {
                         10,
                         (antispice_amount.log(10) - Math.log10(50)) ** 1.35 *
                             1.4 +
-                            Math.log10(50)
+                            Math.log10(50),
                     )
                 break
         }
@@ -3156,7 +3166,7 @@ new antispice_perk("Challenge 7-12 rewards are 5% stronger", 0)
 //[2]
 new antispice_perk(
     "You gain 10% more rainbow " + spice_text[0] + " from Prestige",
-    0
+    0,
 )
 //[3]
 new antispice_perk("You gain 12.5% more Ansuz runes from Ascension", 0)
@@ -3165,17 +3175,17 @@ new antispice_perk("Color boosts and strengtheners are 17.5% stronger", 0)
 //[5]
 new antispice_perk(
     "Crystal infusions and arcane enchantments are 6% stronger",
-    0
+    0,
 )
 //[6]
 new antispice_perk(
     "ALL " + spice_text[0] + " production multipliers are 1% stronger",
-    0
+    0,
 )
 //[7]
 new antispice_perk(
     "The game speed multiplier is 25% stronger outside of Challenge 9",
-    0
+    0,
 )
 //[8]
 new antispice_perk("Unlocks Expansion", 12)
@@ -3185,7 +3195,7 @@ new antispice_perk(
         spice_text[0] +
         " replicators are boosted based on unspent rainbow anti" +
         spice_text[0],
-    16
+    16,
 )
 //done initializing antispice perks
 
@@ -3417,11 +3427,11 @@ function generate_realms() {
             new realm(
                 radius *
                     Math.cos(
-                        1 / (turn * dir) + order[i] * 0.4 * Math.PI + spin
+                        1 / (turn * dir) + order[i] * 0.4 * Math.PI + spin,
                     ),
                 radius *
                     Math.sin(
-                        1 / (turn * dir) + order[i] * 0.4 * Math.PI + spin
+                        1 / (turn * dir) + order[i] * 0.4 * Math.PI + spin,
                     ),
                 -99,
                 -99,
@@ -3437,17 +3447,17 @@ function generate_realms() {
                     ", 100%, " +
                     (random_float() ** 3 * 60 + 40) +
                     "%)",
-                random_float() * 180
+                random_float() * 180,
             )
         } else {
             new realm(
                 radius *
                     Math.cos(
-                        1 / (turn * dir) + order[i] * 0.4 * Math.PI + spin
+                        1 / (turn * dir) + order[i] * 0.4 * Math.PI + spin,
                     ),
                 radius *
                     Math.sin(
-                        1 / (turn * dir) + order[i] * 0.4 * Math.PI + spin
+                        1 / (turn * dir) + order[i] * 0.4 * Math.PI + spin,
                     ),
                 -60,
                 -60,
@@ -3463,7 +3473,7 @@ function generate_realms() {
                     ", 100%, " +
                     (random_float() ** 3 * 60 + 40) +
                     "%)",
-                random_float() * 180
+                random_float() * 180,
             )
         }
     }
@@ -3484,7 +3494,7 @@ function generate_realms() {
                         ((2 * rand - rand ** 2) /
                             (1 + 2 * rand - 2 * rand ** 2)) *
                             0.98 +
-                            0.02
+                            0.02,
                     )
                 }
             } else {
@@ -3494,7 +3504,7 @@ function generate_realms() {
                         ((2 * rand - rand ** 2) /
                             (1 + 2 * rand - 2 * rand ** 2)) *
                             0.98 +
-                            0.02
+                            0.02,
                     )
                 }
             }
@@ -3540,7 +3550,7 @@ function generate_realms() {
                     distance[0] / (turn * dir) +
                         i * 0.4 * Math.PI +
                         spin +
-                        shift
+                        shift,
                 )
             let y =
                 radius *
@@ -3549,7 +3559,7 @@ function generate_realms() {
                     distance[0] / (turn * dir) +
                         i * 0.4 * Math.PI +
                         spin +
-                        shift
+                        shift,
                 )
 
             let status = "checking"
@@ -3578,7 +3588,7 @@ function generate_realms() {
                                     distance[0] / (turn * dir) +
                                         i * 0.4 * Math.PI +
                                         spin +
-                                        shift
+                                        shift,
                                 )
                             y =
                                 radius *
@@ -3587,7 +3597,7 @@ function generate_realms() {
                                     distance[0] / (turn * dir) +
                                         i * 0.4 * Math.PI +
                                         spin +
-                                        shift
+                                        shift,
                                 )
                             tries++
                             fail = true
@@ -3628,7 +3638,7 @@ function generate_realms() {
                             ", 100%, " +
                             (random_float() ** 3 * 60 + 40) +
                             "%)",
-                        random_float() * 180
+                        random_float() * 180,
                     )
                     if (game.new_generation) {
                         let direction = Math.atan2(y, x) + Math.PI
@@ -3653,7 +3663,7 @@ function generate_realms() {
                                         -4.5 *
                                             (normal_quality +
                                                 special_quality -
-                                                2)
+                                                2),
                                     ))
                         new realm(
                             x + 39.9 * Math.cos(direction),
@@ -3672,7 +3682,7 @@ function generate_realms() {
                                 ", 100%, " +
                                 (random_float() ** 3 * 60 + 40) +
                                 "%)",
-                            random_float() * 180
+                            random_float() * 180,
                         )
                     }
                 } else {
@@ -3703,7 +3713,7 @@ function generate_realms() {
                                         (normal_quality +
                                             special_quality +
                                             reset_quality -
-                                            3)
+                                            3),
                                 ))
                     if (
                         realm_range(2, 1 - distance[0], 1) -
@@ -3718,7 +3728,7 @@ function generate_realms() {
                                         -4.5 *
                                             (normal_quality +
                                                 special_quality -
-                                                2)
+                                                2),
                                     ))
                     if (
                         i === order[0] &&
@@ -3742,7 +3752,7 @@ function generate_realms() {
                                 ", 100%, " +
                                 (random_float() ** 3 * 60 + 40) +
                                 "%)",
-                            random_float() * 180
+                            random_float() * 180,
                         )
                     } else if (
                         i === order[1] &&
@@ -3766,7 +3776,7 @@ function generate_realms() {
                                 ", 100%, " +
                                 (random_float() ** 3 * 60 + 40) +
                                 "%)",
-                            random_float() * 180
+                            random_float() * 180,
                         )
                     } else {
                         new realm(
@@ -3786,7 +3796,7 @@ function generate_realms() {
                                 ", 100%, " +
                                 (random_float() ** 3 * 60 + 40) +
                                 "%)",
-                            random_float() * 180
+                            random_float() * 180,
                         )
                     }
                 }
@@ -3807,7 +3817,7 @@ function generate_realms() {
                 (i + 1) +
                 ": realm placement failed " +
                 fail_count +
-                " times"
+                " times",
         )
     }
 
@@ -3832,7 +3842,7 @@ function generate_realms() {
         realm_range(2, 0.98, 0)
 
     let mobile = Number(
-        getComputedStyle(document.body).getPropertyValue("--mobile")
+        getComputedStyle(document.body).getPropertyValue("--mobile"),
     )
 
     document.getElementsByTagName("main")[0].style.display = "block"
@@ -3891,7 +3901,7 @@ function generate_realms() {
             128,
             120,
             (-0.2 + i * 0.5) * Math.PI,
-            (0.2 + i * 0.5) * Math.PI
+            (0.2 + i * 0.5) * Math.PI,
         )
         ctx.stroke()
     }
@@ -3931,7 +3941,7 @@ function generate_realms() {
             128,
             120,
             (-0.2 + i * 0.5) * Math.PI,
-            (0.2 + i * 0.5) * Math.PI
+            (0.2 + i * 0.5) * Math.PI,
         )
         ctx.stroke()
     }
@@ -4037,7 +4047,7 @@ function generate_realms() {
             let n = Math.floor(
                 random_float() * random_float() * 4 +
                     random_float() * random_float() * 4 +
-                    2
+                    2,
             )
             if (n > 10) n = 10
             if (n > clusters[i].length) n = clusters[i].length
@@ -4109,7 +4119,7 @@ function generate_realms() {
                     if (
                         new RegExp(
                             JSON.parse(atob(blacklist)).join("|"),
-                            "i"
+                            "i",
                         ).test(name)
                     ) {
                         duplicate = true
@@ -4166,7 +4176,7 @@ function generate_realms() {
                     if (
                         new RegExp(
                             JSON.parse(atob(blacklist)).join("|"),
-                            "i"
+                            "i",
                         ).test(name)
                     ) {
                         duplicate = true
@@ -4197,7 +4207,7 @@ function generate_realms() {
     console.log("name generation failed " + duplicate_count + " times")
 
     document.getElementById("noise_seed").seed.baseVal = Math.floor(
-        random_float() * 1000000
+        random_float() * 1000000,
     )
 
     ctx = document.getElementById("exploration_stars").getContext("2d")
@@ -4238,7 +4248,7 @@ function generate_realms() {
         .map(_ =>
             Array(Math.ceil((max_ry - min_ry) / 80))
                 .fill()
-                .map(_ => [])
+                .map(_ => []),
         )
 
     for (const r of realm.realms) {
@@ -4337,37 +4347,37 @@ new galactic_upgrade(
         " boosts dark " +
         spice_text[0] +
         " extractors by its total amount",
-    new Decimal(1)
+    new Decimal(1),
 )
 //[1]
 new galactic_upgrade(
     "Unlocks automation for dark constructs and dark conversions",
-    new Decimal(2)
+    new Decimal(2),
 )
 //[2]
 new galactic_upgrade(
     "The free crystal infusions upgrade now scales more",
-    new Decimal(3)
+    new Decimal(3),
 )
 //[3]
 new galactic_upgrade(
     "Researches are no longer gated behind Collapse Challenges, and some are now cheaper",
-    new Decimal(8)
+    new Decimal(8),
 )
 //[4]
 new galactic_upgrade(
     "Dark conversions now also boost research speed 3x",
-    new Decimal(21)
+    new Decimal(21),
 )
 //[5]
 new galactic_upgrade(
     "Quality of life researches are no longer reset by Expansion",
-    new Decimal(55)
+    new Decimal(55),
 )
 //[6]
 new galactic_upgrade(
     "Unlocks more options for Ascension & Collapse automation",
-    new Decimal(144)
+    new Decimal(144),
 )
 //[7]
 new galactic_upgrade(
@@ -4376,19 +4386,19 @@ new galactic_upgrade(
         " is now uncapped, and a new anti" +
         spice_text[0] +
         " perk is unlocked",
-    new Decimal(610)
+    new Decimal(610),
 )
 //[8]
 new galactic_upgrade("Unlocks automation for research", fib(19, true))
 //[9]
 new galactic_upgrade(
     "You automatically gain your best Prestiges, Ascensions, and Collapses/min in real time",
-    fib(24, true)
+    fib(24, true),
 )
 //[10]
 new galactic_upgrade(
     "The boost from Times Prestiged stat is even stronger",
-    fib(31, true)
+    fib(31, true),
 )
 //[11]
 new galactic_upgrade(
@@ -4397,39 +4407,39 @@ new galactic_upgrade(
         " boosts arcane " +
         spice_text[0] +
         " production by its total amount",
-    fib(42, true)
+    fib(42, true),
 )
 //[12]
 new galactic_upgrade(
     "Unlocks automation for anti" + spice_text[0] + " perks",
-    fib(56, true)
+    fib(56, true),
 )
 //[13]
 new galactic_upgrade(
     "Times Expanded stat boosts atomic " +
         spice_text[0] +
         " gains, even in Collapse Challenges<br>(Currently: 1.00x)",
-    fib(73, true)
+    fib(73, true),
 )
 //[14]
 new galactic_upgrade(
     "The boost from Times Ascended stat is stronger",
-    fib(93, true)
+    fib(93, true),
 )
 //[15]
 new galactic_upgrade(
     "Unlocks automation for Collapse Challenges",
-    fib(115, true)
+    fib(115, true),
 )
 //[16]
 new galactic_upgrade(
     "The unstable " + spice_text[0] + " decay boost is stronger",
-    fib(139, true)
+    fib(139, true),
 )
 //[17]
 new galactic_upgrade(
     "Challenge 7's reward instead applies after the realm limit, by a reduced amount",
-    fib(164, true)
+    fib(164, true),
 )
 //[18]
 new galactic_upgrade("Unlocks automation for revisiting realms", fib(190, true))
@@ -4438,14 +4448,14 @@ new galactic_upgrade(
     "Dark " +
         spice_text[0] +
         " generators are boosted based on the previous generator's amount",
-    fib(217, true)
+    fib(217, true),
 )
 //[20]
 new galactic_upgrade("Unlocks galactic crystals", fib(245, true))
 //[21]
 new galactic_upgrade(
     "The exploration map can now be zoomed and scrolled",
-    fib(281, true)
+    fib(281, true),
 )
 //[22]
 new galactic_upgrade(
@@ -4454,33 +4464,33 @@ new galactic_upgrade(
         " production except dark " +
         spice_text[0] +
         " is 0.000% stronger<br>(based on realms visited)",
-    fib(325, true)
+    fib(325, true),
 )
 //[23]
 new galactic_upgrade(
     "Dark " +
         spice_text[0] +
         " production is boosted by 1.62x for every 50 dark constructs",
-    fib(377, true)
+    fib(377, true),
 )
 //[24]
 new galactic_upgrade(
     "You can now equip 3 galactic crystals at once",
-    fib(436, true)
+    fib(436, true),
 )
 //[25]
 new galactic_upgrade("Unlocks automation for Expansion", fib(504, true))
 //[26]
 new galactic_upgrade(
     "Dark conversions now also boost Prestige, Ascension, and Collapse stat gains",
-    fib(580, true)
+    fib(580, true),
 )
 //[27]
 new galactic_upgrade(
     "Dark " +
         spice_text[0] +
         " production is boosted by unspent galactic shards<br>(Currently: 1.00x)",
-    fib(663, true)
+    fib(663, true),
 )
 //done initializing galactic upgrades
 
@@ -4595,6 +4605,7 @@ String.prototype.hashCode = function () {
 //galactic crystal effect interpretation
 function interpret_effect(type, effect, essence, level, count) {
     let power = essence + essence ** 2 / 100 + (level - 1) / 2
+    let power2 = power
     if (power > 300) power = 10.30875 * Math.exp(0.0131328 * power) + 763.361
     else power = power + power ** 1.8 / 28.9551
     /*power = power * Math.exp(0.000363494 * power ** 1.455)*/
@@ -4621,7 +4632,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         " production " +
                         format_idec(
                             Decimal.pow(10, 3.442835e18 * power * scale),
-                            game.notation
+                            game.notation,
                         ) +
                         "x"
                     )
@@ -4630,7 +4641,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         "Red strengtheners are " +
                         format_dec(
                             power ** 0.5376 * 4999 * scale + 1,
-                            game.notation
+                            game.notation,
                         ) +
                         "x stronger"
                     )
@@ -4638,10 +4649,8 @@ function interpret_effect(type, effect, essence, level, count) {
                     return (
                         "Pre-Expansion synergies are " +
                         format_dec(
-                            Math.log(1 + power / 2) ** 0.902662 *
-                                7.46264 *
-                                scale,
-                            game.notation
+                            (power2 / 1225) ** 0.435 * 100 * scale,
+                            game.notation,
                         ) +
                         "% stronger"
                     )
@@ -4649,13 +4658,8 @@ function interpret_effect(type, effect, essence, level, count) {
                     return (
                         "First generators are " +
                         format_dec(
-                            Math.max(
-                                0,
-                                Math.log(1 + power / 2) ** 0.902662 * 11.5671
-                            ) *
-                                scale *
-                                0.852,
-                            game.notation
+                            (power2 / 1225) ** 0.395 * 150 * scale * 0.852,
+                            game.notation,
                         ) +
                         "% stronger"
                     )
@@ -4671,7 +4675,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         " production " +
                         format_idec(
                             Decimal.pow(10, 3.442835e18 * power * scale),
-                            game.notation
+                            game.notation,
                         ) +
                         "x"
                     )
@@ -4680,7 +4684,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         "Yellow strengtheners are " +
                         format_dec(
                             power ** 0.5376 * 4999 * scale * 0.951 + 1,
-                            game.notation
+                            game.notation,
                         ) +
                         "x stronger"
                     )
@@ -4689,7 +4693,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         "Color boosts are " +
                         format_dec(
                             power ** 0.5278 * 2999 * scale * 3.738 + 1,
-                            game.notation
+                            game.notation,
                         ) +
                         "x stronger"
                     )
@@ -4697,13 +4701,8 @@ function interpret_effect(type, effect, essence, level, count) {
                     return (
                         "Second generators are " +
                         format_dec(
-                            Math.max(
-                                0,
-                                Math.log(1 + power / 2) ** 0.902662 * 11.5671
-                            ) *
-                                scale *
-                                0.883,
-                            game.notation
+                            (power2 / 1225) ** 0.395 * 150 * scale * 0.883,
+                            game.notation,
                         ) +
                         "% stronger"
                     )
@@ -4719,7 +4718,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         " production " +
                         format_idec(
                             Decimal.pow(10, 3.442835e18 * power * scale),
-                            game.notation
+                            game.notation,
                         ) +
                         "x"
                     )
@@ -4728,7 +4727,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         "Green strengtheners are " +
                         format_dec(
                             power ** 0.5376 * 4999 * scale * 0.913 + 1,
-                            game.notation
+                            game.notation,
                         ) +
                         "x stronger"
                     )
@@ -4736,8 +4735,8 @@ function interpret_effect(type, effect, essence, level, count) {
                     return (
                         "Crystal infusions & arcane enchantments are " +
                         format_dec(
-                            Math.log(1 + power / 2) * 27.8062 * scale,
-                            game.notation
+                            (power2 / 1225) ** 0.375 * 200 * scale,
+                            game.notation,
                         ) +
                         "% stronger"
                     )
@@ -4745,13 +4744,8 @@ function interpret_effect(type, effect, essence, level, count) {
                     return (
                         "Third generators are " +
                         format_dec(
-                            Math.max(
-                                0,
-                                Math.log(1 + power / 2) ** 0.902662 * 11.5671
-                            ) *
-                                scale *
-                                0.913,
-                            game.notation
+                            (power2 / 1225) ** 0.395 * 150 * scale * 0.913,
+                            game.notation,
                         ) +
                         "% stronger"
                     )
@@ -4767,7 +4761,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         " production " +
                         format_idec(
                             Decimal.pow(10, 3.442835e18 * power * scale),
-                            game.notation
+                            game.notation,
                         ) +
                         "x"
                     )
@@ -4776,7 +4770,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         "Blue strengtheners are " +
                         format_dec(
                             power ** 0.5376 * 4999 * scale * 0.883 + 1,
-                            game.notation
+                            game.notation,
                         ) +
                         "x stronger"
                     )
@@ -4785,7 +4779,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         "Research is " +
                         format_dec(
                             (power + 1) ** (28.5 * scale),
-                            game.notation
+                            game.notation,
                         ) +
                         "x faster"
                     )
@@ -4793,13 +4787,8 @@ function interpret_effect(type, effect, essence, level, count) {
                     return (
                         "Fourth generators are " +
                         format_dec(
-                            Math.max(
-                                0,
-                                Math.log(1 + power / 2) ** 0.902662 * 11.5671
-                            ) *
-                                scale *
-                                0.951,
-                            game.notation
+                            (power2 / 1225) ** 0.395 * 150 * scale * 0.951,
+                            game.notation,
                         ) +
                         "% stronger"
                     )
@@ -4815,7 +4804,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         " production " +
                         format_idec(
                             Decimal.pow(10, 3.442835e18 * power * scale),
-                            game.notation
+                            game.notation,
                         ) +
                         "x"
                     )
@@ -4824,7 +4813,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         "Pink strengtheners are " +
                         format_dec(
                             power ** 0.5376 * 4999 * scale * 0.852 + 1,
-                            game.notation
+                            game.notation,
                         ) +
                         "x stronger"
                     )
@@ -4836,9 +4825,9 @@ function interpret_effect(type, effect, essence, level, count) {
                         format_idec(
                             Decimal.pow(
                                 10,
-                                3.442835e18 * power * scale * 0.004
+                                3.442835e18 * power * scale * 0.004,
                             ),
-                            game.notation
+                            game.notation,
                         ) +
                         "x"
                     )
@@ -4846,11 +4835,8 @@ function interpret_effect(type, effect, essence, level, count) {
                     return (
                         "Fifth generators are " +
                         format_dec(
-                            Math.max(
-                                0,
-                                Math.log(1 + power / 2) ** 0.902662 * 11.5671
-                            ) * scale,
-                            game.notation
+                            (power2 / 1225) ** 0.395 * 150 * scale,
+                            game.notation,
                         ) +
                         "% stronger"
                     )
@@ -4866,7 +4852,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         " gain " +
                         format_idec(
                             Decimal.pow(10, 2.7734e10 * power ** 0.5 * scale),
-                            game.notation
+                            game.notation,
                         ) +
                         "x"
                     )
@@ -4875,7 +4861,7 @@ function interpret_effect(type, effect, essence, level, count) {
                         "Crystal strengtheners are " +
                         format_dec(
                             power ** 0.5376 * 464.471 * scale + 1,
-                            game.notation
+                            game.notation,
                         ) +
                         "x stronger"
                     )
@@ -4883,14 +4869,10 @@ function interpret_effect(type, effect, essence, level, count) {
                     return (
                         "Sixth generators are " +
                         format_dec(
-                            Math.max(
-                                0,
-                                Math.log(1 + power / 2) ** 0.902662 * 9.93952 +
-                                    21.8094
-                            ) *
+                            ((power2 / 1225) ** 0.395 * 121.193 + 28.8072) *
                                 1.058 *
                                 scale,
-                            game.notation
+                            game.notation,
                         ) +
                         "% stronger"
                     )
@@ -4959,11 +4941,11 @@ for (let i = 0; i < 30; i++) {
                     if (game.selected_slot[1] !== -1) {
                         if (game.selected_slot[1] >= 30)
                             document.getElementById(
-                                "slot" + game.selected_slot[1]
+                                "slot" + game.selected_slot[1],
                             ).className = "inventory_slot equip_slot"
                         else
                             document.getElementById(
-                                "slot" + game.selected_slot[1]
+                                "slot" + game.selected_slot[1],
                             ).className = "inventory_slot"
                     }
                     game.selected_slot[1] = i
@@ -4982,11 +4964,11 @@ for (let i = 0; i < 30; i++) {
                     if (game.selected_slot[1] !== -1) {
                         if (game.selected_slot[1] >= 30)
                             document.getElementById(
-                                "slot" + game.selected_slot[1]
+                                "slot" + game.selected_slot[1],
                             ).className = "inventory_slot equip_slot"
                         else
                             document.getElementById(
-                                "slot" + game.selected_slot[1]
+                                "slot" + game.selected_slot[1],
                             ).className = "inventory_slot"
                     }
                     game.selected_slot[1] = i
@@ -5111,11 +5093,11 @@ for (let i = 0; i < 5; i++) {
                     if (game.selected_slot[1] !== -1) {
                         if (game.selected_slot[1] >= 30)
                             document.getElementById(
-                                "slot" + game.selected_slot[1]
+                                "slot" + game.selected_slot[1],
                             ).className = "inventory_slot equip_slot"
                         else
                             document.getElementById(
-                                "slot" + game.selected_slot[1]
+                                "slot" + game.selected_slot[1],
                             ).className = "inventory_slot"
                     }
                     game.selected_slot[1] = 30 + i
@@ -5134,11 +5116,11 @@ for (let i = 0; i < 5; i++) {
                     if (game.selected_slot[1] !== -1) {
                         if (game.selected_slot[1] >= 30)
                             document.getElementById(
-                                "slot" + game.selected_slot[1]
+                                "slot" + game.selected_slot[1],
                             ).className = "inventory_slot equip_slot"
                         else
                             document.getElementById(
-                                "slot" + game.selected_slot[1]
+                                "slot" + game.selected_slot[1],
                             ).className = "inventory_slot"
                     }
                     game.selected_slot[1] = 30 + i
@@ -5460,25 +5442,25 @@ new compendium(
     "- the most common natural " +
         spice_text[0] +
         "<br>- emits heat when subject to enough pressure<br>- has a spicy flavor",
-    "red_spice"
+    "red_spice",
 )
 new compendium(
     "YELLOW " + spice_text[2],
     "- capable of absorbing and retaining energy<br>- often found in an energized state already<br>- has a sour, citrus-like flavor",
     "yellow_spice",
-    0
+    0,
 )
 new compendium(
     "GREEN " + spice_text[2],
     "- an effective fertilizer due to its nutrient-rich composition<br>- has an earthy flavor",
     "green_spice",
-    1
+    1,
 )
 new compendium(
     "BLUE " + spice_text[2],
     "- its inherent structure enables efficient heat absorption<br>- thus a very good coolant<br>- has a cool and refreshing flavor",
     "blue_spice",
-    2
+    2,
 )
 new compendium(
     "PINK " + spice_text[2],
@@ -5486,7 +5468,7 @@ new compendium(
         spice_text[0] +
         "<br>- exhibits remarkable structural integrity<br>- has a strong tendency to adhere to itself<br>- has a sweet and intensely fruity flavor",
     "pink_spice",
-    3
+    3,
 )
 new compendium(
     "RAINBOW " + spice_text[2],
@@ -5494,7 +5476,7 @@ new compendium(
         spice_text[0] +
         "s<br>- explosively reactive, even in small quantities<br>- flavor unknown due to its lethal properties",
     "rainbow_spice",
-    4
+    4,
 )
 new compendium(
     "CRYSTALLIZED " + spice_text[2],
@@ -5504,7 +5486,7 @@ new compendium(
         spice_text[0] +
         " as a fuel source",
     "crystal_spice",
-    5
+    5,
 )
 new compendium(
     "RUNES",
@@ -5512,13 +5494,13 @@ new compendium(
         spice_text[0] +
         "s",
     "runes",
-    6
+    6,
 )
 new compendium(
     "ARCANE " + spice_text[2],
     "- the material runes are made of<br>- has magic-like influence over the spacetime continuum<br>- has an unexpectedly strong bitter flavor",
     "arcane_spice",
-    7
+    7,
 )
 new compendium(
     "ATOMIC " + spice_text[2],
@@ -5529,7 +5511,7 @@ new compendium(
         "s are made up of atomic " +
         spice_text[0],
     "atomic_spice",
-    8
+    8,
 )
 new compendium(
     "UNSTABLE " + spice_text[2],
@@ -5539,7 +5521,7 @@ new compendium(
         spice_text[0] +
         '"<br>- the decay process releases tremendous energy',
     "unstable_spice",
-    9
+    9,
 )
 new compendium(
     "ANTI" + spice_text[2],
@@ -5559,24 +5541,24 @@ new compendium(
         spice_text[0] +
         "s exhibit significantly amplified properties compared to their original forms",
     "pure_antispice",
-    10
+    10,
 )
 new compendium(
     "REALMS",
     '- the largest known structures in the universe<br>- each Realm exists as a separate, self-contained "bubble" encompassing countless galaxies<br>- travelling between Realms requires immense energy',
     "rainbow_antispice",
-    11
+    11,
 )
 new compendium(
     "GALACTIC SHARDS",
     "- remnants of the cosmos left behind by your past journeys<br>- full of cosmic essence, enabling advanced study of and power over the workings of the universe<br>- they seem incomplete, as if they could be combined to form something",
     "galactic_shards",
-    12
+    12,
 )
 new compendium(
     "DARK " + spice_text[2],
     "- predominantly found within black holes<br>- exhibits rapidly increasing gravitational pull as its mass accumulates<br>- can only be extracted by warping the gravitational field to draw it out<br>- has a vague raspberry-like flavor when consumed in safe amounts",
     "dark_spice",
-    13
+    13,
 )
 //done initializing compendium entries
