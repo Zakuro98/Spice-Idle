@@ -24,7 +24,7 @@ function prestige_update() {
         if (game.research_complete[34] >= 1 && game.collapse_challenge !== 12) {
             if (game.color_boosts >= game.augment_start) {
                 let augment_amount = new Decimal(2).pow(
-                    (game.augment_start - 8) / 4
+                    (game.augment_start - 8) / 4,
                 )
                 amount = amount.div(augment_amount).pow(1.5).mul(augment_amount)
             }
@@ -35,7 +35,18 @@ function prestige_update() {
             game.collapse_challenge !== 12
         ) {
             if (game.galactic_bought[14]) {
-                amount = amount.mul(Decimal.pow(2, game.ascend ** 0.5 * 20000))
+                if (game.ascend < 3e15)
+                    amount = amount.mul(
+                        Decimal.pow(2, game.ascend ** 0.5 * 20000),
+                    )
+                else
+                    amount = amount.mul(
+                        Decimal.pow(
+                            2,
+                            (game.ascend - 1.5e15) ** (1 / 3) * 7177200 +
+                                2.73861e11,
+                        ),
+                    )
             } else {
                 if (game.ascend < 5120)
                     amount = amount.mul(Decimal.pow(2, game.ascend / 10))
@@ -43,8 +54,8 @@ function prestige_update() {
                     amount = amount.mul(
                         Decimal.pow(
                             2,
-                            5 * (2 * game.ascend - 7740) ** 0.5 + 262
-                        )
+                            5 * (2 * game.ascend - 7740) ** 0.5 + 262,
+                        ),
                     )
             }
         }
@@ -56,11 +67,11 @@ function prestige_update() {
         if (game.antispice[4].cmp(1) >= 0) {
             if (game.collapse_challenge !== 0) {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03,
                 )
             } else {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06,
                 )
             }
         }
@@ -96,7 +107,7 @@ function prestige_update() {
                 "Currently: +" +
                 format_idec(
                     amount.div(game.real_time_played[1]).mul(60),
-                    game.notation
+                    game.notation,
                 ) +
                 rainbow_unit +
                 " rainbow " +
@@ -111,7 +122,7 @@ function prestige_update() {
                                 "<br>Peak: +" +
                                 format_idec(
                                     game.peak_rainbow_gain.mul(60),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 rainbow_unit +
                                 " rainbow " +
@@ -119,7 +130,7 @@ function prestige_update() {
                                 "/min at " +
                                 format_small(
                                     game.peak_rainbow_boosts,
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " color augments"
                         else
@@ -127,7 +138,7 @@ function prestige_update() {
                                 "<br>Peak: +" +
                                 format_idec(
                                     game.peak_rainbow_gain.mul(60),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 rainbow_unit +
                                 " rainbow " +
@@ -135,7 +146,7 @@ function prestige_update() {
                                 "/min at " +
                                 format_small(
                                     game.peak_rainbow_boosts,
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " color boosts"
                         break
@@ -144,7 +155,7 @@ function prestige_update() {
                             "<br>Peak: +" +
                             format_idec(
                                 game.peak_rainbow_gain.mul(60),
-                                game.notation
+                                game.notation,
                             ) +
                             rainbow_unit +
                             " rainbow " +
@@ -152,7 +163,7 @@ function prestige_update() {
                             "/min at +" +
                             format_idec(
                                 game.peak_rainbow_amount,
-                                game.notation
+                                game.notation,
                             ) +
                             rainbow_unit +
                             " rainbow " +
@@ -164,7 +175,7 @@ function prestige_update() {
                                 "<br>Peak: +" +
                                 format_idec(
                                     game.peak_rainbow_gain.mul(60),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 rainbow_unit +
                                 " rainbow " +
@@ -177,7 +188,7 @@ function prestige_update() {
                                 "<br>Peak: +" +
                                 format_idec(
                                     game.peak_rainbow_gain.mul(60),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 rainbow_unit +
                                 " rainbow " +
@@ -185,7 +196,7 @@ function prestige_update() {
                                 "/min at " +
                                 format_dec(
                                     game.peak_rainbow_time,
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 "s"
                         break
@@ -266,14 +277,14 @@ function prestige_update() {
                     document.getElementById("prestige_goal_text").innerHTML =
                         "Current Auto-Prestige Goal: " +
                         format_small(
-                            game.autopr_goal[0] + game.autopr_goal2[0]
+                            game.autopr_goal[0] + game.autopr_goal2[0],
                         ) +
                         " color augments"
                 else
                     document.getElementById("prestige_goal_text").innerHTML =
                         "Current Auto-Prestige Goal: " +
                         format_small(
-                            game.autopr_goal[0] + game.autopr_goal2[0]
+                            game.autopr_goal[0] + game.autopr_goal2[0],
                         ) +
                         " color boosts"
             } else {
@@ -297,7 +308,7 @@ function prestige_update() {
                     "Current Auto-Prestige Goal: +" +
                     format_idec(
                         game.autopr_goal[1].mul(game.autopr_goal2[1]),
-                        game.notation
+                        game.notation,
                     ) +
                     rainbow_unit +
                     " rainbow " +
@@ -341,7 +352,7 @@ function prestige_update() {
         if (game.research_complete[34] >= 1 && game.collapse_challenge !== 12) {
             if (game.color_boosts >= game.augment_start) {
                 let augment_amount = new Decimal(2).pow(
-                    (game.augment_start - 8) / 4
+                    (game.augment_start - 8) / 4,
                 )
                 amount = amount.div(augment_amount).pow(1.5).mul(augment_amount)
             }
@@ -352,14 +363,25 @@ function prestige_update() {
             game.collapse_challenge !== 12
         ) {
             if (game.galactic_bought[14]) {
-                amount = amount.mul(Decimal.pow(2, game.ascend ** 0.5 * 20000))
+                if (game.ascend < 3e15)
+                    amount = amount.mul(
+                        Decimal.pow(2, game.ascend ** 0.5 * 20000),
+                    )
+                else
+                    amount = amount.mul(
+                        Decimal.pow(
+                            2,
+                            (game.ascend - 1.5e15) ** (1 / 3) * 7177200 +
+                                2.73861e11,
+                        ),
+                    )
             } else {
                 if (game.ascend >= 5120) {
                     amount = amount.mul(
                         Decimal.pow(
                             2,
-                            5 * (2 * game.ascend - 7740) ** 0.5 + 262
-                        )
+                            5 * (2 * game.ascend - 7740) ** 0.5 + 262,
+                        ),
                     )
                 } else {
                     amount = amount.mul(Decimal.pow(2, game.ascend / 10))
@@ -374,11 +396,11 @@ function prestige_update() {
         if (game.antispice[4].cmp(1) >= 0) {
             if (game.collapse_challenge !== 0) {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.03,
                 )
             } else {
                 amount = amount.pow(
-                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06
+                    1 + get_antispice_amount("blue").log(10) ** 0.75 * 0.06,
                 )
             }
         }
@@ -404,7 +426,7 @@ function prestige_update() {
                     amount
                         .div(10)
                         .mul(game.realtime_production ? game.gamespeed : 1),
-                    game.notation
+                    game.notation,
                 ) +
                 rainbow_unit +
                 " rainbow " +
@@ -458,9 +480,9 @@ function prestige_update() {
                                             10,
                                             (game.prestige / 4e15) ** 0.5 *
                                                 1.2e18 *
-                                                phi
+                                                phi,
                                         ),
-                                        game.notation
+                                        game.notation,
                                     ) +
                                     "x)"
                             } else {
@@ -471,9 +493,9 @@ function prestige_update() {
                                     format_idec(
                                         Decimal.pow(
                                             10,
-                                            game.prestige * 300 * phi
+                                            game.prestige * 300 * phi,
                                         ),
-                                        game.notation
+                                        game.notation,
                                     ) +
                                     "x)"
                             }
@@ -489,9 +511,9 @@ function prestige_update() {
                                             10 *
                                                 (game.prestige - 914447) **
                                                     0.25 +
-                                                829.5
+                                                829.5,
                                         ),
-                                        game.notation
+                                        game.notation,
                                     ) +
                                     "x)"
                             } else {
@@ -504,9 +526,9 @@ function prestige_update() {
                                             1e25,
                                             game.prestige **
                                                 (0.5 +
-                                                    40 / (game.prestige + 80))
+                                                    40 / (game.prestige + 80)),
                                         ),
-                                        game.notation
+                                        game.notation,
                                     ) +
                                     "x)"
                             }
@@ -518,7 +540,7 @@ function prestige_update() {
                             " production<br>(Currently: " +
                             format_num(
                                 2.5 * game.prestige * (game.prestige + 1),
-                                game.notation
+                                game.notation,
                             ) +
                             "x)"
                     }
@@ -544,12 +566,12 @@ function prestige_update() {
                         "Increase boost from strengtheners/shifts<br>(" +
                         format_dec(
                             2 + 0.2 * game.prestige_bought[u.id],
-                            game.notation
+                            game.notation,
                         ) +
                         "x -> " +
                         format_dec(
                             2.2 + 0.2 * game.prestige_bought[u.id],
-                            game.notation
+                            game.notation,
                         ) +
                         "x)"
                 else
@@ -658,7 +680,7 @@ function prestige_update() {
                     "<br>(Currently: " +
                     format_idec(
                         game.rainbow_spice.div(256).pow(5).add(1),
-                        game.notation
+                        game.notation,
                     ) +
                     "x)"
                 if (
@@ -785,7 +807,7 @@ function prestige_update() {
                     " production is boosted based on your color boosts<br>(Currently: " +
                     format_idec(
                         Decimal.pow(1.0135, game.color_boosts),
-                        game.notation
+                        game.notation,
                     ) +
                     "x)"
                 if (
@@ -848,7 +870,7 @@ function prestige_update() {
                             format_small(
                                 game.prestige_bought[u.id] ** 2 +
                                     5 * game.prestige_bought[u.id] +
-                                    24
+                                    24,
                             ) +
                             " free crystal infusions"
                     else {
@@ -862,7 +884,11 @@ function prestige_update() {
                         )
                             free_infusions =
                                 (free_infusions - 130676) *
-                                    (game.prestige_bought[20] - 259) +
+                                    (Math.min(
+                                        game.prestige_bought[20],
+                                        1100000,
+                                    ) -
+                                        259) +
                                 130676
                         u.desc =
                             "You get " +
@@ -876,7 +902,7 @@ function prestige_update() {
                             format_small(
                                 game.prestige_bought[u.id] ** 2 +
                                     5 * game.prestige_bought[u.id] +
-                                    24
+                                    24,
                             ) +
                             " free crystal infusions"
                     else
@@ -894,8 +920,8 @@ function prestige_update() {
                                 Math.E **
                                     (Math.log10(
                                         game.rainbow_spice.div(
-                                            Decimal.pow(2, 466)
-                                        )
+                                            Decimal.pow(2, 466),
+                                        ),
                                     ) /
                                         8))) +
                     11 / 9
@@ -910,7 +936,7 @@ function prestige_update() {
                             .div(Decimal.pow(2, 292.5))
                             .pow(exponent)
                             .add(1),
-                        game.notation
+                        game.notation,
                     ) +
                     "x)"
                 if (
@@ -1065,9 +1091,9 @@ function crystal_update() {
                         .pow(3)
                         .add(1)
                         .pow(antispice_power * game.crystal_boost[0][2]),
-                    1
+                    1,
                 ),
-                game.notation
+                game.notation,
             ) +
             "x"
 
@@ -1114,9 +1140,9 @@ function crystal_update() {
                             .pow(12)
                             .add(1)
                             .pow(antispice_power * game.crystal_boost[0][2]),
-                        1
+                        1,
                     ),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
         }
@@ -1153,7 +1179,7 @@ function crystal_update() {
                 .mul(game.total_crystal_spice_boost[0])
                 .mul(game.realtime_production ? game.gamespeed : 1)
                 .mul(3),
-            game.notation
+            game.notation,
         ) +
         spice_unit +
         " crystallized " +
@@ -1175,7 +1201,7 @@ function crystal_update() {
                     .mul(game.total_crystal_spice_boost[0])
                     .mul(game.realtime_production ? game.gamespeed : 1)
                     .mul(3),
-                game.notation
+                game.notation,
             ) +
             spice_unit +
             " crystallized " +
@@ -1204,7 +1230,7 @@ function crystal_update() {
                             game.crystal_spice_gen[gen.id]
                                 .add(game.free_deity)
                                 .floor(),
-                            game.notation
+                            game.notation,
                         ) +
                         " crystallized " +
                         spice_text[0] +
@@ -1215,8 +1241,10 @@ function crystal_update() {
                             .add(game.free_deity)
                             .cmp(
                                 new Decimal(
-                                    game.crystal_spice_bought[gen.id].toString()
-                                )
+                                    game.crystal_spice_bought[
+                                        gen.id
+                                    ].toString(),
+                                ),
                             ) === 0
                     ) {
                         info_str += ",<br>producing "
@@ -1235,10 +1263,10 @@ function crystal_update() {
                                 .mul(
                                     game.realtime_production
                                         ? game.gamespeed
-                                        : 1
+                                        : 1,
                                 )
                                 .mul(3),
-                            game.notation
+                            game.notation,
                         ) +
                         " crystallized " +
                         spice_text[0] +
@@ -1251,14 +1279,14 @@ function crystal_update() {
                                 game.crystal_spice_gen[gen.id]
                                     .add(game.free_deity)
                                     .floor(),
-                                game.notation
+                                game.notation,
                             ) +
                             " " +
                             gen.plural +
                             " <span class='bold'>" +
                             format_idec(
                                 game.total_crystal_spice_boost[gen.id],
-                                game.notation
+                                game.notation,
                             ) +
                             "x</span>"
                 } else {
@@ -1266,7 +1294,7 @@ function crystal_update() {
                         "You have " +
                         format_inum(
                             game.crystal_spice_gen[gen.id].floor(),
-                            game.notation
+                            game.notation,
                         ) +
                         " crystallized " +
                         spice_text[0] +
@@ -1275,8 +1303,8 @@ function crystal_update() {
                     if (
                         game.crystal_spice_gen[gen.id].cmp(
                             new Decimal(
-                                game.crystal_spice_bought[gen.id].toString()
-                            )
+                                game.crystal_spice_bought[gen.id].toString(),
+                            ),
                         ) === 0
                     ) {
                         info_str += ",<br>producing "
@@ -1295,10 +1323,10 @@ function crystal_update() {
                                     .mul(
                                         game.realtime_production
                                             ? game.gamespeed
-                                            : 1
+                                            : 1,
                                     )
                                     .mul(3),
-                                game.notation
+                                game.notation,
                             ) +
                             spice_unit +
                             " crystallized " +
@@ -1317,9 +1345,9 @@ function crystal_update() {
                                         .mul(
                                             game.realtime_production
                                                 ? game.gamespeed
-                                                : 1
+                                                : 1,
                                         ),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " pink " +
                                 spice_text[0] +
@@ -1345,10 +1373,10 @@ function crystal_update() {
                                     .mul(
                                         game.realtime_production
                                             ? game.gamespeed
-                                            : 1
+                                            : 1,
                                     )
                                     .mul(3),
-                                game.notation
+                                game.notation,
                             ) +
                             " crystallized " +
                             spice_text[0] +
@@ -1360,14 +1388,14 @@ function crystal_update() {
                         info_str =
                             format_inum(
                                 game.crystal_spice_gen[gen.id].floor(),
-                                game.notation
+                                game.notation,
                             ) +
                             " " +
                             gen.plural +
                             " <span class='bold'>" +
                             format_idec(
                                 game.total_crystal_spice_boost[gen.id],
-                                game.notation
+                                game.notation,
                             ) +
                             "x</span>"
                 }
@@ -1381,7 +1409,7 @@ function crystal_update() {
                     " are currently being boosted " +
                     format_idec(
                         game.total_crystal_spice_boost[gen.id],
-                        game.notation
+                        game.notation,
                     ) +
                     "x"
 
@@ -1392,7 +1420,7 @@ function crystal_update() {
                     "-" +
                     format_idec(
                         game.crystal_spice_price[gen.id],
-                        game.notation
+                        game.notation,
                     ) +
                     rainbow_unit +
                     " rainbow " +
@@ -1421,14 +1449,14 @@ function crystal_update() {
                             parseFloat(
                                 getComputedStyle(
                                     document.getElementById(
-                                        "crystal_buy" + gen.id
-                                    )
-                                )["font-size"]
+                                        "crystal_buy" + gen.id,
+                                    ),
+                                )["font-size"],
                             ) -
                         0.8
 
                     document.getElementById(
-                        "crystal_buy" + gen.id
+                        "crystal_buy" + gen.id,
                     ).style.width = "auto"
 
                     let width2 =
@@ -1438,24 +1466,24 @@ function crystal_update() {
                             parseFloat(
                                 getComputedStyle(
                                     document.getElementById(
-                                        "crystal_buy" + gen.id
-                                    )
-                                )["font-size"]
+                                        "crystal_buy" + gen.id,
+                                    ),
+                                )["font-size"],
                             ) -
                         0.8
 
                     if (width2 > width) {
                         document.getElementById(
-                            "crystal_buy" + gen.id
+                            "crystal_buy" + gen.id,
                         ).style.width = width2 + 0.89 + "em"
                     } else {
                         document.getElementById(
-                            "crystal_buy" + gen.id
+                            "crystal_buy" + gen.id,
                         ).style.width = width + 0.89 + "em"
                     }
                 } else {
                     document.getElementById(
-                        "crystal_buy" + gen.id
+                        "crystal_buy" + gen.id,
                     ).style.width = "auto"
                 }
 
@@ -1472,13 +1500,13 @@ function crystal_update() {
                     ""
                 if (game.rainbow_spice.cmp(price) >= 0) {
                     document.getElementById(
-                        "crystal_ucost" + gen.id
+                        "crystal_ucost" + gen.id,
                     ).className = "rainbow_cost"
                     document.getElementById("crystal_ubuy" + gen.id).className =
                         "spice_buy can_buy"
                 } else {
                     document.getElementById(
-                        "crystal_ucost" + gen.id
+                        "crystal_ucost" + gen.id,
                     ).className = "empty_cost"
                     document.getElementById("crystal_ubuy" + gen.id).className =
                         "spice_buy"
@@ -1492,14 +1520,14 @@ function crystal_update() {
                             parseFloat(
                                 getComputedStyle(
                                     document.getElementById(
-                                        "crystal_ubuy" + gen.id
-                                    )
-                                )["font-size"]
+                                        "crystal_ubuy" + gen.id,
+                                    ),
+                                )["font-size"],
                             ) -
                         0.8
 
                     document.getElementById(
-                        "crystal_ubuy" + gen.id
+                        "crystal_ubuy" + gen.id,
                     ).style.width = "auto"
 
                     let width2 =
@@ -1509,24 +1537,24 @@ function crystal_update() {
                             parseFloat(
                                 getComputedStyle(
                                     document.getElementById(
-                                        "crystal_ubuy" + gen.id
-                                    )
-                                )["font-size"]
+                                        "crystal_ubuy" + gen.id,
+                                    ),
+                                )["font-size"],
                             ) -
                         0.8
 
                     if (width2 > width) {
                         document.getElementById(
-                            "crystal_ubuy" + gen.id
+                            "crystal_ubuy" + gen.id,
                         ).style.width = width2 + 0.89 + "em"
                     } else {
                         document.getElementById(
-                            "crystal_ubuy" + gen.id
+                            "crystal_ubuy" + gen.id,
                         ).style.width = width + 0.89 + "em"
                     }
                 } else {
                     document.getElementById(
-                        "crystal_ubuy" + gen.id
+                        "crystal_ubuy" + gen.id,
                     ).style.width = "auto"
                 }
 
@@ -1577,7 +1605,7 @@ function crystal_update() {
             " generators " +
             format_idec(
                 Decimal.pow(4, game.crystal_strengthener).pow(antispice_boosts),
-                game.notation
+                game.notation,
             ) +
             "x"
         if (game.crystal_boost[5][1] > 1)
@@ -1591,9 +1619,9 @@ function crystal_update() {
                 " generators " +
                 format_idec(
                     Decimal.pow(4, game.crystal_strengthener).pow(
-                        antispice_boosts * game.crystal_boost[5][1]
+                        antispice_boosts * game.crystal_boost[5][1],
                     ),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
 
@@ -1618,8 +1646,8 @@ function crystal_update() {
                 (document.getElementById("crystal_buy_s").offsetWidth - 1) /
                     parseFloat(
                         getComputedStyle(
-                            document.getElementById("crystal_buy_s")
-                        )["font-size"]
+                            document.getElementById("crystal_buy_s"),
+                        )["font-size"],
                     ) -
                 0.8
 
@@ -1629,8 +1657,8 @@ function crystal_update() {
                 (document.getElementById("crystal_buy_s").offsetWidth - 1) /
                     parseFloat(
                         getComputedStyle(
-                            document.getElementById("crystal_buy_s")
-                        )["font-size"]
+                            document.getElementById("crystal_buy_s"),
+                        )["font-size"],
                     ) -
                 0.8
 
@@ -1672,7 +1700,8 @@ function crystal_update() {
             176
         if (game.galactic_bought[2] && game.prestige_bought[20] >= 262)
             free_infusions =
-                (free_infusions - 130676) * (game.prestige_bought[20] - 260) +
+                (free_infusions - 130676) *
+                    (Math.min(game.prestige_bought[20], 1100000) - 260) +
                 130676
     }
     if (free_infusions > 0)
@@ -1691,9 +1720,9 @@ function crystal_update() {
                         ).toString() *
                             19.2 *
                             antispice_infusions *
-                            game.crystal_boost[2][2]
+                            game.crystal_boost[2][2],
                     ),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
         else
@@ -1709,9 +1738,9 @@ function crystal_update() {
                         ).toString() *
                             24 *
                             antispice_infusions *
-                            game.crystal_boost[2][2]
+                            game.crystal_boost[2][2],
                     ),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
     } else if (
@@ -1731,9 +1760,9 @@ function crystal_update() {
                     ).toString() *
                         20 *
                         antispice_infusions *
-                        game.crystal_boost[2][2]
+                        game.crystal_boost[2][2],
                 ),
-                game.notation
+                game.notation,
             ) +
             "x"
     } else {
@@ -1749,9 +1778,9 @@ function crystal_update() {
                     ).toString() *
                         16 *
                         antispice_infusions *
-                        game.crystal_boost[2][2]
+                        game.crystal_boost[2][2],
                 ),
-                game.notation
+                game.notation,
             ) +
             "x"
     }
@@ -1784,9 +1813,9 @@ function crystal_update() {
                             game.crystal_infusion + BigInt(free_infusions)
                         ).toString() *
                             antispice_infusions *
-                            game.crystal_boost[2][2]
+                            game.crystal_boost[2][2],
                     ),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
         }
@@ -1820,7 +1849,7 @@ function crystal_update() {
                 parseFloat(
                     getComputedStyle(document.getElementById("crystal_buy_i"))[
                         "font-size"
-                    ]
+                    ],
                 ) -
             0.8
 
@@ -1831,7 +1860,7 @@ function crystal_update() {
                 parseFloat(
                     getComputedStyle(document.getElementById("crystal_buy_i"))[
                         "font-size"
-                    ]
+                    ],
                 ) -
             0.8
 
