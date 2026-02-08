@@ -2269,72 +2269,94 @@ function crafting_update() {
     for (let i = 0; i < 5; i++) {
         let crystal = game.equip[i]
         if (crystal !== null) {
-            if (crystal.new) {
-                equipped++
+            if (crystal.new) equipped++
+        }
+    }
 
-                for (let j = 0; j < crystal.effects.length; j++) {
-                    switch (crystal.effects[j]) {
-                        case 0:
-                            switch (crystal.type) {
-                                case 5:
-                                    if (crystal_effects[crystal.type] !== "")
-                                        crystal_effects[crystal.type] += "<br>"
-                                    crystal_effects[crystal.type] +=
-                                        "Rainbow " +
-                                        spice_text[0] +
-                                        " gain " +
-                                        format_idec(
-                                            game.crystal_boost[crystal.type][0],
-                                            game.notation
-                                        ) +
-                                        "x"
-                                    break
-                                default:
-                                    if (crystal_effects[crystal.type] !== "")
-                                        crystal_effects[crystal.type] += "<br>"
-                                    crystal_effects[crystal.type] +=
-                                        color_cap[crystal.type] +
-                                        " " +
-                                        spice_text[0] +
-                                        " production " +
-                                        format_idec(
-                                            game.crystal_boost[crystal.type][0],
-                                            game.notation
-                                        ) +
-                                        "x"
-                                    break
-                            }
-                            break
-                        case 1:
-                            switch (crystal.type) {
-                                case 5:
-                                    if (crystal_effects[crystal.type] !== "")
-                                        crystal_effects[crystal.type] += "<br>"
-                                    crystal_effects[crystal.type] +=
-                                        "Crystal strengtheners are " +
-                                        format_dec(
-                                            game.crystal_boost[crystal.type][1],
-                                            game.notation
-                                        ) +
-                                        "x stronger"
-                                    break
-                                default:
-                                    if (crystal_effects[crystal.type] !== "")
-                                        crystal_effects[crystal.type] += "<br>"
-                                    crystal_effects[crystal.type] +=
-                                        color_cap[crystal.type] +
-                                        " strengtheners are " +
-                                        format_dec(
-                                            game.crystal_boost[crystal.type][1],
-                                            game.notation
-                                        ) +
-                                        "x stronger"
-                                    break
-                            }
-                            break
-                        case 2:
-                            switch (crystal.type) {
-                                case 0:
+    for (let i = 0; i < 6; i++) {
+        if (i >= 5) {
+            for (let j = 0; j < 6; j++) {
+                switch (j) {
+                    case 0:
+                        if (game.crystal_boost[i][0].cmp(1) === 1) {
+                            if (crystal_effects[i] !== "")
+                                crystal_effects[i] += "<br>"
+                            crystal_effects[i] +=
+                                "Rainbow " +
+                                spice_text[0] +
+                                " gain " +
+                                format_idec(
+                                    game.crystal_boost[i][0],
+                                    game.notation
+                                ) +
+                                "x"
+                        }
+                        break
+                    case 1:
+                        if (game.crystal_boost[i][1] > 1) {
+                            if (crystal_effects[i] !== "")
+                                crystal_effects[i] += "<br>"
+                            crystal_effects[i] +=
+                                "Crystal strengtheners are " +
+                                format_dec(
+                                    game.crystal_boost[i][1],
+                                    game.notation
+                                ) +
+                                "x stronger"
+                        }
+                        break
+                    case 2:
+                        if (game.crystal_boost[i][2] > 1) {
+                            if (crystal_effects[i] !== "")
+                                crystal_effects[i] += "<br>"
+                            crystal_effects[i] +=
+                                "Sixth generators are " +
+                                format_dec(
+                                    game.crystal_boost[i][2] * 100 - 100,
+                                    game.notation
+                                ) +
+                                "% stronger"
+                        }
+                        break
+                }
+            }
+        } else {
+            for (let j = 0; j < 5; j++) {
+                switch (j) {
+                    case 0:
+                        if (game.crystal_boost[i][0].cmp(1) === 1) {
+                            if (crystal_effects[i] !== "")
+                                crystal_effects[i] += "<br>"
+                            crystal_effects[i] +=
+                                color_cap[i] +
+                                " " +
+                                spice_text[0] +
+                                " production " +
+                                format_idec(
+                                    game.crystal_boost[i][0],
+                                    game.notation
+                                ) +
+                                "x"
+                        }
+                        break
+                    case 1:
+                        if (game.crystal_boost[i][1] > 1) {
+                            if (crystal_effects[i] !== "")
+                                crystal_effects[i] += "<br>"
+                            crystal_effects[i] +=
+                                color_cap[i] +
+                                " strengtheners are " +
+                                format_dec(
+                                    game.crystal_boost[i][1],
+                                    game.notation
+                                ) +
+                                "x stronger"
+                        }
+                        break
+                    case 2:
+                        switch (i) {
+                            case 0:
+                                if (game.crystal_boost[0][2] > 1) {
                                     if (crystal_effects[0] !== "")
                                         crystal_effects[0] += "<br>"
                                     crystal_effects[0] +=
@@ -2345,8 +2367,10 @@ function crafting_update() {
                                             game.notation
                                         ) +
                                         "% stronger"
-                                    break
-                                case 1:
+                                }
+                                break
+                            case 1:
+                                if (game.crystal_boost[1][2] > 1) {
                                     if (crystal_effects[1] !== "")
                                         crystal_effects[1] += "<br>"
                                     crystal_effects[1] +=
@@ -2356,8 +2380,10 @@ function crafting_update() {
                                             game.notation
                                         ) +
                                         "x stronger"
-                                    break
-                                case 2:
+                                }
+                                break
+                            case 2:
+                                if (game.crystal_boost[2][2] > 1) {
                                     if (crystal_effects[2] !== "")
                                         crystal_effects[2] += "<br>"
                                     crystal_effects[2] +=
@@ -2368,8 +2394,10 @@ function crafting_update() {
                                             game.notation
                                         ) +
                                         "% stronger"
-                                    break
-                                case 3:
+                                }
+                                break
+                            case 3:
+                                if (game.crystal_boost[3][2] > 1) {
                                     if (crystal_effects[3] !== "")
                                         crystal_effects[3] += "<br>"
                                     crystal_effects[3] +=
@@ -2379,8 +2407,10 @@ function crafting_update() {
                                             game.notation
                                         ) +
                                         "x faster"
-                                    break
-                                case 4:
+                                }
+                                break
+                            case 4:
+                                if (game.crystal_boost[4][2].cmp(1) === 1) {
                                     if (crystal_effects[4] !== "")
                                         crystal_effects[4] += "<br>"
                                     crystal_effects[4] +=
@@ -2392,25 +2422,12 @@ function crafting_update() {
                                             game.notation
                                         ) +
                                         "x"
-                                    break
-                                case 5:
-                                    if (crystal_effects[5] !== "")
-                                        crystal_effects[5] += "<br>"
-                                    crystal_effects[crystal.type] +=
-                                        "Sixth generators are " +
-                                        format_dec(
-                                            game.crystal_boost[
-                                                crystal.type
-                                            ][2] *
-                                                100 -
-                                                100,
-                                            game.notation
-                                        ) +
-                                        "% stronger"
-                                    break
-                            }
-                            break
-                        case 3:
+                                }
+                                break
+                        }
+                        break
+                    case 3:
+                        if (game.crystal_boost[i][3] > 1) {
                             let position = [
                                 "First",
                                 "Second",
@@ -2418,18 +2435,17 @@ function crafting_update() {
                                 "Fourth",
                                 "Fifth",
                             ]
-                            crystal_effects[crystal.type] +=
+                            crystal_effects[i] +=
                                 "<br>" +
-                                position[crystal.type] +
+                                position[i] +
                                 " generators are " +
                                 format_dec(
-                                    game.crystal_boost[crystal.type][3] * 100 -
-                                        100,
+                                    game.crystal_boost[i][3] * 100 - 100,
                                     game.notation
                                 ) +
                                 "% stronger"
-                            break
-                    }
+                        }
+                        break
                 }
             }
         }
