@@ -1117,7 +1117,7 @@ if (meme_condition) {
     document.title = "Salt Idle"
     document.getElementById("spices").innerHTML = "SALTS"
     document.getElementById("version").innerHTML =
-        "Salt Idle v1.9.0 β10<br>Made by Zakuro"
+        "Salt Idle v1.9.0 β11<br>Made by Zakuro"
 }
 
 //initialize map
@@ -4664,7 +4664,18 @@ function interpret_effect(type, effect, essence, level, count) {
                         "% stronger"
                     )
                 case 4:
-                    return "Unstable " + spice_text[0] + " decay is stronger"
+                    return (
+                        "Unstable " +
+                        spice_text[0] +
+                        " decay is " +
+                        format_dec(
+                            (power2 / 112.5) ** 0.5 * 2.52 * scale + 1,
+                            game.notation,
+                        ) +
+                        "x stronger"
+                    )
+                default:
+                    return "Dummy effect"
             }
         case 1:
             switch (effect) {
@@ -4707,7 +4718,16 @@ function interpret_effect(type, effect, essence, level, count) {
                         "% stronger"
                     )
                 case 4:
-                    return "The game runs faster"
+                    return (
+                        "The game runs " +
+                        format_dec(
+                            (power + 1) ** (39.4 * scale),
+                            game.notation,
+                        ) +
+                        "x faster"
+                    )
+                default:
+                    return "Dummy effect"
             }
         case 2:
             switch (effect) {
@@ -4750,7 +4770,18 @@ function interpret_effect(type, effect, essence, level, count) {
                         "% stronger"
                     )
                 case 4:
-                    return "Extra atomic efficiency"
+                    return (
+                        "+" +
+                        format_dec(
+                            (power2 / 1225) ** 0.375 * 200 * scale,
+                            game.notation,
+                        ) +
+                        "% atomic " +
+                        spice_text[0] +
+                        " efficiency"
+                    )
+                default:
+                    return "Dummy effect"
             }
         case 3:
             switch (effect) {
@@ -4793,7 +4824,16 @@ function interpret_effect(type, effect, essence, level, count) {
                         "% stronger"
                     )
                 case 4:
-                    return "Color augments start later"
+                    return (
+                        "Color augments start " +
+                        format_dec(
+                            power ** 0.5278 * 14.4 * scale + 1,
+                            game.notation,
+                        ) +
+                        "x later"
+                    )
+                default:
+                    return "Dummy effect"
             }
         case 4:
             switch (effect) {
@@ -4841,7 +4881,20 @@ function interpret_effect(type, effect, essence, level, count) {
                         "% stronger"
                     )
                 case 4:
-                    return "Color boosts are cheaper"
+                    return (
+                        "Color boosts are " +
+                        format_dec(
+                            100 -
+                                0.8 **
+                                    ((power2 / 112.5) ** 1.088 *
+                                        1.333 *
+                                        scale) *
+                                    100,
+                        ) +
+                        "% cheaper"
+                    )
+                default:
+                    return "Dummy effect"
             }
         case 5:
             switch (effect) {
@@ -4851,20 +4904,13 @@ function interpret_effect(type, effect, essence, level, count) {
                         spice_text[0] +
                         " gain " +
                         format_idec(
-                            Decimal.pow(10, 2.7734e10 * power ** 0.5 * scale),
+                            Decimal.pow(10, 2.7734e10 * power ** 0.975 * scale),
                             game.notation,
                         ) +
                         "x"
                     )
                 case 1:
-                    return (
-                        "Crystal strengtheners are " +
-                        format_dec(
-                            power ** 0.5376 * 464.471 * scale + 1,
-                            game.notation,
-                        ) +
-                        "x stronger"
-                    )
+                    return "Crystal strengtheners are stronger (disabled)"
                 case 2:
                     return (
                         "Sixth generators are " +
@@ -4877,26 +4923,65 @@ function interpret_effect(type, effect, essence, level, count) {
                         "% stronger"
                     )
                 case 3:
-                    return "Ansuz rune gain boost"
+                    return (
+                        "Ansuz rune gain " +
+                        format_idec(
+                            Decimal.pow(10, 2.52127e9 * power ** 0.975 * scale),
+                            game.notation,
+                        ) +
+                        "x"
+                    )
                 case 4:
-                    return "Arcane strengtheners are stronger"
+                    return "Arcane strengtheners are stronger (disabled)"
                 case 5:
                     return "Atomic " + spice_text[0] + " gain boost"
+                default:
+                    return "Dummy effect"
             }
         case 6:
             switch (effect) {
                 case 0:
-                    return "Arcane " + spice_text[0] + " production boost"
+                    return (
+                        "Arcane " +
+                        spice_text[0] +
+                        " production " +
+                        format_idec(
+                            Decimal.pow(
+                                10,
+                                3.442835e18 * power ** 0.64 * scale * 0.00012,
+                            ),
+                            game.notation,
+                        ) +
+                        "x"
+                    )
                 case 1:
-                    return "Dark " + spice_text[0] + " production boost"
+                    return (
+                        "Dark " +
+                        spice_text[0] +
+                        " production " +
+                        format_idec(
+                            Decimal.pow(10, 20 * power ** 0.265 * scale),
+                            game.notation,
+                        ) +
+                        "x"
+                    )
                 case 2:
-                    return "Dark constructs are stronger"
+                    return (
+                        "Dark constructs are " +
+                        format_dec(
+                            power2 ** 0.5 * 1.6 * scale + 1,
+                            game.notation,
+                        ) +
+                        "x stronger"
+                    )
                 case 3:
                     return "Dark " + spice_text[0] + " synergies are stronger"
                 case 4:
                     return "Galactic shard gain boost"
                 case 5:
                     return "ALL spice production is stronger"
+                default:
+                    return "Dummy effect"
             }
     }
 }
