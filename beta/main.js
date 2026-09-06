@@ -21,6 +21,9 @@ function tick() {
                 reward_scaling9
         else game.gamespeed = 2 ** (game.collapse_complete[2] * reward_scaling9)
 
+        if (game.crystal_boost[1][4] > 1)
+            game.gamespeed *= game.crystal_boost[1][4]
+
         if (game.antispice_bought[7]) game.gamespeed = game.gamespeed ** 1.25
     }
 
@@ -358,6 +361,9 @@ function tick() {
                     .sub(1),
                 0,
             )
+        }
+        if (game.crystal_boost[0][4] > 1) {
+            game.free_deity = game.free_deity.pow(game.crystal_boost[0][4])
         }
     } else {
         game.free_deity = new Decimal(0)
@@ -1733,26 +1739,30 @@ function tick() {
     }
 
     for (let i = 0; i < 6; i++) {
+        let construct_power = 1
+        if (game.crystal_boost[6][2] > 1)
+            construct_power = game.crystal_boost[6][2]
+
         game.total_red_spice_boost[i] = game.total_red_spice_boost[i].mul(
-            game.dark_construct_boost,
+            game.dark_construct_boost.pow(construct_power),
         )
         game.total_yellow_spice_boost[i] = game.total_yellow_spice_boost[i].mul(
-            game.dark_construct_boost,
+            game.dark_construct_boost.pow(construct_power),
         )
         game.total_green_spice_boost[i] = game.total_green_spice_boost[i].mul(
-            game.dark_construct_boost,
+            game.dark_construct_boost.pow(construct_power),
         )
         game.total_blue_spice_boost[i] = game.total_blue_spice_boost[i].mul(
-            game.dark_construct_boost,
+            game.dark_construct_boost.pow(construct_power),
         )
         game.total_pink_spice_boost[i] = game.total_pink_spice_boost[i].mul(
-            game.dark_construct_boost,
+            game.dark_construct_boost.pow(construct_power),
         )
         game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
             i
-        ].mul(game.dark_construct_boost.pow(1 / 275))
+        ].mul(game.dark_construct_boost.pow(construct_power / 275))
         game.total_arcane_spice_boost[i] = game.total_arcane_spice_boost[i].mul(
-            game.dark_construct_boost.pow(1 / 150000),
+            game.dark_construct_boost.pow(construct_power / 150000),
         )
 
         if (game.galactic_bought[11]) {
@@ -2494,6 +2504,37 @@ function tick() {
                     )
         }
 
+        if (game.crystal_boost[0][4] > 1) {
+            game.total_red_spice_boost[i] = game.total_red_spice_boost[i].mul(
+                game.unstable_boost.pow(game.crystal_boost[0][4] - 1),
+            )
+            game.total_yellow_spice_boost[i] = game.total_yellow_spice_boost[
+                i
+            ].mul(game.unstable_boost.pow(game.crystal_boost[0][4] - 1))
+            game.total_green_spice_boost[i] = game.total_green_spice_boost[
+                i
+            ].mul(game.unstable_boost.pow(game.crystal_boost[0][4] - 1))
+            game.total_blue_spice_boost[i] = game.total_blue_spice_boost[i].mul(
+                game.unstable_boost.pow(game.crystal_boost[0][4] - 1),
+            )
+            game.total_pink_spice_boost[i] = game.total_pink_spice_boost[i].mul(
+                game.unstable_boost.pow(game.crystal_boost[0][4] - 1),
+            )
+
+            game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
+                i
+            ].mul(
+                game.unstable_boost.pow(0.015 * (game.crystal_boost[0][4] - 1)),
+            )
+            game.total_arcane_spice_boost[i] = game.total_arcane_spice_boost[
+                i
+            ].mul(
+                game.unstable_boost.pow(
+                    0.000012 * (game.crystal_boost[0][4] - 1),
+                ),
+            )
+        }
+
         if (game.crystal_boost[4][2].cmp(1) === 1) {
             game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
                 i
@@ -2506,6 +2547,12 @@ function tick() {
                     antispice_boosts * (game.crystal_boost[5][1] - 1),
                 ),
             )
+        }
+
+        if (game.crystal_boost[6][0].cmp(1) === 1) {
+            game.total_arcane_spice_boost[i] = game.total_arcane_spice_boost[
+                i
+            ].mul(game.crystal_boost[6][0])
         }
     }
 
@@ -2535,60 +2582,88 @@ function tick() {
         if (game.galactic_bought[22]) {
             game.total_red_spice_boost[i] = game.total_red_spice_boost[i].pow(
                 1 +
-                    (game.realms_visited.length *
-                        (game.new_generation ? 1 : 8 / 7)) **
-                        0.5 /
-                        (1.6 ** 0.5 * 100),
+                    0.0577 *
+                        Math.log(
+                            Math.max(
+                                game.realms_visited.length *
+                                    (game.new_generation ? 1 : 8 / 7),
+                                22,
+                            ) / 22,
+                        ),
             )
             game.total_yellow_spice_boost[i] = game.total_yellow_spice_boost[
                 i
             ].pow(
                 1 +
-                    (game.realms_visited.length *
-                        (game.new_generation ? 1 : 8 / 7)) **
-                        0.5 /
-                        (1.6 ** 0.5 * 100),
+                    0.0577 *
+                        Math.log(
+                            Math.max(
+                                game.realms_visited.length *
+                                    (game.new_generation ? 1 : 8 / 7),
+                                22,
+                            ) / 22,
+                        ),
             )
             game.total_green_spice_boost[i] = game.total_green_spice_boost[
                 i
             ].pow(
                 1 +
-                    (game.realms_visited.length *
-                        (game.new_generation ? 1 : 8 / 7)) **
-                        0.5 /
-                        (1.6 ** 0.5 * 100),
+                    0.0577 *
+                        Math.log(
+                            Math.max(
+                                game.realms_visited.length *
+                                    (game.new_generation ? 1 : 8 / 7),
+                                22,
+                            ) / 22,
+                        ),
             )
             game.total_blue_spice_boost[i] = game.total_blue_spice_boost[i].pow(
                 1 +
-                    (game.realms_visited.length *
-                        (game.new_generation ? 1 : 8 / 7)) **
-                        0.5 /
-                        (1.6 ** 0.5 * 100),
+                    0.0577 *
+                        Math.log(
+                            Math.max(
+                                game.realms_visited.length *
+                                    (game.new_generation ? 1 : 8 / 7),
+                                22,
+                            ) / 22,
+                        ),
             )
             game.total_pink_spice_boost[i] = game.total_pink_spice_boost[i].pow(
                 1 +
-                    (game.realms_visited.length *
-                        (game.new_generation ? 1 : 8 / 7)) **
-                        0.5 /
-                        (1.6 ** 0.5 * 100),
+                    0.0577 *
+                        Math.log(
+                            Math.max(
+                                game.realms_visited.length *
+                                    (game.new_generation ? 1 : 8 / 7),
+                                22,
+                            ) / 22,
+                        ),
             )
             game.total_crystal_spice_boost[i] = game.total_crystal_spice_boost[
                 i
             ].pow(
                 1 +
-                    (game.realms_visited.length *
-                        (game.new_generation ? 1 : 8 / 7)) **
-                        0.5 /
-                        (1.6 ** 0.5 * 100),
+                    0.0577 *
+                        Math.log(
+                            Math.max(
+                                game.realms_visited.length *
+                                    (game.new_generation ? 1 : 8 / 7),
+                                22,
+                            ) / 22,
+                        ),
             )
             game.total_arcane_spice_boost[i] = game.total_arcane_spice_boost[
                 i
             ].pow(
                 1 +
-                    (game.realms_visited.length *
-                        (game.new_generation ? 1 : 8 / 7)) **
-                        0.5 /
-                        (1.6 ** 0.5 * 100),
+                    0.0577 *
+                        Math.log(
+                            Math.max(
+                                game.realms_visited.length *
+                                    (game.new_generation ? 1 : 8 / 7),
+                                22,
+                            ) / 22,
+                        ),
             )
         }
     }
@@ -2644,6 +2719,12 @@ function tick() {
         if (game.galactic_bought[27]) {
             game.total_dark_spice_boost[i] = game.total_dark_spice_boost[i].mul(
                 game.galactic_shards.div(fib(603, true)).pow(2).add(1),
+            )
+        }
+
+        if (game.crystal_boost[6][1].cmp(1) === 1) {
+            game.total_dark_spice_boost[i] = game.total_dark_spice_boost[i].mul(
+                game.crystal_boost[6][1],
             )
         }
     }
@@ -3628,6 +3709,10 @@ function tick() {
                         )
                     }
 
+                    if (game.crystal_boost[5][3].cmp(1) === 1) {
+                        amount = amount.mul(game.crystal_boost[5][3])
+                    }
+
                     if (game.antispice[4].cmp(1) >= 0) {
                         if (game.collapse_challenge !== 0) {
                             amount = amount.pow(
@@ -3793,6 +3878,10 @@ function tick() {
                             9,
                     ),
                 )
+            }
+
+            if (game.crystal_boost[5][3].cmp(1) === 1) {
+                amount = amount.mul(game.crystal_boost[5][3])
             }
 
             if (game.antispice[4].cmp(1) >= 0) {
@@ -4082,6 +4171,12 @@ function tick() {
         (2097152 + 2097152 * game.collapse_complete[3]) * reward_scaling,
     )
 
+    if (game.crystal_boost[3][4] > 1) {
+        game.augment_start = Math.round(
+            game.augment_start * game.crystal_boost[3][4],
+        )
+    }
+
     if (game.research_complete[31] >= 1 && game.collapse_challenge !== 0) {
         game.pending_goal = get_collapse_goal(
             game.collapse_challenge - 7,
@@ -4229,7 +4324,7 @@ function tick() {
                         game.collapse_challenge = game.autocc_challenge
                         game.pending_completions = 0
                         if (game.collapse_challenge === 9)
-                            game.gamespeed = 1 / 99999
+                            game.gamespeed = 0.00001
                     }
                 }
             }
@@ -4460,6 +4555,10 @@ function tick() {
         )
     }
 
+    if (game.crystal_boost[5][3].cmp(1) === 1) {
+        ansuz_gain = ansuz_gain.mul(game.crystal_boost[5][3])
+    }
+
     if (game.antispice[4].cmp(1) >= 0) {
         if (game.collapse_challenge !== 0) {
             ansuz_gain = ansuz_gain.pow(
@@ -4612,6 +4711,10 @@ function tick() {
 //handling spice collider animations
 function collider_tick() {
     collider.time++
+
+    let crystal_efficiency = 0
+    if (game.crystal_boost[2][4] > 0)
+        crystal_efficiency = game.crystal_boost[2][4]
 
     let col = document.getElementById("collider_view")
     let ctx = col.getContext("2d")
@@ -4795,13 +4898,21 @@ function collider_tick() {
                 game.total_unstable_spice = game.total_unstable_spice.add(
                     game.atomic_spice
                         .mul(game.atomic_portion)
-                        .pow(game.atomic_efficiency + game.dark_efficiency)
+                        .pow(
+                            game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency,
+                        )
                         .floor(),
                 )
                 game.unstable_spice = game.unstable_spice.add(
                     game.atomic_spice
                         .mul(game.atomic_portion)
-                        .pow(game.atomic_efficiency + game.dark_efficiency)
+                        .pow(
+                            game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency,
+                        )
                         .floor(),
                 )
                 game.atomic_spice = game.atomic_spice.mul(
@@ -4815,7 +4926,10 @@ function collider_tick() {
                 )
 
                 let amount = game.spent_atomic_spice[0].pow(
-                    (game.atomic_efficiency + game.dark_efficiency) / 76,
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        76,
                 )
                 if (amount.cmp(Decimal.pow(10, 170)) >= 0)
                     amount = amount
@@ -4854,7 +4968,12 @@ function collider_tick() {
                 )
 
                 let amount = game.spent_atomic_spice[1]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 228)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            228,
+                    )
                     .div(3.2)
                     .mul(red_amount)
                 if (amount.cmp(Decimal.pow(10, 128)) >= 0)
@@ -4899,7 +5018,12 @@ function collider_tick() {
                 )
 
                 let amount = game.spent_atomic_spice[2]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 304)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            304,
+                    )
                     .div(54)
                     .mul(yellow_amount)
                 if (amount.cmp(Decimal.pow(10, 87)) >= 0)
@@ -4934,7 +5058,12 @@ function collider_tick() {
                 )
 
                 let amount = game.spent_atomic_spice[3]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 380)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            380,
+                    )
                     .div(108000)
                     .mul(green_amount)
                 if (amount.cmp(Decimal.pow(10, 56)) >= 0)
@@ -4974,7 +5103,12 @@ function collider_tick() {
                 )
 
                 let amount = game.spent_atomic_spice[4]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 494)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            494,
+                    )
                     .div(5.587e15)
                     .mul(blue_amount)
                 if (amount.cmp(Decimal.pow(10, 40)) >= 0)
@@ -5009,7 +5143,12 @@ function collider_tick() {
                 )
 
                 let amount = game.spent_atomic_spice[5]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 608)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            608,
+                    )
                     .div(8.098e34)
                     .mul(pink_amount)
                 if (amount.cmp(Decimal.pow(10, 88)) >= 0)
@@ -5139,7 +5278,11 @@ function collider_tick() {
                 if (
                     game.atomic_spice
                         .mul(game.atomic_portion)
-                        .pow(game.atomic_efficiency + game.dark_efficiency)
+                        .pow(
+                            game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency,
+                        )
                         .cmp(game.total_unstable_spice) >= 0
                 )
                     can_collide = true
@@ -5148,7 +5291,9 @@ function collider_tick() {
                     pending_amount = game.spent_atomic_spice[0]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 76,
                         )
                     if (pending_amount.cmp(Decimal.pow(10, 170)) >= 0)
@@ -5179,7 +5324,9 @@ function collider_tick() {
                     pending_amount = game.spent_atomic_spice[1]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 228,
                         )
                         .div(3.2)
@@ -5217,7 +5364,9 @@ function collider_tick() {
                     pending_amount = game.spent_atomic_spice[2]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 304,
                         )
                         .div(54)
@@ -5245,7 +5394,9 @@ function collider_tick() {
                     pending_amount = game.spent_atomic_spice[3]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 380,
                         )
                         .div(108000)
@@ -5278,7 +5429,9 @@ function collider_tick() {
                     pending_amount = game.spent_atomic_spice[4]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 494,
                         )
                         .div(5.587e15)
@@ -5306,7 +5459,9 @@ function collider_tick() {
                     pending_amount = game.spent_atomic_spice[5]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 608,
                         )
                         .div(8.098e34)
@@ -5358,12 +5513,20 @@ function collider_tick() {
                 if (available_spice[0]) {
                     game.total_unstable_spice = game.total_unstable_spice.add(
                         atomic_amount
-                            .pow(game.atomic_efficiency + game.dark_efficiency)
+                            .pow(
+                                game.atomic_efficiency +
+                                    game.dark_efficiency +
+                                    crystal_efficiency,
+                            )
                             .floor(),
                     )
                     game.unstable_spice = game.unstable_spice.add(
                         atomic_amount
-                            .pow(game.atomic_efficiency + game.dark_efficiency)
+                            .pow(
+                                game.atomic_efficiency +
+                                    game.dark_efficiency +
+                                    crystal_efficiency,
+                            )
                             .floor(),
                     )
                 }
@@ -5372,7 +5535,10 @@ function collider_tick() {
                     game.spent_atomic_spice[0] =
                         game.spent_atomic_spice[0].add(atomic_amount)
                     let amount = game.spent_atomic_spice[0].pow(
-                        (game.atomic_efficiency + game.dark_efficiency) / 76,
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            76,
                     )
                     if (amount.cmp(Decimal.pow(10, 170)) >= 0)
                         amount = amount
@@ -5398,7 +5564,9 @@ function collider_tick() {
                         game.spent_atomic_spice[1].add(atomic_amount)
                     let amount = game.spent_atomic_spice[1]
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 228,
                         )
                         .div(3.2)
@@ -5432,7 +5600,9 @@ function collider_tick() {
                         game.spent_atomic_spice[2].add(atomic_amount)
                     let amount = game.spent_atomic_spice[2]
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 304,
                         )
                         .div(54)
@@ -5456,7 +5626,9 @@ function collider_tick() {
                         game.spent_atomic_spice[3].add(atomic_amount)
                     let amount = game.spent_atomic_spice[3]
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 380,
                         )
                         .div(108000)
@@ -5485,7 +5657,9 @@ function collider_tick() {
                         game.spent_atomic_spice[4].add(atomic_amount)
                     let amount = game.spent_atomic_spice[4]
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 494,
                         )
                         .div(5.587e15)
@@ -5509,7 +5683,9 @@ function collider_tick() {
                         game.spent_atomic_spice[5].add(atomic_amount)
                     let amount = game.spent_atomic_spice[5]
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 608,
                         )
                         .div(8.098e34)
