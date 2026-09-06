@@ -49,6 +49,10 @@ function ascension_update() {
             )
         }
 
+        if (game.crystal_boost[5][3].cmp(1) === 1) {
+            amount = amount.mul(game.crystal_boost[5][3])
+        }
+
         if (game.antispice[4].cmp(1) >= 0) {
             if (game.collapse_challenge !== 0) {
                 amount = amount.pow(
@@ -493,6 +497,10 @@ function ascension_update() {
                         9,
                 ),
             )
+        }
+
+        if (game.crystal_boost[5][3].cmp(1) === 1) {
+            amount = amount.mul(game.crystal_boost[5][3])
         }
 
         if (game.antispice[4].cmp(1) >= 0) {
