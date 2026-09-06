@@ -3349,6 +3349,7 @@ main {
     margin: 0.4em;
     background-color: #311936;
     border: 1px solid white;
+    overflow: hidden;
     cursor: pointer;
 }
 
@@ -3599,6 +3600,22 @@ main {
     mix-blend-mode: multiply;
 }
 
+.dark_crystal {
+    filter: drop-shadow(0 0 0.1em hsl(300, calc(12.5% * sin(var(--time)) + 57.5%), 30%))
+            drop-shadow(0 0 0.2em hsl(305, calc(10% * sin(var(--time)) + 20%), 15%))
+            drop-shadow(0 0 0.4em black)
+            drop-shadow(0 0 0.6em black);
+}
+
+.dark_crystal::after {
+    background: linear-gradient(195deg,
+                hsl(290, calc(12.5% * sin(var(--time)) + 57.5%), 60%) 25%,
+                hsl(300, calc(12.5% * sin(var(--time)) + 57.5%), 30%) 75%);
+    mask: url(https://i.imgur.com/9zjkpWS.png) center/contain no-repeat;
+    -webkit-mask: url(https://i.imgur.com/9zjkpWS.png) center/contain no-repeat;
+    mix-blend-mode: multiply;
+}
+
 .red_shards {
     background-image: linear-gradient(hsl(15, 100%, 80%) 30%, hsl(5, 100%, 70%) 80%);
     background-clip: text;
@@ -3650,11 +3667,11 @@ main {
 }
 
 .dark_shards {
-    background-image: linear-gradient(hsl(290, calc(12.5% * sin(var(--time)) + 57.5%), 60%) 30%, hsl(300, calc(12.5% * sin(var(--time)) + 57.5%), 40%) 80%);
+    background-image: linear-gradient(hsl(290, calc(12.5% * sin(var(--time)) + 57.5%), 60%) 30%, hsl(300, calc(12.5% * sin(var(--time)) + 57.5%), 30%) 80%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    filter: drop-shadow(0 0 0.05em hsl(300, calc(12.5% * sin(var(--time)) + 57.5%), 40%)) drop-shadow(0 0 0.1em hsl(305, calc(10% * sin(var(--time)) + 20%), 15%)) drop-shadow(0 0 0.2em black) drop-shadow(0 0 0.3em black);
+    filter: drop-shadow(0 0 0.05em hsl(300, calc(12.5% * sin(var(--time)) + 57.5%), 30%)) drop-shadow(0 0 0.1em hsl(305, calc(10% * sin(var(--time)) + 20%), 15%)) drop-shadow(0 0 0.2em black) drop-shadow(0 0 0.3em black);
 }
 
 .recipe_text2 {
