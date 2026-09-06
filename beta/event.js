@@ -4748,6 +4748,10 @@ function ascend_goal_reset() {
 function activate_collider() {
     let can_collide = false
 
+    let crystal_efficiency = 0
+    if (game.crystal_boost[2][4] > 0)
+        crystal_efficiency = game.crystal_boost[2][4]
+
     let red_amount = Decimal.pow(
         10,
         (game.antitotal_spice[1].log(10) / 1e11) ** 0.5,
@@ -4815,7 +4819,11 @@ function activate_collider() {
             if (
                 game.atomic_spice
                     .mul(game.atomic_portion)
-                    .pow(game.atomic_efficiency + game.dark_efficiency)
+                    .pow(
+                        game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency,
+                    )
                     .cmp(1) >= 0
             )
                 can_collide = true
@@ -4823,7 +4831,12 @@ function activate_collider() {
         case 1:
             pending_amount = game.spent_atomic_spice[0]
                 .add(game.atomic_spice.mul(game.atomic_portion))
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 76)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        76,
+                )
             if (pending_amount.cmp(Decimal.pow(10, 170)) >= 0)
                 pending_amount = pending_amount
                     .div(Decimal.pow(10, 170))
@@ -4845,7 +4858,12 @@ function activate_collider() {
         case 2:
             pending_amount = game.spent_atomic_spice[1]
                 .add(game.atomic_spice.mul(game.atomic_portion))
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 228)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        228,
+                )
                 .div(3.2)
                 .mul(red_amount)
             if (pending_amount.cmp(Decimal.pow(10, 128)) >= 0)
@@ -4874,7 +4892,12 @@ function activate_collider() {
         case 3:
             pending_amount = game.spent_atomic_spice[2]
                 .add(game.atomic_spice.mul(game.atomic_portion))
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 304)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        304,
+                )
                 .div(54)
                 .mul(yellow_amount)
             if (pending_amount.cmp(Decimal.pow(10, 87)) >= 0)
@@ -4893,7 +4916,12 @@ function activate_collider() {
         case 4:
             pending_amount = game.spent_atomic_spice[3]
                 .add(game.atomic_spice.mul(game.atomic_portion))
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 380)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        380,
+                )
                 .div(108000)
                 .mul(green_amount)
             if (pending_amount.cmp(Decimal.pow(10, 56)) >= 0)
@@ -4917,7 +4945,12 @@ function activate_collider() {
         case 5:
             pending_amount = game.spent_atomic_spice[4]
                 .add(game.atomic_spice.mul(game.atomic_portion))
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 494)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        494,
+                )
                 .div(5.587e15)
                 .mul(blue_amount)
             if (pending_amount.cmp(Decimal.pow(10, 40)) >= 0)
@@ -4936,7 +4969,12 @@ function activate_collider() {
         case 6:
             pending_amount = game.spent_atomic_spice[5]
                 .add(game.atomic_spice.mul(game.atomic_portion))
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 608)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        608,
+                )
                 .div(8.098e34)
                 .mul(pink_amount)
             if (pending_amount.cmp(Decimal.pow(10, 88)) >= 0)
@@ -4965,7 +5003,11 @@ function activate_collider() {
                     p += Math.floor(
                         game.atomic_spice
                             .mul(game.atomic_portion)
-                            .pow(game.atomic_efficiency + game.dark_efficiency)
+                            .pow(
+                                game.atomic_efficiency +
+                                    game.dark_efficiency +
+                                    crystal_efficiency,
+                            )
                             .log(10000),
                     )
                     if (p > 30) p = 30
@@ -4974,7 +5016,9 @@ function activate_collider() {
                     pending_amount = game.spent_atomic_spice[0]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 76,
                         )
                     if (pending_amount.cmp(Decimal.pow(10, 170)) >= 0)
@@ -4999,7 +5043,9 @@ function activate_collider() {
                     pending_amount = game.spent_atomic_spice[1]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 228,
                         )
                         .div(3.2)
@@ -5031,7 +5077,9 @@ function activate_collider() {
                     pending_amount = game.spent_atomic_spice[2]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 304,
                         )
                         .div(54)
@@ -5053,7 +5101,9 @@ function activate_collider() {
                     pending_amount = game.spent_atomic_spice[3]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 380,
                         )
                         .div(108000)
@@ -5080,7 +5130,9 @@ function activate_collider() {
                     pending_amount = game.spent_atomic_spice[4]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 494,
                         )
                         .div(5.587e15)
@@ -5102,7 +5154,9 @@ function activate_collider() {
                     pending_amount = game.spent_atomic_spice[5]
                         .add(game.atomic_spice.mul(game.atomic_portion))
                         .pow(
-                            (game.atomic_efficiency + game.dark_efficiency) /
+                            (game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency) /
                                 608,
                         )
                         .div(8.098e34)
@@ -5197,13 +5251,21 @@ function activate_collider() {
                 game.total_unstable_spice = game.total_unstable_spice.add(
                     game.atomic_spice
                         .mul(game.atomic_portion)
-                        .pow(game.atomic_efficiency + game.dark_efficiency)
+                        .pow(
+                            game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency,
+                        )
                         .floor(),
                 )
                 game.unstable_spice = game.unstable_spice.add(
                     game.atomic_spice
                         .mul(game.atomic_portion)
-                        .pow(game.atomic_efficiency + game.dark_efficiency)
+                        .pow(
+                            game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency,
+                        )
                         .floor(),
                 )
                 game.atomic_spice = game.atomic_spice.mul(
@@ -5216,7 +5278,10 @@ function activate_collider() {
                     game.atomic_spice.mul(game.atomic_portion),
                 )
                 let amount = game.spent_atomic_spice[0].pow(
-                    (game.atomic_efficiency + game.dark_efficiency) / 76,
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        76,
                 )
                 if (amount.cmp(Decimal.pow(10, 170)) >= 0)
                     amount = amount
@@ -5245,7 +5310,12 @@ function activate_collider() {
                 )
 
                 let amount = game.spent_atomic_spice[1]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 228)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            228,
+                    )
                     .div(3.2)
                     .mul(red_amount)
                 if (amount.cmp(Decimal.pow(10, 128)) >= 0)
@@ -5280,7 +5350,12 @@ function activate_collider() {
                 )
 
                 let amount = game.spent_atomic_spice[2]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 304)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            304,
+                    )
                     .div(54)
                     .mul(yellow_amount)
                 if (amount.cmp(Decimal.pow(10, 87)) >= 0)
@@ -5305,7 +5380,12 @@ function activate_collider() {
                 )
 
                 let amount = game.spent_atomic_spice[3]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 380)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            380,
+                    )
                     .div(108000)
                     .mul(green_amount)
                 if (amount.cmp(Decimal.pow(10, 56)) >= 0)
@@ -5335,7 +5415,12 @@ function activate_collider() {
                 )
 
                 let amount = game.spent_atomic_spice[4]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 494)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            494,
+                    )
                     .div(5.587e15)
                     .mul(blue_amount)
                 if (amount.cmp(Decimal.pow(10, 40)) >= 0)
@@ -5360,7 +5445,12 @@ function activate_collider() {
                 )
 
                 let amount = game.spent_atomic_spice[5]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 608)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            608,
+                    )
                     .div(8.098e34)
                     .mul(pink_amount)
                 if (amount.cmp(Decimal.pow(10, 88)) >= 0)
@@ -5406,6 +5496,10 @@ function activate_collider() {
 function auto_collider() {
     let can_collide = false
     let available_spice = new Array(8).fill(false)
+
+    let crystal_efficiency = 0
+    if (game.crystal_boost[2][4] > 0)
+        crystal_efficiency = game.crystal_boost[2][4]
 
     let red_amount = Decimal.pow(
         10,
@@ -5472,7 +5566,11 @@ function auto_collider() {
     if (
         game.atomic_spice
             .mul(game.atomic_portion)
-            .pow(game.atomic_efficiency + game.dark_efficiency)
+            .pow(
+                game.atomic_efficiency +
+                    game.dark_efficiency +
+                    crystal_efficiency,
+            )
             .cmp(game.total_unstable_spice) >= 0
     )
         can_collide = true
@@ -5480,7 +5578,12 @@ function auto_collider() {
     if (game.research_complete[21] >= 1) {
         pending_amount = game.spent_atomic_spice[0]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow((game.atomic_efficiency + game.dark_efficiency) / 76)
+            .pow(
+                (game.atomic_efficiency +
+                    game.dark_efficiency +
+                    crystal_efficiency) /
+                    76,
+            )
         if (pending_amount.cmp(Decimal.pow(10, 170)) >= 0)
             pending_amount = pending_amount
                 .div(Decimal.pow(10, 170))
@@ -5505,7 +5608,12 @@ function auto_collider() {
     if (game.research_complete[23] >= 1) {
         pending_amount = game.spent_atomic_spice[1]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow((game.atomic_efficiency + game.dark_efficiency) / 228)
+            .pow(
+                (game.atomic_efficiency +
+                    game.dark_efficiency +
+                    crystal_efficiency) /
+                    228,
+            )
             .div(3.2)
             .mul(red_amount)
         if (pending_amount.cmp(Decimal.pow(10, 128)) >= 0)
@@ -5537,7 +5645,12 @@ function auto_collider() {
     if (game.research_complete[26] >= 1) {
         pending_amount = game.spent_atomic_spice[2]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow((game.atomic_efficiency + game.dark_efficiency) / 304)
+            .pow(
+                (game.atomic_efficiency +
+                    game.dark_efficiency +
+                    crystal_efficiency) /
+                    304,
+            )
             .div(54)
             .mul(yellow_amount)
         if (pending_amount.cmp(Decimal.pow(10, 87)) >= 0)
@@ -5559,7 +5672,12 @@ function auto_collider() {
     if (game.research_complete[29] >= 1) {
         pending_amount = game.spent_atomic_spice[3]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow((game.atomic_efficiency + game.dark_efficiency) / 380)
+            .pow(
+                (game.atomic_efficiency +
+                    game.dark_efficiency +
+                    crystal_efficiency) /
+                    380,
+            )
             .div(108000)
             .mul(green_amount)
         if (pending_amount.cmp(Decimal.pow(10, 56)) >= 0)
@@ -5586,7 +5704,12 @@ function auto_collider() {
     if (game.research_complete[33] >= 1) {
         pending_amount = game.spent_atomic_spice[4]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow((game.atomic_efficiency + game.dark_efficiency) / 494)
+            .pow(
+                (game.atomic_efficiency +
+                    game.dark_efficiency +
+                    crystal_efficiency) /
+                    494,
+            )
             .div(5.587e15)
             .mul(blue_amount)
         if (pending_amount.cmp(Decimal.pow(10, 40)) >= 0)
@@ -5608,7 +5731,12 @@ function auto_collider() {
     if (game.research_complete[36] >= 1) {
         pending_amount = game.spent_atomic_spice[5]
             .add(game.atomic_spice.mul(game.atomic_portion))
-            .pow((game.atomic_efficiency + game.dark_efficiency) / 608)
+            .pow(
+                (game.atomic_efficiency +
+                    game.dark_efficiency +
+                    crystal_efficiency) /
+                    608,
+            )
             .div(8.098e34)
             .mul(pink_amount)
         if (pending_amount.cmp(Decimal.pow(10, 88)) >= 0)
@@ -5658,11 +5786,18 @@ function auto_collider() {
             let highest_spice = 0
 
             let unstable_gain = atomic_amount.pow(
-                game.atomic_efficiency + game.dark_efficiency,
+                game.atomic_efficiency +
+                    game.dark_efficiency +
+                    crystal_efficiency,
             )
             let basic_gain = game.spent_atomic_spice[0]
                 .add(atomic_amount)
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 76)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        76,
+                )
                 .floor()
             if (basic_gain.cmp(Decimal.pow(10, 170)) >= 0)
                 basic_gain = basic_gain
@@ -5686,7 +5821,12 @@ function auto_collider() {
                 highest_spice = 1
             let red_gain = game.spent_atomic_spice[1]
                 .add(atomic_amount)
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 228)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        228,
+                )
                 .div(3.2)
                 .mul(red_amount)
                 .floor()
@@ -5717,7 +5857,12 @@ function auto_collider() {
                 highest_spice = 2
             let yellow_gain = game.spent_atomic_spice[2]
                 .add(atomic_amount)
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 304)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        304,
+                )
                 .div(54)
                 .mul(yellow_amount)
                 .floor()
@@ -5738,7 +5883,12 @@ function auto_collider() {
                 highest_spice = 3
             let green_gain = game.spent_atomic_spice[3]
                 .add(atomic_amount)
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 380)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        380,
+                )
                 .div(108000)
                 .mul(green_amount)
                 .floor()
@@ -5764,7 +5914,12 @@ function auto_collider() {
                 highest_spice = 4
             let blue_gain = game.spent_atomic_spice[4]
                 .add(atomic_amount)
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 494)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        494,
+                )
                 .div(5.587e15)
                 .mul(blue_amount)
                 .floor()
@@ -5785,7 +5940,12 @@ function auto_collider() {
                 highest_spice = 5
             let pink_gain = game.spent_atomic_spice[5]
                 .add(atomic_amount)
-                .pow((game.atomic_efficiency + game.dark_efficiency) / 608)
+                .pow(
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        608,
+                )
                 .div(8.098e34)
                 .mul(pink_amount)
                 .floor()
@@ -5932,12 +6092,20 @@ function auto_collider() {
             if (available_spice[0]) {
                 game.total_unstable_spice = game.total_unstable_spice.add(
                     atomic_amount
-                        .pow(game.atomic_efficiency + game.dark_efficiency)
+                        .pow(
+                            game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency,
+                        )
                         .floor(),
                 )
                 game.unstable_spice = game.unstable_spice.add(
                     atomic_amount
-                        .pow(game.atomic_efficiency + game.dark_efficiency)
+                        .pow(
+                            game.atomic_efficiency +
+                                game.dark_efficiency +
+                                crystal_efficiency,
+                        )
                         .floor(),
                 )
             }
@@ -5946,7 +6114,10 @@ function auto_collider() {
                 game.spent_atomic_spice[0] =
                     game.spent_atomic_spice[0].add(atomic_amount)
                 let amount = game.spent_atomic_spice[0].pow(
-                    (game.atomic_efficiency + game.dark_efficiency) / 76,
+                    (game.atomic_efficiency +
+                        game.dark_efficiency +
+                        crystal_efficiency) /
+                        76,
                 )
                 if (amount.cmp(Decimal.pow(10, 170)) >= 0)
                     amount = amount
@@ -5971,7 +6142,12 @@ function auto_collider() {
                 game.spent_atomic_spice[1] =
                     game.spent_atomic_spice[1].add(atomic_amount)
                 let amount = game.spent_atomic_spice[1]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 228)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            228,
+                    )
                     .div(3.2)
                     .mul(red_amount)
                 if (amount.cmp(Decimal.pow(10, 128)) >= 0)
@@ -6002,7 +6178,12 @@ function auto_collider() {
                 game.spent_atomic_spice[2] =
                     game.spent_atomic_spice[2].add(atomic_amount)
                 let amount = game.spent_atomic_spice[2]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 304)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            304,
+                    )
                     .div(54)
                     .mul(yellow_amount)
                 if (amount.cmp(Decimal.pow(10, 87)) >= 0)
@@ -6023,7 +6204,12 @@ function auto_collider() {
                 game.spent_atomic_spice[3] =
                     game.spent_atomic_spice[3].add(atomic_amount)
                 let amount = game.spent_atomic_spice[3]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 380)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            380,
+                    )
                     .div(108000)
                     .mul(green_amount)
                 if (amount.cmp(Decimal.pow(10, 56)) >= 0)
@@ -6049,7 +6235,12 @@ function auto_collider() {
                 game.spent_atomic_spice[4] =
                     game.spent_atomic_spice[4].add(atomic_amount)
                 let amount = game.spent_atomic_spice[4]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 494)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            494,
+                    )
                     .div(5.587e15)
                     .mul(blue_amount)
                 if (amount.cmp(Decimal.pow(10, 40)) >= 0)
@@ -6070,7 +6261,12 @@ function auto_collider() {
                 game.spent_atomic_spice[5] =
                     game.spent_atomic_spice[5].add(atomic_amount)
                 let amount = game.spent_atomic_spice[5]
-                    .pow((game.atomic_efficiency + game.dark_efficiency) / 608)
+                    .pow(
+                        (game.atomic_efficiency +
+                            game.dark_efficiency +
+                            crystal_efficiency) /
+                            608,
+                    )
                     .div(8.098e34)
                     .mul(pink_amount)
                 if (amount.cmp(Decimal.pow(10, 88)) >= 0)
@@ -7162,14 +7358,8 @@ function update_crystal_boosts() {
         game.crystal_boost[i][1] = 1
         switch (i) {
             case 0:
-                game.crystal_boost[i][2] = 1
-                break
             case 1:
-                game.crystal_boost[i][2] = 1
-                break
             case 2:
-                game.crystal_boost[i][2] = 1
-                break
             case 3:
                 game.crystal_boost[i][2] = 1
                 break
@@ -7178,10 +7368,27 @@ function update_crystal_boosts() {
                 break
         }
         game.crystal_boost[i][3] = 1
+        switch (i) {
+            case 0:
+            case 1:
+                game.crystal_boost[i][4] = 1
+                break
+            case 2:
+                game.crystal_boost[i][4] = 0
+                break
+            case 3:
+            case 4:
+                game.crystal_boost[i][4] = 1
+                break
+        }
     }
     game.crystal_boost[5][0] = new Decimal(1)
     game.crystal_boost[5][1] = 1
     game.crystal_boost[5][2] = 1
+    game.crystal_boost[5][3] = new Decimal(1)
+    game.crystal_boost[6][0] = new Decimal(1)
+    game.crystal_boost[6][1] = new Decimal(1)
+    game.crystal_boost[6][2] = 1
 
     game.crystal_stack = [
         Array.from({ length: 5 }, () => []),
@@ -7248,9 +7455,21 @@ function update_crystal_boosts() {
                                         Decimal.pow(
                                             10,
                                             2.7734e10 *
-                                                power ** 0.5 *
+                                                power ** 0.975 *
                                                 scale *
                                                 scale2,
+                                        ),
+                                    )
+                                    break
+                                case 6:
+                                    game.crystal_stack[6][0].push(
+                                        Decimal.pow(
+                                            10,
+                                            3.442835e18 *
+                                                power ** 0.64 *
+                                                scale *
+                                                scale2 *
+                                                0.00012,
                                         ),
                                     )
                                     break
@@ -7269,12 +7488,23 @@ function update_crystal_boosts() {
                             break
                         case 1:
                             switch (crystal.type) {
-                                case 5:
+                                /*case 5:
                                     game.crystal_stack[5][1].push(
                                         power ** 0.5376 *
                                             464.471 *
                                             scale *
                                             scale2,
+                                    )
+                                    break*/
+                                case 6:
+                                    game.crystal_stack[6][1].push(
+                                        Decimal.pow(
+                                            10,
+                                            20 *
+                                                power ** 0.265 *
+                                                scale *
+                                                scale2,
+                                        ),
                                     )
                                     break
                                 default:
@@ -7294,6 +7524,7 @@ function update_crystal_boosts() {
                                 case 0:
                                     game.crystal_stack[0][2].push(
                                         (power2 / 1225) ** 0.435 *
+                                            1 *
                                             scale *
                                             scale2,
                                     )
@@ -7340,17 +7571,77 @@ function update_crystal_boosts() {
                                             scale2 *
                                             1.058,
                                     )
+                                    break
+                                case 6:
+                                    game.crystal_stack[6][2].push(
+                                        power2 ** 0.5 * 1.6 * scale * scale2,
+                                    )
+                                    break
                             }
                             break
                         case 3:
-                            scale3 = [0.852, 0.883, 0.913, 0.951, 1]
-                            game.crystal_stack[crystal.type][3].push(
-                                (power2 / 1225) ** 0.395 *
-                                    1.5 *
-                                    scale *
-                                    scale2 *
-                                    scale3[crystal.type],
-                            )
+                            switch (crystal.type) {
+                                case 5:
+                                    game.crystal_stack[5][3].push(
+                                        Decimal.pow(
+                                            10,
+                                            2.52127e9 *
+                                                power ** 0.975 *
+                                                scale *
+                                                scale2,
+                                        ),
+                                    )
+                                    break
+                                default:
+                                    scale3 = [0.852, 0.883, 0.913, 0.951, 1]
+                                    game.crystal_stack[crystal.type][3].push(
+                                        (power2 / 1225) ** 0.395 *
+                                            1.5 *
+                                            scale *
+                                            scale2 *
+                                            scale3[crystal.type],
+                                    )
+                                    break
+                            }
+                            break
+                        case 4:
+                            switch (crystal.type) {
+                                case 0:
+                                    game.crystal_stack[0][4].push(
+                                        (power2 / 112.5) ** 0.5 *
+                                            2.52 *
+                                            scale *
+                                            scale2,
+                                    )
+                                    break
+                                case 1:
+                                    game.crystal_stack[1][4].push(
+                                        (power + 1) ** (39.4 * scale * scale2),
+                                    )
+                                    break
+                                case 2:
+                                    game.crystal_stack[2][4].push(
+                                        (power2 / 1225) ** 0.375 *
+                                            2 *
+                                            scale *
+                                            scale2,
+                                    )
+                                    break
+                                case 3:
+                                    game.crystal_stack[3][4].push(
+                                        power ** 0.5278 * 14.4 * scale * scale2,
+                                    )
+                                    break
+                                case 4:
+                                    game.crystal_stack[4][4].push(
+                                        0.8 **
+                                            ((power2 / 112.5) ** 1.088 *
+                                                1.333 *
+                                                scale *
+                                                scale2),
+                                    )
+                                    break
+                            }
                             break
                     }
                 }
@@ -7358,193 +7649,78 @@ function update_crystal_boosts() {
         }
     }
 
+    const p = 2
+
+    const stack_type = [
+        ["decimal_mult", "add", "add", "add", "add"], // red
+        ["decimal_mult", "add", "add", "add", "mult"], // yellow
+        ["decimal_mult", "add", "add", "add", "add"], // green
+        ["decimal_mult", "add", "mult", "add", "add"], // blue
+        ["decimal_mult", "add", "decimal_mult", "add", "inverse_mult"], // pink
+        ["decimal_mult", "add", "add", "decimal_mult", "add", "decimal_mult"], // rainbow
+        ["decimal_mult", "decimal_mult", "add", "add", "decimal_mult", "add"], // dark
+    ]
+
     for (let i = 0; i < 7; i++) {
-        if (i >= 5) {
-            for (let j = 0; j < 6; j++) {
-                if (game.crystal_stack[i][j].length >= 2) {
-                    switch (j) {
-                        case 0:
-                            game.crystal_stack[i][j].sort(function (a, b) {
-                                return b.sub(a).cmp(0)
-                            })
-                            for (
-                                let k = 0;
-                                k < game.crystal_stack[i][j].length;
-                                k++
-                            ) {
-                                game.crystal_boost[i][j] = game.crystal_boost[
-                                    i
-                                ][j].mul(
-                                    game.crystal_stack[i][j][k].pow(
-                                        1 / (k + 1),
-                                    ),
-                                )
-                            }
-                            break
-                        case 1:
-                        case 2:
-                            game.crystal_stack[i][j].sort(function (a, b) {
-                                return b - a
-                            })
-                            for (
-                                let k = 0;
-                                k < game.crystal_stack[i][j].length;
-                                k++
-                            ) {
-                                game.crystal_boost[i][j] +=
-                                    game.crystal_stack[i][j][k] / (k + 1)
-                            }
-                            break
+        for (let j = 0; j < game.crystal_stack[i].length; j++) {
+            if (game.crystal_stack[i][j].length >= 1) {
+                switch (stack_type[i][j]) {
+                    case "add": {
+                        let stack = 0
+                        for (
+                            let k = 0;
+                            k < game.crystal_stack[i][j].length;
+                            k++
+                        ) {
+                            stack += game.crystal_stack[i][j][k] ** p
+                        }
+
+                        game.crystal_boost[i][j] += stack ** (1 / p)
+                        break
                     }
-                } else if (game.crystal_stack[i][j].length === 1) {
-                    switch (j) {
-                        case 0:
-                            game.crystal_boost[i][j] =
-                                game.crystal_stack[i][j][0]
-                            break
-                        case 1:
-                        case 2:
-                            game.crystal_boost[i][j] +=
-                                game.crystal_stack[i][j][0]
-                            break
+                    case "mult": {
+                        let stack = 0
+                        for (
+                            let k = 0;
+                            k < game.crystal_stack[i][j].length;
+                            k++
+                        ) {
+                            stack += Math.log(game.crystal_stack[i][j][k]) ** p
+                        }
+
+                        game.crystal_boost[i][j] *= Math.exp(stack ** (1 / p))
+                        break
                     }
-                }
-            }
-        } else {
-            for (let j = 0; j < 5; j++) {
-                if (game.crystal_stack[i][j].length >= 2) {
-                    switch (j) {
-                        case 0:
-                            game.crystal_stack[i][j].sort(function (a, b) {
-                                return b.sub(a).cmp(0)
-                            })
-                            for (
-                                let k = 0;
-                                k < game.crystal_stack[i][j].length;
-                                k++
-                            ) {
-                                game.crystal_boost[i][j] = game.crystal_boost[
-                                    i
-                                ][j].mul(
-                                    game.crystal_stack[i][j][k].pow(
-                                        1 / (k + 1),
-                                    ),
-                                )
-                            }
-                            break
-                        case 1:
-                            game.crystal_stack[i][j].sort(function (a, b) {
-                                return b - a
-                            })
-                            for (
-                                let k = 0;
-                                k < game.crystal_stack[i][j].length;
-                                k++
-                            ) {
-                                game.crystal_boost[i][j] +=
-                                    game.crystal_stack[i][j][k] / (k + 1)
-                            }
-                            break
-                        case 2:
-                            switch (i) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                    game.crystal_stack[i][j].sort(
-                                        function (a, b) {
-                                            return b - a
-                                        },
-                                    )
-                                    for (
-                                        let k = 0;
-                                        k < game.crystal_stack[i][j].length;
-                                        k++
-                                    ) {
-                                        game.crystal_boost[i][j] +=
-                                            game.crystal_stack[i][j][k] /
-                                            (k + 1)
-                                    }
-                                    break
-                                case 3:
-                                    game.crystal_stack[i][j].sort(
-                                        function (a, b) {
-                                            return b - a
-                                        },
-                                    )
-                                    for (
-                                        let k = 0;
-                                        k < game.crystal_stack[i][j].length;
-                                        k++
-                                    ) {
-                                        game.crystal_boost[i][j] *=
-                                            game.crystal_stack[i][j][k] **
-                                            (1 / (k + 1))
-                                    }
-                                    break
-                                case 4:
-                                    game.crystal_stack[i][j].sort(
-                                        function (a, b) {
-                                            return b.sub(a).cmp(0)
-                                        },
-                                    )
-                                    for (
-                                        let k = 0;
-                                        k < game.crystal_stack[i][j].length;
-                                        k++
-                                    ) {
-                                        game.crystal_boost[i][j] =
-                                            game.crystal_boost[i][j].mul(
-                                                game.crystal_stack[i][j][k].pow(
-                                                    1 / (k + 1),
-                                                ),
-                                            )
-                                    }
-                                    break
-                            }
-                            break
-                        case 3:
-                            game.crystal_stack[i][j].sort(function (a, b) {
-                                return b - a
-                            })
-                            for (
-                                let k = 0;
-                                k < game.crystal_stack[i][j].length;
-                                k++
-                            ) {
-                                game.crystal_boost[i][j] +=
-                                    game.crystal_stack[i][j][k] / (k + 1)
-                            }
-                            break
+                    case "inverse_mult": {
+                        let stack = 0
+                        for (
+                            let k = 0;
+                            k < game.crystal_stack[i][j].length;
+                            k++
+                        ) {
+                            stack +=
+                                (-Math.log(game.crystal_stack[i][j][k])) ** p
+                        }
+
+                        game.crystal_boost[i][j] *= Math.exp(
+                            -(stack ** (1 / p)),
+                        )
+                        break
                     }
-                } else if (game.crystal_stack[i][j].length === 1) {
-                    switch (j) {
-                        case 0:
-                            game.crystal_boost[i][j] =
-                                game.crystal_stack[i][j][0]
-                            break
-                        case 1:
-                            game.crystal_boost[i][j] +=
-                                game.crystal_stack[i][j][0]
-                            break
-                        case 2:
-                            switch (i) {
-                                case 0:
-                                case 1:
-                                case 2:
-                                    game.crystal_boost[i][j] +=
-                                        game.crystal_stack[i][j][0]
-                                    break
-                                case 3:
-                                case 4:
-                                    game.crystal_boost[i][j] =
-                                        game.crystal_stack[i][j][0]
-                                    break
-                            }
-                            break
-                        case 3:
-                            game.crystal_boost[i][j] +=
-                                game.crystal_stack[i][j][0]
-                            break
+                    case "decimal_mult": {
+                        let stack = 0
+                        for (
+                            let k = 0;
+                            k < game.crystal_stack[i][j].length;
+                            k++
+                        ) {
+                            stack += game.crystal_stack[i][j][k].log10() ** p
+                        }
+
+                        game.crystal_boost[i][j] = game.crystal_boost[i][j].mul(
+                            Decimal.pow(10, stack ** (1 / p)),
+                        )
+                        break
                     }
                 }
             }
