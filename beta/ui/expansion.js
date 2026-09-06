@@ -7,7 +7,7 @@ function expansion_update() {
         phi,
         game.expand_spice
             .div(Decimal.pow(10, 4.05e18 + Math.E * 1e15))
-            .log(10) / 5e17
+            .log(10) / 5e17,
     )
         .mul(2)
         .floor()
@@ -23,7 +23,7 @@ function expansion_update() {
         expand_amount = expand_amount.pow(
             (4 * power ** 0.5 * (power + 8 * expand_amount.log(10)) ** 0.5 -
                 4 * power) /
-                (8 * expand_amount.log(10))
+                (8 * expand_amount.log(10)),
         )
         if (power === 50) {
             expand_amount = expand_amount
@@ -74,10 +74,10 @@ function expansion_update() {
                     game.realm_limit.mul(
                         Decimal.pow(
                             10,
-                            expand_amount.add(1).div(2).log(phi) * 5e17
-                        )
+                            expand_amount.add(1).div(2).log(phi) * 5e17,
+                        ),
                     ),
-                    game.notation
+                    game.notation,
                 ) +
                 spice_unit +
                 " total " +
@@ -114,7 +114,7 @@ function expansion_update() {
                 "Currently: +" +
                 format_idec(
                     expand_amount.div(game.real_time_played[4]).mul(60),
-                    game.notation
+                    game.notation,
                 ) +
                 " galactic shards/min"
             if (expand_amount.div(game.real_time_played[4]).cmp(1 / 60) === -1)
@@ -122,7 +122,7 @@ function expansion_update() {
                     "Currently: +" +
                     format_idec(
                         expand_amount.div(game.real_time_played[4]).mul(3600),
-                        game.notation
+                        game.notation,
                     ) +
                     " galactic shards/hour"
 
@@ -134,12 +134,12 @@ function expansion_update() {
                                 "<br>Peak: +" +
                                 format_idec(
                                     game.peak_galactic_gain.mul(3600),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " galactic shards/hour at +" +
                                 format_idec(
                                     game.peak_galactic_amount,
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " galactic shards"
                         else
@@ -147,12 +147,12 @@ function expansion_update() {
                                 "<br>Peak: +" +
                                 format_idec(
                                     game.peak_galactic_gain.mul(60),
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " galactic shards/min at +" +
                                 format_idec(
                                     game.peak_galactic_amount,
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 " galactic shards"
                         break
@@ -163,7 +163,7 @@ function expansion_update() {
                                     "<br>Peak: +" +
                                     format_idec(
                                         game.peak_galactic_gain.mul(3600),
-                                        game.notation
+                                        game.notation,
                                     ) +
                                     " galactic shards/hour at " +
                                     game.peak_galactic_time.toFixed(2) +
@@ -173,7 +173,7 @@ function expansion_update() {
                                     "<br>Peak: +" +
                                     format_idec(
                                         game.peak_galactic_gain.mul(60),
-                                        game.notation
+                                        game.notation,
                                     ) +
                                     " galactic shards/min at " +
                                     game.peak_galactic_time.toFixed(2) +
@@ -184,12 +184,12 @@ function expansion_update() {
                                     "<br>Peak: +" +
                                     format_idec(
                                         game.peak_galactic_gain.mul(3600),
-                                        game.notation
+                                        game.notation,
                                     ) +
                                     " galactic shards/hour at " +
                                     format_dec(
                                         game.peak_galactic_time,
-                                        game.notation
+                                        game.notation,
                                     ) +
                                     "s"
                             else
@@ -197,12 +197,12 @@ function expansion_update() {
                                     "<br>Peak: +" +
                                     format_idec(
                                         game.peak_galactic_gain.mul(60),
-                                        game.notation
+                                        game.notation,
                                     ) +
                                     " galactic shards/min at " +
                                     format_dec(
                                         game.peak_galactic_time,
-                                        game.notation
+                                        game.notation,
                                     ) +
                                     "s"
                         }
@@ -214,7 +214,7 @@ function expansion_update() {
                         "<br>Peak: +" +
                         format_idec(
                             game.peak_galactic_gain.mul(3600),
-                            game.notation
+                            game.notation,
                         ) +
                         " galactic shards/hour"
                 else
@@ -222,7 +222,7 @@ function expansion_update() {
                         "<br>Peak: +" +
                         format_idec(
                             game.peak_galactic_gain.mul(60),
-                            game.notation
+                            game.notation,
                         ) +
                         " galactic shards/min"
             }
@@ -309,7 +309,7 @@ function expansion_update() {
                 "+" +
                 format_dec(
                     realm.realms[game.hovered_realm].normal,
-                    game.notation
+                    game.notation,
                 ) +
                 "% normal " +
                 spice_text[0] +
@@ -319,7 +319,7 @@ function expansion_update() {
                 "-" +
                 format_dec(
                     -realm.realms[game.hovered_realm].normal,
-                    game.notation
+                    game.notation,
                 ) +
                 "% normal " +
                 spice_text[0] +
@@ -329,7 +329,7 @@ function expansion_update() {
                 "<br>+" +
                 format_dec(
                     realm.realms[game.hovered_realm].special,
-                    game.notation
+                    game.notation,
                 ) +
                 "% special " +
                 spice_text[0] +
@@ -339,7 +339,7 @@ function expansion_update() {
                 "<br>-" +
                 format_dec(
                     -realm.realms[game.hovered_realm].special,
-                    game.notation
+                    game.notation,
                 ) +
                 "% special " +
                 spice_text[0] +
@@ -349,7 +349,7 @@ function expansion_update() {
                 "<br>+" +
                 format_dec(
                     realm.realms[game.hovered_realm].reset,
-                    game.notation
+                    game.notation,
                 ) +
                 "% reset gain power"
         else if (realm.realms[game.hovered_realm].reset < 0)
@@ -357,7 +357,7 @@ function expansion_update() {
                 "<br>-" +
                 format_dec(
                     -realm.realms[game.hovered_realm].reset,
-                    game.notation
+                    game.notation,
                 ) +
                 "% reset gain power"
 
@@ -397,7 +397,7 @@ function expansion_update() {
                 "+" +
                 format_dec(
                     realm.realms[game.target_realm].normal,
-                    game.notation
+                    game.notation,
                 ) +
                 "% normal " +
                 spice_text[0] +
@@ -407,7 +407,7 @@ function expansion_update() {
                 "-" +
                 format_dec(
                     -realm.realms[game.target_realm].normal,
-                    game.notation
+                    game.notation,
                 ) +
                 "% normal " +
                 spice_text[0] +
@@ -417,7 +417,7 @@ function expansion_update() {
                 "<br>+" +
                 format_dec(
                     realm.realms[game.target_realm].special,
-                    game.notation
+                    game.notation,
                 ) +
                 "% special " +
                 spice_text[0] +
@@ -427,7 +427,7 @@ function expansion_update() {
                 "<br>-" +
                 format_dec(
                     -realm.realms[game.target_realm].special,
-                    game.notation
+                    game.notation,
                 ) +
                 "% special " +
                 spice_text[0] +
@@ -437,7 +437,7 @@ function expansion_update() {
                 "<br>+" +
                 format_dec(
                     realm.realms[game.target_realm].reset,
-                    game.notation
+                    game.notation,
                 ) +
                 "% reset gain power"
         else if (realm.realms[game.target_realm].reset < 0)
@@ -445,7 +445,7 @@ function expansion_update() {
                 "<br>-" +
                 format_dec(
                     -realm.realms[game.target_realm].reset,
-                    game.notation
+                    game.notation,
                 ) +
                 "% reset gain power"
 
@@ -483,7 +483,7 @@ function expansion_update() {
                     "+" +
                     format_dec(
                         realm.realms[game.selected_realm].normal,
-                        game.notation
+                        game.notation,
                     ) +
                     "% normal " +
                     spice_text[0] +
@@ -493,7 +493,7 @@ function expansion_update() {
                     "-" +
                     format_dec(
                         -realm.realms[game.selected_realm].normal,
-                        game.notation
+                        game.notation,
                     ) +
                     "% normal " +
                     spice_text[0] +
@@ -503,7 +503,7 @@ function expansion_update() {
                     "<br>+" +
                     format_dec(
                         realm.realms[game.selected_realm].special,
-                        game.notation
+                        game.notation,
                     ) +
                     "% special " +
                     spice_text[0] +
@@ -513,7 +513,7 @@ function expansion_update() {
                     "<br>-" +
                     format_dec(
                         -realm.realms[game.selected_realm].special,
-                        game.notation
+                        game.notation,
                     ) +
                     "% special " +
                     spice_text[0] +
@@ -523,7 +523,7 @@ function expansion_update() {
                     "<br>+" +
                     format_dec(
                         realm.realms[game.selected_realm].reset,
-                        game.notation
+                        game.notation,
                     ) +
                     "% reset gain power"
             else if (realm.realms[game.selected_realm].reset < 0)
@@ -531,7 +531,7 @@ function expansion_update() {
                     "<br>-" +
                     format_dec(
                         -realm.realms[game.selected_realm].reset,
-                        game.notation
+                        game.notation,
                     ) +
                     "% reset gain power"
 
@@ -574,9 +574,9 @@ function expansion_update() {
             Math.round(
                 (realm.realms[game.current_realm].x ** 2 +
                     realm.realms[game.current_realm].y ** 2) **
-                    0.5
+                    0.5,
             ),
-            game.notation
+            game.notation,
         ) +
         " units"
 
@@ -594,19 +594,19 @@ function expansion_update() {
 
     document.getElementById("galactic_shards_num").innerHTML = format_inum(
         game.galactic_shards,
-        game.notation
+        game.notation,
     )
     document.getElementById("galactic_shards_num2").innerHTML = format_inum(
         game.galactic_shards,
-        game.notation
+        game.notation,
     )
     document.getElementById("galactic_shards_num3").innerHTML = format_inum(
         game.galactic_shards,
-        game.notation
+        game.notation,
     )
     document.getElementById("galactic_shards_num4").innerHTML = format_inum(
         game.galactic_shards,
-        game.notation
+        game.notation,
     )
     if (game.galactic_shards.cmp(1) === 0) {
         document.getElementById("galactic_shards_text").innerHTML =
@@ -734,9 +734,9 @@ function expansion_update() {
                         format_idec(
                             Decimal.pow(
                                 10,
-                                1500 * phi ** 2 * (game.expand / 300) ** 0.5
+                                1500 * phi ** 2 * (game.expand / 300) ** 0.5,
                             ),
-                            game.notation
+                            game.notation,
                         ) +
                         "x)"
                 else
@@ -746,7 +746,7 @@ function expansion_update() {
                         " gains, even in Collapse Challenges<br>(Currently: " +
                         format_idec(
                             Decimal.pow(10, 5 * phi ** 2 * game.expand),
-                            game.notation
+                            game.notation,
                         ) +
                         "x)"
                 break
@@ -758,11 +758,14 @@ function expansion_update() {
                     spice_text[0] +
                     " is " +
                     format_dec(
-                        (game.realms_visited.length *
-                            (game.new_generation ? 1 : 8 / 7)) **
-                            0.5 /
-                            1.6 ** 0.5,
-                        game.notation
+                        Math.log(
+                            Math.max(
+                                game.realms_visited.length *
+                                    (game.new_generation ? 1 : 8 / 7),
+                                22,
+                            ) / 22,
+                        ) * 5.77,
+                        game.notation,
                     ) +
                     "% stronger<br>(based on realms visited)"
                 break
@@ -773,7 +776,7 @@ function expansion_update() {
                     " production is boosted by unspent galactic shards<br>(Currently: " +
                     format_idec(
                         game.galactic_shards.div(fib(603, true)).pow(2).add(1),
-                        game.notation
+                        game.notation,
                     ) +
                     "x)"
                 break
@@ -879,9 +882,9 @@ function dark_update() {
                             .pow(0.25)
                             .mul(32)
                             .add(866.28),
-                        1
+                        1,
                     ),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
         else
@@ -894,9 +897,9 @@ function dark_update() {
                 format_idec(
                     Decimal.max(
                         game.total_dark_spice.div(320).pow(0.5).add(1),
-                        1
+                        1,
                     ),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
     }
@@ -907,7 +910,7 @@ function dark_update() {
             " production " +
             format_idec(
                 Decimal.max(game.total_dark_spice.pow(1e11).add(1), 1),
-                game.notation
+                game.notation,
             ) +
             "x"
     }
@@ -921,9 +924,9 @@ function dark_update() {
                 .mul(
                     game.realtime_production
                         ? game.gamespeed ** (game.dark_gamespeed_level / 100)
-                        : 1
+                        : 1,
                 ),
-            game.notation
+            game.notation,
         ) +
         spice_unit +
         " dark " +
@@ -941,9 +944,9 @@ function dark_update() {
                         game.realtime_production
                             ? game.gamespeed **
                                   (game.dark_gamespeed_level / 100)
-                            : 1
+                            : 1,
                     ),
-                game.notation
+                game.notation,
             ) +
             spice_unit +
             " dark " +
@@ -970,7 +973,7 @@ function dark_update() {
                     "You have " +
                     format_inum(
                         game.dark_spice_gen[gen.id].floor(),
-                        game.notation
+                        game.notation,
                     ) +
                     " dark " +
                     spice_text[0] +
@@ -978,7 +981,7 @@ function dark_update() {
                     gen.plural
                 if (
                     game.dark_spice_gen[gen.id].cmp(
-                        new Decimal(game.dark_spice_bought[gen.id].toString())
+                        new Decimal(game.dark_spice_bought[gen.id].toString()),
                     ) === 0
                 ) {
                     info_str += ",<br>producing "
@@ -998,9 +1001,9 @@ function dark_update() {
                                     game.realtime_production
                                         ? game.gamespeed **
                                               (game.dark_gamespeed_level / 100)
-                                        : 1
+                                        : 1,
                                 ),
-                            game.notation
+                            game.notation,
                         ) +
                         spice_unit +
                         " dark " +
@@ -1015,7 +1018,7 @@ function dark_update() {
                                 game.realtime_production
                                     ? game.gamespeed **
                                           (game.dark_gamespeed_level / 100)
-                                    : 1
+                                    : 1,
                             )
                             .div(dark_reduction[gen.id])
                             .cmp(1 / 60) === -1
@@ -1030,10 +1033,10 @@ function dark_update() {
                                             ? game.gamespeed **
                                                   (game.dark_gamespeed_level /
                                                       100)
-                                            : 1
+                                            : 1,
                                     )
                                     .mul(3600 / dark_reduction[gen.id]),
-                                game.notation
+                                game.notation,
                             ) +
                             " dark " +
                             spice_text[0] +
@@ -1048,7 +1051,7 @@ function dark_update() {
                                 game.realtime_production
                                     ? game.gamespeed **
                                           (game.dark_gamespeed_level / 100)
-                                    : 1
+                                    : 1,
                             )
                             .div(dark_reduction[gen.id])
                             .cmp(1) === -1
@@ -1063,10 +1066,10 @@ function dark_update() {
                                             ? game.gamespeed **
                                                   (game.dark_gamespeed_level /
                                                       100)
-                                            : 1
+                                            : 1,
                                     )
                                     .mul(60 / dark_reduction[gen.id]),
-                                game.notation
+                                game.notation,
                             ) +
                             " dark " +
                             spice_text[0] +
@@ -1084,10 +1087,10 @@ function dark_update() {
                                             ? game.gamespeed **
                                                   (game.dark_gamespeed_level /
                                                       100)
-                                            : 1
+                                            : 1,
                                     )
                                     .div(dark_reduction[gen.id]),
-                                game.notation
+                                game.notation,
                             ) +
                             " dark " +
                             spice_text[0] +
@@ -1105,7 +1108,7 @@ function dark_update() {
                         " production " +
                         format_idec(
                             game.dark_spice_gen[gen.id].pow(0.075).add(1),
-                            game.notation
+                            game.notation,
                         ) +
                         "x"
                 }
@@ -1113,14 +1116,14 @@ function dark_update() {
                     info_str =
                         format_inum(
                             game.dark_spice_gen[gen.id].floor(),
-                            game.notation
+                            game.notation,
                         ) +
                         " " +
                         gen.plural +
                         " <span class='bold'>" +
                         format_idec(
                             game.total_dark_spice_boost[gen.id],
-                            game.notation
+                            game.notation,
                         ) +
                         "x</span>"
                 info.innerHTML = info_str
@@ -1133,7 +1136,7 @@ function dark_update() {
                     " are currently being boosted " +
                     format_idec(
                         game.total_dark_spice_boost[gen.id],
-                        game.notation
+                        game.notation,
                     ) +
                     "x"
 
@@ -1145,7 +1148,7 @@ function dark_update() {
                         "-" +
                         format_inum(
                             game.dark_spice_price[gen.id],
-                            game.notation
+                            game.notation,
                         ) +
                         " galactic shard"
                 else
@@ -1153,7 +1156,7 @@ function dark_update() {
                         "-" +
                         format_inum(
                             game.dark_spice_price[gen.id],
-                            game.notation
+                            game.notation,
                         ) +
                         " galactic shards"
                 if (
@@ -1177,8 +1180,10 @@ function dark_update() {
                             1) /
                             parseFloat(
                                 getComputedStyle(
-                                    document.getElementById("dark_buy" + gen.id)
-                                )["font-size"]
+                                    document.getElementById(
+                                        "dark_buy" + gen.id,
+                                    ),
+                                )["font-size"],
                             ) -
                         0.8
 
@@ -1191,18 +1196,20 @@ function dark_update() {
                             1) /
                             parseFloat(
                                 getComputedStyle(
-                                    document.getElementById("dark_buy" + gen.id)
-                                )["font-size"]
+                                    document.getElementById(
+                                        "dark_buy" + gen.id,
+                                    ),
+                                )["font-size"],
                             ) -
                         0.8
 
                     if (width2 > width) {
                         document.getElementById(
-                            "dark_buy" + gen.id
+                            "dark_buy" + gen.id,
                         ).style.width = width2 + 0.89 + "em"
                     } else {
                         document.getElementById(
-                            "dark_buy" + gen.id
+                            "dark_buy" + gen.id,
                         ).style.width = width + 0.89 + "em"
                     }
                 } else {
@@ -1240,7 +1247,7 @@ function dark_update() {
             " production " +
             format_dec(
                 game.gamespeed ** (game.dark_gamespeed_level / 100),
-                game.notation
+                game.notation,
             ) +
             "x faster"
 
@@ -1271,7 +1278,7 @@ function dark_update() {
                     parseFloat(
                         getComputedStyle(document.getElementById("dark_buy_a"))[
                             "font-size"
-                        ]
+                        ],
                     ) -
                 0.8
 
@@ -1282,7 +1289,7 @@ function dark_update() {
                     parseFloat(
                         getComputedStyle(document.getElementById("dark_buy_a"))[
                             "font-size"
-                        ]
+                        ],
                     ) -
                 0.8
 
@@ -1313,7 +1320,7 @@ function dark_update() {
             " generators " +
             format_idec(
                 Decimal.pow(phi ** 2, game.dark_strengthener),
-                game.notation
+                game.notation,
             ) +
             "x"
 
@@ -1337,7 +1344,7 @@ function dark_update() {
                     parseFloat(
                         getComputedStyle(document.getElementById("dark_buy_s"))[
                             "font-size"
-                        ]
+                        ],
                     ) -
                 0.8
 
@@ -1348,7 +1355,7 @@ function dark_update() {
                     parseFloat(
                         getComputedStyle(document.getElementById("dark_buy_s"))[
                             "font-size"
-                        ]
+                        ],
                     ) -
                 0.8
 
@@ -1368,33 +1375,38 @@ function dark_update() {
 
     let s_str =
         "You have " + format_small(game.dark_construct) + " dark constructs"
+    let construct_power = 1
+    if (game.crystal_boost[6][2] > 1) construct_power = game.crystal_boost[6][2]
     if (game.galactic_bought[23]) {
         if (game.dark_construct_boost.pow(1 / 850000).cmp(1.005) >= 0)
             s_str +=
                 ",<br>boosting all normal " +
                 spice_text[0] +
                 " generators " +
-                format_idec(game.dark_construct_boost, game.notation) +
+                format_idec(
+                    game.dark_construct_boost.pow(construct_power),
+                    game.notation,
+                ) +
                 "x,<br>boosting all crystallized " +
                 spice_text[0] +
                 " generators " +
                 format_idec(
-                    game.dark_construct_boost.pow(1 / 275),
-                    game.notation
+                    game.dark_construct_boost.pow(construct_power / 275),
+                    game.notation,
                 ) +
                 "x,<br>boosting all arcane " +
                 spice_text[0] +
                 " generators " +
                 format_idec(
-                    game.dark_construct_boost.pow(1 / 150000),
-                    game.notation
+                    game.dark_construct_boost.pow(construct_power / 150000),
+                    game.notation,
                 ) +
                 "x,<br>and boosting all dark " +
                 spice_text[0] +
                 " generators " +
                 format_idec(
                     Decimal.pow(phi, Number(game.dark_construct) / 50),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
         else if (game.dark_construct_boost.pow(1 / 275).cmp(1.005) >= 0)
@@ -1402,20 +1414,23 @@ function dark_update() {
                 ",<br>boosting all normal " +
                 spice_text[0] +
                 " generators " +
-                format_idec(game.dark_construct_boost, game.notation) +
+                format_idec(
+                    game.dark_construct_boost.pow(construct_power),
+                    game.notation,
+                ) +
                 "x,<br>boosting all crystallized " +
                 spice_text[0] +
                 " generators " +
                 format_idec(
-                    game.dark_construct_boost.pow(1 / 275),
-                    game.notation
+                    game.dark_construct_boost.pow(construct_power / 275),
+                    game.notation,
                 ) +
                 "x,<br>and boosting all dark " +
                 spice_text[0] +
                 " generators " +
                 format_idec(
                     Decimal.pow(phi, Number(game.dark_construct) / 50),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
         else
@@ -1423,13 +1438,16 @@ function dark_update() {
                 ",<br>boosting all normal " +
                 spice_text[0] +
                 " generators " +
-                format_idec(game.dark_construct_boost, game.notation) +
+                format_idec(
+                    game.dark_construct_boost.pow(construct_power),
+                    game.notation,
+                ) +
                 "x,<br>and boosting all dark " +
                 spice_text[0] +
                 " generators " +
                 format_idec(
                     Decimal.pow(phi, Number(game.dark_construct) / 50),
-                    game.notation
+                    game.notation,
                 ) +
                 "x"
     } else {
@@ -1438,20 +1456,23 @@ function dark_update() {
                 ",<br>boosting all normal " +
                 spice_text[0] +
                 " generators " +
-                format_idec(game.dark_construct_boost, game.notation) +
+                format_idec(
+                    game.dark_construct_boost.pow(construct_power),
+                    game.notation,
+                ) +
                 "x,<br>boosting all crystallized " +
                 spice_text[0] +
                 " generators " +
                 format_idec(
-                    game.dark_construct_boost.pow(1 / 275),
-                    game.notation
+                    game.dark_construct_boost.pow(construct_power / 275),
+                    game.notation,
                 ) +
                 "x,<br>and boosting all arcane " +
                 spice_text[0] +
                 " generators " +
                 format_idec(
-                    game.dark_construct_boost.pow(1 / 150000),
-                    game.notation
+                    game.dark_construct_boost.pow(construct_power / 150000),
+                    game.notation,
                 ) +
                 "x"
         else if (game.dark_construct_boost.pow(1 / 275).cmp(1.005) >= 0)
@@ -1459,13 +1480,16 @@ function dark_update() {
                 ",<br>boosting all normal " +
                 spice_text[0] +
                 " generators " +
-                format_idec(game.dark_construct_boost, game.notation) +
+                format_idec(
+                    game.dark_construct_boost.pow(construct_power),
+                    game.notation,
+                ) +
                 "x,<br>and boosting all crystallized " +
                 spice_text[0] +
                 " generators " +
                 format_idec(
-                    game.dark_construct_boost.pow(1 / 275),
-                    game.notation
+                    game.dark_construct_boost.pow(construct_power / 275),
+                    game.notation,
                 ) +
                 "x"
         else
@@ -1473,7 +1497,10 @@ function dark_update() {
                 ",<br>boosting all normal " +
                 spice_text[0] +
                 " generators " +
-                format_idec(game.dark_construct_boost, game.notation) +
+                format_idec(
+                    game.dark_construct_boost.pow(construct_power),
+                    game.notation,
+                ) +
                 "x"
     }
 
@@ -1498,7 +1525,7 @@ function dark_update() {
                 parseFloat(
                     getComputedStyle(document.getElementById("dark_buy_cs"))[
                         "font-size"
-                    ]
+                    ],
                 ) -
             0.8
 
@@ -1509,7 +1536,7 @@ function dark_update() {
                 parseFloat(
                     getComputedStyle(document.getElementById("dark_buy_cs"))[
                         "font-size"
-                    ]
+                    ],
                 ) -
             0.8
 
@@ -1538,11 +1565,14 @@ function dark_update() {
         " efficiency by " +
         format_dec(game.dark_efficiency * 100, game.notation) +
         "%"
-    if (game.galactic_bought[4])
+    if (game.galactic_bought[4]) {
+        s_str += ",<br>"
+        if (!game.galactic_bought[26]) s_str += "and "
         s_str +=
-            ",<br>and boosting research speed " +
+            "boosting research speed " +
             format_num(3 ** game.dark_conversion, game.notation) +
             "x"
+    }
     if (game.galactic_bought[26])
         s_str +=
             ",<br>and boosting Prestige, Ascension, and Collapse stat gains " +
@@ -1570,7 +1600,7 @@ function dark_update() {
                 parseFloat(
                     getComputedStyle(document.getElementById("dark_buy_cv"))[
                         "font-size"
-                    ]
+                    ],
                 ) -
             0.8
 
@@ -1581,7 +1611,7 @@ function dark_update() {
                 parseFloat(
                     getComputedStyle(document.getElementById("dark_buy_cv"))[
                         "font-size"
-                    ]
+                    ],
                 ) -
             0.8
 
@@ -1615,12 +1645,12 @@ function dark_update() {
 function crafting_update() {
     document.getElementById("red_shards_num").innerHTML = format_num(
         game.exotic_shards[0],
-        game.notation
+        game.notation,
     )
     if (game.recipe[0] === 0)
         document.getElementById("red_shards_num").innerHTML = format_num(
             game.exotic_shards[0] - game.recipe[1],
-            game.notation
+            game.notation,
         )
     if (game.exotic_shards[0] === 1) {
         document.getElementById("red_shards_text").innerHTML = "red shard"
@@ -1629,12 +1659,12 @@ function crafting_update() {
     }
     document.getElementById("yellow_shards_num").innerHTML = format_num(
         game.exotic_shards[1],
-        game.notation
+        game.notation,
     )
     if (game.recipe[0] === 1)
         document.getElementById("yellow_shards_num").innerHTML = format_num(
             game.exotic_shards[1] - game.recipe[1],
-            game.notation
+            game.notation,
         )
     if (game.exotic_shards[1] === 1) {
         document.getElementById("yellow_shards_text").innerHTML = "yellow shard"
@@ -1644,12 +1674,12 @@ function crafting_update() {
     }
     document.getElementById("green_shards_num").innerHTML = format_num(
         game.exotic_shards[2],
-        game.notation
+        game.notation,
     )
     if (game.recipe[0] === 2)
         document.getElementById("green_shards_num").innerHTML = format_num(
             game.exotic_shards[2] - game.recipe[1],
-            game.notation
+            game.notation,
         )
     if (game.exotic_shards[2] === 1) {
         document.getElementById("green_shards_text").innerHTML = "green shard"
@@ -1658,12 +1688,12 @@ function crafting_update() {
     }
     document.getElementById("blue_shards_num").innerHTML = format_num(
         game.exotic_shards[3],
-        game.notation
+        game.notation,
     )
     if (game.recipe[0] === 3)
         document.getElementById("blue_shards_num").innerHTML = format_num(
             game.exotic_shards[3] - game.recipe[1],
-            game.notation
+            game.notation,
         )
     if (game.exotic_shards[3] === 1) {
         document.getElementById("blue_shards_text").innerHTML = "blue shard"
@@ -1672,12 +1702,12 @@ function crafting_update() {
     }
     document.getElementById("pink_shards_num").innerHTML = format_num(
         game.exotic_shards[4],
-        game.notation
+        game.notation,
     )
     if (game.recipe[0] === 4)
         document.getElementById("pink_shards_num").innerHTML = format_num(
             game.exotic_shards[4] - game.recipe[1],
-            game.notation
+            game.notation,
         )
     if (game.exotic_shards[4] === 1) {
         document.getElementById("pink_shards_text").innerHTML = "pink shard"
@@ -1688,13 +1718,13 @@ function crafting_update() {
         document.getElementById("rainbow_shards_block").style.display = "block"
         document.getElementById("rainbow_shards_num").innerHTML = format_num(
             game.exotic_shards[5],
-            game.notation
+            game.notation,
         )
         if (game.recipe[0] === 5)
             document.getElementById("rainbow_shards_num").innerHTML =
                 format_num(
                     game.exotic_shards[5] - game.recipe[1],
-                    game.notation
+                    game.notation,
                 )
         if (game.exotic_shards[5] === 1) {
             document.getElementById("rainbow_shards_text").innerHTML =
@@ -1710,12 +1740,12 @@ function crafting_update() {
         document.getElementById("dark_shards_block").style.display = "block"
         document.getElementById("dark_shards_num").innerHTML = format_num(
             game.exotic_shards[6],
-            game.notation
+            game.notation,
         )
         if (game.recipe[0] === 6)
             document.getElementById("dark_shards_num").innerHTML = format_num(
                 game.exotic_shards[6] - game.recipe[1],
-                game.notation
+                game.notation,
             )
         if (game.exotic_shards[6] === 1) {
             document.getElementById("dark_shards_text").innerHTML = "dark shard"
@@ -1735,7 +1765,7 @@ function crafting_update() {
         "-" + format_num(game.recipe_change, game.notation)
     document.getElementById("recipe_count").innerHTML = format_num(
         game.recipe[1],
-        game.notation
+        game.notation,
     )
     document.getElementById("recipe_plus").innerHTML =
         "+" + format_num(game.recipe_change, game.notation)
@@ -1853,7 +1883,7 @@ function crafting_update() {
                         game.preview.effects[i],
                         game.preview.essence,
                         game.preview.level,
-                        game.preview.effects.length
+                        game.preview.effects.length,
                     )
             }
             str += "</span>"
@@ -1870,7 +1900,7 @@ function crafting_update() {
                     17.1 *
                         (Math.max(Math.log(game.recipe[1]), 0) /
                             Math.log(6e14)) **
-                            2
+                            2,
             ).pow(shard_power[game.recipe[0]])
             price = price.mul(mult).mul(shard_mul[game.recipe[0]])
             document.getElementById("craft_price").innerHTML =
@@ -1923,46 +1953,46 @@ function crafting_update() {
                 if (game.selected_slot[1] !== -1) {
                     if (game.selected_slot[1] >= 30) {
                         document.getElementById(
-                            "equipped_center"
+                            "equipped_center",
                         ).style.display = "flex"
                         if (game.equip[game.selected_slot[1] - 30] === null) {
                             document.getElementById(
-                                "move_button2"
+                                "move_button2",
                             ).style.display = "block"
                             document.getElementById(
-                                "swap_button2"
+                                "swap_button2",
                             ).style.display = "none"
                         } else {
                             document.getElementById(
-                                "move_button2"
+                                "move_button2",
                             ).style.display = "none"
                             document.getElementById(
-                                "swap_button2"
+                                "swap_button2",
                             ).style.display = "block"
                         }
                     } else {
                         if (game.inventory[game.selected_slot[1]] === null) {
                             document.getElementById(
-                                "equipped_center"
+                                "equipped_center",
                             ).style.display = "flex"
                             document.getElementById(
-                                "unequip_button"
+                                "unequip_button",
                             ).style.display = "block"
                             document.getElementById(
-                                "move_button2"
+                                "move_button2",
                             ).style.display = "none"
                             document.getElementById(
-                                "swap_button2"
+                                "swap_button2",
                             ).style.display = "none"
                         } else {
                             document.getElementById(
-                                "inventory_center"
+                                "inventory_center",
                             ).style.display = "flex"
                             document.getElementById(
-                                "move_button"
+                                "move_button",
                             ).style.display = "none"
                             document.getElementById(
-                                "swap_button"
+                                "swap_button",
                             ).style.display = "block"
                         }
                     }
@@ -2013,36 +2043,36 @@ function crafting_update() {
                     if (game.selected_slot[1] >= 30) {
                         if (game.equip[game.selected_slot[1] - 30] === null) {
                             document.getElementById(
-                                "equip_button"
+                                "equip_button",
                             ).style.display = "block"
                             document.getElementById(
-                                "move_button"
+                                "move_button",
                             ).style.display = "none"
                             document.getElementById(
-                                "swap_button"
+                                "swap_button",
                             ).style.display = "none"
                         } else {
                             document.getElementById(
-                                "move_button"
+                                "move_button",
                             ).style.display = "none"
                             document.getElementById(
-                                "swap_button"
+                                "swap_button",
                             ).style.display = "block"
                         }
                     } else {
                         if (game.inventory[game.selected_slot[1]] === null) {
                             document.getElementById(
-                                "move_button"
+                                "move_button",
                             ).style.display = "block"
                             document.getElementById(
-                                "swap_button"
+                                "swap_button",
                             ).style.display = "none"
                         } else {
                             document.getElementById(
-                                "move_button"
+                                "move_button",
                             ).style.display = "none"
                             document.getElementById(
-                                "swap_button"
+                                "swap_button",
                             ).style.display = "block"
                         }
                     }
@@ -2123,20 +2153,31 @@ function crafting_update() {
                             crystal.effects[i],
                             crystal.essence,
                             crystal.level,
-                            crystal.effects.length
+                            crystal.effects.length,
                         )
                 }
                 str += "</span>"
                 if (crystal.recipe !== undefined) {
-                    str +=
-                        '<br><br><span class="recipe_text2">Recipe:</span>' +
-                        ' <span class="recipe_text3 ' +
-                        shard_type[crystal.type] +
-                        '_shards">' +
-                        format_num(crystal.recipe, game.notation) +
-                        " " +
-                        shard_type[crystal.type] +
-                        " shards</span>"
+                    if (crystal.recipe === 1)
+                        str +=
+                            '<br><br><span class="recipe_text2">Recipe:</span>' +
+                            ' <span class="recipe_text3 ' +
+                            shard_type[crystal.type] +
+                            '_shards">' +
+                            format_num(crystal.recipe, game.notation) +
+                            " " +
+                            shard_type[crystal.type] +
+                            " shard</span>"
+                    else
+                        str +=
+                            '<br><br><span class="recipe_text2">Recipe:</span>' +
+                            ' <span class="recipe_text3 ' +
+                            shard_type[crystal.type] +
+                            '_shards">' +
+                            format_num(crystal.recipe, game.notation) +
+                            " " +
+                            shard_type[crystal.type] +
+                            " shards</span>"
                 }
 
                 document.getElementById("inventory_essence").innerHTML = str
@@ -2207,7 +2248,7 @@ function crafting_update() {
                                     crystal.effects[i][j],
                                     crystal.essence[i][1],
                                     crystal.level,
-                                    crystal.effects[i].length
+                                    crystal.effects[i].length,
                                 )
                         }
                         str += "</span>"
@@ -2228,7 +2269,7 @@ function crafting_update() {
                                     crystal.effects[i][j],
                                     crystal.essence[i][1],
                                     crystal.level,
-                                    crystal.effects[i].length
+                                    crystal.effects[i].length,
                                 )
                         }
                         str += "</span>"
@@ -2261,9 +2302,17 @@ function crafting_update() {
             "hidden"
     }
 
-    let crystal_effects = ["", "", "", "", "", ""]
-    let color = ["red", "yellow", "green", "blue", "pink", "rainbow"]
-    let color_cap = ["Red", "Yellow", "Green", "Blue", "Pink", "Rainbow"]
+    let crystal_effects = ["", "", "", "", "", "", ""]
+    let color = ["red", "yellow", "green", "blue", "pink", "rainbow", "dark"]
+    let color_cap = [
+        "Red",
+        "Yellow",
+        "Green",
+        "Blue",
+        "Pink",
+        "Rainbow",
+        "Dark",
+    ]
     let equipped = 0
 
     for (let i = 0; i < 5; i++) {
@@ -2273,8 +2322,56 @@ function crafting_update() {
         }
     }
 
-    for (let i = 0; i < 6; i++) {
-        if (i >= 5) {
+    for (let i = 0; i < 7; i++) {
+        if (i === 6) {
+            for (let j = 0; j < 6; j++) {
+                switch (j) {
+                    case 0:
+                        if (game.crystal_boost[i][0].cmp(1) === 1) {
+                            if (crystal_effects[i] !== "")
+                                crystal_effects[i] += "<br>"
+                            crystal_effects[i] +=
+                                "Arcane " +
+                                spice_text[0] +
+                                " production " +
+                                format_idec(
+                                    game.crystal_boost[i][0],
+                                    game.notation,
+                                ) +
+                                "x"
+                        }
+                        break
+                    case 1:
+                        if (game.crystal_boost[i][1].cmp(1) === 1) {
+                            if (crystal_effects[i] !== "")
+                                crystal_effects[i] += "<br>"
+                            crystal_effects[i] +=
+                                "Dark " +
+                                spice_text[0] +
+                                " production " +
+                                format_idec(
+                                    game.crystal_boost[i][1],
+                                    game.notation,
+                                ) +
+                                "x"
+                        }
+                        break
+                    case 2:
+                        if (game.crystal_boost[i][2] > 1) {
+                            if (crystal_effects[i] !== "")
+                                crystal_effects[i] += "<br>"
+                            crystal_effects[i] +=
+                                "Dark constructs are " +
+                                format_dec(
+                                    game.crystal_boost[i][2],
+                                    game.notation,
+                                ) +
+                                "x stronger"
+                        }
+                        break
+                }
+            }
+        } else if (i === 5) {
             for (let j = 0; j < 6; j++) {
                 switch (j) {
                     case 0:
@@ -2287,7 +2384,7 @@ function crafting_update() {
                                 " gain " +
                                 format_idec(
                                     game.crystal_boost[i][0],
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 "x"
                         }
@@ -2300,7 +2397,7 @@ function crafting_update() {
                                 "Crystal strengtheners are " +
                                 format_dec(
                                     game.crystal_boost[i][1],
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 "x stronger"
                         }
@@ -2313,9 +2410,22 @@ function crafting_update() {
                                 "Sixth generators are " +
                                 format_dec(
                                     game.crystal_boost[i][2] * 100 - 100,
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 "% stronger"
+                        }
+                        break
+                    case 3:
+                        if (game.crystal_boost[i][3].cmp(1) === 1) {
+                            if (crystal_effects[i] !== "")
+                                crystal_effects[i] += "<br>"
+                            crystal_effects[i] +=
+                                "Ansuz rune gain " +
+                                format_idec(
+                                    game.crystal_boost[i][3],
+                                    game.notation,
+                                ) +
+                                "x"
                         }
                         break
                 }
@@ -2334,7 +2444,7 @@ function crafting_update() {
                                 " production " +
                                 format_idec(
                                     game.crystal_boost[i][0],
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 "x"
                         }
@@ -2348,7 +2458,7 @@ function crafting_update() {
                                 " strengtheners are " +
                                 format_dec(
                                     game.crystal_boost[i][1],
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 "x stronger"
                         }
@@ -2364,7 +2474,7 @@ function crafting_update() {
                                         format_dec(
                                             game.crystal_boost[0][2] * 100 -
                                                 100,
-                                            game.notation
+                                            game.notation,
                                         ) +
                                         "% stronger"
                                 }
@@ -2377,7 +2487,7 @@ function crafting_update() {
                                         "Color boosts are " +
                                         format_dec(
                                             game.crystal_boost[1][2],
-                                            game.notation
+                                            game.notation,
                                         ) +
                                         "x stronger"
                                 }
@@ -2391,7 +2501,7 @@ function crafting_update() {
                                         format_dec(
                                             game.crystal_boost[2][2] * 100 -
                                                 100,
-                                            game.notation
+                                            game.notation,
                                         ) +
                                         "% stronger"
                                 }
@@ -2404,7 +2514,7 @@ function crafting_update() {
                                         "Research is " +
                                         format_dec(
                                             game.crystal_boost[3][2],
-                                            game.notation
+                                            game.notation,
                                         ) +
                                         "x faster"
                                 }
@@ -2419,7 +2529,7 @@ function crafting_update() {
                                         " production " +
                                         format_idec(
                                             game.crystal_boost[4][2],
-                                            game.notation
+                                            game.notation,
                                         ) +
                                         "x"
                                 }
@@ -2441,9 +2551,83 @@ function crafting_update() {
                                 " generators are " +
                                 format_dec(
                                     game.crystal_boost[i][3] * 100 - 100,
-                                    game.notation
+                                    game.notation,
                                 ) +
                                 "% stronger"
+                        }
+                        break
+                    case 4:
+                        switch (i) {
+                            case 0:
+                                if (game.crystal_boost[0][4] > 1) {
+                                    if (crystal_effects[0] !== "")
+                                        crystal_effects[0] += "<br>"
+                                    crystal_effects[0] +=
+                                        "Unstable " +
+                                        spice_text[0] +
+                                        " decay is " +
+                                        format_dec(
+                                            game.crystal_boost[0][4],
+                                            game.notation,
+                                        ) +
+                                        "x stronger"
+                                }
+                                break
+                            case 1:
+                                if (game.crystal_boost[1][4] > 1) {
+                                    if (crystal_effects[1] !== "")
+                                        crystal_effects[1] += "<br>"
+                                    crystal_effects[1] +=
+                                        "The game runs " +
+                                        format_dec(
+                                            game.crystal_boost[1][4],
+                                            game.notation,
+                                        ) +
+                                        "x faster"
+                                }
+                                break
+                            case 2:
+                                if (game.crystal_boost[2][4] > 0) {
+                                    if (crystal_effects[2] !== "")
+                                        crystal_effects[2] += "<br>"
+                                    crystal_effects[2] +=
+                                        "+" +
+                                        format_dec(
+                                            game.crystal_boost[2][4] * 100,
+                                            game.notation,
+                                        ) +
+                                        "% atomic " +
+                                        spice_text[0] +
+                                        " efficiency"
+                                }
+                                break
+                            case 3:
+                                if (game.crystal_boost[3][4] > 1) {
+                                    if (crystal_effects[3] !== "")
+                                        crystal_effects[3] += "<br>"
+                                    crystal_effects[3] +=
+                                        "Color augments start " +
+                                        format_dec(
+                                            game.crystal_boost[3][4],
+                                            game.notation,
+                                        ) +
+                                        "x later"
+                                }
+                                break
+                            case 4:
+                                if (game.crystal_boost[4][4] < 1) {
+                                    if (crystal_effects[4] !== "")
+                                        crystal_effects[4] += "<br>"
+                                    crystal_effects[4] +=
+                                        "Color boosts are " +
+                                        format_dec(
+                                            100 -
+                                                game.crystal_boost[4][4] * 100,
+                                            game.notation,
+                                        ) +
+                                        "% cheaper"
+                                }
+                                break
                         }
                         break
                 }
@@ -2465,7 +2649,7 @@ function crafting_update() {
             "dark",
         ]
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 7; i++) {
             if (crystal_effects[i] !== "") {
                 if (str === "") {
                     str =
