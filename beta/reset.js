@@ -2,32 +2,34 @@
 function color_boost(override) {
     let can_boost = false
     let scaling = 1
-    let scaling2 = 1n
-    if (game.ascend_challenge === 3 || game.collapse_challenge === 7) {
+    if (game.ascend_challenge === 3 || game.collapse_challenge === 7)
         scaling = 10
-        scaling2 = 10n
-    }
+    if (game.crystal_boost[4][4] < 1) scaling *= game.crystal_boost[4][4]
     switch (game.color_boosts) {
         case 0:
-            if (game.red_spice_gen[5].cmp(50 * scaling) >= 0) can_boost = true
+            if (game.red_spice_gen[5].cmp(Math.ceil(50 * scaling)) >= 0)
+                can_boost = true
             break
         case 1:
-            if (game.yellow_spice_gen[5].cmp(50 * scaling) >= 0)
+            if (game.yellow_spice_gen[5].cmp(Math.ceil(50 * scaling)) >= 0)
                 can_boost = true
             break
         case 2:
-            if (game.green_spice_gen[5].cmp(50 * scaling) >= 0) can_boost = true
+            if (game.green_spice_gen[5].cmp(Math.ceil(50 * scaling)) >= 0)
+                can_boost = true
             break
         case 3:
-            if (game.blue_spice_gen[5].cmp(50 * scaling) >= 0) can_boost = true
+            if (game.blue_spice_gen[5].cmp(Math.ceil(50 * scaling)) >= 0)
+                can_boost = true
             break
         default:
             if (game.collapse_challenge === 10) {
                 if (
                     game.pink_spice_bought[5] >=
                     Math.ceil(
-                        (game.color_boosts + (33 ** 0.5 - 9) / 2) ** 3 -
-                            (9 * 33 ** 0.5 - 125) / 2,
+                        ((game.color_boosts + (33 ** 0.5 - 9) / 2) ** 3 -
+                            (9 * 33 ** 0.5 - 125) / 2) *
+                            scaling,
                     )
                 )
                     can_boost = true
@@ -35,85 +37,97 @@ function color_boost(override) {
                 if (game.color_boosts <= 8) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 25 - 50) * scaling
+                        Math.ceil((game.color_boosts * 25 - 50) * scaling)
                     )
                         can_boost = true
                 } else if (game.color_boosts <= 29) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 50 - 250) * scaling
+                        Math.ceil((game.color_boosts * 50 - 250) * scaling)
                     )
                         can_boost = true
                 } else if (game.color_boosts <= 133) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 75 - 975) * scaling
+                        Math.ceil((game.color_boosts * 75 - 975) * scaling)
                     )
                         can_boost = true
                 } else if (game.color_boosts <= 223) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 100 - 4300) * scaling
+                        Math.ceil((game.color_boosts * 100 - 4300) * scaling)
                     )
                         can_boost = true
                 } else if (game.color_boosts <= 523) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 150 - 15450) * scaling
+                        Math.ceil((game.color_boosts * 150 - 15450) * scaling)
                     )
                         can_boost = true
                 } else if (game.color_boosts <= 1201) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 200 - 41600) * scaling
+                        Math.ceil((game.color_boosts * 200 - 41600) * scaling)
                     )
                         can_boost = true
                 } else if (game.color_boosts <= 4104) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 300 - 161700) * scaling
+                        Math.ceil((game.color_boosts * 300 - 161700) * scaling)
                     )
                         can_boost = true
                 } else if (game.color_boosts <= 7501) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 500 - 982500) * scaling
+                        Math.ceil((game.color_boosts * 500 - 982500) * scaling)
                     )
                         can_boost = true
                 } else if (game.color_boosts <= 80003) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 1000 - 4733000) * scaling
+                        Math.ceil(
+                            (game.color_boosts * 1000 - 4733000) * scaling,
+                        )
                     )
                         can_boost = true
                 } else if (game.color_boosts <= 132003) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 1500 - 44734500) * scaling
+                        Math.ceil(
+                            (game.color_boosts * 1500 - 44734500) * scaling,
+                        )
                     )
                         can_boost = true
                 } else if (game.color_boosts <= 1666667) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 2500 - 176737500) * scaling
+                        Math.ceil(
+                            (game.color_boosts * 2500 - 176737500) * scaling,
+                        )
                     )
                         can_boost = true
                 } else if (game.color_boosts <= game.augment_start) {
                     if (
                         game.pink_spice_bought[5] >=
-                        (game.color_boosts * 4000 - 2676738000) * scaling
+                        Math.ceil(
+                            (game.color_boosts * 4000 - 2676738000) * scaling,
+                        )
                     )
                         can_boost = true
                 } else {
                     let amount = game.augment_start * 4000 - 2676738000
                     if (
                         game.pink_spice_bought[5] >=
-                        (((game.color_boosts - game.augment_start + 4000) *
-                            (game.color_boosts - game.augment_start + 4001)) /
-                            2 +
-                            amount -
-                            8002000) *
-                            scaling
+                        Math.ceil(
+                            (((game.color_boosts - game.augment_start + 4000) *
+                                (game.color_boosts -
+                                    game.augment_start +
+                                    4001)) /
+                                2 +
+                                amount -
+                                8002000) *
+                                scaling,
+                        )
                     )
                         can_boost = true
                 }
@@ -338,7 +352,9 @@ function color_boost(override) {
                                 (9 -
                                     33 ** 0.5 -
                                     Math.cbrt(
-                                        -8 * Number(game.pink_spice_bought[5]) -
+                                        (-8 *
+                                            Number(game.pink_spice_bought[5])) /
+                                            scaling -
                                             36 * 33 ** 0.5 +
                                             500,
                                     )),
@@ -724,6 +740,10 @@ function ascend(override, challenge) {
                         9,
                 ),
             )
+        }
+
+        if (game.crystal_boost[5][3].cmp(1) === 1) {
+            amount = amount.mul(game.crystal_boost[5][3])
         }
 
         if (game.antispice[4].cmp(1) >= 0) {
